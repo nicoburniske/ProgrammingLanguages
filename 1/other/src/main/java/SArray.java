@@ -45,10 +45,14 @@ public class SArray implements S {
 
     public String toJSON() {
         StringBuilder result = new StringBuilder();
-        for (S s : this.array) {
-            result.append(s.toString());
+        for (int ii = 0; ii < this.array.size(); ii ++ ) {
+            S s = this.array.get(ii);
+            result.append(s.toJSON());
+            if(ii + 1 != this.array.size()) {
+                result.append(",");
+            }
         }
-        return result.toString();
+        return "[" + result.toString() + "]";
     }
 
 }

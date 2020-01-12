@@ -4,4 +4,8 @@ public class TInteger implements T{
     public TInteger(int number) {
         this.number = number;
     }
+
+    public String toJSON() {
+        return "\""+ this.number + "\"";
+    }
 }

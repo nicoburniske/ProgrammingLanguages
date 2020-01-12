@@ -28,7 +28,7 @@ public class SName implements S {
     }
 
     public String toJSON() {
-        return this.name;
+        return "\""+ this.name + "\"";
     }
 
 
