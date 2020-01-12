@@ -3,4 +3,5 @@ public interface S {
     public S replace();
     public T context();
     public T context(int depth);
+    public String toJSON();
 }

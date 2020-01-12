@@ -1,3 +1,5 @@
+import org.json.simple.JSONArray;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +10,6 @@ public class SArray implements S {
         this.array = array;
     }
 
-    @Override
     public int count() {
         int sum = 0;
         for (S sCurrent : array) {
@@ -17,7 +18,6 @@ public class SArray implements S {
         return sum;
     }
 
-    @Override
     public S replace() {
         List<S> acc = new ArrayList<S>();
         for (S sCurrent : array) {
@@ -26,9 +26,8 @@ public class SArray implements S {
         return new SArray(acc);
     }
 
-    @Override
     public T context() {
-        List<T> acc = new ArrayList<>();
+        List<T> acc = new ArrayList();
         for( S sCurrent: array){
             acc.add(sCurrent.context(1));
         }
@@ -37,12 +36,23 @@ public class SArray implements S {
 
     public T context(int depth) {
         depth ++;
-        List<T> acc = new ArrayList<>();
+        List<T> acc = new ArrayList();
         for( S sCurrent: array){
             acc.add(sCurrent.context(depth));
         }
         return new TArray(acc);
     }
 
+    public String toJSON() {
+        StringBuilder result = new StringBuilder();
+        for (int ii = 0; ii < this.array.size(); ii ++ ) {
+            S s = this.array.get(ii);
+            result.append(s.toJSON());
+            if(ii + 1 != this.array.size()) {
+                result.append(",");
+            }
+        }
+        return "[" + result.toString() + "]";
+    }
 
 }
