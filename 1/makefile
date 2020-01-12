@@ -1,3 +1,2 @@
-%.java:
-	cd other/
-	mvn clean install
+project1: %.java:
+	mvn -f ./other/pom.xml clean install
