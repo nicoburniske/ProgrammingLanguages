@@ -21,7 +21,7 @@ public class main {
             } else if ("replace".equals(args[0])) {
                 System.out.println(s.replace().toJSON());
             } else if ("context".equals(args[0])) {
-                System.out.println(s.context());
+                System.out.println(s.context().toJSON());
             } else {
                 throw new IllegalArgumentException("an illegal function was requested");
             }

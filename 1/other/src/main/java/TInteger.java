@@ -6,6 +6,6 @@ public class TInteger implements T{
     }
 
     public String toJSON() {
-        return "\""+ this.number + "\"";
+        return this.number + "";
     }
 }
