@@ -14,7 +14,6 @@ public class main {
         //args[1] = filePath
         try {
             Object obj = new JSONParser().parse(new FileReader(args[1]));
-            //System.out.println(obj.getClass(x`));
             S s = convertToS(obj);
             if ("count".equals(args[0])) {
                 System.out.println(s.count());
@@ -35,11 +34,9 @@ public class main {
     public static S convertToS(Object obj) {
         if(obj instanceof String) {
             String str = (String) obj ;
-            System.out.println(obj);
             return new SName(str);
         } else if (obj instanceof JSONArray){
             JSONArray array = (JSONArray) obj;
-            System.out.println(array.toJSONString());
             List<S> sArray = new ArrayList();
             for(int ii = 0; ii < array.size(); ii ++ ) {
                 sArray.add(convertToS(array.get(ii)));
