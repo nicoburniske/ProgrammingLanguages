@@ -1,0 +1,3 @@
+#!/bin/bash
+read fileName
+java -jar other/target/project1-1.0-SNAPSHOT-jar-with-dependencies.jar count $fileName
