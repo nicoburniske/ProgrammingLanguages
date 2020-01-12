@@ -27,5 +27,9 @@ public class SName implements S {
         return new TInteger(depth);
     }
 
+    public String toJSON() {
+        return this.name;
+    }
+
 
 }

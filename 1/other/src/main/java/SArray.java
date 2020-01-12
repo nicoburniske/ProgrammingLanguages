@@ -10,13 +10,6 @@ public class SArray implements S {
         this.array = array;
     }
 
-//    public SArray(List<JSONArray> array) {
-//        this.array = new ArrayList<S>();
-//        for(int ii = 0; ii < array.size(); ii ++ ) {
-//            this.array.add(main.convertToS(array.get(ii)));
-//        }
-//    }
-
     public int count() {
         int sum = 0;
         for (S sCurrent : array) {
@@ -50,5 +43,12 @@ public class SArray implements S {
         return new TArray(acc);
     }
 
+    public String toJSON() {
+        StringBuilder result = new StringBuilder();
+        for (S s : this.array) {
+            result.append(s.toString());
+        }
+        return result.toString();
+    }
 
 }

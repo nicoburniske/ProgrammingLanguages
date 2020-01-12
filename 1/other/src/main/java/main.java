@@ -12,19 +12,24 @@ public class main {
     public static void main(String[] args) throws IOException, ParseException {
         //args[0] = count/context/replace
         //args[1] = filePath
-        Object obj = new JSONParser().parse(new FileReader(args[1]));
-        //System.out.println(obj.getClass());
-        S s = convertToS(obj);
-        if ("count".equals(args[0])) {
-            System.out.println(s.count());
-        } else if ("replace".equals(args[0])) {
-            System.out.println(s.replace());
-        } else if ("context".equals(args[0])) {
-            System.out.println(s.context());
-        } else {
-            throw new IllegalArgumentException("an illegal function was requested");
-        }
+        try {
+            Object obj = new JSONParser().parse(new FileReader(args[1]));
+            //System.out.println(obj.getClass(x`));
+            S s = convertToS(obj);
+            if ("count".equals(args[0])) {
+                System.out.println(s.count());
+            } else if ("replace".equals(args[0])) {
+                System.out.println(s.replace().toJSON());
+            } else if ("context".equals(args[0])) {
+                System.out.println(s.context());
+            } else {
+                throw new IllegalArgumentException("an illegal function was requested");
+            }
+        } catch (IOException ex) {
 
+        } catch (ParseException ex) {
+
+        }
     }
 
     public static S convertToS(Object obj) {
