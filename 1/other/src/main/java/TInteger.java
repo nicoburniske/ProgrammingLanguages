@@ -1,4 +1,4 @@
-public class TInteger implements T{
+public class TInteger implements T {
     int number;
 
     public TInteger(int number) {

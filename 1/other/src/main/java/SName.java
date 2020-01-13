@@ -2,8 +2,9 @@ public class SName implements S {
     String name;
 
     public SName(String name) {
-        this.name= name;
+        this.name = name;
     }
+
     public int count() {
         return 1;
     }
@@ -28,7 +29,7 @@ public class SName implements S {
     }
 
     public String toJSON() {
-        return "\""+ this.name + "\"";
+        return "\"" + this.name + "\"";
     }
 
 

@@ -28,16 +28,16 @@ public class SArray implements S {
 
     public T context() {
         List<T> acc = new ArrayList();
-        for( S sCurrent: array){
+        for (S sCurrent : array) {
             acc.add(sCurrent.context(1));
         }
         return new TArray(acc);
     }
 
     public T context(int depth) {
-        depth ++;
+        depth++;
         List<T> acc = new ArrayList();
-        for( S sCurrent: array){
+        for (S sCurrent : array) {
             acc.add(sCurrent.context(depth));
         }
         return new TArray(acc);
@@ -45,10 +45,10 @@ public class SArray implements S {
 
     public String toJSON() {
         StringBuilder result = new StringBuilder();
-        for (int ii = 0; ii < this.array.size(); ii ++ ) {
+        for (int ii = 0; ii < this.array.size(); ii++) {
             S s = this.array.get(ii);
             result.append(s.toJSON());
-            if(ii + 1 != this.array.size()) {
+            if (ii + 1 != this.array.size()) {
                 result.append(",");
             }
         }

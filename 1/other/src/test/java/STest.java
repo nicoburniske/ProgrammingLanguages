@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class STest {
     // SName examples
@@ -14,6 +14,7 @@ public class STest {
     List<S> list1, list2, list3, list4;
     // SArray examples
     S sDepth1a, sDepth1b, sDepth2, sDepth3;
+
     @Before
     public void setUp() throws Exception {
         john = new SName("john");
@@ -42,6 +43,7 @@ public class STest {
         assertEquals("[[\"john\",\"nick\",\"ben\"],[\"abc\",\"zyx\"],\"john\"]", sDepth2.toJSON());
         assertEquals("[[[\"john\",\"nick\",\"ben\"],[\"abc\",\"zyx\"],\"john\"],[\"john\",\"nick\",\"ben\"],\"john\"]", sDepth3.toJSON());
     }
+
     @Test
     public void count() {
         assertEquals(1, john.count());
