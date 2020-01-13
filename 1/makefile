@@ -1,4 +1,4 @@
 project1: %.java:
-	mvn -f ./other/pom.xml clean install
+	mvn -f ./Other/pom.xml clean install
 clean:
-	mvn -f ./other/pom.xml clean
+	mvn -f ./Other/pom.xml clean

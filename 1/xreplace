@@ -1,2 +1,2 @@
 #!/bin/bash
-java -jar other/target/project1-1.0-SNAPSHOT-jar-with-dependencies.jar replace /dev/stdin
+java -jar Other/target/project1-1.0-SNAPSHOT-jar-with-dependencies.jar replace /dev/stdin
