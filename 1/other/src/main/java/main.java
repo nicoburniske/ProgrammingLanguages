@@ -43,7 +43,7 @@ public class main {
             }
             return new SArray(sArray);
         } else {
-            throw new IllegalStateException("Json Was not a S");
+            throw new IllegalArgumentException("JSON was not a S");
         }
     }
 }
