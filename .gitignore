@@ -40,16 +40,16 @@
 # *.ipr
 
 # CMake
-cmake-build-*/
+**/other/cmake-build-*/
 
 # Mongo Explorer plugin
-.idea/**/mongoSettings.xml
+**/other/.idea/**/mongoSettings.xml
 
 # File-based project format
-*.iws
+**/other/*.iws
 
 # IntelliJ
-out/
+**/other/out/
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
@@ -117,3 +117,8 @@ hs_err_pid*
 
 # End of https://www.gitignore.io/api/java,intellij
 
+
+#fixing issues because of folder structure
+**/other/.idea/
+**/other/target/
+**/other/*.iml
