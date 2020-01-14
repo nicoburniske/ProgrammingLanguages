@@ -1,8 +1,9 @@
-import org.json.simple.JSONArray;
-
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents a JSON Array where each element is an S.
+ */
 public class SArray implements S {
     List<S> array;
 

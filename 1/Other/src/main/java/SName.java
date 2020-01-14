@@ -1,3 +1,6 @@
+/**
+ * Represents a non-empty String consisting of just lowercase letters.
+ */
 public class SName implements S {
     String name;
 

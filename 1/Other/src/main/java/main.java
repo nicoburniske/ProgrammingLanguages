@@ -25,6 +25,12 @@ public class main {
         }
     }
 
+    /**
+     * Used to build instances of an S.
+     *
+     * @param obj object that was parsed by JSONParser. Should be a String or a JSONArray.
+     * @return The equivalent S.
+     */
     public static S convertToS(Object obj) {
         if (obj instanceof String) {
             String str = (String) obj;
