@@ -5,7 +5,7 @@
  */
 public interface T {
     /**
-     * Converts the given S to a JSON.
+     * Converts the given T to a JSON.
      *
      * @return JSON as a String.
      */
