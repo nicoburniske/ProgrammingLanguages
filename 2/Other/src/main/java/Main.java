@@ -2,7 +2,9 @@ import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,8 +18,8 @@ import java.util.List;
  */
 
 public class Main {
-    public static void main(String[] args) throws ParseException {
-        Object obj = new JSONParser().parse("[[\"let\",\"x\",\"=\",5],[\"let\",\"y\",\"=\",[\"x\",\"+\",1]],[\"x\",\"*\",\"y\"]]");
+    public static void main(String[] args) throws ParseException, IOException {
+        Object obj = new JSONParser().parse(new FileReader("../SDTests/1-in.json"));
         VExpr result = parse(obj).sd(new HashMap<String, AccumulatorType>(), 0);
         System.out.println("[[\"let\",\"x\",\"=\",5],[\"let\",\"y\",\"=\",[\"x\",\"+\",1]],[\"x\",\"*\",\"y\"]]");
         System.out.println(result.toJson());
