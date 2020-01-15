@@ -1,20 +1,33 @@
 import org.json.simple.JSONArray;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Main {
-    public static void main(String[] args) {
+/**
+ *  [["let","x","=",5],
+ *
+ *      ["let","y","=",["x","+",1]]
+ *
+ *      ["x","*","y"]]
+ */
 
+public class Main {
+    public static void main(String[] args) throws ParseException {
+        Object obj = new JSONParser().parse("[[\"let\",\"x\",\"=\",5],[\"let\",\"y\",\"=\",[\"x\",\"+\",1]],[\"x\",\"*\",\"y\"]]");
+        VExpr result = parse(obj);
     }
 
-    private VExpr parse(Object obj) {
+    private static VExpr parse(Object obj) {
+        System.out.println(obj.getClass());
        if (obj instanceof String) {
            System.out.println("String : " + (String)obj);
            return new Var((String)obj);
-       } else if (obj instanceof Integer) {
-           System.out.println("Integer : " + (Integer)obj);
-           return new VInt((Integer) obj);
+       } else if (obj instanceof Long) {
+           System.out.println("Integer : " + ((Long)obj).intValue());
+           return new VInt(((Long)obj).intValue());
        } else if (obj instanceof JSONArray) {
            JSONArray arr = (JSONArray) obj;
            if(arr.get(1) instanceof  String) {
@@ -33,7 +46,7 @@ public class Main {
        }
     }
 
-    private Decl parseDecl(JSONArray arr) {
+    private static Decl parseDecl(JSONArray arr) {
         return new Decl(new Var((String)arr.get(1)),parse(arr.get(3)));
     }
 }
