@@ -8,4 +8,14 @@ public class VOperator implements VExpr{
         this.right = right;
         this.op = op;
     }
+
+    @Override
+    public VExpr sd() {
+        return null;
+    }
+
+    @Override
+    public String toJson() {
+        return "[" + left.toJson() + ",\"" + op + "\"," + right.toJson() + "]";
+    }
 }

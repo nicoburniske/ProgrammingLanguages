@@ -6,4 +6,8 @@ public class Decl {
         this.v = v;
         this.expr = expr;
     }
+
+    public String toJSON() {
+        return "[\"let\"," + v.toJson() + ",\"=\"," + expr.toJson() + "]";
+    }
 }

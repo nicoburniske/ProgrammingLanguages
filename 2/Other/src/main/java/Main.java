@@ -36,8 +36,10 @@ public class Main {
             } else {
                 System.out.println("VDecl : ");
                 List<Decl> declList = new ArrayList();
-                for (Object o : arr.subList(0, arr.size() - 1)) {
-                    declList.add(parseDecl((JSONArray) o));
+                if(arr.size() > 1) {
+                    for (Object o : arr.subList(0, arr.size() - 1)) {
+                        declList.add(parseDecl((JSONArray) o));
+                    }
                 }
                 return new VDeclArray(declList, parse(arr.get(arr.size() - 1)));
             }

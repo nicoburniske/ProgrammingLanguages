@@ -4,4 +4,14 @@ public class VInt implements VExpr{
     }
 
     Integer anInt;
+
+    @Override
+    public VExpr sd() {
+        return null;
+    }
+
+    @Override
+    public String toJson() {
+        return anInt.toString();
+    }
 }
