@@ -1,3 +1,5 @@
+import java.util.Map;
+
 public class VOperator implements VExpr{
     VExpr left;
     VExpr right;
@@ -10,7 +12,7 @@ public class VOperator implements VExpr{
     }
 
     @Override
-    public VExpr sd() {
+    public VExpr sd(Map<String,Integer> accDepth, Map<String,Integer> accDecl) {
         return null;
     }
 

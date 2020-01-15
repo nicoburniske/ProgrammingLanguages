@@ -1,3 +1,5 @@
+import java.util.Map;
+
 public class VarPair implements VExpr {
     Integer depth;
     Integer pos;
@@ -8,7 +10,7 @@ public class VarPair implements VExpr {
     }
 
     @Override
-    public VExpr sd() {
+    public VExpr sd(Map<String,Integer> accDepth, Map<String,Integer> accDecl) {
         //Should never be called
         return null;
     }

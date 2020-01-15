@@ -1,4 +1,5 @@
 import java.util.List;
+import java.util.Map;
 
 public class VDeclArray implements VExpr {
     List<Decl> declarations;
@@ -10,7 +11,7 @@ public class VDeclArray implements VExpr {
     }
 
     @Override
-    public VExpr sd() {
+    public VExpr sd(Map<String,Integer> accDepth, Map<String,Integer> accDecl) {
         return null;
     }
 

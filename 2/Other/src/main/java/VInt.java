@@ -1,3 +1,5 @@
+import java.util.Map;
+
 public class VInt implements VExpr{
     public VInt(Integer anInt) {
         this.anInt = anInt;
@@ -6,7 +8,7 @@ public class VInt implements VExpr{
     Integer anInt;
 
     @Override
-    public VExpr sd() {
+    public VExpr sd(Map<String,Integer> accDepth, Map<String,Integer> accDecl) {
         return null;
     }
 

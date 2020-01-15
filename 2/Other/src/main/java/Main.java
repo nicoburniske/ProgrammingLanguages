@@ -18,6 +18,8 @@ public class Main {
     public static void main(String[] args) throws ParseException {
         Object obj = new JSONParser().parse("[[\"let\",\"x\",\"=\",5],[\"let\",\"y\",\"=\",[\"x\",\"+\",1]],[\"x\",\"*\",\"y\"]]");
         VExpr result = parse(obj);
+        System.out.println("[[\"let\",\"x\",\"=\",5],[\"let\",\"y\",\"=\",[\"x\",\"+\",1]],[\"x\",\"*\",\"y\"]]");
+        System.out.println(result.toJson());
     }
 
     private static VExpr parse(Object obj) {

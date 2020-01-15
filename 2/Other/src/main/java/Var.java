@@ -1,3 +1,5 @@
+import java.util.Map;
+
 public class Var implements VExpr {
     String s;
 
@@ -6,7 +8,7 @@ public class Var implements VExpr {
     }
 
     @Override
-    public VExpr sd() {
+    public VExpr sd(Map<String,Integer> accDepth, Map<String,Integer> accDecl) {
         return null;
     }
 
