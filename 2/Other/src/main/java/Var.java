@@ -8,8 +8,12 @@ public class Var implements VExpr {
     }
 
     @Override
-    public VExpr sd(Map<String,Integer> accDepth, Map<String,Integer> accDecl) {
-        return null;
+    public VExpr sd(Map<String, AccumulatorType> acc, int depth) {
+        if(acc.get(s) == null) {
+            return new Var(s);
+        } else {
+            return new VarPair(acc.get(s).depth, acc.get(s).width);
+        }
     }
 
     @Override

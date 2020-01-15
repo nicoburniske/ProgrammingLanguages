@@ -8,8 +8,8 @@ public class VInt implements VExpr{
     Integer anInt;
 
     @Override
-    public VExpr sd(Map<String,Integer> accDepth, Map<String,Integer> accDecl) {
-        return null;
+    public VExpr sd(Map<String, AccumulatorType> acc, int depth) {
+        return new VInt(anInt);
     }
 
     @Override

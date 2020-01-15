@@ -10,7 +10,7 @@ public class VarPair implements VExpr {
     }
 
     @Override
-    public VExpr sd(Map<String,Integer> accDepth, Map<String,Integer> accDecl) {
+    public VExpr sd(Map<String, AccumulatorType> acc, int depth) {
         //Should never be called
         return null;
     }

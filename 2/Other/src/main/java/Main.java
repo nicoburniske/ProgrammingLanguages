@@ -4,6 +4,7 @@ import org.json.simple.parser.ParseException;
 
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -17,7 +18,7 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) throws ParseException {
         Object obj = new JSONParser().parse("[[\"let\",\"x\",\"=\",5],[\"let\",\"y\",\"=\",[\"x\",\"+\",1]],[\"x\",\"*\",\"y\"]]");
-        VExpr result = parse(obj);
+        VExpr result = parse(obj).sd(new HashMap<String, AccumulatorType>(), 0);
         System.out.println("[[\"let\",\"x\",\"=\",5],[\"let\",\"y\",\"=\",[\"x\",\"+\",1]],[\"x\",\"*\",\"y\"]]");
         System.out.println(result.toJson());
     }

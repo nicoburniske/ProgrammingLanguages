@@ -1,4 +1,3 @@
-import java.util.List;
 import java.util.Map;
 
 public interface VExpr {
@@ -10,7 +9,7 @@ public interface VExpr {
      * A variable without declaration is replaced by itself.
      * @return
      */
-    public VExpr sd(Map<String,Integer> accDepth, Map<String,Integer> accDecl);
+    public VExpr sd(Map<String, AccumulatorType> acc, int depth);
 
     public String toJson();
 }
