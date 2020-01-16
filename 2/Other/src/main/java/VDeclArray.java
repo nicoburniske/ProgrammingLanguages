@@ -13,12 +13,13 @@ public class VDeclArray implements VExpr {
 
     @Override
     public VExpr sd(Map<String, AccumulatorType> acc, int depth) {
+        depth ++;
         List<Decl> l = new ArrayList();
         for(int ii = 0; ii < declarations.size(); ii ++ ) {
             l.add(declarations.get(ii).sd(acc, depth, ii));
             acc = declarations.get(ii).updateAcc(acc, depth, ii);
         }
-        return new VDeclArray(l, scope.sd(acc,depth + 1));
+        return new VDeclArray(l, scope.sd(acc,depth));
     }
 
     @Override

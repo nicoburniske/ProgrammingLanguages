@@ -35,7 +35,7 @@ public class Main {
             return new VInt(((Long) obj).intValue());
         } else if (obj instanceof JSONArray) {
             JSONArray arr = (JSONArray) obj;
-            if (arr.get(1) instanceof String) {
+            if (arr.size() > 1 && arr.get(1) instanceof String) {
                 System.out.println("Oper : " + (String) arr.get(1));
                 return new VOperator(parse(arr.get(0)), parse(arr.get(2)), (String) arr.get(1));
             } else {
