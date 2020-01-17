@@ -17,6 +17,6 @@ public class VarPair implements VExpr {
 
     @Override
     public String toJson() {
-        return "(" + depth + "," + pos + ")";
+        return "[" + depth + "," + pos + "]";
     }
 }
