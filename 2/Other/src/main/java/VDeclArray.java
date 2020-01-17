@@ -42,8 +42,8 @@ public class VDeclArray implements VExpr {
 
     @Override
     public int evaluate(Map<String, Stack<Integer>> acc) {
-        for(int ii = 0; ii < declarations.size(); ii ++ ) {
-            declarations.get(ii).updateAcc(acc, declarations.get(ii).evaluate(acc));
+        for (Decl decl : declarations) {
+            decl.updateAcc(acc, decl.evaluate(acc));
         }
         int returnVal = scope.evaluate(acc);
         for (Decl declaration : declarations) {
