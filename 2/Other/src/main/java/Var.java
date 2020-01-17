@@ -12,7 +12,7 @@ public class Var implements VExpr {
         if(acc.get(s) == null) {
             return new Var(s);
         } else {
-            return new VarPair(depth - acc.get(s).depth, depth - acc.get(s).width);
+            return new VarPair(depth - acc.get(s).depth, acc.get(s).width);
         }
     }
 
