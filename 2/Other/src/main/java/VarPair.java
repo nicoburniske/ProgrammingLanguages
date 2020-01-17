@@ -20,4 +20,9 @@ public class VarPair implements VExpr {
     public String toJson() {
         return "[" + depth + "," + pos + "]";
     }
+
+    @Override
+    public int evaluate(Map<String, Stack<Integer>> acc) {
+        throw new IllegalStateException("should never happen");
+    }
 }

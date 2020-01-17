@@ -17,4 +17,11 @@ public class VInt implements VExpr{
     public String toJson() {
         return anInt.toString();
     }
+
+    @Override
+    public int evaluate(Map<String, Stack<Integer>> acc) {
+        return anInt;
+    }
+
+
 }

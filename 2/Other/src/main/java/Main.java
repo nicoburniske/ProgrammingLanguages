@@ -22,12 +22,13 @@ public class Main {
     public static void main(String[] args) throws ParseException, IOException {
         Object obj = new JSONParser().parse(new FileReader("../SDTests/1-in.json"));
         VExpr result = parse(obj).sd(new HashMap<String, Stack<AccumulatorType>>(), 0);
+        int result2 = parse(obj).evaluate(new HashMap<String, Stack<Integer>>());
         System.out.println(parse(obj).toJson());
         System.out.println(result.toJson());
+        System.out.println(result2);
     }
 
     private static VExpr parse(Object obj) {
-        System.out.println(obj.getClass());
         if (obj instanceof String) {
             return new Var((String) obj);
         } else if (obj instanceof Long) {

@@ -18,7 +18,7 @@ public class VDeclArray implements VExpr {
         List<Decl> l = new ArrayList();
         for(int ii = 0; ii < declarations.size(); ii ++ ) {
             l.add(declarations.get(ii).sd(acc, depth, ii));
-            declarations.get(ii).updateAcc(acc, depth, ii);
+            declarations.get(ii).updateAcc(acc, new AccumulatorType(depth, ii));
         }
         VExpr returnVal = new VDeclArray(l, scope.sd(acc,depth));
         for (Decl declaration : declarations) {
@@ -38,5 +38,17 @@ public class VDeclArray implements VExpr {
         sb.append(scope.toJson());
         sb.append("]");
         return sb.toString();
+    }
+
+    @Override
+    public int evaluate(Map<String, Stack<Integer>> acc) {
+        for(int ii = 0; ii < declarations.size(); ii ++ ) {
+            declarations.get(ii).updateAcc(acc, declarations.get(ii).evaluate(acc));
+        }
+        int returnVal = scope.evaluate(acc);
+        for (Decl declaration : declarations) {
+            declaration.removeFromAcc(acc);
+        }
+        return returnVal;
     }
 }

@@ -13,4 +13,6 @@ public interface VExpr {
     public VExpr sd(Map<String, Stack<AccumulatorType>> acc, int depth);
 
     public String toJson();
+
+    public int evaluate(Map<String, Stack<Integer>> acc);
 }

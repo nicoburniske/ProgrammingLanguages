@@ -21,4 +21,15 @@ public class VOperator implements VExpr{
     public String toJson() {
         return "[" + left.toJson() + ",\"" + op + "\"," + right.toJson() + "]";
     }
+
+    @Override
+    public int evaluate(Map<String, Stack<Integer>> acc) {
+        if ("+".equals(op)) {
+            return left.evaluate(acc) + right.evaluate(acc);
+        } else if("*".equals(op)) {
+            return left.evaluate(acc) * right.evaluate(acc);
+        } else {
+            throw new IllegalStateException("Invalid Operator");
+        }
+    }
 }

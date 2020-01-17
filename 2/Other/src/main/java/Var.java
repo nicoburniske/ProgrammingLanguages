@@ -21,4 +21,13 @@ public class Var implements VExpr {
     public String toJson() {
         return "\"" + s + "\"";
     }
+
+    @Override
+    public int evaluate(Map<String, Stack<Integer>> acc) {
+        if(acc.get(s) == null || acc.get(s).empty()) {
+            throw new IllegalStateException("variable "+ s +" undeclared");
+        } else {
+            return acc.get(s).peek();
+        }
+    }
 }
