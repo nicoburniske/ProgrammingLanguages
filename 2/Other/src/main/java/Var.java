@@ -1,4 +1,5 @@
 import java.util.Map;
+import java.util.Stack;
 
 public class Var implements VExpr {
     String s;
@@ -8,11 +9,11 @@ public class Var implements VExpr {
     }
 
     @Override
-    public VExpr sd(Map<String, AccumulatorType> acc, int depth) {
-        if(acc.get(s) == null) {
+    public VExpr sd(Map<String, Stack<AccumulatorType>> acc, int depth) {
+        if(acc.get(s) == null || acc.get(s).empty()) {
             return new Var(s);
         } else {
-            return new VarPair(depth - acc.get(s).depth, acc.get(s).width);
+            return new VarPair(depth - acc.get(s).peek().depth, acc.get(s).peek().width);
         }
     }
 

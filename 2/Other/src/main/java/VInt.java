@@ -1,4 +1,5 @@
 import java.util.Map;
+import java.util.Stack;
 
 public class VInt implements VExpr{
     public VInt(Integer anInt) {
@@ -8,7 +9,7 @@ public class VInt implements VExpr{
     Integer anInt;
 
     @Override
-    public VExpr sd(Map<String, AccumulatorType> acc, int depth) {
+    public VExpr sd(Map<String, Stack<AccumulatorType>> acc, int depth) {
         return new VInt(anInt);
     }
 

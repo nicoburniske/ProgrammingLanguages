@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 public class VDeclArray implements VExpr {
     List<Decl> declarations;
@@ -12,14 +13,18 @@ public class VDeclArray implements VExpr {
     }
 
     @Override
-    public VExpr sd(Map<String, AccumulatorType> acc, int depth) {
+    public VExpr sd(Map<String, Stack<AccumulatorType>> acc, int depth) {
         depth ++;
         List<Decl> l = new ArrayList();
         for(int ii = 0; ii < declarations.size(); ii ++ ) {
             l.add(declarations.get(ii).sd(acc, depth, ii));
-            acc = declarations.get(ii).updateAcc(acc, depth, ii);
+            declarations.get(ii).updateAcc(acc, depth, ii);
         }
-        return new VDeclArray(l, scope.sd(acc,depth));
+        VExpr returnVal = new VDeclArray(l, scope.sd(acc,depth));
+        for (Decl declaration : declarations) {
+            declaration.removeFromAcc(acc);
+        }
+        return returnVal;
     }
 
     @Override

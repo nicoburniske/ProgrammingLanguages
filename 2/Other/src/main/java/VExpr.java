@@ -1,4 +1,5 @@
 import java.util.Map;
+import java.util.Stack;
 
 public interface VExpr {
 
@@ -9,7 +10,7 @@ public interface VExpr {
      * A variable without declaration is replaced by itself.
      * @return
      */
-    public VExpr sd(Map<String, AccumulatorType> acc, int depth);
+    public VExpr sd(Map<String, Stack<AccumulatorType>> acc, int depth);
 
     public String toJson();
 }

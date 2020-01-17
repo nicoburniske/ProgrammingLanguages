@@ -1,4 +1,5 @@
 import java.util.Map;
+import java.util.Stack;
 
 public class VarPair implements VExpr {
     Integer depth;
@@ -10,7 +11,7 @@ public class VarPair implements VExpr {
     }
 
     @Override
-    public VExpr sd(Map<String, AccumulatorType> acc, int depth) {
+    public VExpr sd(Map<String, Stack<AccumulatorType>> acc, int depth) {
         //Should never be called
         return null;
     }

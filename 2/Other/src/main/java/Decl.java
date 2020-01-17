@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Stack;
 
 public class Decl {
     Var v;
@@ -14,12 +15,21 @@ public class Decl {
         return "[\"let\"," + v.toJson() + ",\"=\"," + expr.toJson() + "]";
     }
 
-    public Decl sd(Map<String, AccumulatorType> acc, int depth, int width) {
+    public Decl sd(Map<String, Stack<AccumulatorType>> acc, int depth, int width) {
         return new Decl(v, expr.sd(acc, depth));
     }
-    public Map<String, AccumulatorType> updateAcc(Map<String, AccumulatorType> acc, int depth, int width) {
-        Map<String, AccumulatorType> accCopy = new HashMap<String, AccumulatorType>(acc);
-        accCopy.put(v.s, new AccumulatorType(depth, width));
-        return accCopy;
+    public void updateAcc(Map<String, Stack<AccumulatorType>> acc, int depth, int width) {
+        Stack<AccumulatorType> stack;
+        if(acc.get(v.s) == null){
+            stack = new Stack<AccumulatorType>();
+        } else {
+            stack = acc.get(v.s);
+        }
+        stack.push(new AccumulatorType(depth, width));
+        acc.put(v.s, stack);
+    }
+
+    public void removeFromAcc(Map<String, Stack<AccumulatorType>> acc) {
+        acc.get(v.s).pop();
     }
 }

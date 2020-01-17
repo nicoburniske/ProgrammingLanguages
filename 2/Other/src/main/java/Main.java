@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * [["let","x","=",5],
@@ -20,26 +21,22 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) throws ParseException, IOException {
         Object obj = new JSONParser().parse(new FileReader("../SDTests/1-in.json"));
-        VExpr result = parse(obj).sd(new HashMap<String, AccumulatorType>(), 0);
-        System.out.println("[[\"let\",\"x\",\"=\",5],[\"let\",\"y\",\"=\",[\"x\",\"+\",1]],[\"x\",\"*\",\"y\"]]");
+        VExpr result = parse(obj).sd(new HashMap<String, Stack<AccumulatorType>>(), 0);
+        System.out.println(parse(obj).toJson());
         System.out.println(result.toJson());
     }
 
     private static VExpr parse(Object obj) {
         System.out.println(obj.getClass());
         if (obj instanceof String) {
-            System.out.println("String : " + (String) obj);
             return new Var((String) obj);
         } else if (obj instanceof Long) {
-            System.out.println("Integer : " + ((Long) obj).intValue());
             return new VInt(((Long) obj).intValue());
         } else if (obj instanceof JSONArray) {
             JSONArray arr = (JSONArray) obj;
             if (arr.size() > 1 && arr.get(1) instanceof String) {
-                System.out.println("Oper : " + (String) arr.get(1));
                 return new VOperator(parse(arr.get(0)), parse(arr.get(2)), (String) arr.get(1));
             } else {
-                System.out.println("VDecl : ");
                 List<Decl> declList = new ArrayList();
                 if(arr.size() > 1) {
                     for (Object o : arr.subList(0, arr.size() - 1)) {
