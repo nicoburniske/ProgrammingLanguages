@@ -1,2 +1,2 @@
 #!/bin/bash
-java -jar Other/target/project1-1.0-SNAPSHOT-jar-with-dependencies.jar interpreter /dev/stdin
+java -jar Other/target/assignmnet2-1.0-SNAPSHOT-jar-with-dependencies.jar interpreter /dev/stdin
