@@ -11,7 +11,7 @@ import java.util.Stack;
 
 public class Main {
     public static void main(String[] args) throws ParseException, IOException {
-        Object obj = new JSONParser().parse(new FileReader("../SDTests/1-in.json"));
+        Object obj = new JSONParser().parse(new FileReader(args[1]));
         VExpr result = parse(obj);
         if ("sd".equals(args[0])) {
             System.out.println(result.sd(new HashMap<String, Stack<AccumulatorType>>(), 0).toJson());
