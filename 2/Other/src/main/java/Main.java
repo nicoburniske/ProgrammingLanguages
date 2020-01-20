@@ -2,7 +2,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,22 +9,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Stack;
 
-/**
- * [["let","x","=",5],
- * <p>
- * ["let","y","=",["x","+",1]]
- * <p>
- * ["x","*","y"]]
- */
-
 public class Main {
     public static void main(String[] args) throws ParseException, IOException {
         Object obj = new JSONParser().parse(new FileReader("../SDTests/1-in.json"));
-        VExpr result = parse(obj).sd(new HashMap<String, Stack<AccumulatorType>>(), 0);
-        int result2 = parse(obj).evaluate(new HashMap<String, Stack<Integer>>());
-        System.out.println(parse(obj).toJson());
-        System.out.println(result.toJson());
-        System.out.println(result2);
+        VExpr result = parse(obj);
+        if ("sd".equals(args[0])) {
+            System.out.println(result.sd(new HashMap<String, Stack<AccumulatorType>>(), 0).toJson());
+        } else if ("interpreter".equals(args[0])) {
+            System.out.println(result.evaluate(new HashMap<String, Stack<Integer>>()));
+        } else {
+            throw new IllegalArgumentException("Error: an illegal function was requested");
+        }
     }
 
     private static VExpr parse(Object obj) {
