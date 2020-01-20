@@ -21,7 +21,7 @@ public interface VExpr {
      * The first describes how many decl arrays are in between the originating decl array and its current position.
      * The second represents its position within the decl array that it was initialized.
      *
-     * A variable with out declaration is left by itself.
+     * A variable without declaration is left by itself.
      *
      * @return A String in JSON format representing a VExpr.
      */
