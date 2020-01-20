@@ -25,7 +25,7 @@ public class Var implements VExpr {
     @Override
     public int evaluate(Map<String, Stack<Integer>> acc) {
         if(acc.get(s) == null || acc.get(s).empty()) {
-            throw new IllegalStateException("variable "+ s +" undeclared");
+            throw new IllegalStateException("\"variable "+ s +" undeclared\"");
         } else {
             return acc.get(s).peek();
         }
