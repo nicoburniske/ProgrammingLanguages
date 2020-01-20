@@ -14,5 +14,5 @@ public interface VExpr {
 
     public String toJson();
 
-    public int evaluate(Map<String, Stack<Integer>> acc);
+    public int evaluate(Map<String, Stack<Integer>> acc) throws IllegalStateException;
 }
