@@ -16,22 +16,19 @@ public interface VExpr {
     public VExpr sd(Map<String, Stack<AccumulatorType>> acc, int depth);
 
     /**
-     * Used to convert a VExpr into a String in JSON format as specified by the requirement "unparse" for sd.
-     * Any previously defined variable will be represented as a JSON array consisting of a pair of integers.
-     * The first describes how many decl arrays are in between the originating decl array and its current position.
-     * The second represents its position within the decl array that it was initialized.
-     *
-     * A variable without declaration is left by itself.
+     * Used to convert a VExpr into a String in JSON format.
      *
      * @return A String in JSON format representing a VExpr.
      */
     public String toJson();
 
     /**
+     * consumes a VExpr and produces its value, an integer. Substitutes all of the
+     * variables and evaluates the expression
      *
-     * @param acc
-     * @return
-     * @throws IllegalStateException
+     * @param acc the accumlator or {@link Var}, to be replaced
+     * @return the value of the {@link VExpr}
+     * @throws IllegalStateException when a {@link Var} is not defined in the acc and is used.
      */
     public int evaluate(Map<String, Stack<Integer>> acc) throws IllegalStateException;
 }
