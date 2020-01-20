@@ -119,6 +119,6 @@ hs_err_pid*
 
 
 #fixing issues because of folder structure
-**/other/.idea/
-**/other/target/
-**/other/*.iml
+**/Other/.idea/
+**/Other/target/
+**/Other/*.iml
