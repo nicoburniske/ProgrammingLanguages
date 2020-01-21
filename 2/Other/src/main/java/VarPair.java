@@ -1,4 +1,5 @@
 import java.util.Map;
+import java.util.Objects;
 import java.util.Stack;
 
 public class VarPair implements VExpr {
@@ -24,5 +25,23 @@ public class VarPair implements VExpr {
     @Override
     public int evaluate(Map<String, Stack<Integer>> acc) {
         throw new IllegalStateException("should never happen");
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        VarPair varPair = (VarPair) o;
+
+        if (!depth.equals(varPair.depth)) return false;
+        return pos.equals(varPair.pos);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = depth.hashCode();
+        result = 31 * result + pos.hashCode();
+        return result;
     }
 }

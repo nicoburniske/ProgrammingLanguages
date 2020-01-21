@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Stack;
 
 public class Decl {
@@ -35,5 +36,23 @@ public class Decl {
 
     public int evaluate(Map<String, Stack<Integer>> acc) {
         return expr.evaluate(acc);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Decl decl = (Decl) o;
+
+        if (!v.equals(decl.v)) return false;
+        return expr.equals(decl.expr);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = v.hashCode();
+        result = 31 * result + expr.hashCode();
+        return result;
     }
 }

@@ -12,7 +12,7 @@ public class VExprTest {
     VExpr one, four, five, ten;
     VExpr aPlusB, aTimesC, bTimesATimesC, aPlus1, onePlus1;
     Decl aEquals1, bEquals4, cEquals5, aEquals10;
-    VExpr declArray1, declArray2, declArray3;
+    VExpr declArray1, declArray2, declArray3, declArray1SDResponse, aTimesCReplaced;
 
     @Before
     public void setup() {
@@ -28,6 +28,7 @@ public class VExprTest {
 
         this.aPlusB = new VOperator(this.a, this.b, "+");
         this.aTimesC = new VOperator(this.a, this.c, "*");
+        this.aTimesCReplaced = new VOperator(new VarPair(0,0), new VarPair(0, 2), "*");
         this.bTimesATimesC = new VOperator(this.b, this.aTimesC, "*");
         this.aPlus1 = new VOperator(this.a, new VInt(1), "+");
         this.onePlus1 = new VOperator(new VInt(1), new VInt(1), "+");
@@ -41,12 +42,17 @@ public class VExprTest {
         this.declArray1 = new VDeclArray(Arrays.asList(this.aEquals1, this.bEquals4, this.cEquals5), this.aTimesC);
         this.declArray2 = new VDeclArray(Arrays.asList(this.aEquals1, this.bEquals4, this.cEquals5), this.bTimesATimesC);
         this.declArray3 = new VDeclArray(Arrays.asList(this.aEquals10), this.declArray2);
+
+        this.declArray1SDResponse = new VDeclArray(Arrays.asList(this.aEquals1, this.bEquals4, this.cEquals5), this.aTimesCReplaced);
+
     }
 
 
     @Test
     public void testSD() {
-
+        assertEquals(one, one.sd(new HashMap(), 0));
+        assertEquals(onePlus1, onePlus1.sd(new HashMap(), 0));
+        assertEquals(declArray1SDResponse, declArray1.sd(new HashMap(), 0));
     }
 
     @Test public void testInterpreter() {

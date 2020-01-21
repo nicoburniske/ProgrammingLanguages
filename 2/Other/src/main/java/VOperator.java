@@ -32,4 +32,24 @@ public class VOperator implements VExpr{
             throw new IllegalStateException("Invalid Operator");
         }
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        VOperator vOperator = (VOperator) o;
+
+        if (!left.equals(vOperator.left)) return false;
+        if (!right.equals(vOperator.right)) return false;
+        return op.equals(vOperator.op);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = left.hashCode();
+        result = 31 * result + right.hashCode();
+        result = 31 * result + op.hashCode();
+        return result;
+    }
 }

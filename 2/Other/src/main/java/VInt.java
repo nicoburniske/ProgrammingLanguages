@@ -23,5 +23,18 @@ public class VInt implements VExpr{
         return anInt;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
+        VInt vInt = (VInt) o;
+
+        return anInt.equals(vInt.anInt);
+    }
+
+    @Override
+    public int hashCode() {
+        return anInt.hashCode();
+    }
 }
