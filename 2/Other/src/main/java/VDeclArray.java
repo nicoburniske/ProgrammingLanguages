@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
 
 public class VDeclArray implements VExpr {
     List<Decl> declarations;
@@ -14,13 +11,13 @@ public class VDeclArray implements VExpr {
 
     @Override
     public VExpr sd(Map<String, Stack<AccumulatorType>> acc, int depth) {
-        depth ++;
+        depth++;
         List<Decl> l = new ArrayList();
-        for(int ii = 0; ii < declarations.size(); ii ++ ) {
+        for (int ii = 0; ii < declarations.size(); ii++) {
             l.add(declarations.get(ii).sd(acc, depth, ii));
             declarations.get(ii).updateAcc(acc, new AccumulatorType(depth, ii));
         }
-        VExpr returnVal = new VDeclArray(l, scope.sd(acc,depth));
+        VExpr returnVal = new VDeclArray(l, scope.sd(acc, depth));
         for (Decl declaration : declarations) {
             declaration.removeFromAcc(acc);
         }
@@ -50,5 +47,23 @@ public class VDeclArray implements VExpr {
             declaration.removeFromAcc(acc);
         }
         return returnVal;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        VDeclArray that = (VDeclArray) o;
+
+        if (!declarations.equals(that.declarations)) return false;
+        return scope.equals(that.scope);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = declarations.hashCode();
+        result = 31 * result + scope.hashCode();
+        return result;
     }
 }
