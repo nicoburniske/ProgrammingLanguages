@@ -28,11 +28,11 @@ public class Var implements VExpr {
     }
 
     @Override
-    public VExpr substitute(Map<String, Stack<VExpr>> variables) {
-        if(variables.get(this.s) == null) {
-            throw new IllegalStateException("\"variable " + s + " undeclared\"");
+    public VExpr substitute(String variable, VExpr value) {
+        if(variable.equals(this.s)) {
+            return value;
         } else {
-            return variables.get(this.s).peek();
+            return new Var(s);
         }
     }
 

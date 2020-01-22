@@ -40,34 +40,26 @@ public class VDeclArray implements VExpr {
     //(value-of-subst (subst (value-of-subst a1) x a2))
     @Override
     public int evaluate() {
-        List<Decl> l = new ArrayList<Decl>();
-        HashMap<String, Stack<VExpr>> vars = new HashMap<String, Stack<VExpr>>();
-        for (int ii = 0; ii < declarations.size(); ii ++) {
-            Decl decl = declarations.get(ii);
-            decl.substitute(vars).evaluate(vars);
-            List<Decl> sub = declarations.subList(ii, declarations.size());
-            for(Decl inside: sub) {
-                inside.substitute(vars);
-            }
+        if(declarations.isEmpty()) {
+            return scope.evaluate();
+        } else {
+            return new VDeclArray(declarations.subList(1, declarations.size()), scope).
+                    substitute(declarations.get(0).v.s, new VInt(declarations.get(0).expr.evaluate())).
+                    evaluate();
         }
-        return scope.substitute(vars).evaluate();
     }
 
-    public VExpr substitute(Map<String, Stack<VExpr>> variables) {
-        List<Decl> l = new ArrayList<Decl>();
-        for (Decl decl : declarations) {
-            Decl tmp = decl.substitute(variables);
-            l.add(tmp);
-            if(variables.get(decl.v.s) == null){
-                variables.put(decl.v.s, new Stack<VExpr>());
+    public VExpr substitute(String variable, VExpr value) {
+        if(declarations.isEmpty()) {
+            return scope.substitute(variable, value);
+        } else {
+            if(declarations.get(0).v.s.equals(variable)){
+                return new VDeclArray(Arrays.asList(new Decl(declarations.get(0).v, declarations.get(0).expr.substitute(variable, value))),new VDeclArray(declarations.subList(1, declarations.size()), scope));
+            } else {
+                return new VDeclArray(Arrays.asList(declarations.get(0).substitute(variable, value)),new VDeclArray(declarations.subList(1, declarations.size()), scope).
+                        substitute(variable, value));
             }
-            variables.get(decl.v.s).push(tmp.expr);
         }
-        VDeclArray tmp =  new VDeclArray(l,scope.substitute(variables));
-        for (Decl decl : declarations) {
-            variables.get(decl.v.s).pop();
-        }
-        return tmp;
     }
 
     @Override

@@ -40,8 +40,8 @@ public class Decl {
         vars.get(v.s).push(new VInt(expr.evaluate()));
     }
 
-    public Decl substitute(Map<String, Stack<VExpr>> variables) {
-        return new Decl(v, expr.substitute(variables));
+    public Decl substitute(String variable, VExpr value) {
+        return new Decl(v, expr.substitute(variable, value));
     }
 
 
