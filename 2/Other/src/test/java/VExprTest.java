@@ -124,20 +124,20 @@ public class VExprTest {
         new VarPair(1, 2).evaluate();
     }
 
-//    @Test
-//    public void testSubstitute() {
-//        VExpr complicatedExample1Substitute = new VDeclArray(Arrays.asList(
-//                new Decl(new Var("x"), new VOperator(new Var("x"), new VInt(6), "+")),
-//                new Decl(new Var("y"), new VOperator(new Var("x"), new VInt(5), "*"))),
-//                new VOperator(new Var("x"), new Var("y"), "+"));
-//        VExpr complicatedExample1SubstituteSolution = new VDeclArray(Arrays.asList(
-//                new Decl(new Var("x"), new VOperator(new VInt(5), new VInt(6), "+")),
-//                new Decl(new Var("y"), new VOperator(new VOperator(new VInt(5), new VInt(6), "+"), new VInt(5), "*"))),
-//                new VOperator(new VOperator(new VInt(5), new VInt(6), "+"), new VOperator(new VOperator(new VInt(5), new VInt(6), "+"), new VInt(5), "*"), "+"));
-//
-//        Map<String, Stack<VExpr>> mapX = new HashMap<String, Stack<VExpr>>();
-//        mapX.put("x", new Stack<VExpr>());
-//        mapX.get("x").push( new VInt(5));
-//        assertEquals(complicatedExample1Substitute.substitute(mapX), complicatedExample1SubstituteSolution);
-//    }
+    @Test
+    public void testSubstitute() {
+        VExpr complicatedExample1Substitute = new VDeclArray(Arrays.asList(
+                new Decl(new Var("x"), new VOperator(new Var("x"), new VInt(6), "+")),
+                new Decl(new Var("y"), new VOperator(new Var("x"), new VInt(5), "*"))),
+                new VOperator(new Var("x"), new Var("y"), "+"));
+        VExpr complicatedExample1SubstituteSolution = new VDeclArray(Arrays.asList(
+                new Decl(new Var("x"), new VOperator(new VInt(5), new VInt(6), "+"))),
+                new VDeclArray(Arrays.asList(new Decl(new Var("y"), new VOperator(new Var("x"), new VInt(5), "*"))),
+                new VOperator(new Var("x"), new Var("y"), "+")));
+
+        Map<String, Stack<VExpr>> mapX = new HashMap<String, Stack<VExpr>>();
+        mapX.put("x", new Stack<VExpr>());
+        mapX.get("x").push( new VInt(5));
+        assertEquals(complicatedExample1Substitute.substitute("x", new VInt(5)), complicatedExample1SubstituteSolution);
+    }
 }
