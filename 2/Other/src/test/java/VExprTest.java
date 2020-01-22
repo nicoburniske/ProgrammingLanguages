@@ -66,7 +66,7 @@ public class VExprTest {
         VExpr complicatedExample = new VDeclArray(Arrays.asList(new Decl(new Var("x"), new VInt(5)),
                 new Decl(new Var("x"), new VOperator(new Var("x"), new VInt(6), "+")),
                 new Decl(new Var("y"), new VOperator(new Var("x"), new VInt(5), "*"))),
-                new VOperator(new Var("x"), new Var("y"), "*"));
+                new VOperator(new Var("x"), new Var("y"), "+"));
 
         assertEquals(66, complicatedExample.evaluate());
     }

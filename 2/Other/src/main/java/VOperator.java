@@ -34,7 +34,7 @@ public class VOperator implements VExpr{
     }
 
     @Override
-    public VExpr substitute(Map<String, VExpr> variables) {
+    public VExpr substitute(Map<String, Stack<VExpr>> variables) {
         return new VOperator(left.substitute(variables), right.substitute(variables), op);
     }
 
