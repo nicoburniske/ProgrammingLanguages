@@ -1,6 +1,5 @@
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Stack;
 
 public class Decl {
@@ -34,11 +33,19 @@ public class Decl {
         acc.get(v.s).pop();
     }
 
-    public int evaluate(Map<String, Stack<Integer>> acc) {
-        return expr.evaluate(acc);
+    public void evaluate(HashMap<String, Stack<VExpr>> vars) {
+        if(vars.get(v.s) == null) {
+            vars.put(v.s, new Stack<VExpr>());
+        }
+        vars.get(v.s).push(new VInt(expr.evaluate()));
     }
 
-    @Override
+    public Decl substitute(String variable, VExpr value) {
+        return new Decl(v, expr.substitute(variable, value));
+    }
+
+
+        @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

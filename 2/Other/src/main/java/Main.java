@@ -2,7 +2,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,7 +17,7 @@ public class Main {
             System.out.println(result.sd(new HashMap<String, Stack<AccumulatorType>>(), 0).toJson());
         } else if ("interpreter".equals(args[0])) {
             try {
-                int val = result.evaluate(new HashMap<String, Stack<Integer>>());
+                int val = result.evaluate();
                 System.out.println(val);
             } catch (IllegalStateException e) {
                 System.out.println(e.getMessage());

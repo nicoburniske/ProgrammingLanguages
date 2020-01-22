@@ -37,16 +37,29 @@ public class VDeclArray implements VExpr {
         return sb.toString();
     }
 
+    //(value-of-subst (subst (value-of-subst a1) x a2))
     @Override
-    public int evaluate(Map<String, Stack<Integer>> acc) {
-        for (Decl decl : declarations) {
-            decl.updateAcc(acc, decl.evaluate(acc));
+    public int evaluate() {
+        if(declarations.isEmpty()) {
+            return scope.evaluate();
+        } else {
+            return new VDeclArray(declarations.subList(1, declarations.size()), scope).
+                    substitute(declarations.get(0).v.s, new VInt(declarations.get(0).expr.evaluate())).
+                    evaluate();
         }
-        int returnVal = scope.evaluate(acc);
-        for (Decl declaration : declarations) {
-            declaration.removeFromAcc(acc);
+    }
+
+    public VExpr substitute(String variable, VExpr value) {
+        if(declarations.isEmpty()) {
+            return scope.substitute(variable, value);
+        } else {
+            if(declarations.get(0).v.s.equals(variable)){
+                return new VDeclArray(Arrays.asList(new Decl(declarations.get(0).v, declarations.get(0).expr.substitute(variable, value))),new VDeclArray(declarations.subList(1, declarations.size()), scope));
+            } else {
+                return new VDeclArray(Arrays.asList(declarations.get(0).substitute(variable, value)),new VDeclArray(declarations.subList(1, declarations.size()), scope).
+                        substitute(variable, value));
+            }
         }
-        return returnVal;
     }
 
     @Override

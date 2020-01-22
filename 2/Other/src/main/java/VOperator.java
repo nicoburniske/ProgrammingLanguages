@@ -23,14 +23,19 @@ public class VOperator implements VExpr{
     }
 
     @Override
-    public int evaluate(Map<String, Stack<Integer>> acc) {
+    public int evaluate() {
         if ("+".equals(op)) {
-            return left.evaluate(acc) + right.evaluate(acc);
+            return left.evaluate() + right.evaluate();
         } else if("*".equals(op)) {
-            return left.evaluate(acc) * right.evaluate(acc);
+            return left.evaluate() * right.evaluate();
         } else {
             throw new IllegalStateException("Invalid Operator");
         }
+    }
+
+    @Override
+    public VExpr substitute(String variable, VExpr value) {
+        return new VOperator(left.substitute(variable, value), right.substitute(variable, value), op);
     }
 
     @Override
