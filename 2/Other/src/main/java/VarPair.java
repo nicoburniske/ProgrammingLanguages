@@ -27,7 +27,7 @@ public class VarPair implements VExpr {
     }
 
     @Override
-    public VExpr substitute(Map<String, Stack<VExpr>> variables) {
+    public VExpr substitute(String variable, VExpr value) {
         throw new IllegalStateException("should never happen");
     }
 
