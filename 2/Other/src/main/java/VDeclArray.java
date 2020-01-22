@@ -41,7 +41,7 @@ public class VDeclArray implements VExpr {
     @Override
     public int evaluate() {
         List<Decl> l = new ArrayList<Decl>();
-        HashMap<String, VExpr> vars = new HashMap<String, VExpr>();
+        HashMap<String, Stack<VExpr>> vars = new HashMap<String, Stack<VExpr>>();
         for (int ii = 0; ii < declarations.size(); ii ++) {
             Decl decl = declarations.get(ii);
             decl.substitute(vars).evaluate(vars);
@@ -53,14 +53,21 @@ public class VDeclArray implements VExpr {
         return scope.substitute(vars).evaluate();
     }
 
-    public VExpr substitute(Map<String, VExpr> variables) {
+    public VExpr substitute(Map<String, Stack<VExpr>> variables) {
         List<Decl> l = new ArrayList<Decl>();
         for (Decl decl : declarations) {
             Decl tmp = decl.substitute(variables);
             l.add(tmp);
-            variables.put(decl.v.s, tmp.expr);
+            if(variables.get(decl.v.s) == null){
+                variables.put(decl.v.s, new Stack<VExpr>());
+            }
+            variables.get(decl.v.s).push(tmp.expr);
         }
-        return new VDeclArray(l,scope.substitute(variables));
+        VDeclArray tmp =  new VDeclArray(l,scope.substitute(variables));
+        for (Decl decl : declarations) {
+            variables.get(decl.v.s).pop();
+        }
+        return tmp;
     }
 
     @Override

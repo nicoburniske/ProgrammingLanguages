@@ -33,11 +33,14 @@ public class Decl {
         acc.get(v.s).pop();
     }
 
-    public void evaluate(HashMap<String, VExpr> vars) {
-        vars.put(v.s, new VInt(expr.evaluate()));
+    public void evaluate(HashMap<String, Stack<VExpr>> vars) {
+        if(vars.get(v.s) == null) {
+            vars.put(v.s, new Stack<VExpr>());
+        }
+        vars.get(v.s).push(new VInt(expr.evaluate()));
     }
 
-    public Decl substitute(Map<String, VExpr> variables) {
+    public Decl substitute(Map<String, Stack<VExpr>> variables) {
         return new Decl(v, expr.substitute(variables));
     }
 
