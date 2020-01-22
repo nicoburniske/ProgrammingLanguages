@@ -24,7 +24,6 @@ public class VExprTest {
         this.five = new VInt(5);
         this.ten = new VInt(10);
 
-
         this.aPlusB = new VOperator(this.a, this.b, "+");
         this.aTimesC = new VOperator(this.a, this.c, "*");
         this.aTimesCReplaced = new VOperator(new VarPair(0,0), new VarPair(0, 2), "*");
@@ -36,7 +35,6 @@ public class VExprTest {
         this.bEquals4 = new Decl((Var)this.b, this.four);
         this.cEquals5 = new Decl((Var)this.c, this.five);
         this.aEquals10 = new Decl((Var)this.a, this.ten);
-
 
         this.declArray1 = new VDeclArray(Arrays.asList(this.aEquals1, this.bEquals4, this.cEquals5), this.aTimesC);
         this.declArray2 = new VDeclArray(Arrays.asList(this.aEquals1, this.bEquals4, this.cEquals5), this.bTimesATimesC);
@@ -60,5 +58,16 @@ public class VExprTest {
         assertEquals(5, this.declArray1.evaluate());
         assertEquals(20, this.declArray2.evaluate());
         assertEquals(20, this.declArray3.evaluate());
+
+
+        //    Decl          Decl        Decl          Scope
+        // [ [x = 5] , [ x = x + 6], [ y = x * 5 ], [ x + y ] ]
+        // y = 55 and x = 11 -> x + y = 66
+        VExpr complicatedExample = new VDeclArray(Arrays.asList(new Decl(new Var("x"), new VInt(5)),
+                new Decl(new Var("x"), new VOperator(new Var("x"), new VInt(6), "+")),
+                new Decl(new Var("y"), new VOperator(new Var("x"), new VInt(5), "*"))),
+                new VOperator(new Var("x"), new Var("y"), "*"));
+
+        assertEquals(66, complicatedExample.evaluate());
     }
 }
