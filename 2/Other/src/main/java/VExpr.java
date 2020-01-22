@@ -26,9 +26,10 @@ public interface VExpr {
      * consumes a VExpr and produces its value, an integer. Substitutes all of the
      * variables and evaluates the expression
      *
-     * @param acc the accumlator or {@link Var}, to be replaced
      * @return the value of the {@link VExpr}
      * @throws IllegalStateException when a {@link Var} is not defined in the acc and is used.
      */
-    public int evaluate(Map<String, Stack<Integer>> acc) throws IllegalStateException;
+    public int evaluate() throws IllegalStateException;
+
+    public VExpr substitute(Map<String, VExpr> variables);
 }

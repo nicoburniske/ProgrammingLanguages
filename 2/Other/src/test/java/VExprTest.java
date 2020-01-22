@@ -3,7 +3,6 @@ import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Stack;
 
 import static org.junit.Assert.assertEquals;
 
@@ -56,10 +55,10 @@ public class VExprTest {
     }
 
     @Test public void testInterpreter() {
-        assertEquals(1, this.one.evaluate(new HashMap<String, Stack<Integer>>()));
-        assertEquals(2, this.onePlus1.evaluate(new HashMap<String, Stack<Integer>>()));
-        assertEquals(5, this.declArray1.evaluate(new HashMap<String, Stack<Integer>>()));
-        assertEquals(20, this.declArray2.evaluate(new HashMap<String, Stack<Integer>>()));
-        assertEquals(20, this.declArray3.evaluate(new HashMap<String, Stack<Integer>>()));
+        assertEquals(1, this.one.evaluate());
+        assertEquals(2, this.onePlus1.evaluate());
+        assertEquals(5, this.declArray1.evaluate());
+        assertEquals(20, this.declArray2.evaluate());
+        assertEquals(20, this.declArray3.evaluate());
     }
 }

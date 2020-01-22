@@ -1,5 +1,4 @@
 import java.util.Map;
-import java.util.Objects;
 import java.util.Stack;
 
 public class VarPair implements VExpr {
@@ -23,7 +22,12 @@ public class VarPair implements VExpr {
     }
 
     @Override
-    public int evaluate(Map<String, Stack<Integer>> acc) {
+    public int evaluate() {
+        throw new IllegalStateException("should never happen");
+    }
+
+    @Override
+    public VExpr substitute(Map<String, VExpr> variables) {
         throw new IllegalStateException("should never happen");
     }
 

@@ -19,8 +19,13 @@ public class VInt implements VExpr{
     }
 
     @Override
-    public int evaluate(Map<String, Stack<Integer>> acc) {
+    public int evaluate() {
         return anInt;
+    }
+
+    @Override
+    public VExpr substitute(Map<String, VExpr> variables) {
+        return new VInt(anInt);
     }
 
     @Override

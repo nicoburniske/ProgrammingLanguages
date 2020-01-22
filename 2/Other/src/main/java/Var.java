@@ -1,5 +1,4 @@
 import java.util.Map;
-import java.util.Objects;
 import java.util.Stack;
 
 public class Var implements VExpr {
@@ -24,11 +23,16 @@ public class Var implements VExpr {
     }
 
     @Override
-    public int evaluate(Map<String, Stack<Integer>> acc) {
-        if (acc.get(s) == null || acc.get(s).empty()) {
+    public int evaluate() {
+        throw new IllegalStateException("\"variable " + s + " undeclared\"");
+    }
+
+    @Override
+    public VExpr substitute(Map<String, VExpr> variables) {
+        if(variables.get(this.s) == null) {
             throw new IllegalStateException("\"variable " + s + " undeclared\"");
         } else {
-            return acc.get(s).peek();
+            return variables.get(this.s);
         }
     }
 
