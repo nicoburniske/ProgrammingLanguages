@@ -60,14 +60,33 @@ public class VExprTest {
         assertEquals(20, this.declArray3.evaluate());
 
 
-        //    Decl          Decl        Decl          Scope
+        //    Decl,        Decl,        Decl,         Scope
         // [ [x = 5] , [ x = x + 6], [ y = x * 5 ], [ x + y ] ]
         // y = 55 and x = 11 -> x + y = 66
         VExpr complicatedExample = new VDeclArray(Arrays.asList(new Decl(new Var("x"), new VInt(5)),
                 new Decl(new Var("x"), new VOperator(new Var("x"), new VInt(6), "+")),
                 new Decl(new Var("y"), new VOperator(new Var("x"), new VInt(5), "*"))),
-                new VOperator(new Var("x"), new Var("y"), "*"));
+                new VOperator(new Var("x"), new Var("y"), "+"));
 
-        assertEquals(66, complicatedExample.evaluate());
+        /*
+        [
+              ["let","x","=",1],
+              ["let","y","=",2],
+              ["let", "m", "=", 100]
+              [["let","z","=",3],
+                [[["let","m","=",4],["m", "*", "y"]],"*",[["let","n","=",5],[["x", "+", "m"], "*", "n"]]]]
+            ]
+         */
+        VExpr complicatedExample2 = new VDeclArray(Arrays.asList(
+                new Decl(new Var("x"), new VInt(1)),
+                new Decl(new Var("y"), new VInt(2)),
+                new Decl(new Var("m"), new VInt(100))),
+                new VOperator(
+                        new VDeclArray(Arrays.asList(
+                                new Decl(new Var("m"), new VInt(4))),
+                                new VOperator(new Var("m"), new Var("y"), "*")),
+                        new Var("m"), "*"));
+
+        assertEquals(800, complicatedExample2.evaluate());
     }
 }
