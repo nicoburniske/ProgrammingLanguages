@@ -1,2 +1,2 @@
-#!/bin/bash
+#!/usr/bin/env bash
 java -jar Other/target/project1-1.0-SNAPSHOT-jar-with-dependencies.jar context /dev/stdin
