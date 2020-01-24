@@ -1,3 +1,5 @@
+package interpreter;
+
 import java.util.*;
 
 public class VDeclArray implements VExpr {

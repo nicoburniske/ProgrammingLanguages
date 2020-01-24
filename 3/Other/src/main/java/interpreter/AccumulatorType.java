@@ -1,3 +1,5 @@
+package interpreter;
+
 public class AccumulatorType {
     Integer width;
     Integer depth;
