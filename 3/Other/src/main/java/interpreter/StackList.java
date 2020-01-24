@@ -6,7 +6,7 @@ import java.util.List;
 public class  StackList<T> {
     private List<T> l;
     private int size;
-    private int current = 0;
+    private int current = -1;
 
     public StackList(int size) {
         this.l = new ArrayList<T>();
@@ -19,19 +19,24 @@ public class  StackList<T> {
 
     public T pop() {
         current --;
-        return l.remove(current + 1);
+        return l.remove(0);
     }
 
     public void push(T element) {
-        if(l.size() >= this.size) {
+        if(l.size() > this.size) {
             throw new IllegalStateException("List is at Capacity");
         }
-        l.add(element);
+        System.out.println(l);
+        l.add(0, element);
         current ++;
     }
 
     public T peek() {
-        return l.get(current);
+        return l.get(0);
+    }
+
+    public String toString() {
+        return l.toString();
     }
 
 

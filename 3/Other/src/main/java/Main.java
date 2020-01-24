@@ -38,8 +38,8 @@ public class Main {
             JSONArray arr = (JSONArray) obj;
             if (arr.size() > 1 && arr.get(1) instanceof String) {
                 return new VOperator(parse(arr.get(0)), parse(arr.get(2)), (String) arr.get(1));
-            } else if (arr.size() > 1 && arr.get(0) instanceof Integer && arr.get(1) instanceof Integer) {
-                return new VarPair((Integer)arr.get(0), (Integer)arr.get(1));
+            } else if (arr.size() > 1 && arr.get(0) instanceof Long && arr.get(1) instanceof Long) {
+                return new VarPair(((Long)arr.get(0)).intValue(), ((Long)arr.get(1)).intValue());
             }
             else {
                 List<Decl> declList = new ArrayList();
