@@ -25,20 +25,16 @@ public class VOperator implements VExpr{
     }
 
     @Override
-    public int evaluate() {
+    public int evaluate(StackList<StackList<Integer>> env) {
         if ("+".equals(op)) {
-            return left.evaluate() + right.evaluate();
+            return left.evaluate(env) + right.evaluate(env);
         } else if("*".equals(op)) {
-            return left.evaluate() * right.evaluate();
+            return left.evaluate(env) * right.evaluate(env);
         } else {
             throw new IllegalStateException("Invalid Operator");
         }
     }
 
-    @Override
-    public VExpr substitute(String variable, VExpr value) {
-        return new VOperator(left.substitute(variable, value), right.substitute(variable, value), op);
-    }
 
     @Override
     public boolean equals(Object o) {

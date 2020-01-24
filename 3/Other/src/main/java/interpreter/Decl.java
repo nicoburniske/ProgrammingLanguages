@@ -1,6 +1,7 @@
 package interpreter;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 
@@ -35,16 +36,10 @@ public class Decl {
         acc.get(v.s).pop();
     }
 
-    public void evaluate(HashMap<String, Stack<VExpr>> vars) {
-        if(vars.get(v.s) == null) {
-            vars.put(v.s, new Stack<VExpr>());
-        }
-        vars.get(v.s).push(new VInt(expr.evaluate()));
+    public int evaluate(StackList<StackList<Integer>> env) {
+        return expr.evaluate(env);
     }
 
-    public Decl substitute(String variable, VExpr value) {
-        return new Decl(v, expr.substitute(variable, value));
-    }
 
 
         @Override

@@ -21,14 +21,10 @@ public class VInt implements VExpr{
     }
 
     @Override
-    public int evaluate() {
+    public int evaluate(StackList<StackList<Integer>> env) {
         return anInt;
     }
 
-    @Override
-    public VExpr substitute(String variable, VExpr value) {
-        return new VInt(anInt);
-    }
 
     @Override
     public boolean equals(Object o) {

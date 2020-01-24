@@ -18,7 +18,8 @@ public class Main {
             System.out.println(result.sd(new HashMap<String, Stack<AccumulatorType>>(), 0).toJson());
         } else if ("interpreter".equals(args[0])) {
             try {
-                int val = result.evaluate();
+                //TODO: figure out the size
+                int val = result.evaluate(new StackList<StackList<Integer>>(123012));
                 System.out.println(val);
             } catch (IllegalStateException e) {
                 System.out.println(e.getMessage());

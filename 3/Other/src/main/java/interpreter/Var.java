@@ -25,18 +25,10 @@ public class Var implements VExpr {
     }
 
     @Override
-    public int evaluate() {
+    public int evaluate(StackList<StackList<Integer>> env) {
         throw new IllegalStateException("\"variable " + s + " undeclared\"");
     }
 
-    @Override
-    public VExpr substitute(String variable, VExpr value) {
-        if(variable.equals(this.s)) {
-            return value;
-        } else {
-            return new Var(s);
-        }
-    }
 
     @Override
     public boolean equals(Object o) {

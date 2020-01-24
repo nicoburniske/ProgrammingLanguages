@@ -41,28 +41,20 @@ public class VDeclArray implements VExpr {
 
     //(value-of-subst (subst (value-of-subst a1) x a2))
     @Override
-    public int evaluate() {
-        if(declarations.isEmpty()) {
-            return scope.evaluate();
-        } else {
-            return new VDeclArray(declarations.subList(1, declarations.size()), scope).
-                    substitute(declarations.get(0).v.s, new VInt(declarations.get(0).expr.evaluate())).
-                    evaluate();
+    public int evaluate(StackList<StackList<Integer>> env) {
+        env.push(new StackList<Integer>(declarations.size()));
+        for(Decl d : declarations) {
+            env.peek().push(d.evaluate(env));
         }
+        int i = scope.evaluate(env);
+        for(Decl d : declarations) {
+            env.peek().pop();
+        }
+        env.pop();
+        return i;
+
     }
 
-    public VExpr substitute(String variable, VExpr value) {
-        if(declarations.isEmpty()) {
-            return scope.substitute(variable, value);
-        } else {
-            if(declarations.get(0).v.s.equals(variable)){
-                return new VDeclArray(Arrays.asList(new Decl(declarations.get(0).v, declarations.get(0).expr.substitute(variable, value))),new VDeclArray(declarations.subList(1, declarations.size()), scope));
-            } else {
-                return new VDeclArray(Arrays.asList(declarations.get(0).substitute(variable, value)),new VDeclArray(declarations.subList(1, declarations.size()), scope).
-                        substitute(variable, value));
-            }
-        }
-    }
 
     @Override
     public boolean equals(Object o) {

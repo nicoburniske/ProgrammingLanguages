@@ -24,14 +24,10 @@ public class VarPair implements VExpr {
     }
 
     @Override
-    public int evaluate() {
-        throw new IllegalStateException("should never happen");
+    public int evaluate(StackList<StackList<Integer>> env) {
+        return env.get(depth).get(pos);
     }
 
-    @Override
-    public VExpr substitute(String variable, VExpr value) {
-        throw new IllegalStateException("should never happen");
-    }
 
     @Override
     public boolean equals(Object o) {

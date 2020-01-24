@@ -30,8 +30,8 @@ public interface VExpr {
      *
      * @return the value of the {@link VExpr}
      * @throws IllegalStateException when a {@link Var} is not defined in the acc and is used.
+     * @param env
      */
-    public int evaluate() throws IllegalStateException;
+    public int evaluate(StackList<StackList<Integer>> env) throws IllegalStateException;
 
-    public VExpr substitute(String variable, VExpr value);
 }
