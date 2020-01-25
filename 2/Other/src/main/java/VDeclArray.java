@@ -49,16 +49,29 @@ public class VDeclArray implements VExpr {
         }
     }
 
+    // subst(x, .., [let x = expr, ...])
+    //
     public VExpr substitute(String variable, VExpr value) {
         if(declarations.isEmpty()) {
             return scope.substitute(variable, value);
         } else {
             if(declarations.get(0).v.s.equals(variable)){
-                return new VDeclArray(Arrays.asList(new Decl(declarations.get(0).v, declarations.get(0).expr.substitute(variable, value))),new VDeclArray(declarations.subList(1, declarations.size()), scope));
+                return new VDeclArray(Arrays.asList(new Decl(declarations.get(0).v, declarations.get(0).expr.substitute(variable, value))),
+                                     new VDeclArray(declarations.subList(1, declarations.size()), scope));
             } else {
-                return new VDeclArray(Arrays.asList(declarations.get(0).substitute(variable, value)),new VDeclArray(declarations.subList(1, declarations.size()), scope).
-                        substitute(variable, value));
+                return new VDeclArray(Arrays.asList(declarations.get(0).substitute(variable, value)),
+                                     new VDeclArray(declarations.subList(1, declarations.size()), scope).substitute(variable, value));
             }
+            /*
+            var first = declarations.get(0);
+            var substFirst = Arrays.asList(first.substitute(variable, value));
+            var restExpr = new VDeclArray(declarations.subList(1, declarations.size()), scope);
+            if(first.v.s.equals(variable)){
+                return new VDeclArray(substFirst, restExpr);
+            } else {
+                return new VDeclArray(substFirst, restExpr.substitute(variable, value));
+            }
+            */
         }
     }
 
