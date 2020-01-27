@@ -14,7 +14,6 @@ public class  StackList<T> {
     }
 
     public T get(int i) {
-	System.out.println("i: " + i + "  current:" + current);
         return l.get(i);
     }
 
