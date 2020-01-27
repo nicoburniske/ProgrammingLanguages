@@ -19,7 +19,7 @@ public class Main {
         } else if ("interpreter".equals(args[0])) {
             try {
                 //TODO: figure out the size
-                int val = result.evaluate(new StackList<StackList<Integer>>(123012));
+                int val = result.evaluate(new StackList<StackList<Integer>>(result.getMaxNumberOfScopedVariables()));
                 System.out.println(val);
             } catch (IllegalStateException e) {
                 System.out.println(e.getMessage());

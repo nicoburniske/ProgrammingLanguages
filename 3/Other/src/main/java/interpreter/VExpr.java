@@ -34,4 +34,5 @@ public interface VExpr {
      */
     public int evaluate(StackList<StackList<Integer>> env) throws IllegalStateException;
 
+    int getMaxNumberOfScopedVariables();
 }

@@ -35,6 +35,11 @@ public class VOperator implements VExpr{
         }
     }
 
+    @Override
+    public int getMaxNumberOfScopedVariables() {
+        return Math.max(left.getMaxNumberOfScopedVariables(), right.getMaxNumberOfScopedVariables());
+    }
+
 
     @Override
     public boolean equals(Object o) {

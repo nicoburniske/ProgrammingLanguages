@@ -29,6 +29,11 @@ public class Var implements VExpr {
         throw new IllegalStateException("\"variable " + s + " undeclared\"");
     }
 
+    @Override
+    public int getMaxNumberOfScopedVariables() {
+        return 0;
+    }
+
 
     @Override
     public boolean equals(Object o) {

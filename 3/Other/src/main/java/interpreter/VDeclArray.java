@@ -55,6 +55,11 @@ public class VDeclArray implements VExpr {
 
     }
 
+    @Override
+    public int getMaxNumberOfScopedVariables() {
+        return 1 + scope.getMaxNumberOfScopedVariables();
+    }
+
 
     @Override
     public boolean equals(Object o) {

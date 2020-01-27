@@ -25,6 +25,11 @@ public class VInt implements VExpr{
         return anInt;
     }
 
+    @Override
+    public int getMaxNumberOfScopedVariables() {
+        return 0;
+    }
+
 
     @Override
     public boolean equals(Object o) {

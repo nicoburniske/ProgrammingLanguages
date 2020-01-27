@@ -28,6 +28,11 @@ public class VarPair implements VExpr {
         return env.get(depth).get(pos);
     }
 
+    @Override
+    public int getMaxNumberOfScopedVariables() {
+        return 0;
+    }
+
 
     @Override
     public boolean equals(Object o) {
