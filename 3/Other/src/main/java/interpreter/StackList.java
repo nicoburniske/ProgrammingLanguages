@@ -3,7 +3,7 @@ package interpreter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class  StackList<T> {
+public class StackList<T> {
     private List<T> l;
     private int size;
     private int current = -1;
@@ -18,30 +18,30 @@ public class  StackList<T> {
     }
 
     public T pop() {
-        current --;
+        current--;
         return l.remove(0);
     }
 
     public void push(T element) {
-        if(l.size() > this.size) {
+        if (l.size() > this.size) {
             throw new IllegalStateException("List is at Capacity");
         }
-    //    System.out.println(l);
         l.add(0, element);
-        current ++;
+        current++;
     }
 
     public T peek() {
         return l.get(0);
     }
-    
+
     public void insertToEnd(T element) {
-	l.add(element);
-	current ++;
+        l.add(element);
+        current++;
     }
+
     public void removeFromEnd() {
-	l.remove(current);
-	current --;
+        l.remove(current);
+        current--;
     }
 
     public String toString() {
