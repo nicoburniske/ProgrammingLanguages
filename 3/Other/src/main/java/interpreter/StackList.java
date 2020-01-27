@@ -38,6 +38,7 @@ public class  StackList<T> {
     
     public void insertToEnd(T element) {
 	l.add(element);
+	current ++;
     }
     public void removeFromEnd() {
 	l.remove(current);
