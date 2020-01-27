@@ -33,11 +33,12 @@ public class Decl {
     }
 
     public <T> void removeFromAcc(Map<String, Stack<T>> acc) {
-        acc.get(v.s).pop();
+	acc.get(v.s).pop();
     }
 
     public int evaluate(StackList<StackList<Integer>> env) {
-        return expr.evaluate(env);
+        System.out.println(expr.toJSON() + "    " + env);
+	return expr.evaluate(env);
     }
 
 

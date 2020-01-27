@@ -26,7 +26,7 @@ public class  StackList<T> {
         if(l.size() > this.size) {
             throw new IllegalStateException("List is at Capacity");
         }
-        System.out.println(l);
+    //    System.out.println(l);
         l.add(0, element);
         current ++;
     }

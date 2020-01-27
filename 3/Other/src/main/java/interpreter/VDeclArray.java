@@ -42,13 +42,18 @@ public class VDeclArray implements VExpr {
     //(value-of-subst (subst (value-of-subst a1) x a2))
     @Override
     public int evaluate(StackList<StackList<Integer>> env) {
+	System.out.println(env);
         env.push(new StackList<Integer>(declarations.size()));
+        System.out.println(env);
         for(Decl d : declarations) {
             env.peek().push(d.evaluate(env));
+        System.out.println(env);
         }
         int i = scope.evaluate(env);
+        System.out.println("value" + i);
         for(Decl d : declarations) {
             env.peek().pop();
+        System.out.println(env);
         }
         env.pop();
         return i;
