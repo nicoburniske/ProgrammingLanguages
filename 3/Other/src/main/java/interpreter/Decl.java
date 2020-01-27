@@ -37,7 +37,7 @@ public class Decl {
     }
 
     public int evaluate(StackList<StackList<Integer>> env) {
-        System.out.println(expr.toJSON() + "    " + env);
+        System.out.println(expr.toJson() + "    " + env);
 	return expr.evaluate(env);
     }
 

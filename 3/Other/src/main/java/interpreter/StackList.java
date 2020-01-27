@@ -14,6 +14,7 @@ public class  StackList<T> {
     }
 
     public T get(int i) {
+	System.out.println("i: " + i + "  current:" + current);
         return l.get(i);
     }
 
@@ -33,6 +34,14 @@ public class  StackList<T> {
 
     public T peek() {
         return l.get(0);
+    }
+    
+    public void insertToEnd(T element) {
+	l.add(element);
+    }
+    public void removeFromEnd() {
+	l.remove(current);
+	current --;
     }
 
     public String toString() {

@@ -46,13 +46,13 @@ public class VDeclArray implements VExpr {
         env.push(new StackList<Integer>(declarations.size()));
         System.out.println(env);
         for(Decl d : declarations) {
-            env.peek().push(d.evaluate(env));
+            env.peek().insertToEnd(d.evaluate(env));
         System.out.println(env);
         }
         int i = scope.evaluate(env);
         System.out.println("value" + i);
         for(Decl d : declarations) {
-            env.peek().pop();
+            env.peek().removeFromEnd();
         System.out.println(env);
         }
         env.pop();
