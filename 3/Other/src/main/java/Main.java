@@ -1,4 +1,8 @@
 import interpreter.*;
+import jfkbits.Atom;
+import jfkbits.ExprList;
+import jfkbits.LispParser;
+import jfkbits.LispTokenizer;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -11,22 +15,27 @@ import java.util.List;
 import java.util.Stack;
 
 public class Main {
-    public static void main(String[] args) throws ParseException, IOException {
-        Object obj = new JSONParser().parse(new FileReader(args[1]));
-        VExpr result = parse(obj);
-        if ("sd".equals(args[0])) {
-            System.out.println(result.sd(new HashMap<String, Stack<AccumulatorType>>(), 0).toJson());
-        } else if ("interpreter".equals(args[0])) {
-            try {
-                //TODO: figure out the size
-                int val = result.evaluate(new StackList<StackList<Integer>>(result.getMaxNumberOfScopedVariables()));
-                System.out.println(val);
-            } catch (IllegalStateException e) {
-                System.out.println(e.getMessage());
-            }
-        } else {
-            throw new IllegalArgumentException("Error: an illegal function was requested");
-        }
+    public static void main(String[] args) throws ParseException, IOException, LispParser.ParseException {
+//        Object obj = new JSONParser().parse(new FileReader(args[1]));
+//        VExpr result = parse(obj);
+//        if ("sd".equals(args[0])) {
+//            System.out.println(result.sd(new HashMap<String, Stack<AccumulatorType>>(), 0).toJson());
+//        } else if ("interpreter".equals(args[0])) {
+//            try {
+//                //TODO: figure out the size
+//                int val = result.evaluate(new StackList<StackList<Integer>>(result.getMaxNumberOfScopedVariables()));
+//                System.out.println(val);
+//            } catch (IllegalStateException e) {
+//                System.out.println(e.getMessage());
+//            }
+//        } else {
+//            throw new IllegalArgumentException("Error: an illegal function was requested");
+//        }
+        LispTokenizer tzr = new LispTokenizer(
+                "((let x = (1 + 1)) (x + 3))");
+        LispParser parser = new LispParser(tzr);
+        LispParser.Expr result = parser.parseExpr();
+        parseSVexp(result);
     }
 
     private static VExpr parse(Object obj) {
@@ -53,6 +62,34 @@ public class Main {
         } else {
             throw new IllegalStateException("JSON could not be parsed");
         }
+    }
+
+
+    private static VExpr parseSVexp(LispParser.Expr expr) {
+        System.out.println(expr.getClass()+ "    " + expr.toString());
+        if(expr instanceof Atom) {
+            return  new Var(((Atom)expr).toString());
+        } else if (expr instanceof ExprList) {
+            ExprList exprList = (ExprList) expr;
+            if(exprList.size() == 3 && exprList.get(1).toString().equals("*") || exprList.get(1).toString().equals("+")) {
+                return new VOperator(parseSVexp(exprList.get(0)), parseSVexp(exprList.get(2)), exprList.get(1).toString());
+            } else {
+                List<Decl> declList = new ArrayList();
+                if(exprList.size() > 1) {
+                    for (LispParser.Expr o : exprList.subList(0, exprList.size() - 1)) {
+                        declList.add(parseDecls(o));
+                    }
+                }
+                return new VDeclArray(declList, parseSVexp(exprList.get(declList.size() - 1)));
+            }
+        } else {
+            throw new IllegalStateException("Nopw");
+        }
+    }
+
+    private static Decl parseDecls(LispParser.Expr expr) {
+        ExprList exprList = (ExprList)expr;
+        return new Decl(new Var((exprList).get(1).toString()), parseSVexp(exprList.get(3)));
     }
 
     private static Decl parseDecl(JSONArray arr) {
