@@ -32,10 +32,10 @@ public class Main {
 //            throw new IllegalArgumentException("Error: an illegal function was requested");
 //        }
         LispTokenizer tzr = new LispTokenizer(
-                "((let x = (1 + 1)) (x + 3))");
+                "((let x = 2) (x + 3))");
         LispParser parser = new LispParser(tzr);
         LispParser.Expr result = parser.parseExpr();
-        parseSVexp(result);
+        System.out.println(parseSVexp(result).toJson());
     }
 
     private static VExpr parse(Object obj) {
@@ -66,12 +66,16 @@ public class Main {
 
 
     private static VExpr parseSVexp(LispParser.Expr expr) {
-        System.out.println(expr.getClass()+ "    " + expr.toString());
         if(expr instanceof Atom) {
-            return  new Var(((Atom)expr).toString());
+            try {
+                Integer num = Integer.parseInt(expr.toString());
+                return new VInt(num);
+            } catch (NumberFormatException ne) {
+                return  new Var(((Atom)expr).toString());
+            }
         } else if (expr instanceof ExprList) {
             ExprList exprList = (ExprList) expr;
-            if(exprList.size() == 3 && exprList.get(1).toString().equals("*") || exprList.get(1).toString().equals("+")) {
+            if(exprList.size() == 3 && (exprList.get(1).toString().equals("*") || exprList.get(1).toString().equals("+"))) {
                 return new VOperator(parseSVexp(exprList.get(0)), parseSVexp(exprList.get(2)), exprList.get(1).toString());
             } else {
                 List<Decl> declList = new ArrayList();
@@ -80,7 +84,7 @@ public class Main {
                         declList.add(parseDecls(o));
                     }
                 }
-                return new VDeclArray(declList, parseSVexp(exprList.get(declList.size() - 1)));
+                return new VDeclArray(declList, parseSVexp(exprList.get(exprList.size() - 1)));
             }
         } else {
             throw new IllegalStateException("Nopw");
