@@ -22,7 +22,6 @@ public class Main {
             Object obj = new JSONParser().parse(new FileReader(args[1]));
             VExpr result = parse(obj);
             try {
-                //TODO: figure out the size
                 int val = result.evaluate(new StackList<StackList<Integer>>(result.getMaxNumberOfScopedVariables()));
                 System.out.println(val);
             } catch (IllegalStateException e) {
