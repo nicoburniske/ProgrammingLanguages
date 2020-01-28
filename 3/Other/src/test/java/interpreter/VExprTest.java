@@ -1,17 +1,24 @@
 package interpreter;
 
-import org.junit.After;
+import jfkbits.Atom;
+import jfkbits.ExprList;
+import jfkbits.LispParser;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static parser.ParseUtils.parseSVexp;
 
 public class VExprTest {
     VExpr complicatedExample1, complicatedExample2;
+    LispParser.Expr exprOnePlusX, expr10TimesX, exprXEquals10TimesX, exprXEquals9, expr1, expr2;
+    VExpr expr1Solution, expr2Solution;
+
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         complicatedExample1 = new VDeclArray(Arrays.asList(
                 new Decl(new Var("x"), new VInt(1)),
                 new Decl(new Var("y"), new VInt(2)),
@@ -26,10 +33,42 @@ public class VExprTest {
                 new Decl(new Var("x"), new VOperator(new VarPair(0, 0), new VInt(6), "+")),
                 new Decl(new Var("y"), new VOperator(new VarPair(0, 1), new VInt(5), "*"))),
                 new VOperator(new VarPair(0, 1), new VarPair(0, 2), "+"));
-    }
 
-    @After
-    public void tearDown() throws Exception {
+        exprOnePlusX = new ExprList();
+        ((ExprList) exprOnePlusX).add(new Atom("1"));
+        ((ExprList) exprOnePlusX).add(new Atom("+"));
+        ((ExprList) exprOnePlusX).add(new Atom("x"));
+
+        exprXEquals9 = new ExprList();
+        ((ExprList) exprXEquals9).add(new Atom("let"));
+        ((ExprList) exprXEquals9).add(new Atom("x"));
+        ((ExprList) exprXEquals9).add(new Atom("="));
+        ((ExprList) exprXEquals9).add(new Atom("9"));
+
+        expr1 = new ExprList();
+        ((ExprList) expr1).add(exprXEquals9);
+        ((ExprList) expr1).add(exprOnePlusX);
+
+        expr1Solution = new VDeclArray(Arrays.asList(new Decl(new Var("x"), new VInt(9))),
+                new VOperator(new VInt(1), new Var("x"), "+"));
+
+        expr10TimesX = new ExprList();
+        ((ExprList)expr10TimesX).add(new Atom("10"));
+        ((ExprList)expr10TimesX).add(new Atom("*"));
+        ((ExprList)expr10TimesX).add(new Atom("x"));
+
+        exprXEquals10TimesX = new ExprList();
+        ((ExprList) exprXEquals10TimesX).add(new Atom("let"));
+        ((ExprList) exprXEquals10TimesX).add(new Atom("x"));
+        ((ExprList) exprXEquals10TimesX).add(new Atom("="));
+        ((ExprList) exprXEquals10TimesX).add(expr10TimesX);
+
+        expr2 = new ExprList();
+        ((ExprList) expr2).add(exprXEquals9);
+        ((ExprList) expr2).add(exprXEquals10TimesX);
+        ((ExprList) expr2).add(new Atom("x"));
+
+        expr2Solution = new VDeclArray(Arrays.asList(new Decl(new Var("x"), new VInt(9)), new Decl(new Var("x"), new VOperator(new VInt(10), new Var("x"), "*"))), new Var("x"));
     }
 
     @Test
@@ -44,5 +83,11 @@ public class VExprTest {
     public void getMaxNumberOfScopedVariables() {
         assertEquals(2, complicatedExample1.getMaxNumberOfScopedVariables());
         assertEquals(1, complicatedExample2.getMaxNumberOfScopedVariables());
+    }
+
+    @Test
+    public void testAST() {
+        assertTrue(parseSVexp(expr1).equals(expr1Solution));
+        assertTrue(parseSVexp(expr2).equals(expr2Solution));
     }
 }
