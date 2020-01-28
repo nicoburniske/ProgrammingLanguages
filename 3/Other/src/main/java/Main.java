@@ -64,7 +64,7 @@ public class Main {
     }
 
 
-    private static VExpr parseSVexp(LispParser.Expr expr) {
+    public static VExpr parseSVexp(LispParser.Expr expr) {
         if(expr instanceof Atom) {
             try {
                 Integer num = Integer.parseInt(expr.toString());
