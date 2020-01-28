@@ -9,7 +9,14 @@ import org.json.simple.JSONArray;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Utilities class holding methods used for parsing and mapping in Main.
+ */
 public final class ParseUtils {
+    /**
+     * @param obj to be converted to VExpr.
+     * @return The converted VExpr.
+     */
     public static VExpr parse(Object obj) {
         if (obj instanceof String) {
             return new Var((String) obj);
@@ -36,6 +43,11 @@ public final class ParseUtils {
         }
     }
 
+    /**
+     * Maps S-expression syntax to java VExpr.
+     * @param expr The S-Expression to be converted.
+     * @return the mapped VExpr.
+     */
     public static VExpr parseSVexp(LispParser.Expr expr) {
         if(expr instanceof Atom) {
             try {
@@ -52,7 +64,7 @@ public final class ParseUtils {
                 List<Decl> declList = new ArrayList();
                 if(exprList.size() > 1) {
                     for (LispParser.Expr o : exprList.subList(0, exprList.size() - 1)) {
-                        declList.add(parseDecls(o));
+                        declList.add(parseLispDecl(o));
                     }
                 }
                 return new VDeclArray(declList, parseSVexp(exprList.get(exprList.size() - 1)));
@@ -62,12 +74,22 @@ public final class ParseUtils {
         }
     }
 
-    public static Decl parseDecls(LispParser.Expr expr) {
+    /**
+     * Maps an SDecl onto a Decl
+     * @param expr The SDecl to be mapped.
+     * @return the equivalent decl
+     */
+    private static Decl parseLispDecl(LispParser.Expr expr) {
         ExprList exprList = (ExprList)expr;
         return new Decl(new Var((exprList).get(1).toString()), parseSVexp(exprList.get(3)));
     }
 
-    public static Decl parseDecl(JSONArray arr) {
+    /**
+     * Maps a decl in JSON to a Decl.
+     * @param arr the JSON array representing a decl.
+     * @return the equivalent decl.
+     */
+    private static Decl parseDecl(JSONArray arr) {
         return new Decl(new Var((String) arr.get(1)), parse(arr.get(3)));
     }
 }

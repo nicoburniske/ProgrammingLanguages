@@ -34,5 +34,9 @@ public interface VExpr {
      */
     public int evaluate(StackList<StackList<Integer>> env) throws IllegalStateException;
 
+    /**
+     * Calculates the maximum number of variables that are accessible at any possible scope in the given VExpr.
+     * @return the maximum number of variables.
+     */
     int getMaxNumberOfScopedVariables();
 }
