@@ -2,9 +2,11 @@ package fvexpr;
 
 import answer.Answer;
 
+import java.util.HashMap;
+
 public class Multiply extends Operator {
     @Override
-    public Answer interpret() {
-        return right.interpret().multiply(left.interpret());
+    public Answer interpret(HashMap<Var, Answer> acc) {
+        return right.interpret(acc).multiply(left.interpret(acc));
     }
 }

@@ -3,7 +3,7 @@ package answer;
 import java.math.BigInteger;
 
 public class Answer<T> {
-    T result;
+    public T result;
 
     public Answer(T result) {
         this.result = result;

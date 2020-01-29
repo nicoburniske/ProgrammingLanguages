@@ -1,11 +1,12 @@
 package fvexpr;
 
 import answer.Answer;
-import answer.AnswerInt;
+
+import java.util.HashMap;
 
 public class Plus extends Operator {
     @Override
-    public Answer interpret() {
-        return right.interpret().add(left.interpret());
+    public Answer interpret(HashMap<Var, Answer> acc) {
+        return right.interpret(acc).add(left.interpret(acc));
     }
 }
