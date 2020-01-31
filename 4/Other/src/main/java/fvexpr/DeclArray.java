@@ -4,12 +4,18 @@ import answer.Answer;
 import fdecl.FDecl;
 import org.json.simple.JSONArray;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class DeclArray  implements FVExpr{
     List<FDecl> decls;
     FVExpr scope;
+
+    public DeclArray(List<FDecl> fDecls, FVExpr scope) {
+        this.decls = fDecls;
+        this.scope = scope;
+    }
 
 
     @Override

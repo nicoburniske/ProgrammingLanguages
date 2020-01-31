@@ -1,7 +1,4 @@
 import fvexpr.FVExpr;
-import interpreter.*;
-import jfkbits.LispParser;
-import jfkbits.LispTokenizer;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import parser.ParseUtils;
@@ -9,8 +6,6 @@ import parser.ParseUtils;
 import java.io.FileReader;
 import java.io.IOException;
 
-import static parser.ParseUtils.parseSVexp;
-import static parser.ParseUtils.parse;
 
 public class Main {
     public static void main(String[] args) throws ParseException, IOException {

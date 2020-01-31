@@ -12,6 +12,11 @@ public class FuncCall implements FVExpr{
     FVExpr func;
     List<FVExpr> params;
 
+    public FuncCall(FVExpr func, List<FVExpr> params) {
+        this.func = func;
+        this.params = params;
+    }
+
 
     @Override
     public Answer interpret(HashMap<Var, Answer> acc) {
