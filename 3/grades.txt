@@ -10,62 +10,31 @@ Inspection Scores Forthcoming
 ===============
 Test Fest
 ===============
-Failed [5, "+", [["let","x","=",1], [["let","x2","=",12],["let","x3","=",3],["let","4x","=",[[0,0],"*",[1,0]]],["let","x5","=",5], [[0,2], "+", 6]]]]
-, Expected 23
-, Got Traceback (most recent call last):
-  File "Other/interpreter_run.py", line 9, in <module>
-    print(json.dumps(parsed.interpret(InterpreterEnvironment(parsed))))
-  File "/home/vagrant/vagrant/hw/zonkey/3/Other/SDExpr.py", line 108, in interpret
-    rhs_interp = self.rhs.interpret(env)
-  File "/home/vagrant/vagrant/hw/zonkey/3/Other/SDExpr.py", line 178, in interpret
-    result = self.vexpr.interpret(env)
-  File "/home/vagrant/vagrant/hw/zonkey/3/Other/SDExpr.py", line 177, in interpret
-    env.add_val(decl.vexpr.interpret(env))
-  File "/home/vagrant/vagrant/hw/zonkey/3/Other/InterpreterEnvironment.py", line 20, in add_val
-    self.table[self.stack_pointer][self.left_pointer] = value
-IndexError: list assignment index out of range
+ast: Failed ((let "matthias" =
+                  ((let "will" =
+                                  ((let "love" =
+                                                ((let "my" =
+                                                            ((let "test" = (1 + (2 * 3)))
+                                                            (let "because" =
+                                                                            ((let "of" = 3) (5 + 6)))
+                                                            (let "all" = 0)
+                                                            4))
+                                                5))
+                                  (let "the" = 99)
+                                  (let "nested" = (3 * 21))
+                                  7))
+                  (2 + 2)))
+(let "statements" = (2 * (3 + 4))) 125), Expected [["let","matthias","=",[["let","will","=",[["let","love","=",[["let","my","=",
+  [["let","test","=",[1,"+",[2,"*",3]]],["let","because","=",[["let","of","=",3],[5,"+",6]]],
+    ["let","all","=",0],4]],5]],["let","the","=",99],["let","nested","=",[3,"*",21]],7]],
+  [2,"+",2]]],["let","statements","=",[2,"*",[3,"+",4]]],125], Got [["let",""matthias"","=",[["let",""will"","=",[["let",""love"","=",[["let",""my"","=",[["let",""test"","=",[1,"+",[2,"*",3]]],["let",""because"","=",[["let",""of"","=",3],[5,"+",6]]],["let",""all"","=",0],4]],5]],["let",""the"","=",99],["let",""nested"","=",[3,"*",21]],7]],[2,"+",2]]],["let",""statements"","=",[2,"*",[3,"+",4]]],125]
 
-Failed [5, "+", [["let","x","=",1], [["let","x2","=",12],["let","x3","=",3],["let","4x","=",[[0,0],"*",[1,0]]],["let","x5","=",5], [[0,2], "+", 6]]]]
-, Expected 23
-, Got 11
+interpreter: Failed [["let","a","=",5], 
+ [["let", "b", "=", 9],
+  ["let", "b", "=", [[[[[3,0], "+", 1]]]]],
+  [["let", "c", "=", [[2,0], "+", [1,1]]],
+   [[1,1], "*", [[0,0], "+", [2,0]]]]]], Expected 200, Got List is at Capacity
 
-Failed [5, "+", [["let","x","=",1], [["let","x2","=",12],["let","x3","=",3],["let","4x","=",[[0,0],"*",[1,0]]],["let","x5","=",5], [[0,2], "+", 6]]]]
-, Expected 23
-, Got Traceback (most recent call last):
-  File "Other/interpreter.py", line 108, in <module>
-    print(interpreter(parse(input_json)))
-  File "Other/interpreter.py", line 40, in interpreter
-    return interpret_acc(pyvexpr, -1, env_list)
-  File "Other/interpreter.py", line 56, in interpret_acc
-    return interpret_acc(pyvexpr[0], depth, env_list) + interpret_acc(pyvexpr[2], depth, env_list)
-  File "Other/interpreter.py", line 62, in interpret_acc
-    env_list[depth + 1].append(val)
-IndexError: list index out of range
-
-Failed [5, "+", [["let","x","=",1], [["let","x2","=",12],["let","x3","=",3],["let","4x","=",[[0,0],"*",[1,0]]],["let","x5","=",5], [[0,2], "+", 6]]]]
-, Expected 23
-, Got 14
-
-Failed [5, "+", [["let","x","=",1], [["let","x2","=",12],["let","x3","=",3],["let","4x","=",[[0,0],"*",[1,0]]],["let","x5","=",5], [[0,2], "+", 6]]]]
-, Expected 23
-, Got Exception in thread "main" java.lang.ArrayIndexOutOfBoundsException: 2
-	at LetExpr.interpret_helper(ISVExpr.java:440)
-	at LetExpr.interpret_helper(ISVExpr.java:444)
-	at Add.interpret_helper(ISVExpr.java:321)
-	at ASVExpr.interpret(ISVExpr.java:101)
-	at Interpreter.main(Interpreter.java:8)
-
-Failed [5, "+", [["let","x","=",1], [["let","x2","=",12],["let","x3","=",3],["let","4x","=",[[0,0],"*",[1,0]]],["let","x5","=",5], [[0,2], "+", 6]]]]
-, Expected 23
-, Got "unshift: outer array already filled up"
-Failed [5, "+", [["let","x","=",1], [["let","x2","=",12],["let","x3","=",3],["let","4x","=",[[0,0],"*",[1,0]]],["let","x5","=",5], [[0,2], "+", 6]]]]
-, Expected 23
-, Got 14
-
-Failed ((5 + ((let x = 9) (let y = 3) (let z = 234) (z + (z * (x + y))))) * ((let x = (1 + 1)) (x + 3)))
-, Expected [[5,"+",[["let","x","=",9],["let","y","=",3],["let","z","=",234],["z","+",["z","*",["x","+","y"]]]]],"*",[["let","x","=",[1,"+",1]],["x","+",3]]]
-, Got [5,"+",[["let","x","=",9],["let","y","=",3],["let","z","=",234],["z","+",["z","*",["x","+","y"]]]]]
-
-Failed [5, "+", [["let","x","=",1], [["let","x2","=",12],["let","x3","=",3],["let","4x","=",[[0,0],"*",[1,0]]],["let","x5","=",5], [[0,2], "+", 6]]]]
-, Expected 23
-, Got The string x2 is not accepted JSON.
+interpreter: Failed [["let","x","=",10],["let","y","=",[0,0]],["let","e","=",1],["let","f","=",[["let","b","=",[1,1]],["let","y","=",[1,0]],["let","x","=",[0,1]],["let","m","=",[-5,"*",1]],["let","c","=",[["let","b","=",[[1,3],"+",-2]],["let","e","=",[[[[[5,2],"+",[4,1]]]]]],[[0,1],"+",[1,3]]]],[[[0,4],"+",[0,2]],"+",[[0,1],"+",[0,0]]]]],["let","e","=",[1,"+",2]],["let","x","=",[[0,1],"+",[0,3]]],["let","z","=",[["let","a","=",[1,5]],["let","b","=",[0,0]],["let","x","=",[1,5]],["let","c","=",[5,"*",1]],["let","c","=",[["let","d","=",[[1,3],"+",-2]],["let","e","=",[[[[5,4]]]]],[[0,1],"+",[0,0]]]],[[[0,4],"+",[0,2]],"+",[[0,0],"+",[0,1]]]]],[[[[0,5],"+",[0,1]],"+",[[0,4],"+",[0,1]]],"+",[[0,6],"*",-1]]]
+, Expected -75
+, Got List is at Capacity
