@@ -1,8 +1,6 @@
 package parser;
 
-import fvexpr.FVExpr;
-import fvexpr.Int;
-import fvexpr.Var;
+import fvexpr.*;
 import org.json.simple.JSONArray;
 
 public final class ParseUtils {
@@ -12,7 +10,16 @@ public final class ParseUtils {
         } else if (obj instanceof Long) {
             return new Int((Long) obj);
         } else if (obj instanceof JSONArray) {
-
+            JSONArray arr = (JSONArray) obj;
+            if(arr.size() == 3) {
+                if(arr.get(1) instanceof String) {
+                    if(((String)arr.get(1)).equals("*")) {
+                        return new Multiply(parse(arr.get(0)), parse(arr.get(2)));
+                    } else if (((String)arr.get(1)).equals("+")) {
+                        return new Plus(parse(arr.get(0)), parse(arr.get(2)));
+                    }
+                }
+            }
         }
     }
 //    public static VExpr parse(Object obj) {
