@@ -2,6 +2,7 @@ package fvexpr;
 
 import answer.Answer;
 import fdecl.FDecl;
+import org.json.simple.JSONArray;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,5 +19,15 @@ public class DeclArray  implements FVExpr{
             envNew.put(d.name, d.interpret(envNew));
         }
         return scope.interpret(envNew);
+    }
+
+    @Override
+    public String toJson() {
+        JSONArray ret = new JSONArray();
+        for (FDecl decl : decls) {
+            ret.add(decl.toJson());
+        }
+        ret.add(scope.toJson());
+        return ret.toJSONString();
     }
 }

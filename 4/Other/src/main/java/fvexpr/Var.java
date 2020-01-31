@@ -2,6 +2,7 @@ package fvexpr;
 
 import answer.Answer;
 import answer.AnswerString;
+import org.json.simple.JSONValue;
 
 import java.util.HashMap;
 
@@ -19,6 +20,13 @@ public class Var implements FVExpr {
         } else {
             return new AnswerString(String.format("\"variable %s undeclared\"", this.myString));
         }
+    }
+
+    @Override
+    public String toJson() {
+        JSONValue ret = new JSONValue();
+        ret.parse(this.myString);
+        return ret.toString();
     }
 
     @Override

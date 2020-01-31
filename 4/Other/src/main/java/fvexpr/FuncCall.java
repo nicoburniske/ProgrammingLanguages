@@ -3,6 +3,7 @@ package fvexpr;
 import answer.Answer;
 import answer.AnswerFunction;
 import answer.AnswerString;
+import org.json.simple.JSONArray;
 
 import java.util.HashMap;
 import java.util.List;
@@ -22,5 +23,16 @@ public class FuncCall implements FVExpr{
         else {
             return new AnswerString("\"function application (closure expected)\"");
         }
+    }
+
+    @Override
+    public String toJson() {
+        JSONArray ret = new JSONArray();
+        ret.add("call");
+        ret.add(func.toJson());
+        for (FVExpr expr: params) {
+            ret.add(expr.toJson());
+        }
+        return ret.toJSONString();
     }
 }

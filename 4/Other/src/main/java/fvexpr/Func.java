@@ -2,6 +2,7 @@ package fvexpr;
 
 import answer.Answer;
 import answer.AnswerString;
+import org.json.simple.JSONArray;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +19,14 @@ public class Func implements FVExpr {
     @Override
     public Answer interpret(HashMap<Var, Answer> acc) {
         return new AnswerString( "closure");
+    }
+
+    @Override
+    public String toJson() {
+        JSONArray ret = new JSONArray();
+        ret.add("fun*");
+        ret.add(function.toJson());
+        return ret.toJSONString();
     }
 
     public Answer apply(List<FVExpr> params, HashMap<Var, Answer> acc) {

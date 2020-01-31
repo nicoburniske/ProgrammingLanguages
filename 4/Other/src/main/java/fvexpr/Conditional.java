@@ -1,6 +1,7 @@
 package fvexpr;
 
 import answer.Answer;
+import org.json.simple.JSONArray;
 
 import java.math.BigInteger;
 import java.util.HashMap;
@@ -18,4 +19,16 @@ public class Conditional implements FVExpr {
             return ifFalse.interpret(acc);
         }
     }
+
+    @Override
+    public String toJson() {
+        JSONArray ret = new JSONArray();
+        ret.add("if-0");
+        ret.add(clause.toJson());
+        ret.add(ifTrue.toJson());
+        ret.add(ifFalse.toJson());
+        return ret.toJSONString();
+    }
+
+
 }
