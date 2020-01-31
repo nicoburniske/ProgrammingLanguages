@@ -8,6 +8,10 @@ import java.util.HashMap;
 public class Var implements FVExpr {
     String myString;
 
+    public Var(String myString) {
+        this.myString = myString;
+    }
+
     @Override
     public Answer interpret(HashMap<Var, Answer> acc) {
         if (acc.get(this) != null) {

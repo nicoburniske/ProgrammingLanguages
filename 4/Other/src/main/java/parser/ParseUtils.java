@@ -1,6 +1,20 @@
 package parser;
 
+import fvexpr.FVExpr;
+import fvexpr.Int;
+import fvexpr.Var;
+import org.json.simple.JSONArray;
+
 public final class ParseUtils {
+    public static FVExpr parse(Object obj) {
+        if (obj instanceof String) {
+            return new Var((String) obj);
+        } else if (obj instanceof Long) {
+            return new Int((Long) obj);
+        } else if (obj instanceof JSONArray) {
+
+        }
+    }
 //    public static VExpr parse(Object obj) {
 //        if (obj instanceof String) {
 //            return new Var((String) obj);

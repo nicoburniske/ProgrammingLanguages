@@ -1,8 +1,10 @@
+import fvexpr.FVExpr;
 import interpreter.*;
 import jfkbits.LispParser;
 import jfkbits.LispTokenizer;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import parser.ParseUtils;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -15,10 +17,9 @@ public class Main {
 
          if ("interpreter".equals(args[0])) {
             Object obj = new JSONParser().parse(new FileReader(args[1]));
-            VExpr result = parse(obj);
+            FVExpr result = ParseUtils.parse(obj);
             try {
 
-                System.out.println(val);
             } catch (IllegalStateException e) {
                 System.out.println(e.getMessage());
             }
