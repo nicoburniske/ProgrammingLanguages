@@ -9,8 +9,6 @@ import parser.ParseUtils;
 import java.io.FileReader;
 import java.io.IOException;
 
-import static parser.ParseUtils.parseSVexp;
-import static parser.ParseUtils.parse;
 
 public class Main {
     public static void main(String[] args) throws ParseException, IOException {
