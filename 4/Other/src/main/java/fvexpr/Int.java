@@ -22,7 +22,6 @@ public class Int implements FVExpr {
     @Override
     public String toJson() {
         JSONValue ret = new JSONValue();
-        ret.parse(myNum.toString());
-        return ret.toString();
+        return ret.toJSONString(myNum);
     }
 }

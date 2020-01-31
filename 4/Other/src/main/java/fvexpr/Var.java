@@ -24,9 +24,7 @@ public class Var implements FVExpr {
 
     @Override
     public String toJson() {
-        JSONValue ret = new JSONValue();
-        ret.parse(this.myString);
-        return ret.toString();
+        return this.myString;
     }
 
     @Override
