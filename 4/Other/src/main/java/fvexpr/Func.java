@@ -10,6 +10,11 @@ public class Func implements FVExpr {
     List<Var> arguments;
     FVExpr function;
 
+    public Func(List<Var> arguments, FVExpr function) {
+        this.arguments = arguments;
+        this.function = function;
+    }
+
     @Override
     public Answer interpret(HashMap<Var, Answer> acc) {
         return new AnswerString( "closure");

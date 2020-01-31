@@ -3,6 +3,9 @@ package parser;
 import fvexpr.*;
 import org.json.simple.JSONArray;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public final class ParseUtils {
     public static FVExpr parse(Object obj) {
         if (obj instanceof String) {
@@ -17,10 +20,24 @@ public final class ParseUtils {
                         return new Multiply(parse(arr.get(0)), parse(arr.get(2)));
                     } else if (((String)arr.get(1)).equals("+")) {
                         return new Plus(parse(arr.get(0)), parse(arr.get(2)));
+                    } else if (((String)arr.get(0)).equals("fun*") && arr.get(1) instanceof List){
+                        return new Func(parseVarList((List)arr.get(1)), parse(arr.get(2)));
                     }
                 }
             }
         }
+    }
+    private static List<Var> parseVarList(List<Object> l) {
+        List<Var> n = new ArrayList<Var>(l.size());
+        for(Object o : l) {
+            if(o instanceof String) {
+                n.add(new Var((String)o));
+            } else {
+                throw new IllegalStateException("JSON could not be parsed");
+            }
+        }
+        return n;
+
     }
 //    public static VExpr parse(Object obj) {
 //        if (obj instanceof String) {
