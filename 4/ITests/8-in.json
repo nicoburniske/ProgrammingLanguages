@@ -1,1 +1,1 @@
-[["let", "+", "=", ["fun*", ["left", "right"], ["left", "*" , "right"]]], [5, "+", 5]]
+[["let", "+", "=", ["fun*", ["left", "right"], ["left", "*" , "right"]]], ["call", "+", 5, 5]]
