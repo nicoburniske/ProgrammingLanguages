@@ -30,10 +30,12 @@ public final class ParseUtils {
                         return new Multiply(parse(arr.get(0)), parse(arr.get(2)));
                     } else if (((String)arr.get(1)).equals("+")) {
                         return new Plus(parse(arr.get(0)), parse(arr.get(2)));
-                    } else if (((String)arr.get(0)).equals("fun*") && arr.get(1) instanceof List){
-                        return new Func(parseVarList((List<Object>)arr.get(1)), parse(arr.get(2)));
-                    } else {
+                    }  else {
                         throw new IllegalStateException("JSON could not be parsed");
+                    }
+                } else if (arr.get(0) instanceof String) {
+                    if (((String)arr.get(0)).equals("fun*") && arr.get(1) instanceof List){
+                        return new Func(parseVarList((List<Object>)arr.get(1)), parse(arr.get(2)));
                     }
                 }
             } else if (arr.size() == 4) {
