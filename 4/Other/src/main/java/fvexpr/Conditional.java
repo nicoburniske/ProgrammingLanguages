@@ -1,6 +1,8 @@
 package fvexpr;
 
 import answer.Answer;
+import answer.AnswerInt;
+import answer.AnswerString;
 import org.json.simple.JSONArray;
 
 import java.math.BigInteger;
@@ -20,7 +22,7 @@ public class Conditional implements FVExpr {
 
     @Override
     public Answer interpret(HashMap<Var, Answer> acc) {
-        if (clause.interpret(acc).equals(new BigInteger("0"))) {
+        if (clause.interpret(acc).equals(new AnswerInt(new BigInteger("0")))) {
             return ifTrue.interpret(acc);
         } else {
             return ifFalse.interpret(acc);
