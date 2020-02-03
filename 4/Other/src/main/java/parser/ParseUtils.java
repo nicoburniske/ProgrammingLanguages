@@ -32,14 +32,11 @@ public final class ParseUtils {
                         return new Func(parseVarList((List<Object>)arr.get(1)), parse(arr.get(2)));
                     }
                 }
-            } else if (arr.size() == 4 && ! ((arr.get(0) instanceof String) && (((String)arr.get(0)).equals("let")))) {
-                if (arr.get(0) instanceof String && ((String)arr.get(0)).equals("if-0")) {
-                    return new Conditional(parse(arr.get(1)), parse(arr.get(2)), parse(arr.get(3)));
-                } else {
-                    throw new IllegalStateException("JSON could not be parsed");
-                }
             } else if (arr.size() >= 1){
-                if( arr.size() ==1) {
+                if (arr.size() == 4 && arr.get(0) instanceof String && ((String)arr.get(0)).equals("if-0")) {
+                    return new Conditional(parse(arr.get(1)), parse(arr.get(2)), parse(arr.get(3)));
+                }
+                else if( arr.size() ==1) {
                     return new DeclArray(new ArrayList<FDecl>(), parse(arr.get(0)));
                 } else {
                     return new DeclArray( parseDeclList(arr.subList(0,arr.size() - 1 )), parse(arr.get(arr.size()-1)));
