@@ -17,7 +17,7 @@ public final class ParseUtils {
             return new Int((Long) obj);
         } else if (obj instanceof JSONArray) {
             JSONArray arr = (JSONArray) obj;
-            if (arr.size() >= 3 && arr.get(0) instanceof String && ((String)arr.get(0)).equals("call")){
+            if (arr.size() >= 2 && arr.get(0) instanceof String && ((String)arr.get(0)).equals("call")){
                 List l = arr.subList(2,arr.size());
                 List<FVExpr> n = new ArrayList<FVExpr>();
                 for (Object o : l) {
