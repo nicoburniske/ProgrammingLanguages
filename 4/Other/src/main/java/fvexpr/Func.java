@@ -21,7 +21,7 @@ public class Func implements FVExpr {
 
     @Override
     public Answer interpret(HashMap<Var, Answer> acc) {
-        return new AnswerString( CLOSURE_STRING);
+        return new AnswerString(CLOSURE_STRING);
     }
 
     @Override
@@ -37,7 +37,7 @@ public class Func implements FVExpr {
             return new AnswerString(ERROR_ARGUMENTS_MISMATCH);
         }
         HashMap<Var, Answer> envNew = new HashMap<Var, Answer>(acc);
-        for(int ii = 0 ; ii < params.size(); ii ++) {
+        for (int ii = 0; ii < params.size(); ii++) {
             envNew.put(arguments.get(ii), params.get(ii).interpret(envNew));
         }
         return function.interpret(envNew);
