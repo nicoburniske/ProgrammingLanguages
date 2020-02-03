@@ -1,6 +1,6 @@
 package answer;
 
-import java.math.BigInteger;
+import static fvexpr.Constants.ERROR_INVALID_ARITHMETIC;
 
 public class Answer<T> {
     public T result;
@@ -9,12 +9,12 @@ public class Answer<T> {
         this.result = result;
     }
 
-    public Answer add (Answer obj) {
-        return new AnswerString("\"arithmetic error\"");
+    public Answer add(Answer obj) {
+        return new AnswerString(ERROR_INVALID_ARITHMETIC);
     }
 
-    public Answer multiply (Answer obj) {
-        return new AnswerString("\"arithmetic error\"");
+    public Answer multiply(Answer obj) {
+        return new AnswerString(ERROR_INVALID_ARITHMETIC);
     }
 
 

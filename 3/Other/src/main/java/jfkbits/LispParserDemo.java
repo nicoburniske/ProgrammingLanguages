@@ -10,12 +10,14 @@ public class LispParserDemo
     {
 
         LispTokenizer tzr = new LispTokenizer(
-                "((data \"quoted data\" 123 4.5)\n (data (!@# (4.5) \"(more\" \"data)\")))");
+                "( 1 + 1 )");
         LispParser parser = new LispParser(tzr);
 
         try
         {
             LispParser.Expr result = parser.parseExpr();
+            System.out.println(((ExprList)result).get(1).getClass());
+            System.out.println(((ExprList)result).get(1) instanceof StringAtom);
             System.out.println(result);
         }
         catch (ParseException e1)

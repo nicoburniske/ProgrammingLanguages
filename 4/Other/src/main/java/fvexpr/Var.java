@@ -6,6 +6,8 @@ import org.json.simple.JSONValue;
 
 import java.util.HashMap;
 
+import static fvexpr.Constants.ERROR_UNDECLARED_VARIABLE_TEMPLATE;
+
 public class Var implements FVExpr {
     String myString;
 
@@ -18,7 +20,7 @@ public class Var implements FVExpr {
         if (acc.get(this) != null) {
             return acc.get(this);
         } else {
-            return new AnswerString(String.format("\"variable %s undeclared\"", this.myString));
+            return new AnswerString(String.format(ERROR_UNDECLARED_VARIABLE_TEMPLATE, this.myString));
         }
     }
 
