@@ -28,7 +28,7 @@ public class Main {
             throw new IllegalArgumentException("Error: an illegal function was requested");
         }
     }
-    private static HashMap<Var, Answer> initializeStd() {
+    public static HashMap<Var, Answer> initializeStd() {
         HashMap<Var, Answer> stdLib = new HashMap<Var, Answer>();
         stdLib.put(new Var("+"), new AnswerFunction(new Func(Arrays.asList(new Var("left"), new Var("right")), new FVExpr() {
             @Override
