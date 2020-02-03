@@ -2,12 +2,15 @@ package fvexpr;
 
 import answer.Answer;
 import answer.AnswerFunction;
+import answer.AnswerString;
 import org.json.simple.JSONArray;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+
+import static fvexpr.Constants.ERROR_CLOSURE_EXPECTED;
 
 public class Operator implements FVExpr {
     FVExpr left;
@@ -22,7 +25,11 @@ public class Operator implements FVExpr {
 
     @Override
     public Answer interpret(HashMap<Var, Answer> acc){
+        if(acc.get(funcName) == null){
             return ((AnswerFunction)acc.get(funcName)).result.apply(Arrays.asList(right, left), acc);
+        } else {
+            return new AnswerString(ERROR_CLOSURE_EXPECTED);
+        }
     }
 
     @Override
