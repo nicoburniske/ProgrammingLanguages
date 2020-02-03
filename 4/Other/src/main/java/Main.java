@@ -16,7 +16,7 @@ public class Main {
          if ("interpreter".equals(args[0])) {
             Object obj = new JSONParser().parse(new FileReader(args[1]));
             FVExpr result = ParseUtils.parse(obj);
-            result.interpret(new HashMap<Var, Answer>());
+            System.out.println(result.interpret(new HashMap<Var, Answer>()).result);
         } else {
             throw new IllegalArgumentException("Error: an illegal function was requested");
         }
