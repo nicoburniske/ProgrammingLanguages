@@ -1,0 +1,11 @@
+49
+Dustin Jamner
+
+49/80
+
+interpreter
+-5 no mention of constant space in purpose statement
+-5 no mention of constant time
+-5 no purpose statement for accumulator
+-10 does not pre-allocate space
+-6 no unit tests for base cases or simple cases
