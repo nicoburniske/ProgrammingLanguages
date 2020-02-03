@@ -7,6 +7,9 @@ import org.json.simple.JSONArray;
 import java.util.HashMap;
 import java.util.List;
 
+import static fvexpr.Constants.CLOSURE_STRING;
+import static fvexpr.Constants.ERROR_ARGUMENTS_MISMATCH;
+
 public class Func implements FVExpr {
     List<Var> arguments;
     FVExpr function;
@@ -18,7 +21,7 @@ public class Func implements FVExpr {
 
     @Override
     public Answer interpret(HashMap<Var, Answer> acc) {
-        return new AnswerString( "closure");
+        return new AnswerString( CLOSURE_STRING);
     }
 
     @Override
@@ -31,7 +34,7 @@ public class Func implements FVExpr {
 
     public Answer apply(List<FVExpr> params, HashMap<Var, Answer> acc) {
         if (params.size() != arguments.size()) {
-            return new AnswerString("\"number of arguments does not match number of parameters\"");
+            return new AnswerString(ERROR_ARGUMENTS_MISMATCH);
         }
         HashMap<Var, Answer> envNew = new HashMap<Var, Answer>(acc);
         for(int ii = 0 ; ii < params.size(); ii ++) {

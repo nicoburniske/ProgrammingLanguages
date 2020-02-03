@@ -8,6 +8,8 @@ import org.json.simple.JSONArray;
 import java.util.HashMap;
 import java.util.List;
 
+import static fvexpr.Constants.ERROR_CLOSURE_EXPECTED;
+
 public class FuncCall implements FVExpr{
     FVExpr func;
     List<FVExpr> params;
@@ -26,7 +28,7 @@ public class FuncCall implements FVExpr{
             return ((AnswerFunction)acc.get((Var) func)).result.apply(params,acc);
         }
         else {
-            return new AnswerString("\"function application (closure expected)\"");
+            return new AnswerString(ERROR_CLOSURE_EXPECTED);
         }
     }
 
