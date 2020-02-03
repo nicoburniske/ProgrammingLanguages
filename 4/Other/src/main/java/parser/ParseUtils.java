@@ -26,13 +26,7 @@ public final class ParseUtils {
                 return new FuncCall(parse(arr.get(1)),n);
             } else if(arr.size() == 3) {
                 if(arr.get(1) instanceof String) {
-                    if(((String)arr.get(1)).equals("*")) {
-                        return new Multiply(parse(arr.get(0)), parse(arr.get(2)));
-                    } else if (((String)arr.get(1)).equals("+")) {
-                        return new Plus(parse(arr.get(0)), parse(arr.get(2)));
-                    }  else {
-                        throw new IllegalStateException("JSON could not be parsed");
-                    }
+                        return new Operator(parse(arr.get(0)), parse(arr.get(2)), new Var((String)arr.get(1)));
                 } else if (arr.get(0) instanceof String) {
                     if (((String)arr.get(0)).equals("fun*") && arr.get(1) instanceof List){
                         return new Func(parseVarList((List<Object>)arr.get(1)), parse(arr.get(2)));
