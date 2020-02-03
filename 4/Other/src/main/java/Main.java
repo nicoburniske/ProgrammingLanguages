@@ -55,7 +55,7 @@ public class Main {
         stdLib.put(new Var("^"), new AnswerFunction(new Func(Arrays.asList(new Var("left"), new Var("right")), new FVExpr() {
             @Override
             public Answer interpret(HashMap<Var, Answer> acc) {
-                return acc.get(new Var("left")).pow(acc.get(new Var("right")));
+                return (acc.get(new Var("right")).pow(acc.get(new Var("left"))));
             }
 
             @Override
