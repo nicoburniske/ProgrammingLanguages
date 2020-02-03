@@ -1,6 +1,7 @@
 package fdecl;
 
 import answer.Answer;
+import answer.AnswerFunction;
 import fvexpr.FVExpr;
 import fvexpr.Func;
 import fvexpr.Var;
@@ -15,7 +16,7 @@ public class FDeclFVExpr extends FDecl<Func> {
 
     @Override
     public Answer interpret(HashMap<Var, Answer> acc) {
-        return rhs.interpret(acc);
+        return new AnswerFunction(rhs);
     }
 
     @Override
