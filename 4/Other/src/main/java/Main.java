@@ -23,7 +23,7 @@ public class Main {
             Object obj = new JSONParser().parse(new FileReader(args[1]));
             FVExpr result = ParseUtils.parse(obj);
 
-            System.out.println(result.interpret(new HashMap<Var, Answer>()).result);
+            System.out.println(result.interpret(initializeStd()).result);
         } else {
             throw new IllegalArgumentException("Error: an illegal function was requested");
         }
