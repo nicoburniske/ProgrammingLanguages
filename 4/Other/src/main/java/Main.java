@@ -22,21 +22,48 @@ public class Main {
          if ("interpreter".equals(args[0])) {
             Object obj = new JSONParser().parse(new FileReader(args[1]));
             FVExpr result = ParseUtils.parse(obj);
-             HashMap<Var, Answer> stdLib = new HashMap<Var, Answer>();
-             stdLib.put(new Var("+"), new AnswerFunction(new Func(Arrays.asList(new Var("left"), new Var("right")), new FVExpr() {
-                         @Override
-                         public Answer interpret(HashMap<Var, Answer> acc) {
-                             return new AnswerInt(((BigInteger)acc.get(new Var("left")).result).add((BigInteger)acc.get(new Var("right")).result));
-                         }
 
-                         @Override
-                         public String toJson() {
-                             return null;
-                         }
-                     })));
             System.out.println(result.interpret(new HashMap<Var, Answer>()).result);
         } else {
             throw new IllegalArgumentException("Error: an illegal function was requested");
         }
     }
+    private static HashMap<Var, Answer> initializeStd() {
+        HashMap<Var, Answer> stdLib = new HashMap<Var, Answer>();
+        stdLib.put(new Var("+"), new AnswerFunction(new Func(Arrays.asList(new Var("left"), new Var("right")), new FVExpr() {
+            @Override
+            public Answer interpret(HashMap<Var, Answer> acc) {
+                return acc.get(new Var("left")).add(acc.get(new Var("right")));
+            }
+
+            @Override
+            public String toJson() {
+                return "+";
+            }
+        })));
+        stdLib.put(new Var("*"), new AnswerFunction(new Func(Arrays.asList(new Var("left"), new Var("right")), new FVExpr() {
+            @Override
+            public Answer interpret(HashMap<Var, Answer> acc) {
+                return acc.get(new Var("left")).multiply(acc.get(new Var("right")));
+            }
+
+            @Override
+            public String toJson() {
+                return "*";
+            }
+        })));
+        stdLib.put(new Var("^"), new AnswerFunction(new Func(Arrays.asList(new Var("left"), new Var("right")), new FVExpr() {
+            @Override
+            public Answer interpret(HashMap<Var, Answer> acc) {
+                return acc.get(new Var("left")).pow(acc.get(new Var("right")));
+            }
+
+            @Override
+            public String toJson() {
+                return "^";
+            }
+        })));
+        return stdLib;
+    }
 }
+
