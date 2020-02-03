@@ -12,9 +12,9 @@ import java.util.List;
 public class Operator implements FVExpr {
     FVExpr left;
     FVExpr right;
-    BinaryFunction funcName;
+    Var funcName;
 
-    public Operator(FVExpr left, FVExpr right, BinaryFunction func) {
+    public Operator(FVExpr left, FVExpr right, Var func) {
         this.left = left;
         this.right = right;
         this.funcName = func;
@@ -22,7 +22,7 @@ public class Operator implements FVExpr {
 
     @Override
     public Answer interpret(HashMap<Var, Answer> acc){
-            return funcName.apply(left.interpret(acc), right.interpret(acc));
+            return ((AnswerFunction)acc.get(funcName)).result.apply(Arrays.asList(right, left), acc);
     }
 
     @Override
