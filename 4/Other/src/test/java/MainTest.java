@@ -54,7 +54,6 @@ public class MainTest {
         assertEquals("variable x undeclared", new Var("x").interpret(this.stdlib).result);
         assertEquals("variable y undeclared", this.xTimesY.interpret(this.stdlib).result);
         assertEquals("closure", this.fxTimes5.interpret(this.stdlib).result);
-        assertEquals
     }
 
     @Test
