@@ -5,6 +5,10 @@ import static fvexpr.Constants.*;
 public class AnswerString extends Answer<String> {
     public AnswerString(String result) {
         super(result);
+        if(!result.equals(CLOSURE_STRING)){
+            throw new IllegalStateException(result);
+        }
+
     }
 
     @Override

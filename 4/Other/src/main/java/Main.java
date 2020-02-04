@@ -22,8 +22,11 @@ public class Main {
         if ("interpreter".equals(args[0])) {
             Object obj = new JSONParser().parse(new FileReader(args[1]));
             FVExpr result = ParseUtils.parse(obj);
-
-            System.out.println(result.interpret(initializeStd()).result);
+            try {
+                System.out.println(result.interpret(initializeStd()).result);
+            } catch (IllegalStateException e) {
+                System.out.println(e.getMessage());
+            }
         } else {
             throw new IllegalArgumentException("Error: an illegal function was requested");
         }
