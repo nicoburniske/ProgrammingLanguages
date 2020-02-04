@@ -2,6 +2,7 @@ import answer.Answer;
 import fdecl.FDecl;
 import fdecl.FDeclInt;
 import fvexpr.*;
+import jdk.nashorn.internal.runtime.ECMAException;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -51,12 +52,34 @@ public class MainTest {
 
     @Test
     public void testErrorMessages() {
-        assertEquals("variable x undeclared", new Var("x").interpret(this.stdlib).result);
-        assertEquals("variable y undeclared", this.xTimesY.interpret(this.stdlib).result);
-        assertEquals("closure", this.fxTimes5.interpret(this.stdlib).result);
-        assertEquals("variable x undeclared", this.xSquared.interpret(this.stdlib).result);
-        assertEquals("variable x undeclared", new Operator(new Var("y"), new Var("x"), new Var("^")).interpret(this.stdlib).result);
-        assertEquals("closure or primop expected", new DeclArray(Arrays.asList(this.xEquals5, this.yEquals10), new Operator(new Var("x"), new Var("y"), new Var("/"))).interpret(this.stdlib).result);
+        try {
+            new Var("x").interpret(this.stdlib);
+        } catch (Exception e) {
+            assertEquals(new IllegalStateException("\"variable x undeclared\"").getMessage(), e.getMessage());
+        }
+        try {
+            this.xTimesY.interpret(this.stdlib);
+        } catch (Exception e) {
+            assertEquals(new IllegalStateException("\"variable y undeclared\"").getMessage(), e.getMessage());
+        }
+        assertEquals("\"closure\"", this.fxTimes5.interpret(this.stdlib).result);
+
+        try {
+            this.xSquared.interpret(this.stdlib);
+        } catch (Exception e) {
+            assertEquals(new IllegalStateException("\"variable x undeclared\"").getMessage(), e.getMessage());
+        }
+        try {
+            new Operator(new Var("y"), new Var("x"), new Var("^")).interpret(this.stdlib);
+        } catch (Exception e) {
+            assertEquals(new IllegalStateException("\"variable x undeclared\"").getMessage(), e.getMessage());
+        }
+        try {
+            new DeclArray(Arrays.asList(this.xEquals5, this.yEquals10), new Operator(new Var("x"), new Var("y"), new Var("/"))).interpret(this.stdlib);
+        } catch (Exception e) {
+            assertEquals(new IllegalStateException("\"closure or primop expected\"").getMessage(), e.getMessage());
+        }
+
     }
 
     @Test
