@@ -1,5 +1,6 @@
 package answer;
 
+import static fvexpr.Constants.CLOSURE_STRING;
 import static fvexpr.Constants.ERROR_INVALID_ARITHMETIC;
 
 public class Answer<T> {
@@ -11,6 +12,9 @@ public class Answer<T> {
 
     public Answer add(Answer obj) {
         if (obj instanceof AnswerString) {
+            if(((AnswerString)obj).result.equals(CLOSURE_STRING)) {
+                return new AnswerString(ERROR_INVALID_ARITHMETIC);
+            }
             return obj;
         }
         return new AnswerString(ERROR_INVALID_ARITHMETIC);
@@ -18,6 +22,9 @@ public class Answer<T> {
 
     public Answer multiply(Answer obj) {
         if (obj instanceof AnswerString) {
+            if(((AnswerString)obj).result.equals(CLOSURE_STRING)) {
+                return new AnswerString(ERROR_INVALID_ARITHMETIC);
+            }
             return obj;
         }
         return new AnswerString(ERROR_INVALID_ARITHMETIC);
@@ -26,6 +33,9 @@ public class Answer<T> {
 
     public Answer pow(Answer obj) {
         if (obj instanceof AnswerString) {
+            if(((AnswerString)obj).result.equals(CLOSURE_STRING)) {
+                return new AnswerString(ERROR_INVALID_ARITHMETIC);
+            }
             return obj;
         }
         return new AnswerString(ERROR_INVALID_ARITHMETIC);
