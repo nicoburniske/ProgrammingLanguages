@@ -24,6 +24,11 @@ import java.util.HashMap;
  */
 
 public interface FVExpr {
+    /**
+      an environment-based interpreter for the language of FVExpr
+     * @param acc the enviroment that interpret uses to run
+     * @return An {@link Answer}
+     */
     public Answer interpret(HashMap<Var, Answer> acc);
     String toJson();
 }

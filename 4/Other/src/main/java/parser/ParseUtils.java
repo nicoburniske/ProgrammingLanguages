@@ -10,6 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class ParseUtils {
+
+    /**
+     * This function parses what the JSON reader returns and turns it into a FVExpr
+     * @param obj object to be Parsed
+     * @return
+     */
     public static FVExpr parse(Object obj) {
         if (obj instanceof String) {
             return new Var((String) obj);
@@ -47,6 +53,11 @@ public final class ParseUtils {
         throw new IllegalStateException("JSON could not be parsed");
     }
 
+    /**Converts a list of Objects into a list of Decls
+     *
+     * @param decls the objects to be convertecd to decls
+     * @return
+     */
     private static List<FDecl> parseDeclList(List<Object> decls) {
         List<FDecl> n = new ArrayList<FDecl>(decls.size());
         for(Object dec : decls) {
@@ -56,6 +67,11 @@ public final class ParseUtils {
 
     }
 
+    /**
+     * Parses a singular decl
+     * @param dec
+     * @return
+     */
     private static FDecl parseDecl(Object dec) {
         if(dec instanceof JSONArray  && ((JSONArray) dec).size() == 4) {
             JSONArray arr = (JSONArray) dec;
@@ -70,6 +86,11 @@ public final class ParseUtils {
         throw new IllegalStateException("JSON could not be parsed");
     }
 
+    /**
+     * Parses the Var list in a {@link Func}
+     * @param l the list of Vars
+     * @return
+     */
     private static List<Var> parseVarList(List<Object> l) {
         List<Var> n = new ArrayList<Var>(l.size());
         for(Object o : l) {
