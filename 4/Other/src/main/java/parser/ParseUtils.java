@@ -17,7 +17,7 @@ public final class ParseUtils {
             return new Int((Long) obj);
         } else if (obj instanceof JSONArray) {
             JSONArray arr = (JSONArray) obj;
-            if (arr.size() >= 3 && arr.get(0) instanceof String && ((String)arr.get(0)).equals("call")){
+            if (arr.size() >= 2 && arr.get(0) instanceof String && ((String)arr.get(0)).equals("call")){
                 List l = arr.subList(2,arr.size());
                 List<FVExpr> n = new ArrayList<FVExpr>();
                 for (Object o : l) {
@@ -32,7 +32,11 @@ public final class ParseUtils {
                         return new Func(parseVarList((List<Object>)arr.get(1)), parse(arr.get(2)));
                     }
                 }
-            } else if (arr.size() >= 1){
+                else {
+                    System.out.println("OOPS" + arr.toJSONString());
+                }
+            }
+            if (arr.size() >= 1){
                 if (arr.size() == 4 && arr.get(0) instanceof String && ((String)arr.get(0)).equals("if-0")) {
                     return new Conditional(parse(arr.get(1)), parse(arr.get(2)), parse(arr.get(3)));
                 }
