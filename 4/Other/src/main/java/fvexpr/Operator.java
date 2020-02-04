@@ -22,9 +22,9 @@ public class Operator implements FVExpr {
     }
 
     @Override
-    public Answer interpret(HashMap<Var, Answer> acc){
-        if(acc.get(funcName) != null){
-            return ((AnswerFunction)acc.get(funcName)).result.apply(Arrays.asList(right, left), acc);
+    public Answer interpret(HashMap<Var, Answer> acc) {
+        if (acc.get(funcName) != null) {
+            return ((AnswerFunction) this.funcName.interpret(acc)).result.apply(Arrays.asList(left, right), acc);
         } else {
             return new AnswerString(ERROR_CLOSURE_EXPECTED);
         }
