@@ -19,7 +19,7 @@ import java.util.HashMap;
 public class Main {
     public static void main(String[] args) throws ParseException, IOException {
 
-         if ("interpreter".equals(args[0])) {
+        if ("interpreter".equals(args[0])) {
             Object obj = new JSONParser().parse(new FileReader(args[1]));
             FVExpr result = ParseUtils.parse(obj);
 
@@ -28,6 +28,7 @@ public class Main {
             throw new IllegalArgumentException("Error: an illegal function was requested");
         }
     }
+
     public static HashMap<Var, Answer> initializeStd() {
         HashMap<Var, Answer> stdLib = new HashMap<Var, Answer>();
         stdLib.put(new Var("+"), new AnswerFunction(new Func(Arrays.asList(new Var("left"), new Var("right")), new FVExpr() {
@@ -55,7 +56,7 @@ public class Main {
         stdLib.put(new Var("^"), new AnswerFunction(new Func(Arrays.asList(new Var("left"), new Var("right")), new FVExpr() {
             @Override
             public Answer interpret(HashMap<Var, Answer> acc) {
-                return (acc.get(new Var("left")).pow(acc.get(new Var("right"))));
+                return (acc.get(new Var("right")).pow(acc.get(new Var("left"))));
             }
 
             @Override
