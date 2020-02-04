@@ -33,7 +33,7 @@ public final class ParseUtils {
                     }
                 }
                 else {
-                    System.out.println("OOPS");
+                    System.out.println("OOPS" + arr.get(1).toString());
                 }
             } else if (arr.size() >= 1){
                 if (arr.size() == 4 && arr.get(0) instanceof String && ((String)arr.get(0)).equals("if-0")) {
