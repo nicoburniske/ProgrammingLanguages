@@ -32,9 +32,6 @@ public final class ParseUtils {
                         return new Func(parseVarList((List<Object>)arr.get(1)), parse(arr.get(2)));
                     }
                 }
-                else {
-                    System.out.println("OOPS" + arr.toJSONString());
-                }
             }
             if (arr.size() >= 1){
                 if (arr.size() == 4 && arr.get(0) instanceof String && ((String)arr.get(0)).equals("if-0")) {
