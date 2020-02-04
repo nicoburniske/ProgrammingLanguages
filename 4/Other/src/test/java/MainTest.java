@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.math.BigInteger;
+import java.net.ServerSocket;
 import java.util.Arrays;
 import java.util.HashMap;
 
@@ -52,6 +53,7 @@ public class MainTest {
     @Test
     public void testErrorMessages() {
         assertEquals("variable x undeclared", new Var("x").interpret(this.stdlib).result);
+        System.out.println(this.xTimesY.toJson());
         assertEquals("variable y undeclared", this.xTimesY.interpret(this.stdlib).result);
         assertEquals("closure", this.fxTimes5.interpret(this.stdlib).result);
     }

@@ -40,5 +40,4 @@ public class Answer<T> {
         }
         return new AnswerString(ERROR_INVALID_ARITHMETIC);
     }
-
 }
