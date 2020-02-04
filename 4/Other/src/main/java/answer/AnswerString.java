@@ -2,6 +2,7 @@ package answer;
 
 import static fvexpr.Constants.*;
 
+
 public class AnswerString extends Answer<String> {
     public AnswerString(String result) {
         super(result);
