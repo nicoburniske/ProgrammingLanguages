@@ -1,0 +1,4 @@
+[
+    ["let","/","=", ["fun*", ["first", "second"], ["first", "*", ["first","+" ,"second"]]]],
+    ["call","/", 1, 4] 
+]
