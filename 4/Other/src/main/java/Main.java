@@ -17,18 +17,21 @@ import java.util.HashMap;
 
 
 public class Main {
-    public static void main(String[] args) throws ParseException, IOException {
-
-        if ("interpreter".equals(args[0])) {
-            Object obj = new JSONParser().parse(new FileReader(args[1]));
-            FVExpr result = ParseUtils.parse(obj);
-            try {
-                System.out.println(result.interpret(initializeStd()).result);
-            } catch (IllegalStateException e) {
-                System.out.println(e.getMessage());
+    public static void main(String[] args) {
+        try {
+            if ("interpreter".equals(args[0])) {
+                Object obj = new JSONParser().parse(new FileReader(args[1]));
+                FVExpr result = ParseUtils.parse(obj);
+                try {
+                    System.out.println(result.interpret(initializeStd()).result);
+                } catch (IllegalStateException e) {
+                    System.out.println(e.getMessage());
+                }
+            } else {
+                throw new IllegalArgumentException("Error: an illegal function was requested");
             }
-        } else {
-            throw new IllegalArgumentException("Error: an illegal function was requested");
+        } catch (Exception e) {
+            //Do nothing
         }
     }
 

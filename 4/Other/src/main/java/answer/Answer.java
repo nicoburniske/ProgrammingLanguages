@@ -11,33 +11,15 @@ public class Answer<T> {
     }
 
     public Answer add(Answer obj) {
-        if (obj instanceof AnswerString) {
-            if(((AnswerString)obj).result.equals(CLOSURE_STRING)) {
-                return new AnswerString(ERROR_INVALID_ARITHMETIC);
-            }
-            return obj;
-        }
         return new AnswerString(ERROR_INVALID_ARITHMETIC);
     }
 
     public Answer multiply(Answer obj) {
-        if (obj instanceof AnswerString) {
-            if(((AnswerString)obj).result.equals(CLOSURE_STRING)) {
-                return new AnswerString(ERROR_INVALID_ARITHMETIC);
-            }
-            return obj;
-        }
         return new AnswerString(ERROR_INVALID_ARITHMETIC);
     }
 
 
     public Answer pow(Answer obj) {
-        if (obj instanceof AnswerString) {
-            if(((AnswerString)obj).result.equals(CLOSURE_STRING)) {
-                return new AnswerString(ERROR_INVALID_ARITHMETIC);
-            }
-            return obj;
-        }
         return new AnswerString(ERROR_INVALID_ARITHMETIC);
     }
 }

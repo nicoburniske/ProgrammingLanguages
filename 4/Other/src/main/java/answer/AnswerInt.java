@@ -29,9 +29,8 @@ public class AnswerInt extends Answer<BigInteger> {
     public Answer pow(Answer obj) {
         if (obj instanceof AnswerInt) {
             return new AnswerInt(((AnswerInt) obj).result.pow(this.result.intValue()));
-            // return new AnswerInt(this.result.pow(((AnswerInt)obj).result.intValue()));
         } else {
-            return obj.pow(this);
+            return super.pow(obj);
         }
     }
 }

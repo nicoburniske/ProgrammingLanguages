@@ -13,25 +13,16 @@ public class AnswerString extends Answer<String> {
 
     @Override
     public Answer add(Answer obj) {
-        if(this.result.equals(CLOSURE_STRING)){
-            return new AnswerString(ERROR_INVALID_ARITHMETIC);
-        }
         return super.add(obj);
     }
 
     @Override
     public Answer multiply(Answer obj) {
-        if(this.result.equals(CLOSURE_STRING)){
-            return new AnswerString(ERROR_INVALID_ARITHMETIC);
-        }
         return super.multiply(obj);
     }
 
     @Override
     public Answer pow(Answer obj) {
-        if(this.result.equals(CLOSURE_STRING)){
-            return new AnswerString(ERROR_INVALID_ARITHMETIC);
-        }
         return super.multiply(obj);
     }
 }
