@@ -8,9 +8,9 @@ public class AnswerInt extends Answer<BigInteger> {
     }
 
     @Override
-    public Answer add (Answer obj){
-        if(obj instanceof AnswerInt) {
-            return new AnswerInt(this.result.add(((AnswerInt)obj).result));
+    public Answer add(Answer obj) {
+        if (obj instanceof AnswerInt) {
+            return new AnswerInt(this.result.add(((AnswerInt) obj).result));
         } else {
             return super.add(obj);
         }
@@ -18,8 +18,8 @@ public class AnswerInt extends Answer<BigInteger> {
 
     @Override
     public Answer multiply(Answer obj) {
-        if(obj instanceof AnswerInt) {
-            return new AnswerInt(this.result.multiply(((AnswerInt)obj).result));
+        if (obj instanceof AnswerInt) {
+            return new AnswerInt(this.result.multiply(((AnswerInt) obj).result));
         } else {
             return super.multiply(obj);
         }
@@ -27,10 +27,11 @@ public class AnswerInt extends Answer<BigInteger> {
 
     @Override
     public Answer pow(Answer obj) {
-        if(obj instanceof AnswerInt) {
-            return new AnswerInt(this.result.pow(((AnswerInt)obj).result.intValue()));
+        if (obj instanceof AnswerInt) {
+            return new AnswerInt(((AnswerInt) obj).result.pow(this.result.intValue()));
+            // return new AnswerInt(this.result.pow(((AnswerInt)obj).result.intValue()));
         } else {
-            return super.pow(obj);
+            return obj.pow(this);
         }
     }
 }
