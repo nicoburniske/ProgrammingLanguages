@@ -35,7 +35,8 @@ public final class ParseUtils {
                 else {
                     System.out.println("OOPS" + arr.toJSONString());
                 }
-            } else if (arr.size() >= 1){
+            }
+            if (arr.size() >= 1){
                 if (arr.size() == 4 && arr.get(0) instanceof String && ((String)arr.get(0)).equals("if-0")) {
                     return new Conditional(parse(arr.get(1)), parse(arr.get(2)), parse(arr.get(3)));
                 }
