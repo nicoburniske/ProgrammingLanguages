@@ -1,0 +1,345 @@
+Total: 64/70
+
+-2 for extra files in 4/ directory
+-3 interpreter; Input: ["call","f"]; Expected: "variable f undeclared"
+; Got: "closure or primop expected"
+
+-3 interpreter; Input: ["call",["fun*",["x"],42]]; Expected: "number of arguments does not match number of parameters"
+; Got: "number of arguments does not match the number of parameters"
+
+-3 interpreter; Input: ["call",["call",1,1],[1,"+",["fun*",["x"],"x"]]]; Expected: "arithmetic error"
+; Got: "closure or primop expected"
+
+-3, for test 1-in.json; got parse: bad Int 1000000000000000000
+  context...:
+   /usr/share/racket/collects/racket/private/map.rkt:35:13: map
+   /usr/share/racket/collects/racket/match/compiler.rkt:418:15: parse-loop45
+   /home/vagrant/src/20PL/Code/4/xinterpreter:14:0: main
+
+-3, for test 2-in.json; got parse: bad Int 100000
+  context...:
+   /usr/share/racket/collects/racket/match/compiler.rkt:507:40: f5
+   /home/vagrant/src/20PL/Code/4/xinterpreter:14:0: main
+
+-3, for test 7-in.json; got parse-string: bad Var "ERROR stdin::72: read-json: error while parsing a json array"
+  context...:
+   /home/vagrant/src/20PL/Code/4/xinterpreter:14:0: main
+
+-3, for test 0-in.json; got parse: bad Int -100000
+  context...:
+   /usr/share/racket/collects/racket/match/compiler.rkt:507:40: f5
+   /home/vagrant/src/20PL/Code/4/Other/data-rep.rkt:51:0: parse
+   /usr/share/racket/collects/racket/match/compiler.rkt:507:40: f88
+   /home/vagrant/src/20PL/Code/4/xinterpreter:14:0: main
+
+-3, for test 6-in.json; got parse-string: bad Var "ERROR stdin::4: read-json: error while parsing a json array"
+  context...:
+   /home/vagrant/src/20PL/Code/4/xinterpreter:14:0: main
+
++20 Bonus for your tests
+===============
+Code Inspection
+===============
+Inspection Scores Forthcoming
+
+===============
+Test Fest
+===============
+interpreter: Failed 
+[["let", "add", "=", ["fun*", ["lhs", "rhs"], ["lhs", "+", "rhs"]]],
+ ["let", "mult", "=", ["fun*", ["lhs", "rhs"], ["lhs", "*", "rhs"]]],
+ ["let", "sub", "=", ["fun*", ["lhs", "rhs", "fMul"], ["lhs", "+", ["call", "fMul", -1, "rhs"]]]],
+ ["let", "equal?", "=", ["fun*", ["lhs", "rhs", "fSub", "fMul"], ["if-0", ["call", "fSub", "lhs", "rhs", "fMul"], 0, 1]]],
+ ["let", "fThenElse", "=", ["fun*", ["lhs", "rhs", "fThen", "fElse", "fEqual", "fSub", "fMul"], ["if-0", ["call", "fEqual", "lhs", "rhs", "fSub", "fMul"], "fThen", "fElse"]]],
+ ["let", "x", "=", 5],["let", "y", "=", 6],
+ ["call", ["call", "fThenElse", "x", "y", "add", 9, "equal?", "sub"], "x", "y"]], Expected "number of arguments does not match number of parameters"
+, Got "closure or primop expected"
+
+interpreter: Failed 
+[["let", "add", "=", ["fun*", ["lhs", "rhs"], ["lhs", "+", "rhs"]]],
+ ["let", "mult", "=", ["fun*", ["lhs", "rhs"], ["lhs", "*", "rhs"]]],
+ ["let", "sub", "=", ["fun*", ["lhs", "rhs", "fMul"], ["lhs", "+", ["call", "fMul", -1, "rhs"]]]],
+ ["let", "equal?", "=", ["fun*", ["lhs", "rhs", "fSub", "fMul"], ["if-0", ["call", "fSub", "lhs", "rhs", "fMul"], 0, 1]]],
+ ["let", "fThenElse", "=", ["fun*", ["lhs", "rhs", "fThen", "fElse", "fEqual", "fSub", "fMul"], ["if-0", ["call", "fEqual", "lhs", "rhs", "fSub", "fMul"], "fThen", "fElse"]]],
+ ["let", "x", "=", 5],["let", "y", "=", 6],
+ ["call", ["call", "fThenElse", "x", "y", "add", "mult", "equal?", "sub", "mult"], "x", "y"]], Expected 30
+, Got "closure or primop expected"
+
+interpreter: Failed 
+[["let", "add", "=", ["fun*", ["lhs", "rhs"], ["lhs", "+", "rhs"]]],
+ ["let", "mult", "=", ["fun*", ["lhs", "rhs"], ["lhs", "*", "rhs"]]],
+ ["let", "sub", "=", ["fun*", ["lhs", "rhs", "fMul"], ["lhs", "+", ["call", "fMul", -1, "rhs"]]]],
+ ["let", "equal?", "=", ["fun*", ["lhs", "rhs", "fSub", "fMul"], ["if-0", ["call", "fSub", "lhs", "rhs", "fMul"], 0, 1]]],
+ ["let", "fThenElse", "=", ["fun*", ["lhs", "rhs", "fThen", "fElse", "fEqual", "fSub", "fMul"], ["if-0", ["call", "fEqual", "lhs", "rhs", "fSub", "fMul"], "fThen", "fElse"]]],
+ ["let", "x", "=", 5],["let", "y", "=", 6],
+ ["call", ["call", "fThenElse", "x", "y", "add", "mult", "equal?", "sub", "mult"], "x", "equal?"]], Expected "arithmetic error"
+, Got "closure or primop expected"
+
+interpreter: Failed [
+	["let", "x", "=", 5],
+	["let", "mult", "=",
+		["fun*", ["a", "b"], ["a", "*", "b"]]],
+	"mult"
+], Expected "closure", Got fvexpr.Func@7440e464
+
+interpreter: Failed [["let", "x", "=", ["fun*", ["a", "b"], ["a", "+", ["a", "*", "b"]] ]],
+["let", "b", "=", 6],
+["let", "a", "=", 2],
+["call", "x", "b", "a"]
+], Expected 18, Got 6
+
+interpreter: Failed [
+	["let", "x", "=", 5],
+	["let", "mult", "=",
+		["fun*", ["a", "b"], ["a", "*", "b"]]],
+	["call", "mult", "x"]
+], Expected "number of arguments does not match number of parameters", Got "number of arguments does not match the number of parameters"
+
+interpreter: Failed [["let", "x", "=", ["fun*", ["x", "y", "z", "a"], [["x", "+", "y"], "*", ["z", "+", "a"]]]],
+ ["call", "x", 1, 2, 3, 4, 5, 6]], Expected "number of arguments does not match number of parameters"
+, Got "number of arguments does not match the number of parameters"
+
+interpreter: Failed [["let", "x", "=", ["fun*", ["x", "y", "z", "a"], [["x", "+", "y"], "*", ["z", "+", "a"]]]],
+ "x"], Expected "closure"
+, Got fvexpr.Func@4b1210ee
+
+interpreter: Failed [["let", "x", "=", 10],
+ ["x", "^", ["x", "*", -1]]], Expected "arithmetic error"
+, Got 
+interpreter: Failed [["let", "f", "=", ["fun*", ["x"], ["x", "+", ["call", "h", "x"]]]],["let", "h", "=", ["fun*", ["y"], "y"]],[["let", "h", "=", ["fun*", ["y"], ["y", "+", 10]]],["call", "f", 2]]], Expected 4, Got 14
+
+interpreter: Failed [
+  ["let", "addition", "=", ["fun*",  ["a", "b"], ["a", "+", "b"]]],
+  ["let", "doubleadd", "=", ["fun*",  ["a", "b"], [["call","a","apple","b"], "+", ["call","addition","a","b"]]]],
+  ["let", "a", "=", 2],
+  ["let", "b", "=", 3],
+  ["if-0",1,["call","doubleadd","a","b"],["call","addition","a","b","a"]]
+], Expected "number of arguments does not match number of parameters"
+, Got "number of arguments does not match the number of parameters"
+
+interpreter: Failed [
+  ["let", "twoargsplz", "=",
+    ["fun*", ["first", "second"], "first"]
+  ],
+  ["call", "twoargsplz",1]
+], Expected "number of arguments does not match number of parameters"
+, Got "number of arguments does not match the number of parameters"
+
+interpreter: Failed ["call", ["fun*", ["fx"], ["call", "fx"]], ["fun*", [], 42]]
+, Expected 42
+, Got "closure or primop expected"
+
+interpreter: Failed [["let", "x", "=", ["call", ["call", ["fun*", ["y"], ["fun*", [], "y"]], 50]]],
+ ["let", "y", "=", [-2, "^", 3]],
+ ["x", "+", "y"]]
+, Expected 42
+, Got 
+interpreter: Failed ["call", ["call", ["fun*", [], ["fun*", [], 42]]]]
+, Expected 42
+, Got "closure or primop expected"
+
+interpreter: Failed [["let", "y", "=", [-2, "^", 3]],
+ ["call", ["call", ["fun*", ["x"], ["fun*", [], ["x", "+", "y"]]], 50]]]
+, Expected 42
+, Got 
+interpreter: Failed [["let", "w", "=", -1],
+ ["let", "fx", "=", ["fun*", ["x"], ["fun*", [], ["w" , "+", "x"]]]],
+ ["let", "z", "=", 43],
+ ["call", ["call", "fx", "z"]]]
+, Expected 42
+, Got "closure or primop expected"
+
+interpreter: Failed [1, "^", -1]
+, Expected "arithmetic error"
+, Got 
+interpreter: Failed ["call", ["fun*", ["x"], "x"], 1, 2]
+, Expected "number of arguments does not match number of parameters"
+, Got "number of arguments does not match the number of parameters"
+
+interpreter: Failed [
+  ["let", "f", "=", ["fun*", ["x"], ["fun*", ["x"], ["x", "+", 1]]]],
+  ["call", ["call", "f", 1], 3]
+]
+, Expected 4, Got "closure or primop expected"
+
+interpreter: Failed [2, "^", -4]
+, Expected "arithmetic error"
+, Got 
+interpreter: Failed [["let", "+", "=", 5], [3, "+", 4]]
+, Expected "closure or primop expected"
+, Got 
+interpreter: Failed [3, "multiply", 4]
+, Expected "variable multiply undeclared"
+, Got "closure or primop expected"
+
+interpreter: Failed [["let", "x", "=", 8], ["let", "y", "=", ["fun*", ["a", "b"], ["if-0", "a", "b", ["a", "+", "x"]]]], [["let", "x", "=", 1], ["call", "y", 3, 4]]]
+, Expected 11
+, Got 4
+
+interpreter: Failed [["let", "x", "=", [
+  ["let", "y", "=", 5],
+  ["let", "z", "=", 8],
+  [["let", "a", "=", 5],
+    "y"]  
+ ]],
+ [["let", "y", "=", 99],
+  ["y", "^", 60]
+]], Expected 547156642390761476194741370840006174593084288894372625927973260005098646976716330666955874608367161577767293609297694001, Got 
+interpreter: Failed [5, "^", -5], Expected "arithmetic error", Got 
+interpreter: Failed [["let", "doubl", "=", ["fun*", ["n"], ["n", "+", "n"]]],
+["let", "toNine", "=", ["fun*", ["f"], ["call", "f", 9]]],
+[["call", "toNine", ["fun*", ["n"], ["n", "*", "n"]]], "+", ["call", "toNine", "doubl"]]], Expected 99, Got "closure or primop expected"
+
+interpreter: Failed [["let", "f", "=", 
+  ["fun*", ["x", "y"], 5]],
+ ["call", "f", 1, 2, 3]], Expected "number of arguments does not match number of parameters", Got "number of arguments does not match the number of parameters"
+
+interpreter: Failed [["let","func1","=",["fun*",["n1"],["fun*",["n2"],["n1","+","n2"]]]],["let","func2","=",["fun*",["f"],"f"]],["call",["call","func2","func2"],["call","func1",2]]], Expected "closure", Got "closure or primop expected"
+
+interpreter: Failed ["call",["fun*",["a"],"a"],[2,"+",2],[3,"+",3]], Expected "number of arguments does not match number of parameters", Got "number of arguments does not match the number of parameters"
+
+interpreter: Failed [1,"-",2]
+, Expected "variable - undeclared"
+, Got "closure or primop expected"
+
+interpreter: Failed ["call","x"]
+, Expected "variable x undeclared"
+, Got "closure or primop expected"
+
+interpreter: Failed ["call", ["fun*",["^"],"*"],
+	[
+		["call",
+			["fun*", ["a", "b"], ["a", "+", "b"]],
+  		7, 8],
+	"+",2]
+]
+, Expected "closure", Got fvexpr.Func@7440e464
+
+interpreter: Failed [
+	["let","f","=",["fun*",["*"],["y","+","*"]]],
+	[
+		["let","y","=",5],
+		["call","f",6]
+	]
+]
+, Expected "variable y undeclared", Got 11
+
+interpreter: Failed [
+	["let","f","=",
+		["fun*",["*"],[250,"^","*"]
+		]
+	],
+	["let","z","=", 4],
+	["call","f","z",1]
+]
+, Expected "number of arguments does not match number of parameters", Got "number of arguments does not match the number of parameters"
+
+interpreter: Failed ["call",[["let", "x", "=", 3],["let","func","=",["fun*", ["unused"], ["x", "+", "y"]]],["let", "y", "=", 6],["func"]],3]
+, Expected 9
+, Got "closure or primop expected"
+
+interpreter: Failed ["call", ["fun*", ["x","y","z","f"], 3], 2, ["call", ["fun*", ["x"], "x"], 1, 2], 2, 3]
+, Expected "number of arguments does not match number of parameters"
+, Got "number of arguments does not match the number of parameters"
+
+interpreter: Failed ["if-0", ["fun*", ["x"], "z"], 3, ["call", "x", 3]]
+, Expected "variable x undeclared"
+, Got "closure or primop expected"
+
+interpreter: Failed [3,"^",-20]
+, Expected "arithmetic error"
+, Got 
+interpreter: Failed [["let", "y", "=", 3],[["let", "x", "=", 3],["let", "y", "=", ["fun*", ["x", "y"], ["x", "+", "y"]]],"y"]]
+, Expected "closure"
+, Got fvexpr.Func@7440e464
+
+interpreter: Failed ["call", ["fun*", ["x"], ["x", "*", 5]], 3, 4], Expected "number of arguments does not match number of parameters", Got "number of arguments does not match the number of parameters"
+
+interpreter: Failed [["let", "f", "=", ["fun*", ["x"], ["x", "+", 2]]],
+["call", "f", 2, 3]], Expected "number of arguments does not match number of parameters", Got "number of arguments does not match the number of parameters"
+
+interpreter: Failed [["let", "not", "=", ["fun*", ["n"], ["if-0", "n", 1, 0]]],
+ "not"], Expected "closure", Got fvexpr.Func@7440e464
+
+interpreter: Failed [["let", "x", "=", 10], ["let", "y", "=", ["fun*", ["z"], ["x", "+", "z"]]],
+                       [["let", "x", "=", 20], ["call", ["fun*", ["x"], ["call", "x", 10]], "y"]]], Expected 20, Got "arithmetic error"
+
+interpreter: Failed ["call", [["let", "x * y", "=", ["fun*", ["x", "y"], ["x", "*", "y"]]], "x * y"], [["let", "x", "=", 10], "x"]], Expected "number of arguments does not match number of parameters", Got "closure or primop expected"
+
+interpreter: Failed [["let", "x", "=", ["fun*", ["x", "y"], ["fun*", ["x"], [["let", "z", "=", 2], ["z", "*", ["x", "+", "y"]]]]]], ["let", "y", "=", 10], ["call", ["call", "x", [20, "*", 40], [1, "*", 1]], "y"]], Expected 22, Got "closure or primop expected"
+
+interpreter: Failed [1, "^", -10], Expected "arithmetic error", Got 
+interpreter: Failed ["call", ["if-0", 0, ["fun*", [], 3], ["fun*", [], 4]]], Expected 3
+, Got "closure or primop expected"
+
+interpreter: Failed ["call", ["fun*", ["x"], ["x","@",2]], [2]]
+, Expected "variable @ undeclared"
+, Got "closure or primop expected"
+
+interpreter: Failed [[["let", "x", "=", ["if-0", 3, 1, 2]], ["x", "^", 3]], "*", [["let", "f", "=", ["if-0", 0, ["fun*", ["x", "y"], ["x", "^", "y"]], ["fun*", ["x"], ["x", "+", 2]]]], ["call", "f", [3, "+", -10], 9]]]
+, Expected -322828856
+, Got 
+interpreter: Failed ["call", ["fun*", ["x", "y"], ["x", "+", "y"]], 1, 2, 3], Expected "number of arguments does not match number of parameters"
+, Got "number of arguments does not match the number of parameters"
+
+interpreter: Failed [
+  ["let", "x", "=", ["fun*", ["x"], "x"]],
+  "x"
+]
+, Expected "closure"
+, Got fvexpr.Func@6ff3c5b5
+
+interpreter: Failed [
+  ["let", "x", "=", ["fun*", ["one", "two", "three"], 123]],
+  ["call", "x", 1, 2]
+]
+, Expected "number of arguments does not match number of parameters"
+, Got "number of arguments does not match the number of parameters"
+
+interpreter: Failed [["let", "ouch", "=", ["fun*", ["f", "y"], ["f", "+", "y"]]], ["call", "ouch", 3]], Expected "number of arguments does not match number of parameters"
+, Got "number of arguments does not match the number of parameters"
+
+interpreter: Failed ["call", ["fun*", ["x", "y"], [["call", "x", 10], "+", "y"]],
+        ["fun*", ["y"], ["y", "*", 10]], 20]
+, Expected 120
+, Got "closure or primop expected"
+
+interpreter: Failed [4,"^",-2], Expected "arithmetic error"
+, Got 
+interpreter: Failed [[["let", "f", "=",
+   ["fun*", ["x"],
+    [["let", "g", "=",
+      ["fun*", ["n"],
+       ["if-0", "n", "x",
+	["call", "g", ["n", "+", -1]]]]],
+     "g"]]],
+  [["let", "x", "=", 20],
+   ["let", "g", "=", ["fun*", ["z"], ["call", "f", "z"]]],
+   ["call", ["call", ["call", "g", ["call", "f", 1]], 10], 15]]],
+ "+",
+ [["let", "x", "=", 4], ["let", "y", "=", 2],
+  ["let", "z", "=", ["fun*", ["b", "a"], ["b", "+", "a"]]],
+  [["call", "z", "x", "y"], "^", "y"]]]
+, Expected 37
+, Got "closure or primop expected"
+
+interpreter: Failed [["let", "a", "=", ["fun*", ["x", "y"], ["call", "g", "x", "y"]]],
+ ["call", "a", 1, 2]]
+, Expected "variable g undeclared"
+, Got "closure or primop expected"
+
+interpreter: Failed [["let", "x", "=", ["fun*", ["a", "b", "c"], ["a", "+", ["b", "*", "c"]]]],
+ "x"]
+, Expected "closure"
+, Got fvexpr.Func@4b1210ee
+
+interpreter: Failed [["let", "x", "=", ["fun*", ["a", "b"], ["a", "+", "b"]]],
+ ["call", "x", 3, 5, 76]]
+, Expected "number of arguments does not match number of parameters"
+, Got "number of arguments does not match the number of parameters"
+
+interpreter: Failed [["let", "x", "=", 3],
+ ["let", "y", "=", -2],
+ ["x", "^", "y"]]
+, Expected "arithmetic error"
+, Got 
