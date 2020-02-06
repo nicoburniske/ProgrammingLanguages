@@ -37,10 +37,13 @@ public class Func implements SFVExpr {
         if (params.size() != arguments.size()) {
             return new AnswerString(ERROR_ARGUMENTS_MISMATCH);
         }
-//        Store<Var, Answer> envNew = new Store<>(acc);
         for (int ii = 1; ii <= params.size(); ii++) {
             acc.put(arguments.get(params.size() - ii), params.get(params.size() - ii).interpret(acc));
         }
-        return function.interpret(acc);
+        Answer ans = function.interpret(acc);
+        for (int ii = 1; ii <= params.size(); ii++) {
+            acc.pop();
+        }
+        return ans;
     }
 }
