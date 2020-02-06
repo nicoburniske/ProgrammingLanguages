@@ -4,6 +4,7 @@ import answer.Answer;
 import answer.AnswerFunction;
 import answer.AnswerString;
 import org.json.simple.JSONArray;
+import store.Location;
 import store.Store;
 
 import java.util.ArrayList;
@@ -22,12 +23,12 @@ public class Operator implements SFVExpr {
         this.funcName = func;
     }
     @Override
-    public Answer interpret(Store<Var, Answer> env) {
+    public Answer interpret(Store<Var, Location> env, Store<Location, Answer> store) {
         if (env.get(funcName) != null) {
             List<SFVExpr> params = new ArrayList<>();
             params.add(this.left);
             params.addAll(this.rhs);
-            return ((AnswerFunction) this.funcName.interpret(env)).result.apply( params, env);
+            return ((AnswerFunction) this.funcName.interpret(env, store)).result.apply( params, env, store);
         } else {
             return new AnswerString(ERROR_CLOSURE_EXPECTED);
         }

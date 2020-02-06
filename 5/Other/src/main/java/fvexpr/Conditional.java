@@ -2,6 +2,7 @@ package fvexpr;
 
 import answer.Answer;
 import org.json.simple.JSONArray;
+import store.Location;
 import store.Store;
 
 import java.math.BigInteger;
@@ -19,11 +20,11 @@ public class Conditional implements SFVExpr {
     }
 
     @Override
-    public Answer interpret(Store<Var, Answer> env) {
-        if (clause.interpret(env).result.equals(new BigInteger("0"))) {
-            return ifTrue.interpret(env);
+    public Answer interpret(Store<Var, Location> env, Store<Location, Answer> store) {
+        if (clause.interpret(env, store).result.equals(new BigInteger("0"))) {
+            return ifTrue.interpret(env, store);
         } else {
-            return ifFalse.interpret(env);
+            return ifFalse.interpret(env, store);
         }
     }
 

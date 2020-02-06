@@ -3,9 +3,9 @@ package fvexpr;
 import answer.Answer;
 import fdecl.SFVDecl;
 import org.json.simple.JSONArray;
+import store.Location;
 import store.Store;
 
-import java.util.HashMap;
 import java.util.List;
 
 public class DeclArray  implements SFVExpr {
@@ -19,11 +19,13 @@ public class DeclArray  implements SFVExpr {
 
 
     @Override
-    public Answer interpret(Store<Var, Answer> env) {
+    public Answer interpret(Store<Var, Location> env, Store<Location, Answer> store) {
         for(SFVDecl d : decls) {
-            env.put(d.name, d.interpret(env));
+            Location l = new Location(store.getSize());
+            env.put(d.name, l);
+            store.put(l, d.interpret(env, store));
         }
-        Answer ans = scope.interpret(env);
+        Answer ans = scope.interpret(env, store);
         for(SFVDecl d : decls) {
             env.pop();
         }

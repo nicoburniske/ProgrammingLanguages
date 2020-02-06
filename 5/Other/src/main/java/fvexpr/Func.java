@@ -3,9 +3,9 @@ package fvexpr;
 import answer.Answer;
 import answer.AnswerString;
 import org.json.simple.JSONArray;
+import store.Location;
 import store.Store;
 
-import java.util.HashMap;
 import java.util.List;
 
 import static fvexpr.Constants.CLOSURE_STRING;
@@ -21,7 +21,7 @@ public class Func implements SFVExpr {
     }
 
     @Override
-    public Answer interpret(Store<Var, Answer> env) {
+    public Answer interpret(Store<Var, Location> env, Store<Location, Answer> store) {
         return new AnswerString(CLOSURE_STRING);
     }
 
@@ -33,16 +33,18 @@ public class Func implements SFVExpr {
         return ret.toJSONString();
     }
 
-    public Answer apply(List<SFVExpr> params, Store<Var, Answer> acc) {
+    public Answer apply(List<SFVExpr> params, Store<Var, Location> env, Store<Location, Answer> store) {
         if (params.size() != arguments.size()) {
             return new AnswerString(ERROR_ARGUMENTS_MISMATCH);
         }
         for (int ii = 1; ii <= params.size(); ii++) {
-            acc.put(arguments.get(params.size() - ii), params.get(params.size() - ii).interpret(acc));
+            Location l = new Location(store.getSize());
+            env.put(arguments.get(params.size() - ii), l);
+            store.put(l, params.get(params.size() - ii).interpret(env, store));
         }
-        Answer ans = function.interpret(acc);
+        Answer ans = function.interpret(env, store);
         for (int ii = 1; ii <= params.size(); ii++) {
-            acc.pop();
+            env.pop();
         }
         return ans;
     }

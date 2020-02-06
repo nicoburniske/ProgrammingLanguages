@@ -3,6 +3,7 @@ package fvexpr;
 import answer.Answer;
 import answer.AnswerInt;
 import org.json.simple.JSONValue;
+import store.Location;
 import store.Store;
 
 import java.math.BigInteger;
@@ -15,7 +16,7 @@ public class Int implements SFVExpr {
     }
 
     @Override
-    public Answer interpret(Store<Var, Answer> env) {
+    public Answer interpret(Store<Var, Location> env, Store<Location, Answer> store) {
         return new AnswerInt(myNum);
     }
 

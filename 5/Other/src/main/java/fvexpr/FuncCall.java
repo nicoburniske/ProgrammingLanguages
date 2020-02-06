@@ -4,6 +4,7 @@ import answer.Answer;
 import answer.AnswerFunction;
 import answer.AnswerString;
 import org.json.simple.JSONArray;
+import store.Location;
 import store.Store;
 
 import java.util.List;
@@ -21,11 +22,11 @@ public class FuncCall implements SFVExpr {
 
 
     @Override
-    public Answer interpret(Store<Var, Answer> env) {
+    public Answer interpret(Store<Var, Location> env, Store<Location, Answer> store) {
         if(func instanceof Func) {
-            return ((Func)func).apply(params, env);
-        } else if (func instanceof Var && env.get((Var) func) instanceof AnswerFunction) {
-            return ((AnswerFunction) env.get((Var) func)).result.apply(params, env);
+            return ((Func)func).apply(params, env, store);
+        } else if (func instanceof Var && store.get(env.get((Var)func)) instanceof AnswerFunction) {
+            return ((AnswerFunction) store.get(env.get((Var) func))).result.apply(params, env, store);
         }
         else {
             return new AnswerString(ERROR_CLOSURE_EXPECTED);

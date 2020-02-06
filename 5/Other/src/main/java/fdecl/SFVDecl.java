@@ -4,10 +4,8 @@ import answer.Answer;
 import fvexpr.SFVExpr;
 import fvexpr.Var;
 import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
+import store.Location;
 import store.Store;
-
-import java.util.HashMap;
 
 public class SFVDecl {
     public Var name;
@@ -18,8 +16,8 @@ public class SFVDecl {
         this.rhs = rhs;
     }
 
-    public Answer interpret(Store<Var, Answer> acc) {
-        return rhs.interpret(acc);
+    public Answer interpret(Store<Var, Location> acc, Store<Location, Answer> store) {
+        return rhs.interpret(acc, store);
     }
 
     public String toJson() {

@@ -2,6 +2,7 @@ package fvexpr;
 
 import answer.Answer;
 import answer.AnswerString;
+import store.Location;
 import store.Store;
 
 import static fvexpr.Constants.ERROR_UNDECLARED_VARIABLE_TEMPLATE;
@@ -14,9 +15,9 @@ public class Var implements SFVExpr {
     }
 
     @Override
-    public Answer interpret(Store<Var, Answer> env) {
+    public Answer interpret(Store<Var, Location> env, Store<Location, Answer> store) {
         if (env.get(this) != null) {
-            return env.get(this);
+            return store.get(env.get(this));
         } else {
             return new AnswerString(String.format(ERROR_UNDECLARED_VARIABLE_TEMPLATE, this.myString));
         }

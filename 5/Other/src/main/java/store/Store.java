@@ -45,4 +45,8 @@ public class Store<Key, Value> {
         this.keys.remove(this.keys.size() - 1);
         this.values.remove(this.values.size() - 1);
     }
+
+    public int getSize() {
+        return this.keys.size();
+    }
 }

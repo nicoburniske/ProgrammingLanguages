@@ -5,11 +5,12 @@ import fvexpr.Func;
 import fvexpr.Var;
 import org.json.simple.parser.JSONParser;
 import parser.ParseUtils;
+import store.Location;
 import store.Store;
 
 import java.io.FileReader;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.List;
 
 
 public class Main {
@@ -19,7 +20,7 @@ public class Main {
                 Object obj = new JSONParser().parse(new FileReader(args[1]));
                 SFVExpr result = ParseUtils.parse(obj);
                 try {
-                    System.out.println(result.interpret(initializeStd()).result);
+                    System.out.println(result.interpret(initializeStd().get(0), initializeStd().get(1)).result);
                 } catch (IllegalStateException e) {
                     System.out.println(e.getMessage());
                 }
@@ -31,12 +32,15 @@ public class Main {
         }
     }
 
-    public static Store<Var, Answer> initializeStd() {
-        Store<Var, Answer> stdLib = new Store<>();
-        stdLib.put(new Var("+"), new AnswerFunction(new Func(Arrays.asList(new Var("left"), new Var("right")), new SFVExpr() {
+    public static List<Store> initializeStd() {
+        Store<Var, Location> stdEnv = new Store<>();
+        Store<Location, Answer> stdStore = new Store<>();
+        Location zero = new Location(0);
+        stdEnv.put(new Var("+"), zero);
+        stdStore.put(zero, new AnswerFunction(new Func(Arrays.asList(new Var("left"), new Var("right")), new SFVExpr() {
             @Override
-            public Answer interpret(Store<Var, Answer> env) {
-                return env.get(new Var("right")).add(env.get(new Var("left")));
+            public Answer interpret(Store<Var, Location> env, Store<Location, Answer> store) {
+                return store.get(env.get(new Var("right"))).add(store.get(env.get(new Var("left"))));
             }
 
             @Override
@@ -44,10 +48,13 @@ public class Main {
                 return "+";
             }
         })));
-        stdLib.put(new Var("*"), new AnswerFunction(new Func(Arrays.asList(new Var("left"), new Var("right")), new SFVExpr() {
+
+        Location one = new Location(1);
+        stdEnv.put(new Var("*"), one);
+        stdStore.put(one, new AnswerFunction(new Func(Arrays.asList(new Var("left"), new Var("right")), new SFVExpr() {
             @Override
-            public Answer interpret(Store<Var, Answer> env) {
-                return env.get(new Var("right")).multiply(env.get(new Var("left")));
+            public Answer interpret(Store<Var, Location> env, Store<Location, Answer> store) {
+                return store.get(env.get(new Var("right"))).multiply(store.get(env.get(new Var("left"))));
             }
 
             @Override
@@ -55,10 +62,14 @@ public class Main {
                 return "*";
             }
         })));
-        stdLib.put(new Var("^"), new AnswerFunction(new Func(Arrays.asList(new Var("left"), new Var("right")), new SFVExpr() {
+
+
+        Location two = new Location(2);
+        stdEnv.put(new Var("^"), two);
+        stdStore.put(two, new AnswerFunction(new Func(Arrays.asList(new Var("left"), new Var("right")), new SFVExpr() {
             @Override
-            public Answer interpret(Store<Var, Answer> env) {
-                return (env.get(new Var("right")).pow(env.get(new Var("left"))));
+            public Answer interpret(Store<Var, Location> env, Store<Location, Answer> store) {
+                return store.get((env.get(new Var("right")))).pow(store.get(env.get(new Var("left"))));
             }
 
             @Override
@@ -66,7 +77,7 @@ public class Main {
                 return "^";
             }
         })));
-        return stdLib;
+        return Arrays.asList(stdEnv, stdStore);
     }
 }
 
