@@ -129,19 +129,10 @@ interpreter: Failed ["call", ["fun*", ["fx"], ["call", "fx"]], ["fun*", [], 42]]
 , Expected 42
 , Got "closure or primop expected"
 
-interpreter: Failed [["let", "x", "=", ["call", ["call", ["fun*", ["y"], ["fun*", [], "y"]], 50]]],
- ["let", "y", "=", [-2, "^", 3]],
- ["x", "+", "y"]]
-, Expected 42
-, Got 
 interpreter: Failed ["call", ["call", ["fun*", [], ["fun*", [], 42]]]]
 , Expected 42
 , Got "closure or primop expected"
 
-interpreter: Failed [["let", "y", "=", [-2, "^", 3]],
- ["call", ["call", ["fun*", ["x"], ["fun*", [], ["x", "+", "y"]]], 50]]]
-, Expected 42
-, Got 
 interpreter: Failed [["let", "w", "=", -1],
  ["let", "fx", "=", ["fun*", ["x"], ["fun*", [], ["w" , "+", "x"]]]],
  ["let", "z", "=", 43],
@@ -176,15 +167,6 @@ interpreter: Failed [["let", "x", "=", 8], ["let", "y", "=", ["fun*", ["a", "b"]
 , Expected 11
 , Got 4
 
-interpreter: Failed [["let", "x", "=", [
-  ["let", "y", "=", 5],
-  ["let", "z", "=", 8],
-  [["let", "a", "=", 5],
-    "y"]  
- ]],
- [["let", "y", "=", 99],
-  ["y", "^", 60]
-]], Expected 547156642390761476194741370840006174593084288894372625927973260005098646976716330666955874608367161577767293609297694001, Got 
 interpreter: Failed [5, "^", -5], Expected "arithmetic error", Got 
 interpreter: Failed [["let", "doubl", "=", ["fun*", ["n"], ["n", "+", "n"]]],
 ["let", "toNine", "=", ["fun*", ["f"], ["call", "f", 9]]],
@@ -276,9 +258,6 @@ interpreter: Failed ["call", ["fun*", ["x"], ["x","@",2]], [2]]
 , Expected "variable @ undeclared"
 , Got "closure or primop expected"
 
-interpreter: Failed [[["let", "x", "=", ["if-0", 3, 1, 2]], ["x", "^", 3]], "*", [["let", "f", "=", ["if-0", 0, ["fun*", ["x", "y"], ["x", "^", "y"]], ["fun*", ["x"], ["x", "+", 2]]]], ["call", "f", [3, "+", -10], 9]]]
-, Expected -322828856
-, Got 
 interpreter: Failed ["call", ["fun*", ["x", "y"], ["x", "+", "y"]], 1, 2, 3], Expected "number of arguments does not match number of parameters"
 , Got "number of arguments does not match the number of parameters"
 
