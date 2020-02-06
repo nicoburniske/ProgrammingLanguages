@@ -31,8 +31,8 @@ public class Main {
         }
     }
 
-    public static HashMap<Var, Answer> initializeStd() {
-        HashMap<Var, Answer> stdLib = new HashMap<Var, Answer>();
+    public static Store<Var, Answer> initializeStd() {
+        Store<Var, Answer> stdLib = new Store<>();
         stdLib.put(new Var("+"), new AnswerFunction(new Func(Arrays.asList(new Var("left"), new Var("right")), new SFVExpr() {
             @Override
             public Answer interpret(Store<Var, Answer> env) {

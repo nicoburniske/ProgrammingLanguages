@@ -22,7 +22,7 @@ public class Store<Key, Value> {
      * @param k
      * @return the value associated with the given key.
      */
-    Value get(Key k) {
+    public Value get(Key k) {
         try {
             return values.get(keys.lastIndexOf(k));
         } catch (IndexOutOfBoundsException e) {
@@ -33,7 +33,7 @@ public class Store<Key, Value> {
     /**
      * Records a new association within the store.
      */
-    void put(Key k, Value v) {
+    public void put(Key k, Value v) {
         keys.add(k);
         values.add(v);
     }
@@ -41,7 +41,7 @@ public class Store<Key, Value> {
     /**
      * Removes the most recent entry.
      */
-    void pop() {
+    public void pop() {
         this.keys.remove(this.keys.size() - 1);
         this.values.remove(this.values.size() - 1);
     }
