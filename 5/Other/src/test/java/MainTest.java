@@ -1,7 +1,9 @@
+import answer.Answer;
 import fdecl.SFVDecl;
 import fvexpr.*;
 import org.junit.Before;
 import org.junit.Test;
+import store.Store;
 
 import java.math.BigInteger;
 import java.util.Arrays;
@@ -17,7 +19,7 @@ public class MainTest {
     SFVExpr callfxTimes5, callfxYtimesX; // function calls
     SFVExpr ifXfiveElse10, funcOneElse100; // conditionals
     SFVExpr declArr1, declArr2; // decl arrays
-    HashMap<Var, Answer> stdlib = Main.initializeStd(); // the "standard library"
+    Store<Var, Answer> stdlib = Main.initializeStd(); // the "standard library"
 
     @Before
     public void init() {
@@ -67,12 +69,12 @@ public class MainTest {
             assertEquals(new IllegalStateException("\"variable x undeclared\"").getMessage(), e.getMessage());
         }
         try {
-            new Operator(new Var("y"), new Var("x"), new Var("^")).interpret(this.stdlib);
+            new Operator(new Var("y"), Arrays.asList(new Var("x")), new Var("^")).interpret(this.stdlib);
         } catch (Exception e) {
             assertEquals(new IllegalStateException("\"variable x undeclared\"").getMessage(), e.getMessage());
         }
         try {
-            new DeclArray(Arrays.asList(this.xEquals5, this.yEquals10), new Operator(new Var("x"), new Var("y"), new Var("/"))).interpret(this.stdlib);
+            new DeclArray(Arrays.asList(this.xEquals5, this.yEquals10), new Operator(new Var("x"), Arrays.asList(new Var("y")), new Var("/"))).interpret(this.stdlib);
         } catch (Exception e) {
             assertEquals(new IllegalStateException("\"closure or primop expected\"").getMessage(), e.getMessage());
         }

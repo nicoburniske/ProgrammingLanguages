@@ -1,7 +1,7 @@
 package fvexpr;
 
 /**
- * The constants that contain the Errors that the program can output.
+ * The constants that contain the Errors that the program can outpu
  */
 public interface Constants {
     String ERROR_UNDECLARED_VARIABLE_TEMPLATE = "\"variable %s undeclared\"";

@@ -19,7 +19,7 @@ public class SFVDecl {
     }
 
     public Answer interpret(Store<Var, Answer> acc) {
-        rhs.interpret(acc);
+        return rhs.interpret(acc);
     }
 
     public String toJson() {

@@ -20,11 +20,10 @@ public class DeclArray  implements SFVExpr {
 
     @Override
     public Answer interpret(Store<Var, Answer> env) {
-        HashMap<Var, Answer> envNew = new HashMap<Var, Answer>(env);
         for(SFVDecl d : decls) {
-            envNew.put(d.name, d.interpret(envNew));
+            env.put(d.name, d.interpret(env));
         }
-        return scope.interpret(envNew);
+        return scope.interpret(env);
     }
 
     @Override
