@@ -3,24 +3,7 @@ package fvexpr;
 import answer.Answer;
 import store.Store;
 
-
-/**
- *  An FVExpr is one of:
- *
- *      - a Var
- *
- *      - an Int
- *
- *      - an Operator [FVExpr, Var, FVExpr]
- *
- *      - a DeclArray [FDecl,...,FDecl,FVExpr]
- *
- *      - a Func ["fun*",VarList,FVExpr]
- *
- *      - a FuncCall ["call",FVExpr,FVExpr,...,FVExpr]
- *
- *      - a conditional ["if-0",FVExpr,FVExpr,FVExpr]
- */
+//TODO: create data definition.
 
 public interface SFVExpr {
     /**
