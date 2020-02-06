@@ -33,14 +33,14 @@ public class Func implements SFVExpr {
         return ret.toJSONString();
     }
 
-    public Answer apply(List<SFVExpr> params, HashMap<Var, Answer> acc) {
+    public Answer apply(List<SFVExpr> params, Store<Var, Answer> acc) {
         if (params.size() != arguments.size()) {
             return new AnswerString(ERROR_ARGUMENTS_MISMATCH);
         }
-        HashMap<Var, Answer> envNew = new HashMap<Var, Answer>(acc);
+//        Store<Var, Answer> envNew = new Store<>(acc);
         for (int ii = 1; ii <= params.size(); ii++) {
-            envNew.put(arguments.get(params.size() - ii), params.get(params.size() - ii).interpret(envNew));
+            acc.put(arguments.get(params.size() - ii), params.get(params.size() - ii).interpret(acc));
         }
-        return function.interpret(envNew);
+        return function.interpret(acc);
     }
 }
