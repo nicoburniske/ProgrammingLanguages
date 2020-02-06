@@ -7,7 +7,6 @@ import store.Store;
 
 import java.math.BigInteger;
 import java.util.Arrays;
-import java.util.HashMap;
 
 import static junit.framework.Assert.assertEquals;
 
@@ -42,6 +41,8 @@ public class MainTest {
         this.callfxYtimesX = new FuncCall(this.fxYtimesX, Arrays.asList(new Int((long) 10), (SFVExpr) new Int((long) 35)));
 
         this.ifXfiveElse10 = new Conditional(new Var("x"), new Int((long) 5), new Int((long) 10));
+
+
     }
 
     @Test
@@ -87,6 +88,7 @@ public class MainTest {
         assertEquals(new BigInteger("350"), this.callfxYtimesX.interpret(this.stdlib).result);
         assertEquals(new BigInteger("50"), this.callfxTimes5.interpret(this.stdlib).result);
         assertEquals(new BigInteger("25"), new DeclArray(Arrays.asList(this.xEquals5), this.xSquared).interpret(this.stdlib).result);
+    assertEquals(new BigInteger("420"), new DeclArray(Arrays.asList(new SFVDecl(new Var("x"), new Int((long) 20))), this.declArr1).interpret(new Store<Var, Answer>()));
     }
 
     @Test
