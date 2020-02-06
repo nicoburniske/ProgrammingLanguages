@@ -23,7 +23,11 @@ public class DeclArray  implements SFVExpr {
         for(SFVDecl d : decls) {
             env.put(d.name, d.interpret(env));
         }
-        return scope.interpret(env);
+        Answer ans = scope.interpret(env);
+        for(SFVDecl d : decls) {
+            env.pop();
+        }
+        return ans;
     }
 
     @Override
