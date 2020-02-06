@@ -2,9 +2,9 @@ package fvexpr;
 
 import answer.Answer;
 import org.json.simple.JSONArray;
+import store.Store;
 
 import java.math.BigInteger;
-import java.util.HashMap;
 
 public class Conditional implements SFVExpr {
     SFVExpr clause;
@@ -19,11 +19,11 @@ public class Conditional implements SFVExpr {
     }
 
     @Override
-    public Answer interpret(HashMap<Var, Answer> acc) {
-        if (clause.interpret(acc).result.equals(new BigInteger("0"))) {
-            return ifTrue.interpret(acc);
+    public Answer interpret(Store<Var, Answer> env) {
+        if (clause.interpret(env).result.equals(new BigInteger("0"))) {
+            return ifTrue.interpret(env);
         } else {
-            return ifFalse.interpret(acc);
+            return ifFalse.interpret(env);
         }
     }
 

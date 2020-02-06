@@ -5,6 +5,7 @@ import fvexpr.*;
 import org.json.simple.JSONArray;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public final class ParseUtils {
@@ -30,7 +31,7 @@ public final class ParseUtils {
                 return new FuncCall(parse(arr.get(1)),n);
             } else if(arr.size() == 3) {
                 if(arr.get(1) instanceof String) {
-                        return new Operator(parse(arr.get(0)), parse(arr.get(2)), new Var((String)arr.get(1)));
+                        return new Operator(parse(arr.get(0)), Arrays.asList(parse(arr.get(2))), new Var((String)arr.get(1)));
                 } else if (arr.get(0) instanceof String) {
                     if (((String)arr.get(0)).equals("fun*") && arr.get(1) instanceof List){
                         return new Func(parseVarList((List<Object>)arr.get(1)), parse(arr.get(2)));
@@ -75,9 +76,9 @@ public final class ParseUtils {
             JSONArray arr = (JSONArray) dec;
             if(((String)arr.get(0)).equals("let") && parse(arr.get(1)) instanceof Var && ((String)arr.get(2)).equals("=")) {
                 if(arr.get(3) instanceof JSONArray && parse(arr.get(3)) instanceof Func) {
-                    return new FDeclFVExpr((Var)parse(arr.get(1)), (Func)parse(arr.get(3)));
+                    return new SFVDecl((Var)parse(arr.get(1)), (Func)parse(arr.get(3)));
                 } else if (arr.get(3) instanceof Long) {
-                    return new FDeclInt((Var)parse(arr.get(1)), new Int((Long)arr.get(3)));
+                    return new SFVDecl((Var)parse(arr.get(1)), new Int((Long)arr.get(3)));
                 }
             }
         }

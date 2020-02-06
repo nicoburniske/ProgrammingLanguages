@@ -2,8 +2,7 @@ package fvexpr;
 
 import answer.Answer;
 import answer.AnswerString;
-
-import java.util.HashMap;
+import store.Store;
 
 import static fvexpr.Constants.ERROR_UNDECLARED_VARIABLE_TEMPLATE;
 
@@ -15,9 +14,9 @@ public class Var implements SFVExpr {
     }
 
     @Override
-    public Answer interpret(HashMap<Var, Answer> acc) {
-        if (acc.get(this) != null) {
-            return acc.get(this);
+    public Answer interpret(Store<Var, Answer> env) {
+        if (env.get(this) != null) {
+            return env.get(this);
         } else {
             return new AnswerString(String.format(ERROR_UNDECLARED_VARIABLE_TEMPLATE, this.myString));
         }

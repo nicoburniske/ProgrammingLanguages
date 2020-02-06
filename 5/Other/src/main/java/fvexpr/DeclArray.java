@@ -3,6 +3,7 @@ package fvexpr;
 import answer.Answer;
 import fdecl.SFVDecl;
 import org.json.simple.JSONArray;
+import store.Store;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,8 +19,8 @@ public class DeclArray  implements SFVExpr {
 
 
     @Override
-    public Answer interpret(HashMap<Var, Answer> acc) {
-        HashMap<Var, Answer> envNew = new HashMap<Var, Answer>(acc);
+    public Answer interpret(Store<Var, Answer> env) {
+        HashMap<Var, Answer> envNew = new HashMap<Var, Answer>(env);
         for(SFVDecl d : decls) {
             envNew.put(d.name, d.interpret(envNew));
         }

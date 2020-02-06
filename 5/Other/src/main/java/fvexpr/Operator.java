@@ -4,10 +4,9 @@ import answer.Answer;
 import answer.AnswerFunction;
 import answer.AnswerString;
 import org.json.simple.JSONArray;
+import store.Store;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 import static fvexpr.Constants.ERROR_CLOSURE_EXPECTED;
@@ -23,12 +22,12 @@ public class Operator implements SFVExpr {
         this.funcName = func;
     }
     @Override
-    public Answer interpret(HashMap<Var, Answer> acc) {
-        if (acc.get(funcName) != null) {
+    public Answer interpret(Store<Var, Answer> env) {
+        if (env.get(funcName) != null) {
             List<SFVExpr> params = new ArrayList<>();
             params.add(this.left);
             params.addAll(this.rhs);
-            return ((AnswerFunction) this.funcName.interpret(acc)).result.apply( params, acc);
+            return ((AnswerFunction) this.funcName.interpret(env)).result.apply( params, env);
         } else {
             return new AnswerString(ERROR_CLOSURE_EXPECTED);
         }

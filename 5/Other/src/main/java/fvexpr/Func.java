@@ -3,6 +3,7 @@ package fvexpr;
 import answer.Answer;
 import answer.AnswerString;
 import org.json.simple.JSONArray;
+import store.Store;
 
 import java.util.HashMap;
 import java.util.List;
@@ -20,7 +21,7 @@ public class Func implements SFVExpr {
     }
 
     @Override
-    public Answer interpret(HashMap<Var, Answer> acc) {
+    public Answer interpret(Store<Var, Answer> env) {
         return new AnswerString(CLOSURE_STRING);
     }
 

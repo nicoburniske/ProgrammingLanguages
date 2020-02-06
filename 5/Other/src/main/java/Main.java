@@ -5,6 +5,7 @@ import fvexpr.Func;
 import fvexpr.Var;
 import org.json.simple.parser.JSONParser;
 import parser.ParseUtils;
+import store.Store;
 
 import java.io.FileReader;
 import java.util.Arrays;
@@ -34,8 +35,8 @@ public class Main {
         HashMap<Var, Answer> stdLib = new HashMap<Var, Answer>();
         stdLib.put(new Var("+"), new AnswerFunction(new Func(Arrays.asList(new Var("left"), new Var("right")), new SFVExpr() {
             @Override
-            public Answer interpret(HashMap<Var, Answer> acc) {
-                return acc.get(new Var("right")).add(acc.get(new Var("left")));
+            public Answer interpret(Store<Var, Answer> env) {
+                return env.get(new Var("right")).add(env.get(new Var("left")));
             }
 
             @Override
@@ -45,8 +46,8 @@ public class Main {
         })));
         stdLib.put(new Var("*"), new AnswerFunction(new Func(Arrays.asList(new Var("left"), new Var("right")), new SFVExpr() {
             @Override
-            public Answer interpret(HashMap<Var, Answer> acc) {
-                return acc.get(new Var("right")).multiply(acc.get(new Var("left")));
+            public Answer interpret(Store<Var, Answer> env) {
+                return env.get(new Var("right")).multiply(env.get(new Var("left")));
             }
 
             @Override
@@ -56,8 +57,8 @@ public class Main {
         })));
         stdLib.put(new Var("^"), new AnswerFunction(new Func(Arrays.asList(new Var("left"), new Var("right")), new SFVExpr() {
             @Override
-            public Answer interpret(HashMap<Var, Answer> acc) {
-                return (acc.get(new Var("right")).pow(acc.get(new Var("left"))));
+            public Answer interpret(Store<Var, Answer> env) {
+                return (env.get(new Var("right")).pow(env.get(new Var("left"))));
             }
 
             @Override

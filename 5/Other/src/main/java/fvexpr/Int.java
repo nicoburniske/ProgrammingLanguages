@@ -3,9 +3,9 @@ package fvexpr;
 import answer.Answer;
 import answer.AnswerInt;
 import org.json.simple.JSONValue;
+import store.Store;
 
 import java.math.BigInteger;
-import java.util.HashMap;
 
 public class Int implements SFVExpr {
     BigInteger myNum;
@@ -15,7 +15,7 @@ public class Int implements SFVExpr {
     }
 
     @Override
-    public Answer interpret(HashMap<Var, Answer> acc) {
+    public Answer interpret(Store<Var, Answer> env) {
         return new AnswerInt(myNum);
     }
 

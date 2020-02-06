@@ -1,8 +1,7 @@
 package fvexpr;
 
 import answer.Answer;
-
-import java.util.HashMap;
+import store.Store;
 
 
 /**
@@ -26,9 +25,9 @@ import java.util.HashMap;
 public interface SFVExpr {
     /**
       an environment-based interpreter for the language of FVExpr
-     * @param acc the enviroment that interpret uses to run
+     * @param env the enviroment that interpret uses to run
      * @return An {@link Answer}
      */
-    public Answer interpret(HashMap<Var, Answer> acc);
+    public Answer interpret(Store<Var, Answer> env);
     String toJson();
 }
