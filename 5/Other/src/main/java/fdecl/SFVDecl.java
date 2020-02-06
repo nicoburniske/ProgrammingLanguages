@@ -3,10 +3,13 @@ package fdecl;
 import answer.Answer;
 import fvexpr.SFVExpr;
 import fvexpr.Var;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import store.Store;
 
 import java.util.HashMap;
 
-public  class SFVDecl {
+public class SFVDecl {
     public Var name;
     public SFVExpr rhs;
 
@@ -15,12 +18,17 @@ public  class SFVDecl {
         this.rhs = rhs;
     }
 
-    public  Answer interpret(HashMap<Var, Answer> acc) {
-        return null;
+    public Answer interpret(Store<Var, Answer> acc) {
+        rhs.interpret(acc);
     }
 
-    public Object toJson() {
-   return null;
+    public String toJson() {
+        JSONArray json = new JSONArray();
+        json.add("let");
+        json.add(this.name.toJson());
+        json.add("=");
+        json.add(this.rhs.toJson());
+        return json.toJSONString();
     }
 }
 
