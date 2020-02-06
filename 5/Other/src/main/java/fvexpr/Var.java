@@ -16,7 +16,7 @@ public class Var implements SFVExpr {
 
     @Override
     public Answer interpret(Store<Var, Location> env, Store<Location, Answer> store) {
-        if (env.get(this) != null) {
+        if (env.get(this) != null || store.get(env.get(this)) != null) {
             return store.get(env.get(this));
         } else {
             return new AnswerString(String.format(ERROR_UNDECLARED_VARIABLE_TEMPLATE, this.myString));
