@@ -90,7 +90,7 @@ public class MainTest {
         assertEquals(new BigInteger("350"), this.callfxYtimesX.interpret(this.stdEnv, this.stdStore).result);
         assertEquals(new BigInteger("50"), this.callfxTimes5.interpret(this.stdEnv, this.stdStore).result);
         assertEquals(new BigInteger("25"), new DeclArray(Arrays.asList(this.xEquals5), this.xSquared).interpret(this.stdEnv, this.stdStore).result);
-        assertEquals(new BigInteger("420"), new DeclArray(Arrays.asList(new SFVDecl(new Var("x"), new Int((long) 20))), this.declArr1).interpret(new Store<>(), new Store<>()));
+        assertEquals(new BigInteger("25"), new DeclArray(Arrays.asList(new SFVDecl(new Var("x"), new Int((long) 20))), this.declArr1).interpret(this.stdEnv, this.stdStore).result);
     }
 
     @Test
