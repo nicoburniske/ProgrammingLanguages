@@ -24,7 +24,7 @@ public class Operator implements SFVExpr {
     }
     @Override
     public Answer interpret(Store<Var, Location> env, Store<Location, Answer> store) {
-        if (env.get(funcName) != null || store.get(env.get(funcName)) != null) {
+        if (env.get(funcName) != null && store.get(env.get(funcName)) != null) {
             List<SFVExpr> params = new ArrayList<>();
             params.add(this.left);
             params.addAll(this.rhs);

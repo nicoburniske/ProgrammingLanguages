@@ -29,6 +29,7 @@ public class FuncCall implements SFVExpr {
             return ((AnswerFunction) store.get(env.get((Var) func))).result.apply(params, env, store);
         }
         else {
+            System.out.println(store.get(env.get((Var)func)).result.getClass());
             return new AnswerString(ERROR_CLOSURE_EXPECTED);
         }
     }
