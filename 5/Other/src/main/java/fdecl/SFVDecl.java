@@ -1,6 +1,8 @@
 package fdecl;
 
 import answer.Answer;
+import answer.AnswerFunction;
+import fvexpr.Func;
 import fvexpr.SFVExpr;
 import fvexpr.Var;
 import org.json.simple.JSONArray;
@@ -18,6 +20,9 @@ public class SFVDecl implements JSONAware {
     }
 
     public Answer interpret(Store<Var, Location> acc, Store<Location, Answer> store) {
+        if(rhs instanceof Func) {
+            return new AnswerFunction((Func)rhs);
+        }
         return rhs.interpret(acc, store);
     }
 
