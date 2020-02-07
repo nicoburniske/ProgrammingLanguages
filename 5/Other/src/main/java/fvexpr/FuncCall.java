@@ -33,13 +33,14 @@ public class FuncCall implements SFVExpr {
         }
     }
 
+
     @Override
-    public String toJson() {
+    public String toJSONString() {
         JSONArray ret = new JSONArray();
         ret.add("call");
-        ret.add(func.toJson());
+        ret.add(func);
         for (SFVExpr expr: params) {
-            ret.add(expr.toJson());
+            ret.add(expr);
         }
         return ret.toJSONString();
     }

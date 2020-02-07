@@ -25,13 +25,6 @@ public class Func implements SFVExpr {
         return new AnswerString(CLOSURE_STRING);
     }
 
-    @Override
-    public String toJson() {
-        JSONArray ret = new JSONArray();
-        ret.add("fun*");
-        ret.add(function.toJson());
-        return ret.toJSONString();
-    }
 
     public Answer apply(List<SFVExpr> params, Store<Var, Location> env, Store<Location, Answer> store) {
         if (params.size() != arguments.size()) {
@@ -47,5 +40,13 @@ public class Func implements SFVExpr {
             env.pop();
         }
         return ans;
+    }
+
+    @Override
+    public String toJSONString() {
+        JSONArray ret = new JSONArray();
+        ret.add("fun*");
+        ret.add(function);
+        return ret.toJSONString();
     }
 }

@@ -2,13 +2,14 @@ package fvexpr;
 
 import answer.Answer;
 import answer.AnswerInt;
+import org.json.simple.JSONAware;
 import org.json.simple.JSONValue;
 import store.Location;
 import store.Store;
 
 import java.math.BigInteger;
 
-public class Int implements SFVExpr {
+public class Int implements SFVExpr, JSONAware {
     BigInteger myNum;
 
     public Int(Long myNum) {
@@ -20,9 +21,9 @@ public class Int implements SFVExpr {
         return new AnswerInt(myNum);
     }
 
+
     @Override
-    public String toJson() {
-        JSONValue ret = new JSONValue();
-        return ret.toJSONString(myNum);
+    public String toJSONString() {
+        return this.myNum.toString();
     }
 }

@@ -39,6 +39,11 @@ public class Main {
         stdEnv.put(new Var("+"), zero);
         stdStore.put(zero, new AnswerFunction(new Func(Arrays.asList(new Var("left"), new Var("right")), new SFVExpr() {
             @Override
+            public String toJSONString() {
+                return null;
+            }
+
+            @Override
             public Answer interpret(Store<Var, Location> env, Store<Location, Answer> store) {
                 return store.get(env.get(new Var("right"))).add(store.get(env.get(new Var("left"))));
             }
@@ -52,6 +57,11 @@ public class Main {
         Location one = new Location(1);
         stdEnv.put(new Var("*"), one);
         stdStore.put(one, new AnswerFunction(new Func(Arrays.asList(new Var("left"), new Var("right")), new SFVExpr() {
+            @Override
+            public String toJSONString() {
+                return null;
+            }
+
             @Override
             public Answer interpret(Store<Var, Location> env, Store<Location, Answer> store) {
                 return store.get(env.get(new Var("right"))).multiply(store.get(env.get(new Var("left"))));
@@ -67,6 +77,11 @@ public class Main {
         Location two = new Location(2);
         stdEnv.put(new Var("^"), two);
         stdStore.put(two, new AnswerFunction(new Func(Arrays.asList(new Var("left"), new Var("right")), new SFVExpr() {
+            @Override
+            public String toJSONString() {
+                return null;
+            }
+
             @Override
             public Answer interpret(Store<Var, Location> env, Store<Location, Answer> store) {
                 return store.get((env.get(new Var("right")))).pow(store.get(env.get(new Var("left"))));

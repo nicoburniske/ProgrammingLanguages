@@ -4,10 +4,11 @@ import answer.Answer;
 import fvexpr.SFVExpr;
 import fvexpr.Var;
 import org.json.simple.JSONArray;
+import org.json.simple.JSONAware;
 import store.Location;
 import store.Store;
 
-public class SFVDecl {
+public class SFVDecl implements JSONAware {
     public Var name;
     public SFVExpr rhs;
 
@@ -20,13 +21,15 @@ public class SFVDecl {
         return rhs.interpret(acc, store);
     }
 
-    public String toJson() {
+
+
+    @Override
+    public String toJSONString() {
         JSONArray json = new JSONArray();
         json.add("let");
-        json.add(this.name.toJson());
+        json.add(this.name);
         json.add("=");
-        json.add(this.rhs.toJson());
-        return json.toJSONString();
-    }
+        json.add(this.rhs);
+        return json.toJSONString();    }
 }
 

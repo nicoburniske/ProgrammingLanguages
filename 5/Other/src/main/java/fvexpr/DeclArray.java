@@ -32,13 +32,12 @@ public class DeclArray  implements SFVExpr {
         return ans;
     }
 
+
     @Override
-    public String toJson() {
+    public String toJSONString() {
         JSONArray ret = new JSONArray();
-        for (SFVDecl decl : decls) {
-            ret.add(decl.toJson());
-        }
-        ret.add(scope.toJson());
+        ret.addAll(decls);
+        ret.add(scope);
         return ret.toJSONString();
     }
 }

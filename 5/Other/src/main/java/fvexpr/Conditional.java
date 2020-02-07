@@ -28,15 +28,13 @@ public class Conditional implements SFVExpr {
         }
     }
 
+
     @Override
-    public String toJson() {
+    public String toJSONString() {
         JSONArray ret = new JSONArray();
         ret.add("if-0");
-        ret.add(clause.toJson());
-        ret.add(ifTrue.toJson());
-        ret.add(ifFalse.toJson());
-        return ret.toJSONString();
-    }
-
-
+        ret.add(clause);
+        ret.add(ifTrue);
+        ret.add(ifFalse);
+        return ret.toJSONString();    }
 }
