@@ -47,11 +47,6 @@ public class Main {
             public Answer interpret(Store<Var, Location> env, Store<Location, Answer> store) {
                 return store.get(env.get(new Var("right"))).add(store.get(env.get(new Var("left"))));
             }
-
-            @Override
-            public String toJson() {
-                return "+";
-            }
         })));
 
         Location one = new Location(1);
@@ -67,10 +62,6 @@ public class Main {
                 return store.get(env.get(new Var("right"))).multiply(store.get(env.get(new Var("left"))));
             }
 
-            @Override
-            public String toJson() {
-                return "*";
-            }
         })));
 
 
@@ -85,11 +76,6 @@ public class Main {
             @Override
             public Answer interpret(Store<Var, Location> env, Store<Location, Answer> store) {
                 return store.get((env.get(new Var("right")))).pow(store.get(env.get(new Var("left"))));
-            }
-
-            @Override
-            public String toJson() {
-                return "^";
             }
         })));
         return Arrays.asList(stdEnv, stdStore);
