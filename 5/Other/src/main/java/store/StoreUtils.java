@@ -12,7 +12,7 @@ public class StoreUtils {
             return store.get(env.get(v));
         }
         else {
-            return new AnswerString(ERROR_UNDECLARED_VARIABLE_TEMPLATE);
+            return new AnswerString(String.format(ERROR_UNDECLARED_VARIABLE_TEMPLATE, v.myString));
         }
     }
 

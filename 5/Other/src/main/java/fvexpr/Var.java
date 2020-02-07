@@ -5,11 +5,12 @@ import answer.AnswerString;
 import org.json.simple.JSONAware;
 import store.Location;
 import store.Store;
+import store.StoreUtils;
 
 import static fvexpr.Constants.ERROR_UNDECLARED_VARIABLE_TEMPLATE;
 
 public class Var implements SFVExpr {
-    String myString;
+    public String myString;
 
     public Var(String myString) {
         this.myString = myString;
@@ -17,11 +18,7 @@ public class Var implements SFVExpr {
 
     @Override
     public Answer interpret(Store<Var, Location> env, Store<Location, Answer> store) {
-        if (env.get(this) != null && store.get(env.get(this)) != null) {
-            return store.get(env.get(this));
-        } else {
-            return new AnswerString(String.format(ERROR_UNDECLARED_VARIABLE_TEMPLATE, this.myString));
-        }
+        return StoreUtils.lookup(env, store, this);
     }
 
 
