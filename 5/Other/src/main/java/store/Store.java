@@ -2,6 +2,7 @@ package store;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Generic store class that will be used as both a store and an environment.
@@ -48,5 +49,15 @@ public class Store<Key, Value> {
 
     public int getSize() {
         return this.keys.size();
+    }
+
+    @Override
+    public String toString() {
+        return "Store{" +
+                "keys=" + keys.stream().map(Object::toString)
+                .collect(Collectors.joining(", ")) +
+                ", values=" + values.stream().map(Object::toString)
+                .collect(Collectors.joining(", ")) +
+                '}';
     }
 }

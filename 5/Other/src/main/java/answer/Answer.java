@@ -41,4 +41,11 @@ public class Answer<T> {
     public Answer pow(Answer obj) {
         return new AnswerString(ERROR_INVALID_ARITHMETIC);
     }
+
+    @Override
+    public String toString() {
+        return "Answer{" +
+                "result=" + result.toString() +
+                '}';
+    }
 }

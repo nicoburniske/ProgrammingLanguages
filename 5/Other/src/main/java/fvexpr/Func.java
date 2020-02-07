@@ -49,4 +49,11 @@ public class Func implements SFVExpr {
         ret.add(function);
         return ret.toJSONString();
     }
+
+    @Override
+    public String toString() {
+        return "Func{" +
+                this.toJSONString() +
+                '}';
+    }
 }
