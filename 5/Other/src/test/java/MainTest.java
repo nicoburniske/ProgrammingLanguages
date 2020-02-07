@@ -1,11 +1,16 @@
 import answer.Answer;
 import fdecl.SFVDecl;
 import fvexpr.*;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.junit.Before;
 import org.junit.Test;
+import parser.ParseUtils;
 import store.Location;
 import store.Store;
+import store.StoreUtils;
 
+import java.io.FileReader;
 import java.math.BigInteger;
 import java.util.Arrays;
 
@@ -19,8 +24,8 @@ public class MainTest {
     SFVExpr callfxTimes5, callfxYtimesX; // function calls
     SFVExpr ifXfiveElse10, funcOneElse100; // conditionals
     SFVExpr declArr1, declArr2; // decl arrays
-    Store<Var, Location> stdEnv = Main.initializeStd().get(0); // the "standard library"
-    Store<Location, Answer> stdStore = Main.initializeStd().get(1); // the "standard library"
+    Store<Var, Location> stdEnv = StoreUtils.initializeStd().get(0); // the "standard library"
+    Store<Location, Answer> stdStore = StoreUtils.initializeStd().get(1); // the "standard library"
 
     @Before
     public void init() {
@@ -95,6 +100,18 @@ public class MainTest {
 
     @Test
     public void testToJSON() {
+        SFVExpr hardTest = null;
+        try {
+            hardTest = ParseUtils.parse(new JSONParser().parse("[[\"let\", \"f\", \"=\", \n" +
+                    "  [\"fun*\", [\"n\"], [\"if-0\", \"n\", 1, [[\"call\", \"f\", [\"n\", \"+\", -1]], \"*\", \"n\"]]]\n" +
+                    " ], \n" +
+                    " [\"call\", \"f\", 5]]"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        assertEquals(hardTest.interpret(stdEnv, stdStore), new BigInteger("120"));
+
+
 
     }
 }
