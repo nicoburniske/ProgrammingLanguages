@@ -2,6 +2,7 @@ package fvexpr;
 
 import answer.Answer;
 import answer.AnswerString;
+import org.json.simple.JSONAware;
 import store.Location;
 import store.Store;
 
@@ -23,10 +24,6 @@ public class Var implements SFVExpr {
         }
     }
 
-    @Override
-    public String toJson() {
-        return this.myString;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -41,5 +38,10 @@ public class Var implements SFVExpr {
     @Override
     public int hashCode() {
         return myString != null ? myString.hashCode() : 0;
+    }
+
+    @Override
+    public String toJSONString() {
+        return String.format("\"%s\"",this.myString);
     }
 }

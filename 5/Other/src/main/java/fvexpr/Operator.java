@@ -34,10 +34,13 @@ public class Operator implements SFVExpr {
         }
     }
 
+
     @Override
-    public String toJson() {
+    public String toJSONString() {
         JSONArray ret = new JSONArray();
-       //TODO fix tojson
+        ret.add(left);
+        ret.add(this.funcName);
+        this.rhs.forEach(arg -> ret.add(arg));
         return ret.toJSONString();
     }
 }
