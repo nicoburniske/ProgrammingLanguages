@@ -1,0 +1,9 @@
+#!/bin/bash
+for file in ../../collected-tests/4/ITests/*-in.json
+do
+    INPUT="'$file'"
+    SUBSTRING=$(echo $INPUT| cut -d'-' -f 2)
+    OUTFILE= $("../../collected-"$SUBSTRING"-out.json")
+    ./xinterpreter < $file | diff - $OUTFILE
+done
+
