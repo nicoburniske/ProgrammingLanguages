@@ -9,6 +9,7 @@ import store.Store;
 import store.StoreUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static fvexpr.Constants.ERROR_CLOSURE_EXPECTED;
@@ -21,6 +22,11 @@ public class Operator implements SFVExpr {
     public Operator(SFVExpr left, List<SFVExpr> right, Var func) {
         this.left = left;
         this.rhs = right;
+        this.funcName = func;
+    }
+    public Operator(SFVExpr left, SFVExpr right, Var func) {
+        this.left = left;
+        this.rhs = Arrays.asList(right);
         this.funcName = func;
     }
     @Override

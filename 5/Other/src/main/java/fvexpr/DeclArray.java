@@ -5,6 +5,7 @@ import fdecl.SFVDecl;
 import org.json.simple.JSONArray;
 import store.Location;
 import store.Store;
+import store.StoreUtils;
 
 import java.util.List;
 
@@ -21,9 +22,7 @@ public class DeclArray  implements SFVExpr {
     @Override
     public Answer interpret(Store<Var, Location> env, Store<Location, Answer> store) {
         for(SFVDecl d : decls) {
-            Location l = new Location(store.getSize());
-            env.put(d.name, l);
-            store.put(l, d.interpret(env, store));
+            StoreUtils.insertIntoStore(env, store, d);
         }
         Answer ans = scope.interpret(env, store);
         for(SFVDecl d : decls) {

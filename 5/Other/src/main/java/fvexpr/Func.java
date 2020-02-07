@@ -1,10 +1,13 @@
 package fvexpr;
 
 import answer.Answer;
+import answer.AnswerFunction;
 import answer.AnswerString;
+import fdecl.SFVDecl;
 import org.json.simple.JSONArray;
 import store.Location;
 import store.Store;
+import store.StoreUtils;
 
 import java.util.List;
 
@@ -22,6 +25,7 @@ public class Func implements SFVExpr {
 
     @Override
     public Answer interpret(Store<Var, Location> env, Store<Location, Answer> store) {
+        //return new AnswerFunction(this);
         return new AnswerString(CLOSURE_STRING);
     }
 
@@ -31,9 +35,7 @@ public class Func implements SFVExpr {
             return new AnswerString(ERROR_ARGUMENTS_MISMATCH);
         }
         for (int ii = 1; ii <= params.size(); ii++) {
-            Location l = new Location(store.getSize());
-            env.put(arguments.get(params.size() - ii), l);
-            store.put(l, params.get(params.size() - ii).interpret(env, store));
+            StoreUtils.insertIntoStore(env, store, new SFVDecl(arguments.get(params.size() - ii), params.get(params.size() - ii)));
         }
 //        System.out.println("=======================\n" + env.toString() + "\n" + store.toString() + "\n=======================");
         Answer ans = function.interpret(env, store);

@@ -20,9 +20,6 @@ public class SFVDecl implements JSONAware {
     }
 
     public Answer interpret(Store<Var, Location> acc, Store<Location, Answer> store) {
-        if(rhs instanceof Func) {
-            return new AnswerFunction((Func)rhs);
-        }
         return rhs.interpret(acc, store);
     }
 
