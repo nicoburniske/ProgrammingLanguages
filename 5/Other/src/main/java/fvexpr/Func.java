@@ -35,6 +35,7 @@ public class Func implements SFVExpr {
             env.put(arguments.get(params.size() - ii), l);
             store.put(l, params.get(params.size() - ii).interpret(env, store));
         }
+        System.out.println("=======================\n" + env.toString() + "\n" + store.toString() + "\n=======================");
         Answer ans = function.interpret(env, store);
         for (int ii = 1; ii <= params.size(); ii++) {
             env.pop();
@@ -46,6 +47,7 @@ public class Func implements SFVExpr {
     public String toJSONString() {
         JSONArray ret = new JSONArray();
         ret.add("fun*");
+        ret.add(arguments);
         ret.add(function);
         return ret.toJSONString();
     }

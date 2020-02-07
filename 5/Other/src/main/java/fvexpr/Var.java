@@ -44,4 +44,9 @@ public class Var implements SFVExpr {
     public String toJSONString() {
         return String.format("\"%s\"",this.myString);
     }
+
+    @Override
+    public String toString() {
+        return "\"" + myString + "\"";
+    }
 }

@@ -40,7 +40,7 @@ public class Main {
         stdStore.put(zero, new AnswerFunction(new Func(Arrays.asList(new Var("left"), new Var("right")), new SFVExpr() {
             @Override
             public String toJSONString() {
-                return null;
+                return "+";
             }
 
             @Override
@@ -54,7 +54,7 @@ public class Main {
         stdStore.put(one, new AnswerFunction(new Func(Arrays.asList(new Var("left"), new Var("right")), new SFVExpr() {
             @Override
             public String toJSONString() {
-                return null;
+                return "*";
             }
 
             @Override
@@ -70,7 +70,7 @@ public class Main {
         stdStore.put(two, new AnswerFunction(new Func(Arrays.asList(new Var("left"), new Var("right")), new SFVExpr() {
             @Override
             public String toJSONString() {
-                return null;
+                return "^";
             }
 
             @Override

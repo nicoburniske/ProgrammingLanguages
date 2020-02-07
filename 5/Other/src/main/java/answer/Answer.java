@@ -44,8 +44,7 @@ public class Answer<T> {
 
     @Override
     public String toString() {
-        return "Answer{" +
-                "result=" + result.toString() +
+        return "Answer{" + result.toString() +
                 '}';
     }
 }
