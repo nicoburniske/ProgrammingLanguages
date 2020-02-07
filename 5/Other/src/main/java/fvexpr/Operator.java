@@ -6,6 +6,7 @@ import answer.AnswerString;
 import org.json.simple.JSONArray;
 import store.Location;
 import store.Store;
+import store.StoreUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,11 +25,11 @@ public class Operator implements SFVExpr {
     }
     @Override
     public Answer interpret(Store<Var, Location> env, Store<Location, Answer> store) {
-        if (env.get(funcName) != null && store.get(env.get(funcName)) != null) {
+        if (StoreUtils.isLookupValid(env, store, funcName)) {
             List<SFVExpr> params = new ArrayList<>();
             params.add(this.left);
             params.addAll(this.rhs);
-            return ((AnswerFunction) this.funcName.interpret(env, store)).result.apply( params, env, store);
+            return ((AnswerFunction) StoreUtils.lookup(env, store, this.funcName)).result.apply( params, env, store);
         } else {
             return new AnswerString(ERROR_CLOSURE_EXPECTED);
         }
