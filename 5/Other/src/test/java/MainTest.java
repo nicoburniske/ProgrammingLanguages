@@ -109,9 +109,8 @@ public class MainTest {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        System.out.println(hardTest.toJSONString());
         assertEquals(hardTest.interpret(stdEnv, stdStore), new BigInteger("120"));
-
-
 
     }
 }

@@ -47,7 +47,8 @@ public class OperatorTest {
     @Test
     public void interpret() {
         assertEquals(declArray1.interpret(stdEnv, stdStore).result, new BigInteger("140"));
-        //TODO:check this number
+        assertEquals(new BigInteger("0"), new Operator(new Int((long)1), Arrays.asList(new Int((long)-1)),new Var("+")).interpret(stdEnv, stdStore).result);
+        assertEquals(new BigInteger("0"), new Operator(new Int((long)-1), Arrays.asList(new Int((long)1)),new Var("+")).interpret(stdEnv, stdStore).result);
     }
 
     @Test
