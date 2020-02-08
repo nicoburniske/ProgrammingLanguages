@@ -14,30 +14,29 @@ import java.util.List;
 import static fvexpr.Constants.ERROR_UNDECLARED_VARIABLE_TEMPLATE;
 
 public class StoreUtils {
-    public  static  Answer lookup(Store<Var, Location> env, Store<Location, Answer> store, Var v){
-        if(isLookupValid(env, store, v)) {
+    public static Answer lookup(Store<Var, Location> env, Store<Location, Answer> store, Var v) {
+        if (isLookupValid(env, store, v)) {
             return store.get(env.get(v));
-        }
-        else {
+        } else {
             return new AnswerString(String.format(ERROR_UNDECLARED_VARIABLE_TEMPLATE, v.myString));
         }
     }
 
-    public  static  Boolean isLookupValid(Store<Var, Location> env, Store<Location, Answer> store, Var v){
-        return ( (env.get(v) != null) && (store.get(env.get(v)) != null));
+    public static Boolean isLookupValid(Store<Var, Location> env, Store<Location, Answer> store, Var v) {
+        return ((env.get(v) != null) && (store.get(env.get(v)) != null));
     }
 
     public static void insertIntoStore(Store<Var, Location> env, Store<Location, Answer> store, SFVDecl d) {
         // obtain a unique location.
-        Location l = new Location(store.getSize()+env.getSize());
+        Location l = new Location(store.getSize() + env.getSize());
         store.put(l, d.interpret(env, store));
         env.put(d.name, l);
     }
 
     public static void insertIntoStore(Store<Var, Location> env, Store<Location, Answer> store, Var v, Answer a) {
-        Location l = new Location(store.getSize());
-        env.put(v, l);
+        Location l = new Location(store.getSize() + env.getSize());
         store.put(l, a);
+        env.put(v, l);
     }
 
     public static List<Store> initializeStd() {

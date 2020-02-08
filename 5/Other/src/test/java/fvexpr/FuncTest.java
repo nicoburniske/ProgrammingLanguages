@@ -37,8 +37,8 @@ public class FuncTest {
 
     @Test
     public void name() {
-        assertEquals(f1.interpret(stdEnv, stdStore).result, CLOSURE_STRING);
-        assertEquals(f2.interpret(stdEnv, stdStore).result, CLOSURE_STRING);
-        assertEquals(f3.interpret(stdEnv, stdStore).result, CLOSURE_STRING);
+        assertEquals(f1.interpret(stdEnv, stdStore).result, f1);
+        assertEquals(f2.interpret(stdEnv, stdStore).result, f2);
+        assertEquals(f3.interpret(stdEnv, stdStore).result, f3);
     }
 }

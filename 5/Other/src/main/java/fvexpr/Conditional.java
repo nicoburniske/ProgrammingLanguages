@@ -36,5 +36,26 @@ public class Conditional implements SFVExpr {
         ret.add(clause);
         ret.add(ifTrue);
         ret.add(ifFalse);
-        return ret.toJSONString();    }
+        return ret.toJSONString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Conditional that = (Conditional) o;
+
+        if (!clause.equals(that.clause)) return false;
+        if (!ifTrue.equals(that.ifTrue)) return false;
+        return ifFalse.equals(that.ifFalse);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = clause.hashCode();
+        result = 31 * result + ifTrue.hashCode();
+        result = 31 * result + ifFalse.hashCode();
+        return result;
+    }
 }

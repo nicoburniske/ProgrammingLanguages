@@ -20,6 +20,20 @@ public class Int implements SFVExpr, JSONAware {
         return new AnswerInt(myNum);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Int anInt = (Int) o;
+
+        return myNum.equals(anInt.myNum);
+    }
+
+    @Override
+    public int hashCode() {
+        return myNum.hashCode();
+    }
 
     @Override
     public String toJSONString() {

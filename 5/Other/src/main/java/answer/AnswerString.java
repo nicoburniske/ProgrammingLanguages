@@ -26,4 +26,9 @@ public class AnswerString extends Answer<String> {
     public Answer pow(Answer obj) {
         return super.multiply(obj);
     }
+
+    @Override
+    public String toString() {
+        return result;
+    }
 }

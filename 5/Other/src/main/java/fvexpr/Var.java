@@ -21,22 +21,6 @@ public class Var implements SFVExpr {
         return StoreUtils.lookup(env, store, this);
     }
 
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Var var = (Var) o;
-
-        return myString != null ? myString.equals(var.myString) : var.myString == null;
-    }
-
-    @Override
-    public int hashCode() {
-        return myString != null ? myString.hashCode() : 0;
-    }
-
     @Override
     public String toJSONString() {
         return String.format("\"%s\"",this.myString);
@@ -45,5 +29,20 @@ public class Var implements SFVExpr {
     @Override
     public String toString() {
         return "\"" + myString + "\"";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Var var = (Var) o;
+
+        return myString.equals(var.myString);
+    }
+
+    @Override
+    public int hashCode() {
+        return myString.hashCode();
     }
 }

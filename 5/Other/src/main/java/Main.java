@@ -21,7 +21,7 @@ public class Main {
                 Object obj = new JSONParser().parse(new FileReader(args[1]));
                 SFVExpr result = ParseUtils.parse(obj);
                 try {
-                    System.out.println(result.interpret(StoreUtils.initializeStd().get(0), StoreUtils.initializeStd().get(1)).result);
+                    System.out.println(result.interpret(StoreUtils.initializeStd().get(0), StoreUtils.initializeStd().get(1)).toString());
                 } catch (IllegalStateException e) {
                     System.out.println(e.getMessage());
                 }

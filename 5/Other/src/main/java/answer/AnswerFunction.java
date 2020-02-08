@@ -8,4 +8,9 @@ public class AnswerFunction extends Answer<Func> {
     public AnswerFunction(Func result) {
         super(result);
     }
+
+    @Override
+    public String toString() {
+        return CLOSURE_STRING;
+    }
 }

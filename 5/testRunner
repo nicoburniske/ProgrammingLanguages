@@ -7,7 +7,7 @@ do
    #echo $temp1
    #echo $temp2 
    #echo $temp3 
-    echo "Begin"
+    echo $temp3
     ./xinterpreter < $file | diff -w - $temp3
     echo "end"
 done

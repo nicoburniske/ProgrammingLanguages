@@ -50,4 +50,24 @@ public class Operator implements SFVExpr {
         this.rhs.forEach(arg -> ret.add(arg));
         return ret.toJSONString();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Operator operator = (Operator) o;
+
+        if (!left.equals(operator.left)) return false;
+        if (!rhs.equals(operator.rhs)) return false;
+        return funcName.equals(operator.funcName);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = left.hashCode();
+        result = 31 * result + rhs.hashCode();
+        result = 31 * result + funcName.hashCode();
+        return result;
+    }
 }

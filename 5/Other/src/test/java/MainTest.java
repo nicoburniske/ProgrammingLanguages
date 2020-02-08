@@ -101,7 +101,7 @@ public class MainTest {
 
     @Test
     public void testToJSON() {
-        SFVExpr hardTest = null;
+        /*SFVExpr hardTest = null;
         try {
             hardTest = ParseUtils.parse(new JSONParser().parse("[[\"let\", \"f\", \"=\", " +
                     "  [\"fun*\", [\"n\"], [\"if-0\", \"n\", 1, [\"call\", \"f\", [\"n\", \"+\", -1]]]]" +
@@ -112,6 +112,16 @@ public class MainTest {
             e.printStackTrace();
         }
         System.out.println(hardTest.toJSONString());
-        assertEquals(new BigInteger("1"), hardTest.interpret(stdEnv, stdStore).result);
+        assertEquals(new BigInteger("1"), hardTest.interpret(stdEnv, stdStore).result);*/
+
+        SFVExpr hardTest2 = null;
+        try {
+            hardTest2 = ParseUtils.parse(new JSONParser().parse("[[\"let\", \"x\", \"=\", 9], [\"let\", \"y\", \"=\", [\"fun*\", [\"a\", \"b\"], [\"if-0\", \"a\", \"b\", [\"a\", \"+\", \"x\"]]]], [[\"let\", \"x\", \"=\", 1], [\"call\", \"y\", 3, 4]]]"));
+        } catch (ParseException e) {
+            fail();
+            e.printStackTrace();
+        }
+        System.out.println(hardTest2.toJSONString());
+        // assertEquals(new BigInteger("11"), hardTest2.interpret(stdEnv, stdStore).result);
     }
 }

@@ -24,12 +24,9 @@ public class FuncCall implements SFVExpr {
 
     @Override
     public Answer interpret(Store<Var, Location> env, Store<Location, Answer> store) {
-        if(func instanceof Func) {
-            return ((Func)func).apply(params, env, store);
-        } else if (func instanceof Var && StoreUtils.lookup(env, store, (Var)func) instanceof AnswerFunction) {
-            return ((AnswerFunction) StoreUtils.lookup(env, store, (Var)func)).result.apply(params, env, store);
-        }
-        else {
+        if (func.interpret(env, store) instanceof AnswerFunction) {
+            return ((AnswerFunction) func.interpret(env, store)).result.apply(params, env, store);
+        } else {
 //            System.out.println(store.get(env.get((Var)func)).result.toString());
             return new AnswerString(ERROR_CLOSURE_EXPECTED);
         }
@@ -41,9 +38,27 @@ public class FuncCall implements SFVExpr {
         JSONArray ret = new JSONArray();
         ret.add("call");
         ret.add(func);
-        for (SFVExpr expr: params) {
+        for (SFVExpr expr : params) {
             ret.add(expr);
         }
         return ret.toJSONString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        FuncCall funcCall = (FuncCall) o;
+
+        if (!func.equals(funcCall.func)) return false;
+        return params.equals(funcCall.params);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = func.hashCode();
+        result = 31 * result + params.hashCode();
+        return result;
     }
 }
