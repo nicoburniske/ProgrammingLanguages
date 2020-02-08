@@ -15,6 +15,7 @@ import java.math.BigInteger;
 import java.util.Arrays;
 
 import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 
 public class MainTest {
@@ -69,7 +70,7 @@ public class MainTest {
         } catch (Exception e) {
             assertEquals(new IllegalStateException("\"variable y undeclared\"").getMessage(), e.getMessage());
         }
-        assertEquals("\"closure\"", this.fxTimes5.interpret(this.stdEnv, this.stdStore).result);
+        assertEquals(new Func(Arrays.asList(new Var("x")), new Operator(new Var("x"), new Int( 5l), new Var("*"))), this.fxTimes5.interpret(this.stdEnv, this.stdStore).result);
 
         try {
             this.xSquared.interpret(this.stdEnv,this.stdStore);
@@ -107,16 +108,10 @@ public class MainTest {
                     " ], " +
                     " [\"call\", \"f\", 2]]"));
         } catch (ParseException e) {
+            fail();
             e.printStackTrace();
         }
         System.out.println(hardTest.toJSONString());
-        System.out.println("[[\"let\", \"f\", \"=\", " +
-                "  [\"fun*\", [\"n\"], [\"if-0\", \"n\", 1, [\"call\", \"f\", [\"n\", \"+\", -1]]]]" +
-                " ], " +
-                " [\"call\", \"f\", 1]]");
-        assertEquals(hardTest.interpret(stdEnv, stdStore), new BigInteger("120"));
-
-
-
+        assertEquals(new BigInteger("1"), hardTest.interpret(stdEnv, stdStore).result);
     }
 }

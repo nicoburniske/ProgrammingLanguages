@@ -3,7 +3,6 @@ package fvexpr;
 import answer.Answer;
 import answer.AnswerInt;
 import org.json.simple.JSONAware;
-import org.json.simple.JSONValue;
 import store.Location;
 import store.Store;
 

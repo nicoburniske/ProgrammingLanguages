@@ -10,16 +10,16 @@ import store.Store;
 import store.StoreUtils;
 
 import java.util.List;
+import java.util.Objects;
 
-import static fvexpr.Constants.CLOSURE_STRING;
 import static fvexpr.Constants.ERROR_ARGUMENTS_MISMATCH;
 
 public class Func implements SFVExpr {
-    List<Var> arguments;
+    List<Var> parameters;
     SFVExpr function;
 
-    public Func(List<Var> arguments, SFVExpr function) {
-        this.arguments = arguments;
+    public Func(List<Var> parameters, SFVExpr function) {
+        this.parameters = parameters;
         this.function = function;
     }
 
@@ -30,18 +30,34 @@ public class Func implements SFVExpr {
     }
 
 
-    public Answer apply(List<SFVExpr> params, Store<Var, Location> env, Store<Location, Answer> store) {
-        if (params.size() != arguments.size()) {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Func func = (Func) o;
+        return Objects.equals(parameters, func.parameters) &&
+                Objects.equals(function, func.function);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(parameters, function);
+    }
+
+    public Answer apply(List<SFVExpr> arguments, Store<Var, Location> env, Store<Location, Answer> store) {
+        if (arguments.size() != this.parameters.size()) {
             return new AnswerString(ERROR_ARGUMENTS_MISMATCH);
         }
-        for (int ii = 1; ii <= params.size(); ii++) {
-            StoreUtils.insertIntoStore(env, store, new SFVDecl(arguments.get(params.size() - ii), params.get(params.size() - ii)));
+        for (int ii = 1; ii <= arguments.size(); ii++) {
+            StoreUtils.insertIntoStore(env, store, new SFVDecl(this.parameters.get(arguments.size() - ii), arguments.get(arguments.size() - ii)));
         }
 //        System.out.println("=======================\n" + env.toString() + "\n" + store.toString() + "\n=======================");
         Answer ans = function.interpret(env, store);
-        for (int ii = 1; ii <= params.size(); ii++) {
+
+        for (SFVExpr v : arguments) {
             env.pop();
         }
+
         return ans;
     }
 
@@ -49,7 +65,7 @@ public class Func implements SFVExpr {
     public String toJSONString() {
         JSONArray ret = new JSONArray();
         ret.add("fun*");
-        ret.add(arguments);
+        ret.add(parameters);
         ret.add(function);
         return ret.toJSONString();
     }

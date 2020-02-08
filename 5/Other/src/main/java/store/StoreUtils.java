@@ -28,11 +28,17 @@ public class StoreUtils {
     }
 
     public static void insertIntoStore(Store<Var, Location> env, Store<Location, Answer> store, SFVDecl d) {
-        Location l = new Location(store.getSize());
-        env.put(d.name, l);
+        // obtain a unique location.
+        Location l = new Location(store.getSize()+env.getSize());
         store.put(l, d.interpret(env, store));
+        env.put(d.name, l);
     }
 
+    public static void insertIntoStore(Store<Var, Location> env, Store<Location, Answer> store, Var v, Answer a) {
+        Location l = new Location(store.getSize());
+        env.put(v, l);
+        store.put(l, a);
+    }
 
     public static List<Store> initializeStd() {
         Store<Var, Location> stdEnv = new Store<>();
