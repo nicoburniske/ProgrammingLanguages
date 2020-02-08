@@ -102,13 +102,17 @@ public class MainTest {
     public void testToJSON() {
         SFVExpr hardTest = null;
         try {
-            hardTest = ParseUtils.parse(new JSONParser().parse("[[\"let\", \"f\", \"=\", \n" +
-                    "  [\"fun*\", [\"n\"], [\"if-0\", \"n\", 1, [[\"call\", \"f\", [\"n\", \"+\", -1]], \"*\", \"n\"]]]\n" +
-                    " ], \n" +
-                    " [\"call\", \"f\", 5]]"));
+            hardTest = ParseUtils.parse(new JSONParser().parse("[[\"let\", \"f\", \"=\", " +
+                    "  [\"fun*\", [\"n\"], [\"if-0\", \"n\", 1, [\"call\", \"f\", [\"n\", \"+\", -1]]]]" +
+                    " ], " +
+                    " [\"call\", \"f\", 2]]"));
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        System.out.println("[[\"let\", \"f\", \"=\", " +
+                "  [\"fun*\", [\"n\"], [\"if-0\", \"n\", 1, [\"call\", \"f\", [\"n\", \"+\", -1]]]]" +
+                " ], " +
+                " [\"call\", \"f\", 1]]");
         assertEquals(hardTest.interpret(stdEnv, stdStore), new BigInteger("120"));
 
 
