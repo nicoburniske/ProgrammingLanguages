@@ -47,7 +47,7 @@ public class StoreUtils {
 
             @Override
             public Answer interpret(Store<Var, Location> env, Store<Location, Answer> store) {
-                return store.get(env.get(new Var("right"))).add(store.get(env.get(new Var("left"))));
+                return StoreUtils.lookup(env, store, new Var("right")).add(StoreUtils.lookup(env, store, new Var("left")));
             }
         })));
 
