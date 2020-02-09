@@ -1,0 +1,69 @@
+24
+Julia Belyakova
+
+24/50 + 0/5
+
+-3 incorrect data definition of values, which should be integers, 
+   closures, maybe primitives (your Answer is somewhat close 
+   in spirit to what you should have had): 
+   for example, strings are not valid values; 
+   a closures should contain an environment 
+   (a closure is not the same as its source function definition --
+   see test2 below)
+
+-0 the interpreter is incorrect; for example, in function call, 
+   you should *evaluate* func and only then check if it is a function 
+   (see test1);
+
+-5 no interpretation of values
+
+-3 not sufficiently articulate purpose statement for interpreter
+
+-5 no comments on the right-to-left evaluation of arguments
+
+-5 no purpose statement for function application
+
+-5 no domain check for exponent (second argument cannot be negative)
+
+----------------------------------------
+ Misc Comments
+----------------------------------------
+
+The rubric this time is heavy on purpose statements. 
+Please, do comment your code.
+
+Good use of constants and class hierarchy.
+
+It would be nice to encapsulate environment into a separate class.
+
+Try to find a better way of testing exceptions than try-catch. 
+There must be something special for that in JUnit.
+
+test1
+----------
+
+It should return 4, because the inner call ["call", "id", "id"] 
+returns the closure of id, and then we call it again with 4.
+Because you don't evaluate func, you cannot process the case where 
+func is a function call.
+
+[
+  ["let", "id", "=", ["fun*", ["x"], "x"]],
+  ["call", ["call", "id", "id"], 4]
+]
+
+test2
+----------
+
+It should return 0, not 5. 
+You don't save the correct environment in the closure,
+so you take the wrong value of x.
+
+[
+  ["let", "x", "=", 0],
+  ["let", "retx", "=", ["fun*", [], "x"]],
+  [
+    ["let", "x", "=", 5],
+    ["call", "retx"]
+  ]
+]
