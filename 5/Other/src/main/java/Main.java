@@ -28,14 +28,14 @@ public class Main {
                     Store<Location, Answer> stdStore = StoreUtils.initializeStd().get(1);
                     String ans;
                     try {
-                        ans = result.interpret(stdEnv, stdStore).toString();
+                        ans = result.interpret(stdEnv, stdStore).toJSONString();
                     } catch (IllegalStateException e) {
                         ans = e.getMessage();
                     }
                     if(wantValue) {
                         System.out.println(String.format("[\"value\", %s]", ans));
                     } else {
-                        System.out.println(String.format("[\"store\", %s]", stdStore.toString()));
+                        System.out.println(String.format("[\"store\", %s]", stdStore.toJSONString()));
                     }
                 }
 
