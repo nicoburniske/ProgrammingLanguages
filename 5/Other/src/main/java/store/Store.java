@@ -1,5 +1,8 @@
 package store;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONAware;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,7 +13,7 @@ import java.util.stream.Collectors;
  * @param <Key>
  * @param <Value>
  */
-public class Store<Key, Value> {
+public class Store<Key, Value> implements JSONAware {
     private List<Key> keys;
     private List<Value> values;
 
@@ -68,5 +71,13 @@ public class Store<Key, Value> {
                 ", values=" + values.stream().map(Object::toString)
                 .collect(Collectors.joining(", ")) +
                 '}';
+    }
+
+    @Override
+    public String toJSONString() {
+        JSONArray ret = new JSONArray();
+        List<Value> valuesWithoutPrelude = values.subList(6, values.size());
+        ret.addAll(valuesWithoutPrelude);
+        return ret.toJSONString();
     }
 }
