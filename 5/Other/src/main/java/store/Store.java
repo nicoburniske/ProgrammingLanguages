@@ -32,6 +32,15 @@ public class Store<Key, Value> {
     }
 
     /**
+     *  @param k
+     * @param v
+     * @return
+     */
+    public Value getThenSet(Key k, Value v) {
+        return values.set(keys.indexOf(k), v);
+    }
+
+    /**
      * Records a new association within the store.
      */
     public void put(Key k, Value v) {
