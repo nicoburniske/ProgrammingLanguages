@@ -97,7 +97,7 @@ public class StoreUtils {
 
             @Override
             public Answer interpret(Store<Var, Location> env, Store<Location, Answer> store) {
-                AnswerCell cell = (AnswerCell) lookup(env, store, new Var("arg"));
+                Answer cell = lookup(env, store, new Var("arg"));
                 Location newLocation = new Location(store.getSize() + env.getSize());
                 store.put(newLocation, cell);
                 return new AnswerCell(new Cell(newLocation));
