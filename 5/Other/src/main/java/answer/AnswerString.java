@@ -28,6 +28,11 @@ public class AnswerString extends Answer<String> {
     }
 
     @Override
+    public String toJSONString() {
+        return result;
+    }
+
+    @Override
     public String toString() {
         return result;
     }

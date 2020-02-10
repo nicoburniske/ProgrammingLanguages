@@ -1,5 +1,7 @@
 package answer;
 
+import org.json.simple.JSONAware;
+
 import static fvexpr.Constants.ERROR_INVALID_ARITHMETIC;
 
 /**
@@ -7,7 +9,7 @@ import static fvexpr.Constants.ERROR_INVALID_ARITHMETIC;
  * This is where Errors are thrown when there is an Issue
  * @param <T>
  */
-public class Answer<T> {
+public abstract class Answer<T> implements JSONAware {
     public T result;
 
     public Answer(T result) {
@@ -41,4 +43,6 @@ public class Answer<T> {
     public Answer pow(Answer obj) {
         return new AnswerString(ERROR_INVALID_ARITHMETIC);
     }
+
+    public abstract String toJSONString();
 }

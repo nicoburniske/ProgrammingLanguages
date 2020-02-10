@@ -1,6 +1,8 @@
 package store;
 
-public class Location {
+import org.json.simple.JSONAware;
+
+public class Location implements JSONAware {
     private int i;
 
     public Location(int i){
@@ -32,6 +34,11 @@ public class Location {
 
     @Override
     public String toString() {
+        return i + "";
+    }
+
+    @Override
+    public String toJSONString() {
         return i + "";
     }
 }

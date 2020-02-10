@@ -3,6 +3,7 @@ import answer.AnswerFunction;
 import fvexpr.SFVExpr;
 import fvexpr.Func;
 import fvexpr.Var;
+import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
 import parser.ParseUtils;
 import store.Location;
@@ -19,12 +20,26 @@ public class Main {
         try {
             if ("interpreter".equals(args[0])) {
                 Object obj = new JSONParser().parse(new FileReader(args[1]));
-                SFVExpr result = ParseUtils.parse(obj);
-                try {
-                    System.out.println(result.interpret(StoreUtils.initializeStd().get(0), StoreUtils.initializeStd().get(1)).toString());
-                } catch (IllegalStateException e) {
-                    System.out.println(e.getMessage());
+                if(obj instanceof JSONArray && ((JSONArray)obj).size() > 1 && ((JSONArray)obj).get(0) instanceof String ) {
+                    JSONArray input = (JSONArray)obj;
+                    Boolean wantValue = ((String)(input.get(0))).equals("value");
+                    SFVExpr result = ParseUtils.parse(input.get(1));
+                    Store<Var, Location> stdEnv = StoreUtils.initializeStd().get(0);
+                    Store<Location, Answer> stdStore = StoreUtils.initializeStd().get(1);
+                    String ans;
+                    try {
+                        ans = result.interpret(stdEnv, stdStore).toString();
+                    } catch (IllegalStateException e) {
+                        ans = e.getMessage();
+                    }
+                    if(wantValue) {
+                        System.out.println(String.format("[\"value\", %s]", ans));
+                    } else {
+                        System.out.println(String.format("[\"store\", %s]", stdStore.toString()));
+                    }
                 }
+
+
             } else {
                 throw new IllegalArgumentException("Error: an illegal function was requested");
             }

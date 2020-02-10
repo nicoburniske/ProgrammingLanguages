@@ -40,6 +40,11 @@ public class AnswerInt extends Answer<BigInteger> {
     }
 
     @Override
+    public String toJSONString() {
+        return result.toString();
+    }
+
+    @Override
     public String toString() {
         return result.toString();
     }
