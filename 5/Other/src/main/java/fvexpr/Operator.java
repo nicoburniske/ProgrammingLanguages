@@ -31,14 +31,10 @@ public class Operator implements SFVExpr {
     }
     @Override
     public Answer interpret(Store<Var, Location> env, Store<Location, Answer> store) {
-        if (StoreUtils.isLookupValid(env, store, funcName)) {
             List<SFVExpr> params = new ArrayList<>();
             params.add(this.left);
             params.addAll(this.rhs);
             return ((AnswerFunction) StoreUtils.lookup(env, store, this.funcName)).result.apply( params, env, store);
-        } else {
-            return new AnswerString(ERROR_CLOSURE_EXPECTED);
-        }
     }
 
 

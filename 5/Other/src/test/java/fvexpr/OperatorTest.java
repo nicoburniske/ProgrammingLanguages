@@ -71,12 +71,12 @@ public class OperatorTest {
         try {
             declArray4.interpret(new Store<>(), new Store<>());
         } catch (Exception e) {
-            assertEquals(e.getMessage(), ERROR_CLOSURE_EXPECTED);
+            assertEquals(e.getMessage(), String.format(ERROR_UNDECLARED_VARIABLE_TEMPLATE, "*"));
         }
         try {
             declArray5.interpret(new Store<>(), new Store<>());
         } catch (Exception e) {
-            assertEquals(e.getMessage(), ERROR_CLOSURE_EXPECTED);
+            assertEquals(e.getMessage(), String.format(ERROR_UNDECLARED_VARIABLE_TEMPLATE, "*"));
         }
     }
 

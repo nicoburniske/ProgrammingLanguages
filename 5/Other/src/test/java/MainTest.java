@@ -85,7 +85,7 @@ public class MainTest {
         try {
             new DeclArray(Arrays.asList(this.xEquals5, this.yEquals10), new Operator(new Var("x"), Arrays.asList(new Var("y")), new Var("/"))).interpret(this.stdEnv, this.stdStore);
         } catch (Exception e) {
-            assertEquals(new IllegalStateException("\"closure or primop expected\"").getMessage(), e.getMessage());
+            assertEquals(new IllegalStateException("\"variable / undeclared\"").getMessage(), e.getMessage());
         }
 
     }
