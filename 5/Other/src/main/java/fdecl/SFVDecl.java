@@ -1,15 +1,12 @@
 package fdecl;
 
 import answer.Answer;
-import answer.AnswerFunction;
-import fvexpr.Func;
 import fvexpr.SFVExpr;
 import fvexpr.Var;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONAware;
 import store.Location;
 import store.Store;
-import store.StoreUtils;
 
 /**
  *  Represents a Declaration of a SFVExpr to a Variable

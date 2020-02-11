@@ -22,12 +22,6 @@ public class FuncCallTest {
     SFVExpr declAndCallRecusiveFunc = new DeclArray(Arrays.asList(new SFVDecl(new Var("funx"), recursiveFunc)), new FuncCall(new Var("funx"), Arrays.asList(new Int((long) 5))));
     @Test
     public void testRecursiveFuncCall() {
-        //[
-        //  ["let", "x", "=", 0],
-        //  ["let", "retx", "=", ["fun*", [], ["call", "retx"]],
-        //  ["call", "retx"]
-        //  ]
-        //]
         assertEquals(new BigInteger("55"), declAndCallRecusiveFunc.interpret(stdEnv,stdStore).result);
     }
 

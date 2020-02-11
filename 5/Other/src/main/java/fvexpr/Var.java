@@ -1,13 +1,9 @@
 package fvexpr;
 
 import answer.Answer;
-import answer.AnswerString;
-import org.json.simple.JSONAware;
 import store.Location;
 import store.Store;
 import store.StoreUtils;
-
-import static fvexpr.Constants.ERROR_UNDECLARED_VARIABLE_TEMPLATE;
 
 public class Var implements SFVExpr {
     public String myString;

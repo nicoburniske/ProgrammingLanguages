@@ -1,7 +1,5 @@
 import answer.Answer;
-import answer.AnswerFunction;
 import fvexpr.SFVExpr;
-import fvexpr.Func;
 import fvexpr.Var;
 import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
@@ -11,9 +9,6 @@ import store.Store;
 import store.StoreUtils;
 
 import java.io.FileReader;
-import java.util.Arrays;
-import java.util.List;
-
 
 public class Main {
     public static void main(String[] args) {
@@ -38,8 +33,6 @@ public class Main {
                         System.out.println(String.format("[\"store\", %s]", stdStore.toJSONString()));
                     }
                 }
-
-
             } else {
                 throw new IllegalArgumentException("Error: an illegal function was requested");
             }
@@ -47,7 +40,5 @@ public class Main {
             System.out.println("ooops" + e.getMessage());
         }
     }
-
-
 }
 

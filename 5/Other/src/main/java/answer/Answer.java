@@ -1,6 +1,5 @@
 package answer;
 
-import fdecl.SFVDecl;
 import org.json.simple.JSONAware;
 
 import static fvexpr.Constants.ERROR_INVALID_ARITHMETIC;
