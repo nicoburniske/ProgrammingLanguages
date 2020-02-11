@@ -10,7 +10,6 @@ import store.StoreUtils;
 
 import java.util.Arrays;
 
-import static fvexpr.Constants.CLOSURE_STRING;
 import static org.junit.Assert.assertEquals;
 
 public class FuncTest {
@@ -32,7 +31,6 @@ public class FuncTest {
         f2 = new Func(Arrays.asList(a,b), new Int(2L));
         f3 = new Func(Arrays.asList(), new Operator(a, b, z));
         declArray1 = new DeclArray(Arrays.asList(new SFVDecl(a, new Int(8L))), f3);
-
     }
 
     @Test
