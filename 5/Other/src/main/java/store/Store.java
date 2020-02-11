@@ -16,17 +16,20 @@ import java.util.stream.Collectors;
 public class Store<Key, Value> implements JSONAware {
     private List<Key> keys;
     private List<Value> values;
+    int counter;
 
 
     public Store() {
         this.keys = new ArrayList<>();
         this.values = new ArrayList<>();
+        counter = 0;
     }
     public Store(Store<Key, Value> store) {
         this.keys = new ArrayList<>();
         this.values = new ArrayList<>();
         this.keys.addAll(store.getKeys());
         this.values.addAll(store.getValues());
+        counter = store.counter;
     }
 
 
@@ -65,6 +68,7 @@ public class Store<Key, Value> implements JSONAware {
     public void put(Key k, Value v) {
         keys.add(k);
         values.add(v);
+        counter ++;
     }
 
     /**
@@ -76,7 +80,7 @@ public class Store<Key, Value> implements JSONAware {
     }
 
     public int getSize() {
-        return this.keys.size();
+        return counter;
     }
 
     @Override

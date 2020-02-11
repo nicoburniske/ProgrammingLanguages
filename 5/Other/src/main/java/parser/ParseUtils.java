@@ -75,11 +75,7 @@ public final class ParseUtils {
         if(dec instanceof JSONArray  && ((JSONArray) dec).size() == 4) {
             JSONArray arr = (JSONArray) dec;
             if(((String)arr.get(0)).equals("let") && parse(arr.get(1)) instanceof Var && ((String)arr.get(2)).equals("=")) {
-                if(arr.get(3) instanceof JSONArray && parse(arr.get(3)) instanceof Func) {
-                    return new SFVDecl((Var)parse(arr.get(1)), (Func)parse(arr.get(3)));
-                } else if (arr.get(3) instanceof Long) {
-                    return new SFVDecl((Var)parse(arr.get(1)), new Int((Long)arr.get(3)));
-                }
+                    return new SFVDecl((Var)parse(arr.get(1)), parse(arr.get(3)));
             }
         }
         throw new IllegalStateException("JSON could not be parsed");
