@@ -3,6 +3,7 @@ package store;
 import answer.Answer;
 import answer.AnswerCell;
 import answer.AnswerInt;
+import answer.Cell;
 import fvexpr.Int;
 import fvexpr.Operator;
 import fvexpr.SFVExpr;
@@ -34,9 +35,8 @@ public class PreludeTests {
         AnswerInt valueStored = (AnswerInt) stdStore.get(allocatedCell.result.getLocation());
         assertEquals(new BigInteger("55"), valueStored.result);
 
-        SFVExpr useGet = new Operator((allocatedCell.result), Arrays.asList(), new Var("!"));
-        Answer valueRetrieved = useConstructor.interpret(stdEnv, stdStore);
-//        assertEquals(new BigInteger("55"), valueRetrieved.result);
-//
+        SFVExpr useGet = new Operator((new Cell(allocatedCell.result.getLocation())), Arrays.asList(), new Var("!"));
+        Answer valueRetrieved = useGet.interpret(stdEnv, stdStore);
+        assertEquals(new BigInteger("55"), valueRetrieved.result);
     }
 }
