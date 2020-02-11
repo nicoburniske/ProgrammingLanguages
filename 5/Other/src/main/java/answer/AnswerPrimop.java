@@ -1,7 +1,6 @@
 package answer;
 
 import fvexpr.Func;
-import fvexpr.Operator;
 import fvexpr.Var;
 import store.Location;
 import store.Store;

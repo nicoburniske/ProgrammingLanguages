@@ -1,6 +1,5 @@
 package answer;
 
-import fdecl.SFVDecl;
 import org.json.simple.JSONAware;
 
 import static fvexpr.Constants.ERROR_INVALID_ARITHMETIC;
@@ -8,7 +7,7 @@ import static fvexpr.Constants.ERROR_INVALID_ARITHMETIC;
 /**
  * This class represents the different types of Answers that Interpret can produce.
  * This is where Errors are thrown when there is an Issue
- * @param <T>
+ * @param <T> The type of the Answer
  */
 public abstract class Answer<T> implements JSONAware {
     public T result;
@@ -45,6 +44,12 @@ public abstract class Answer<T> implements JSONAware {
         return new AnswerString(ERROR_INVALID_ARITHMETIC);
     }
 
+    /**
+     * This functions converts {@link Answer} into JSON for
+     * printing using the {@link JSONAware} library
+     * @return A JSON formatted String
+     */
+    @Override
     public abstract String toJSONString();
 
 }

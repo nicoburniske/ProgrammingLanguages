@@ -1,6 +1,5 @@
 package answer;
 
-import fdecl.SFVDecl;
 import fvexpr.Func;
 import fvexpr.Var;
 import store.Location;
