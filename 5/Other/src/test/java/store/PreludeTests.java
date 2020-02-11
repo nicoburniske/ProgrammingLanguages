@@ -35,8 +35,8 @@ public class PreludeTests {
         assertEquals(new BigInteger("55"), valueStored.result);
 
         SFVExpr useGet = new Operator((allocatedCell.result), Arrays.asList(), new Var("!"));
-        Answer valueRetrieved = useConstructor.interpret(stdEnv, stdStore);
-//        assertEquals(new BigInteger("55"), valueRetrieved.result);
+        Answer valueRetrieved = useGet.interpret(stdEnv, stdStore);
+        assertEquals(new BigInteger("55"), (valueRetrieved).result);
 //
     }
 }
