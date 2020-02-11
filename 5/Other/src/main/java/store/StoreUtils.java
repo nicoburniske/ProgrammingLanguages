@@ -65,7 +65,7 @@ public class StoreUtils {
                 return lookup(env, store, new Var("right")).multiply(lookup(env, store, new Var("left")));
             }
 
-        })));
+        }),stdEnv));
 
         stdStore.put(exponenetLocation, new AnswerFunction(new Func(Arrays.asList(new Var("left"), new Var("right")), new SFVExpr() {
             @Override
@@ -77,7 +77,7 @@ public class StoreUtils {
             public Answer interpret(Store<Var, Location> env, Store<Location, Answer> store) {
                 return lookup(env, store, new Var("right")).pow(lookup(env, store, new Var("left")));
             }
-        })));
+        }),stdEnv));
         stdStore.put(plusLocation, new AnswerFunction(new Func(Arrays.asList(new Var("left"), new Var("right")), new SFVExpr() {
             @Override
             public String toJSONString() {
@@ -88,7 +88,7 @@ public class StoreUtils {
             public Answer interpret(Store<Var, Location> env, Store<Location, Answer> store) {
                 return lookup(env, store, new Var("right")).add(lookup(env, store, new Var("left")));
             }
-        })));
+        }),stdEnv));
         stdStore.put(allocateLocation, new AnswerFunction(new Func(Arrays.asList(new Var("arg")), new SFVExpr() {
             @Override
             public String toJSONString() {
@@ -103,7 +103,7 @@ public class StoreUtils {
                 return new AnswerCell(new Cell(newLocation));
             }
 
-        })));
+        }),stdEnv));
         stdStore.put(findLocation, new AnswerFunction(new Func(Arrays.asList(new Var("arg")), new SFVExpr() {
             @Override
             public String toJSONString() {
@@ -116,7 +116,7 @@ public class StoreUtils {
                 return store.get(cell.result.getLocation());
             }
 
-        })));
+        }),stdEnv));
         stdStore.put(setLocation, new AnswerFunction(new Func(Arrays.asList(new Var("arg1"), new Var("arg2")), new SFVExpr() {
             @Override
             public String toJSONString() {
@@ -129,7 +129,7 @@ public class StoreUtils {
                 return store.getThenSet(cell.result.getLocation(),lookup(env, store, new Var("arg2")));
             }
 
-        })));
+        }),stdEnv));
         return Arrays.asList(stdEnv, stdStore);
     }
 

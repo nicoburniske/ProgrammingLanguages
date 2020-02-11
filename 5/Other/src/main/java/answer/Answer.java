@@ -1,5 +1,6 @@
 package answer;
 
+import fdecl.SFVDecl;
 import org.json.simple.JSONAware;
 
 import static fvexpr.Constants.ERROR_INVALID_ARITHMETIC;
@@ -45,4 +46,5 @@ public abstract class Answer<T> implements JSONAware {
     }
 
     public abstract String toJSONString();
+
 }

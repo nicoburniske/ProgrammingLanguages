@@ -9,6 +9,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONAware;
 import store.Location;
 import store.Store;
+import store.StoreUtils;
 
 public class SFVDecl implements JSONAware {
     public Var name;

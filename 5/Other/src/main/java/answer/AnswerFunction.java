@@ -1,17 +1,27 @@
 package answer;
 
+import fdecl.SFVDecl;
 import fvexpr.Func;
+import fvexpr.Var;
+import store.Location;
+import store.Store;
 
 import static fvexpr.Constants.CLOSURE_STRING;
 
 public class AnswerFunction extends Answer<Func> {
-    public AnswerFunction(Func result) {
+    public Store<Var, Location> env;
+    public AnswerFunction(Func result, Store<Var, Location> env) {
         super(result);
+        this.env = new Store<>(env);
     }
+    public void addMeTOScope(Var name, Location l) {
+        env.put(name, l);
+    }
+
 
     @Override
     public String toJSONString() {
-        return CLOSURE_STRING;
+        return "\"closure\"";
     }
 
     @Override

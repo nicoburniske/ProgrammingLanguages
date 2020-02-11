@@ -17,9 +17,25 @@ public class Store<Key, Value> implements JSONAware {
     private List<Key> keys;
     private List<Value> values;
 
+
     public Store() {
         this.keys = new ArrayList<>();
         this.values = new ArrayList<>();
+    }
+    public Store(Store<Key, Value> store) {
+        this.keys = new ArrayList<>();
+        this.values = new ArrayList<>();
+        this.keys.addAll(store.getKeys());
+        this.values.addAll(store.getValues());
+    }
+
+
+    public List<Key> getKeys() {
+        return keys;
+    }
+
+    public List<Value> getValues() {
+        return values;
     }
 
     /**

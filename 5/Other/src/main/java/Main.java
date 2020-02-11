@@ -44,7 +44,7 @@ public class Main {
                 throw new IllegalArgumentException("Error: an illegal function was requested");
             }
         } catch (Exception e) {
-            System.out.println("ooops");
+            System.out.println("ooops" + e.getMessage());
         }
     }
 

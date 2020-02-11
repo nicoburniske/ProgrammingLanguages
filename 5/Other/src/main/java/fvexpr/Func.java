@@ -25,7 +25,7 @@ public class Func implements SFVExpr {
 
     @Override
     public Answer interpret(Store<Var, Location> env, Store<Location, Answer> store) {
-        return new AnswerFunction(this);
+        return new AnswerFunction(this, env);
         //return new AnswerString(CLOSURE_STRING);
     }
 

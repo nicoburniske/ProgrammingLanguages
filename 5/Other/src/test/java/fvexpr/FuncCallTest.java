@@ -22,7 +22,29 @@ public class FuncCallTest {
     SFVExpr declAndCallRecusiveFunc = new DeclArray(Arrays.asList(new SFVDecl(new Var("funx"), recursiveFunc)), new FuncCall(new Var("funx"), Arrays.asList(new Int((long) 5))));
     @Test
     public void testRecursiveFuncCall() {
+        //[
+        //  ["let", "x", "=", 0],
+        //  ["let", "retx", "=", ["fun*", [], ["call", "retx"]],
+        //  ["call", "retx"]
+        //  ]
+        //]
         assertEquals(new BigInteger("55"), declAndCallRecusiveFunc.interpret(stdEnv,stdStore).result);
+    }
+
+    @Test
+    public void baconExampleTest() {
+        //[
+        //  ["let", "x", "=", 0],
+        //  ["let", "retx", "=", ["fun*", [], "x"]],
+        //  [
+        //    ["let", "x", "=", 5],
+        //    ["call", "retx"]
+        //  ]
+        //]
+        SFVExpr test2 = new DeclArray(Arrays.asList(new SFVDecl(new Var("x"), new Int(0L)), new SFVDecl(new Var("retx"), new Func(Arrays.asList(), new Var("x")))),
+                new DeclArray(Arrays.asList(new SFVDecl(new Var("x"), new Int(5L))),
+                        new FuncCall(new Var("retx"), Arrays.asList())));
+        assertEquals(new BigInteger("0"), test2.interpret(stdEnv, stdStore).result);
     }
 
 }
