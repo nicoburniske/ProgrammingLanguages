@@ -38,5 +38,14 @@ public class PreludeTests {
         SFVExpr useGet = new Operator((new Cell(allocatedCell.result.getLocation())), Arrays.asList(), new Var("!"));
         Answer valueRetrieved = useGet.interpret(stdEnv, stdStore);
         assertEquals(new BigInteger("55"), valueRetrieved.result);
+
+        SFVExpr useSet = new Operator(allocatedCell.result, Arrays.asList(new Int((long) 1000)), new Var("="));
+        Answer oldValue = useSet.interpret(stdEnv, stdStore);
+        assertEquals(new BigInteger("55"), oldValue.result);
+        AnswerInt newValue = (AnswerInt) stdStore.get(allocatedCell.result.getLocation());
+        assertEquals(new BigInteger("1000"), newValue.result);
+
+        System.out.println(stdEnv.toString());
+        System.out.println(stdStore.toString());
     }
 }
