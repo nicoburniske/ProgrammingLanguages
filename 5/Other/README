@@ -1,0 +1,10 @@
+
+
+This is a Maven project. Everything is inside the /src directory.
+
+The code for our implementation is under src/main/java, and our unit tests are in src/test/java.
+
+The entry point for the program is in the class Main.java
+
+Interpreter Responses are in the answer Package. Decls are in the fdecl Package SFVexper are in the fvexpr Package and the parser is in the parser package.
+Store (the class for both the environment and the store (I know its a little confusing sorry)) is in the store package. Along with some helpful util functions.
