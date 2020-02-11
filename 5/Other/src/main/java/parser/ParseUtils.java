@@ -29,13 +29,20 @@ public final class ParseUtils {
                     n.add(parse(o));
                 }
                 return new FuncCall(parse(arr.get(1)),n);
-            } else if(arr.size() >= 2) {
+            } else if(arr.size() == 3) {
                 if(arr.get(1) instanceof String) {
                         return new Operator(parse(arr.get(0)), Arrays.asList(parse(arr.get(2))), new Var((String)arr.get(1)));
-                } else if (arr.size() == 3 && arr.get(0) instanceof String) {
+                } else if (arr.get(0) instanceof String) {
                     if (((String)arr.get(0)).equals("fun*") && arr.get(1) instanceof List){
                         return new Func(parseVarList((List<Object>)arr.get(1)), parse(arr.get(2)));
                     }
+                }
+            }else if(arr.size() == 2) {
+                if (arr.get(1) instanceof String) {
+                    return new Operator(parse(arr.get(0)), Arrays.asList(), new Var((String) arr.get(1)));
+                }
+                if (arr.get(0) instanceof String) {
+                    return new Operator(parse(arr.get(1)), Arrays.asList(), new Var((String) arr.get(1)));
                 }
             }
             if (arr.size() >= 1){
