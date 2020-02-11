@@ -1,5 +1,6 @@
 package answer;
 
+import fdecl.SFVDecl;
 import org.json.simple.JSONAware;
 
 import static fvexpr.Constants.ERROR_INVALID_ARITHMETIC;
@@ -46,7 +47,7 @@ public abstract class Answer<T> implements JSONAware {
 
     /**
      * This functions converts {@link Answer} into JSON for
-     * printing using the {@link JSONAware} library
+     * printing using the {@link JSONAware} interface from our JSON Parsing library
      * @return A JSON formatted String
      */
     @Override

@@ -44,8 +44,5 @@ public class PreludeTests {
         assertEquals(new BigInteger("55"), oldValue.result);
         AnswerInt newValue = (AnswerInt) stdStore.get(allocatedCell.result.getLocation());
         assertEquals(new BigInteger("1000"), newValue.result);
-
-        System.out.println(stdEnv.toString());
-        System.out.println(stdStore.toString());
     }
 }

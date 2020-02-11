@@ -11,6 +11,9 @@ import store.Location;
 import store.Store;
 import store.StoreUtils;
 
+/**
+ *  Represents a Declaration of a SFVExpr to a Variable
+ */
 public class SFVDecl implements JSONAware {
     public Var name;
     public SFVExpr rhs;
@@ -20,12 +23,21 @@ public class SFVDecl implements JSONAware {
         this.rhs = rhs;
     }
 
-    public Answer interpret(Store<Var, Location> acc, Store<Location, Answer> store) {
-        return rhs.interpret(acc, store);
+    /**
+     * Interprets the SFVExpr value (rhs) of the declaration.
+     * @param env the current environment
+     * @param store the current store
+     * @return The answer representing the interpreted value of the rhs
+     */
+    public Answer interpret(Store<Var, Location> env, Store<Location, Answer> store) {
+        return rhs.interpret(env, store);
     }
 
-
-
+    /**
+     * This functions converts {@link SFVDecl} into JSON for
+     * printing using the {@link JSONAware} interface from our JSON Parsing library
+     * @return A JSON formatted String
+     */
     @Override
     public String toJSONString() {
         JSONArray json = new JSONArray();
