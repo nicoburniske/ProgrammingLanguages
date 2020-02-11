@@ -43,7 +43,7 @@ public final class ParseUtils {
                     return new Operator(parse(arr.get(0)), Arrays.asList(), new Var((String) arr.get(1)));
                 }
                 if (arr.get(0) instanceof String) {
-                    return new Operator(parse(arr.get(1)), Arrays.asList(), new Var((String) arr.get(1)));
+                    return new Operator(parse(arr.get(1)), Arrays.asList(), new Var((String) arr.get(0)));
                 }
             }
             if (arr.size() >= 1){
