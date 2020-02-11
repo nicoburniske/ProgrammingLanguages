@@ -26,13 +26,13 @@ public class StoreUtils {
 
     public static void insertIntoStore(Store<Var, Location> env, Store<Location, Answer> store, SFVDecl d) {
         // obtain a unique location.
-        Location l = new Location(store.getSize() + env.getSize());
+        Location l = new Location(store.getSize());
         store.put(l, d.interpret(env, store));
         env.put(d.name, l);
     }
 
     public static void insertIntoStore(Store<Var, Location> env, Store<Location, Answer> store, Var v, Answer a) {
-        Location l = new Location(store.getSize() + env.getSize());
+        Location l = new Location(store.getSize());
         store.put(l, a);
         env.put(v, l);
     }
@@ -97,7 +97,7 @@ public class StoreUtils {
             @Override
             public Answer interpret(Store<Var, Location> env, Store<Location, Answer> store) {
                 Answer cell = lookup(env, store, new Var("arg"));
-                Location newLocation = new Location(store.getSize() + env.getSize());
+                Location newLocation = new Location(store.getSize());
                 store.put(newLocation, cell);
                 return new AnswerCell(new Cell(newLocation));
             }
