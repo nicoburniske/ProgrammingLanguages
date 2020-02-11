@@ -1,0 +1,5 @@
+["value", [
+        ["let","/","=", ["fun*", ["first", "second"], ["first", "*", ["first","+" ,"second"]]]],
+        [1, "/", 4] 
+    ]
+]
