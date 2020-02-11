@@ -1,0 +1,13 @@
+#!/bin/bash
+for file in *-in.json
+do
+   temp1=$(echo $file | cut -d'-' -f0 )
+   temp3="$temp1-out.json"
+   #echo $temp1
+   #echo $temp2 
+   #echo $temp3 
+    echo $temp3
+    ../xinterpreter < $file | diff -w - $temp3
+    echo "end"
+done
+
