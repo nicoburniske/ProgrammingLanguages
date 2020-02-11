@@ -29,6 +29,13 @@ public class Func implements SFVExpr {
         //return new AnswerString(CLOSURE_STRING);
     }
 
+    /**
+     * Applies the function given the current environment and the arguments it is currently being invoked with.
+      * @param arguments
+     * @param env
+     * @param store
+     * @return
+     */
     public Answer apply(List<SFVExpr> arguments, Store<Var, Location> env, Store<Location, Answer> store) {
         if (arguments.size() != this.parameters.size()) {
             return new AnswerString(ERROR_ARGUMENTS_MISMATCH);

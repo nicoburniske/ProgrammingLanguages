@@ -29,8 +29,11 @@ public interface SFVExpr extends JSONAware {
     /**
      * Takes an SFVExper and interprets it using the {@param env} and the {@param store}.
      * an environment-store-based interpreter for the language of {@link SFVExpr}
+     * ACCUMULATOR STATEMENT: The two accumulator's env (represents an environment) and store (represents a store) accumulate the variables that are currently in scope, both temporally and physically.
+     * They enable the recursive function to keep track of what has been declared, and what values variables are associated with. The result of interpretation is the appropriate Answer,
+     * where AnswerString represents an error, AnswerPrimop represents a Primop, AnswerInt represents a numerical evaluation, and AnswerFunction represents a non-primop function.
      *
-     * @param env   the enviroment that is used to lookup and store the {@link Location}s of {@link Var}s
+     * @param env   the environment that is used to lookup and store the {@link Location}s of {@link Var}s
      * @param store the store that that is used to lookup the {@link Answer}s of {@link Location}s
      * @return An {@link Answer}
      */

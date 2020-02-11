@@ -27,13 +27,8 @@ public class FuncCall implements SFVExpr {
 
         if (func.interpret(env, store) instanceof AnswerFunction) {
             AnswerFunction ans = (AnswerFunction) func.interpret(env, store);
-//            if(func instanceof Var) {
-//                ans.addMeTOScope((Var)func, env.get((Var)func));
-//            }
-//            return ans.result.apply(params, ans.env, store);
-            return ans.result.apply(params, env, store);
+           return ans.result.apply(params, env, store);
         } else {
-//            System.out.println(store.get(env.get((Var)func)).result.toString());
             return new AnswerString(ERROR_CLOSURE_EXPECTED);
         }
     }
