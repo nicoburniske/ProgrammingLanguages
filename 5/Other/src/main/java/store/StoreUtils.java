@@ -54,7 +54,7 @@ public class StoreUtils {
         stdEnv.put(new Var("!"), setLocation);
 
         //PLUS, TIMES, Exp should all have access to eachother so add to env first then to store
-        stdStore.put(multiplyLocation, new AnswerFunction(new Func(Arrays.asList(new Var("left"), new Var("right")), new SFVExpr() {
+        stdStore.put(multiplyLocation, new AnswerPrimop(new Func(Arrays.asList(new Var("left"), new Var("right")), new SFVExpr() {
             @Override
             public String toJSONString() {
                 return "*";
@@ -66,8 +66,7 @@ public class StoreUtils {
             }
 
         }),stdEnv));
-
-        stdStore.put(exponenetLocation, new AnswerFunction(new Func(Arrays.asList(new Var("left"), new Var("right")), new SFVExpr() {
+        stdStore.put(exponenetLocation, new AnswerPrimop(new Func(Arrays.asList(new Var("left"), new Var("right")), new SFVExpr() {
             @Override
             public String toJSONString() {
                 return "^";
@@ -78,7 +77,7 @@ public class StoreUtils {
                 return lookup(env, store, new Var("right")).pow(lookup(env, store, new Var("left")));
             }
         }),stdEnv));
-        stdStore.put(plusLocation, new AnswerFunction(new Func(Arrays.asList(new Var("left"), new Var("right")), new SFVExpr() {
+        stdStore.put(plusLocation, new AnswerPrimop(new Func(Arrays.asList(new Var("left"), new Var("right")), new SFVExpr() {
             @Override
             public String toJSONString() {
                 return "+";
@@ -89,7 +88,7 @@ public class StoreUtils {
                 return lookup(env, store, new Var("right")).add(lookup(env, store, new Var("left")));
             }
         }),stdEnv));
-        stdStore.put(allocateLocation, new AnswerFunction(new Func(Arrays.asList(new Var("arg")), new SFVExpr() {
+        stdStore.put(allocateLocation, new AnswerPrimop(new Func(Arrays.asList(new Var("arg")), new SFVExpr() {
             @Override
             public String toJSONString() {
                 return "@";
@@ -104,7 +103,7 @@ public class StoreUtils {
             }
 
         }),stdEnv));
-        stdStore.put(findLocation, new AnswerFunction(new Func(Arrays.asList(new Var("arg")), new SFVExpr() {
+        stdStore.put(findLocation, new AnswerPrimop(new Func(Arrays.asList(new Var("arg")), new SFVExpr() {
             @Override
             public String toJSONString() {
                 return "!";
@@ -117,7 +116,7 @@ public class StoreUtils {
             }
 
         }),stdEnv));
-        stdStore.put(setLocation, new AnswerFunction(new Func(Arrays.asList(new Var("arg1"), new Var("arg2")), new SFVExpr() {
+        stdStore.put(setLocation, new AnswerPrimop(new Func(Arrays.asList(new Var("arg1"), new Var("arg2")), new SFVExpr() {
             @Override
             public String toJSONString() {
                 return "=";
