@@ -5,12 +5,27 @@ import org.json.simple.JSONAware;
 public class Location implements JSONAware {
     private int i;
 
+    /**
+     * A constructor to create a new location
+     * @param i the integer representing that location
+     */
     public Location(int i){
         this.i = i;
     }
 
-    public int getI() {
-        return i;
+    @Override
+    public String toString() {
+        return i + "";
+    }
+
+    /**
+     * This functions converts {@link Location} into JSON for
+     * printing using the {@link JSONAware} library
+     * @return A JSON formatted String
+     */
+    @Override
+    public String toJSONString() {
+        return i + "";
     }
 
     @Override
@@ -28,17 +43,4 @@ public class Location implements JSONAware {
         return i;
     }
 
-    public void setI(int i) {
-        this.i = i;
-    }
-
-    @Override
-    public String toString() {
-        return i + "";
-    }
-
-    @Override
-    public String toJSONString() {
-        return i + "";
-    }
 }
