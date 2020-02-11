@@ -51,7 +51,7 @@ public class StoreUtils {
         Location findLocation = new Location(4);
         stdEnv.put(new Var("!"), findLocation);
         Location setLocation = new Location(5);
-        stdEnv.put(new Var("!"), setLocation);
+        stdEnv.put(new Var("="), setLocation);
 
         //PLUS, TIMES, Exp should all have access to eachother so add to env first then to store
         stdStore.put(multiplyLocation, new AnswerPrimop(new Func(Arrays.asList(new Var("left"), new Var("right")), new SFVExpr() {
