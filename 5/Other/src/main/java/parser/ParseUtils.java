@@ -37,13 +37,6 @@ public final class ParseUtils {
                         return new Func(parseVarList((List<Object>)arr.get(1)), parse(arr.get(2)));
                     }
                 }
-            }else if(arr.size() == 2) {
-                if (arr.get(1) instanceof String) {
-                    return new Operator(parse(arr.get(0)), Arrays.asList(), new Var((String) arr.get(1)));
-                }
-                if (arr.get(0) instanceof String) {
-                    return new Operator(parse(arr.get(1)), Arrays.asList(), new Var((String) arr.get(1)));
-                }
             }
             if (arr.size() >= 1){
                 if (arr.size() == 4 && arr.get(0) instanceof String && ((String)arr.get(0)).equals("if-0")) {
@@ -53,6 +46,14 @@ public final class ParseUtils {
                     return new DeclArray(new ArrayList<SFVDecl>(), parse(arr.get(0)));
                 } else {
                     return new DeclArray( parseDeclList(arr.subList(0,arr.size() - 1 )), parse(arr.get(arr.size()-1)));
+                }
+            }
+            if(arr.size() == 2) {
+                if (arr.get(1) instanceof String) {
+                    return new Operator(parse(arr.get(0)), Arrays.asList(), new Var((String) arr.get(1)));
+                }
+                if (arr.get(0) instanceof String) {
+                    return new Operator(parse(arr.get(1)), Arrays.asList(), new Var((String) arr.get(1)));
                 }
             }
         }
