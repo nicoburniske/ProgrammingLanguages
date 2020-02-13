@@ -1,0 +1,1762 @@
+Total: 81/100
+
+-3 interpreter; Input: ["value",[["let","count!","=",["fun*",["f"],[["let","count","=",[0,"@"]],["fun*",["x"],[["let","_","=",["count","=",[["count","!"],"+",1]]],[["count","!"],"+",["call","f","x"]]]]]]],["let","count","=",["fun*",["x"],["x","+","x"]]],["let","double","=",["fun*",["x"],["x","*","x"]]],["let","f","=",["call","count!","count"]],["let","x","=",["call","count!","double"]],[[["call","f",2],"+",["call","f",3]],"*",[["call","x",2],"+",["call","x",3]]]]]; Expected: ["value",208]
+; Got: ooopsanswer.AnswerFunction cannot be cast to answer.AnswerCell
+
+-3 interpreter; Input: ["store",[["let","x","=",[0,"@"]],[["x","!"],"+",["x","=",1]]]]; Expected: ["store",[["cell",7],1]]
+; Got: ["store", [0,1,["cell","7"],1,["cell","7"],["cell","7"],0,1]]
+
+-3 interpreter; Input: ["store",[["let","x","=",[0,"@"]],[["x","=",1],"+",["x","!"]]]]; Expected: ["store",[["cell",7],1]]
+; Got: ["store", [0,1,["cell","7"],["cell","7"],1,["cell","7"],0,0]]
+
+-3 interpreter; Input: ["value",["call","@",1]]; Expected: ["value",["cell",6]]
+; Got: ["value", ["cell","7"]]
+
+-3 interpreter; Input: ["store",[["let","c","=",["call","@",["call","@",["call","@",0]]]],["let","d","=",["call","@",1]],["let","_","=",[["call","!","c"],"=","d"]],["call","!",["call","!",["call","!","c"]]]]]; Expected: ["store",[["cell",11],["cell",12],["cell",9],0,["cell",12],["cell",10],1]]
+; Got: ["store", [0,0,["cell","7"],["cell","14"],["cell","9"],["cell","9"],["cell","11"],1,1,["cell","14"],["cell","11"],["cell","14"],["cell","9"],["cell","7"],["cell","11"],["cell","9"],["cell","14"]]]
+
+-3 interpreter; Input: ["value",[["let","y","=",1],["let","x","=",["fun*",["x"],["x","+","y"]]],[["let","y","=",2],["call","x",[["let","x","=",0],["x","+","y"]]]]]]; Expected: ["value",3]
+; Got: ["value", 4]
+
+-3, for test 3-in.json; got parse: bad SFV '("@" 5)
+  context...:
+   /usr/share/racket/collects/racket/private/map.rkt:54:19: loop
+   /usr/share/racket/collects/racket/match/compiler.rkt:507:40: f86
+   /home/vagrant/src/20PL/Code/5/xinterpreter:22:0: main
+
+-3, for test 11-in.json; got parse-string: bad Var "shouldNotBeEvaluated"
+  context...:
+   /home/vagrant/src/20PL/Code/5/Other/data-rep.rkt:63:0: parse
+   /home/vagrant/src/20PL/Code/5/xinterpreter:22:0: main
+
+-3, for test 9-in.json; got parse: bad SFV '("@" 5)
+  context...:
+   /home/vagrant/src/20PL/Code/5/xinterpreter:22:0: main
+
+-3, for test 0-in.json; got ["store",[43]]
+
+-3, for test 1-in.json; got parse: bad SFV '("@" 5)
+  context...:
+   /home/vagrant/src/20PL/Code/5/Other/data-rep.rkt:82:0: parse-decl
+   /usr/share/racket/collects/racket/private/map.rkt:35:13: map
+   /usr/share/racket/collects/racket/match/compiler.rkt:507:40: f86
+   /home/vagrant/src/20PL/Code/5/xinterpreter:22:0: main
+
+-3, for test 10-in.json; got ["value","primop domain error"]
+
+-3, for test 4-in.json; got parse: bad SFV '("@" 5)
+  context...:
+   /usr/share/racket/collects/racket/private/map.rkt:54:19: loop
+   /usr/share/racket/collects/racket/match/compiler.rkt:507:40: f86
+   /home/vagrant/src/20PL/Code/5/xinterpreter:22:0: main
+
++20 Bonus for your tests
+===============
+Code Inspection
+===============
+Inspection Scores Forthcoming
+
+===============
+Test Fest
+===============
+interpreter: Failed ["store",[["let","x","=",["fun*",["a","b"],["a","+","b"]]],["call","x",3,1]]], Expected ["store",["closure",3,1]]
+, Got ["store", ["closure",1,3,1,3]]
+
+interpreter: Failed ["store",[["let","x","=",["fun*",["x"],[["x","@"],"=",4]]],["call","x",5]]], Expected ["store",["closure",5,4]]
+, Got ["store", ["closure",5,5,4,4,["cell","9"]]]
+
+interpreter: Failed ["store",[["let","x","=",["fun*",["x"],[["x","@"],"!"]]],["call","x",5]]], Expected ["store",["closure",5,5]]
+, Got ["store", ["closure",5,5,5,["cell","9"]]]
+
+interpreter: Failed ["store",[["let", "r", "=", ["fun*", ["n"], ["if-0", "n", 0, [1, "+", ["call", "r", ["n", "+", -1]]]]]],
+  ["call", "r", 15]]], Expected ["store",["closure",15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0]]
+, Got ["store", ["closure",15,-1,15,14,-1,14,13,-1,13,12,-1,12,11,-1,11,10,-1,10,9,-1,9,8,-1,8,7,-1,7,6,-1,6,5,-1,5,4,-1,4,3,-1,3,2,-1,2,1,-1,1,0,0,1,1,1,2,1,3,1,4,1,5,1,6,1,7,1,8,1,9,1,10,1,11,1,12,1,13,1,14,1]]
+
+interpreter: Failed ["store",[["let","x","=",[["let","y","=",2],["fun*",["x"],[["x","@"],"=",[4,"+","y"]]]]],["call","x",5]]], Expected ["store",["closure",2,5,6]]
+, Got ["store", [2,"closure",5]]
+
+interpreter: Failed ["store",[["let","x","=",["fun*",["x"],["x","@"]]],["call","x",5]]], Expected ["store",["closure",5,5]]
+, Got ["store", ["closure",5,5,5]]
+
+interpreter: Failed ["value",[["let","x","=",[["let","y","=",2],["fun*",["x"],[["x","@"],"=",[4,"+","y"]]]]],["call","x",5]]], Expected ["value",5]
+, Got ["value", "variable y undeclared"]
+
+interpreter: Failed ["store", [["let", "x", "=", 9], ["let", "y", "=", [5, "@"]], "a"]], Expected ["store", [9, ["cell", 8], 5]]
+, Got ["store", [9,5,5,["cell","8"]]]
+
+interpreter: Failed ["store", [["let", "f", "=", ["fun*", ["x"], ["if-0", "x", 5, ["call", "f", ["x", "+", -1]]]]], ["call", "f", 3]]], Expected ["store", ["closure", 3, 2, 1, 0]]
+, Got ["store", ["closure",3,-1,3,2,-1,2,1,-1,1,0]]
+
+interpreter: Failed ["store", [["let", "x", "=", 9], ["let", "y", "=", [5, "@"]], ["let", "a", "=", "+"], 3]]
+, Expected ["store", [9, ["cell", 9], "primop", 5]]
+, Got ["store", [9,5,5,["cell","8"],"primop"]]
+
+interpreter: Failed ["store", [["let", "x", "=", 9], ["let", "y", "=", [5, "@"]], [5, "+", ["fun*", ["a"], 2]]]], Expected ["store", [9, ["cell", 8], 5]]
+, Got ["store", [9,5,5,["cell","8"],"closure",5]]
+
+interpreter: Failed ["store",
+  [["let", "x", "=", 10],
+  ["let", "y", "=", 20],
+  ["let", "z", "=", ["fun*", [], 20]],
+  ["let", "aa", "=", ["z", "+", "y"]],
+  ["y", "+", "aa"]]
+], Expected ["store", [10, 20, "closure", 0]]
+, Got ["store", [10,20,"closure",20,"closure"]]
+
+interpreter: Failed ["store",[
+  ["let", "x", "=", [1, "@"]],
+  ["let", "y", "=", ["x", "=", [2, "@"]]],
+  "y"
+  ]
+], Expected ["store", [["cell",8], 1, ["cell",9], 2]]
+, Got ["store", [1,["cell","10"],["cell","7"],2,2,["cell","10"],["cell","7"],1]]
+
+interpreter: Failed ["store", [["let", "double", "=", ["fun*", ["a"], ["a", "*", 2]]],
+["let", "zero", "=", 0],
+["let", "a", "=", 2],
+["let", "b", "=", 3],
+["b", "*", [["let", "a", "=", 4],
+			["let", "b", "=", 5],
+			["if-0", ["call", "double", "zero"], ["a", "+", "a"], ["b"]]]]
+]], Expected ["store",["closure",0,2,3,4,5,0]]
+, Got ["store", ["closure",0,2,3,4,5,0,2,0,4,4,8,3]]
+
+interpreter: Failed ["store", [["let", "wacky", "=", ["fun*", ["func", "arg", "mult"], ["mult", "*", ["call", "func", "arg"]]]],
+["let", "double", "=", ["fun*", ["arg"], [2, "*", "arg"]]],
+["call", "wacky", "double", 3, 5]
+]], Expected ["store",["closure","closure","closure",3,5,3]]
+, Got ["store", ["closure","closure",5,3,"closure",3,3,2,6,5]]
+
+interpreter: Failed ["value", [["let", "u", "=", 5], ["let", "6cell", "=", ["u", "@"]], ["let", "x", "=", [["u", "@"], "!"]],
+ [["x", "!"], "=", 42]]], Expected ["value", "primop domain error"]
+, Got ooopsanswer.AnswerInt cannot be cast to answer.AnswerCell
+
+interpreter: Failed ["value", [["let", "f", "=", ["fun*", ["x"], ["x", "+", ["call", "h", "x"]]]],["let", "h", "=", ["fun*", ["y"], "y"]],[["let", "h", "=", ["fun*", ["y"], ["y", "+", 10]]],["call", "f", 2]]]], Expected ["value",4], Got ["value", 14]
+
+interpreter: Failed ["store", [["let", "y", "=", [10, "@"]],
+           ["let", "x", "=", [11, "@"]],
+           [["x", "=", "y"], "+", ["y", "=", 20]]]], Expected ["store", [["cell", 8], ["cell", 9], 20, ["cell", 8]]], Got ["store", [10,20,["cell","7"],11,["cell","7"],["cell","10"],20,["cell","7"],["cell","7"],["cell","10"],10,11]]
+
+interpreter: Failed ["value", [["let", "x", "=", ["call", ["call", ["fun*", ["y"], ["fun*", [], "y"]], 50]]],
+           ["let", "y", "=", [-2, "^", 3]],
+           ["x", "+", "y"]]]
+, Expected ["value", 42], Got ["value", "variable y undeclared"]
+
+interpreter: Failed ["value", [["let", "y", "=", [-2, "^", 3]],
+           ["call", ["call", ["fun*", ["x"], ["fun*", [], ["x", "+", "y"]]], 50]]]]
+, Expected ["value", 42], Got ["value", "variable x undeclared"]
+
+interpreter: Failed ["store", [["let", "y", "=", [10, "@"]],
+           ["let", "x", "=", [11, "@"]],
+           [["x", "=", ["y", "!"]], "+", ["y", "=", 20]]]], Expected ["store", [["cell", 8], ["cell", 9], 20, 20]], Got ["store", [10,20,["cell","7"],11,20,["cell","10"],20,["cell","7"],["cell","7"],20,["cell","10"],10,11]]
+
+interpreter: Failed ["value", [["let", "w", "=", -1],
+           ["let", "fx", "=", ["fun*", ["x"], ["fun*", [], ["w" , "+", "x"]]]],
+           ["let", "z", "=", 43],
+           ["call", ["call", "fx", "z"]]]]
+, Expected ["value", 42], Got ["value", "variable x undeclared"]
+
+interpreter: Failed ["store", [[5, "@"], "=", 7]]
+, Expected ["store",[7]]
+, Got ["store", [5,7,7,["cell","7"]]]
+
+interpreter: Failed ["store", [[[["fun*", ["x"], "x"], "@"], "@"], "!"]]
+, Expected ["store", ["closure", ["cell", 6]]]
+, Got ["store", ["closure","closure",["cell","7"],["cell","7"],["cell","9"]]]
+
+interpreter: Failed ["value", [["let", "f", "=", ["fun*", ["a", "b", "c"], [["a", "+", "b"], "+", "c"]]], [1, "f", 2, 3]]]
+, Expected ["value", 6]
+, Got ooopsJSON could not be parsed
+
+interpreter: Failed ["value", [["let", "x", "=", [1, "@"]], ["let", "y", "=", ["x", "=", "x"]], [[[["x", "!"], "!"], "!"], "!"]]]
+, Expected ["value", ["cell", 8]]
+, Got ["value", ["cell","7"]]
+
+interpreter: Failed ["value", [[[3, "@"], "@"], "!"]]
+, Expected ["value", ["cell", 6]]
+, Got ["value", ["cell","7"]]
+
+interpreter: Failed ["store", [["let", "f", "=", ["fun*", ["a", "b", "c"], [["a", "+", "b"], "+", "c"]]], [1, "f", 2, 3]]]
+, Expected ["store", ["closure", 1, 2, 3]]
+, Got ooopsJSON could not be parsed
+
+interpreter: Failed ["store",
+    [
+        ["let", "out", "=", [1, "@"]],
+        ["let", "recursive", "=",
+            ["fun*", ["count", "acc"],
+                ["if-0",
+                    "count",
+                    ["out", "!"],
+                    ["call",
+                        "recursive",
+                        ["count", "+", -1],
+                        ["out", "=", [["out", "!"], "*", 2]]
+                    ]
+                ]
+            ]
+        ],
+        ["call", "recursive", 2, 1]
+    ]
+]
+
+, Expected ["store", [["cell", 8], "closure", 4, 2, 1, 1, 1, 0, 2]]
+, Got ["store", [1,4,["cell","7"],"closure",1,2,["cell","7"],2,1,2,["cell","7"],-1,2,1,1,["cell","7"],2,2,4,["cell","7"],-1,1,2,0,["cell","7"]]]
+
+interpreter: Failed ["store", [["let", "x", "=", [1, "@"]], ["x", "=", "x"]]]
+, Expected ["store", [["cell", 7], ["cell", 7]]]
+, Got ["store", [1,["cell","7"],["cell","7"],["cell","7"],["cell","7"]]]
+
+interpreter: Failed ["value", [[42, "@"], "@"]]
+, Expected ["value", ["cell", 7]]
+, Got ["value", ["cell","9"]]
+
+interpreter: Failed ["store", [[[[[42, "@"], "@"], "@"], "@"], "@"]]
+, Expected ["store", [42, ["cell", 6], ["cell", 7], ["cell", 8], ["cell", 9]]]
+, Got ["store", [42,42,["cell","7"],["cell","7"],["cell","9"],["cell","9"],["cell","11"],["cell","11"],["cell","13"],["cell","13"]]]
+
+interpreter: Failed ["store", [
+    ["let", "x", "=", [31, "@"]],
+    ["let", "y", "=", ["x", "=", 30]],
+    ["let", "z", "=", ["x", "=", 29]],
+    ["let", "a", "=", ["x", "=", 28]],
+    ["let", "b", "=", ["x", "=", 27]],
+    ["x", "!"]
+]], Expected ["store", [["cell", 11], 31, 30, 29, 28, 27]]
+, Got ["store", [31,27,["cell","7"],30,["cell","7"],31,29,["cell","7"],30,28,["cell","7"],29,27,["cell","7"],28,["cell","7"]]]
+
+interpreter: Failed ["store", [["let", "fib", "=",
+  ["fun*", ["n"],
+    ["if-0",
+      ["n", "+", -1],
+      1,
+      ["if-0", 
+        "n",
+        1,
+        [["call", "fib", ["n", "+", -1]], 
+          "+",
+          ["call", "fib", ["n", "+", -2]]]]]]],
+  ["call", "fib", 4]]], Expected ["store", 
+[
+  "closure",
+  4,
+  2,
+  0,
+  1,
+  3,
+  1,
+  2,
+  0,
+  1
+]], Got ["store", ["closure",4,-1,4,-2,4,2,-1,2,-2,2,0,-1,0,-1,2,1,-1,1,1,1,-1,4,3,-1,3,-2,3,1,-1,1,-1,3,2,-1,2,-2,2,0,-1,0,-1,2,1,-1,1,1,1,1,2,2,3]]
+
+interpreter: Failed ["store", [
+  ["let", "func", "=", [
+    "fun*",
+    ["a", "b", "c"],
+    ["if-0", "a", ["b", "*", "c"], [
+      ["let", "x", "=", 6],
+      ["call", "func", ["a", "+", -1], "b", "c"]
+    ]]
+  ]],
+  ["call", "func", 2, 30, 50]
+]], Expected ["store", ["closure", 2,30, 50, 6, 1, 30, 50, 6, 0, 30, 50]], Got ["store", ["closure",50,30,2,6,-1,2,50,30,1,6,-1,1,50,30,0,50,30]]
+
+interpreter: Failed ["value", [["let", "y", "=", ["x", "+", 1]], ["let", "x", "=", 7], "y"]], Expected ["value", 1], Got ["value", "variable x undeclared"]
+
+interpreter: Failed ["value", [
+  ["let", "count!", "=",
+    ["fun*", ["f"], [
+      ["let", "count", "=", [0, "@"]],
+      ["fun*", ["x"], [
+        ["let", "_", "=", ["count", "=", [["count", "!"], "+", 1]]],
+        [["count", "!"], "+", ["call", "f", "x"]]
+      ]]
+    ]]],
+  ["let", "square", "=", ["fun*", ["x"], ["x", "*", "x"]]],
+  ["let", "double", "=", ["fun*", ["x"], ["x", "+", "x"]]],
+  ["let", "f", "=", ["call", "count!", "square"]],
+  ["let", "g", "=", ["call", "count!", "double"]],
+  [[["call", "f", 3], "^", ["call", "f", 3]],
+    "+",
+  [["call", "g", 3], "^", ["call", "g", 3]]]]], Expected ["value", 25939521753], Got ["value", "variable count undeclared"]
+
+interpreter: Failed ["store", [["let", "+", "=", ["fun*", ["left", "right"], ["left", "*", "right"]]], [5, "+", 5]]], Expected ["store", ["closure", 5, 5]], Got ["store", ["closure",5,5,5,5]]
+
+interpreter: Failed ["store", [["let", "y", "=", ["fun*", ["num"], 
+  ["if-0", "num", "num", ["num", "+", ["call", "x", ["num", "+", -1]]]]]], 
+  ["let", "x", "=", ["fun*", ["num"], 
+  ["if-0", "num", "num", ["num", "+", [-1, "*", ["call", "y", ["num", "+", -1]]]]]]],
+  ["call", "x", 5]]], Expected ["store", ["closure", "closure", 5,4,3,2,1,0]], Got ["store", ["closure","closure",5,-1,5,4,-1,4,3,-1,3,2,-1,2,1,-1,1,0,0,-1,0,1,1,2,3,-1,-3,3,0,4,4,-1,-4,5]]
+
+interpreter: Failed ["store",[["let","x","=",4],["let","y","=","j"],["let","z","=",5],"x"]], Expected ["store",[4,0,0]], Got ["store", [4]]
+
+interpreter: Failed ["value",[0,"!"]], Expected ["value","primop domain error"], Got ooopsanswer.AnswerInt cannot be cast to answer.AnswerCell
+
+interpreter: Failed ["value",[["let","x","=",["call","f",3]],["let","f","=",["fun*",["a"],["a","*","a"]]],"x"]], Expected ["value","closure or primop expected"], Got ["value", "variable f undeclared"]
+
+interpreter: Failed ["store", [["let","a","=",[2,"@"]],["let","b","=",["call","@",3]],["let","f","=",["fun*",["x","y"],["x","^","y"]]],[["let","tmp","=",["a","!"]],[["b","!"],"f",["call","f",["a","=",["b","!"]],["b","=","tmp"]]]]]], Expected ["store",[["cell",9],["cell",10],"closure",2,2,2,2,3,2,8]], Got ["store", [2,2,["cell","7"],3,2,["cell","10"],"closure",["cell","7"],2,2,["cell","10"],["cell","10"],2,["cell","7"],3,2,3,2,["cell","10"],8,2,8,2]]
+
+interpreter: Failed ["value",[["let","fp","=",["+","@"]],["call",["fp","!"],[["let","tmp","=",["fp","=","*"]],2],3]]], Expected ["value",6], Got ["value", 5]
+
+interpreter: Failed ["store",[4,"+",[[[[[[[[5,"@"],"!"],"@"],"!"],"@"],"@"],"!"],"!"]]], Expected ["store",[5,5,5,["cell",8]]], Got ["store", [5,5,["cell","7"],5,5,["cell","10"],5,5,["cell","13"],["cell","13"],["cell","15"],["cell","13"],5,4]]
+
+interpreter: Failed ["value",[["let","a","=",2],["let","b","=",["a","+","c"]],["let","c","=",4],"b"]], Expected ["value",2], Got ["value", "variable c undeclared"]
+
+interpreter: Failed ["store",[["let","c","=",[5,"@"]],["let","b","=","c"],["let","a","=","b"],["let","z","=","a"],["let","x","=",["z","=",["a","=",["b","=",["c","=",2]]]]],["c","!"]]], Expected ["store",[["cell",11],["cell",11],["cell",11],["cell",11],2,5]]
+, Got ["store", [5,5,["cell","7"],["cell","7"],["cell","7"],["cell","7"],2,["cell","7"],5,["cell","7"],2,["cell","7"],5,["cell","7"],2,["cell","7"]]]
+
+interpreter: Failed ["store",[["let","x","=",5],[["let","y","=",6],["x","+","y"]]]]
+, Expected ["store",[5,6]]
+, Got ["store", [5,6,6,5]]
+
+interpreter: Failed ["store",[["let","x","=",[1,"@"]],["let","y","=",["x","=",2]],["y","+",["x","!"]]]]
+, Expected ["store",[["cell",8],1,2]]
+, Got ["store", [1,2,["cell","7"],2,["cell","7"],1,["cell","7"],2,1]]
+
+interpreter: Failed ["store",[1,"@"]]
+, Expected ["store",[1]]
+, Got ["store", [1,1]]
+
+interpreter: Failed ["store",[["let","x","=",[1,"@"]],["x","!"]]]
+, Expected ["store",[["cell",7],1]]
+, Got ["store", [1,1,["cell","7"],["cell","7"]]]
+
+interpreter: Failed ["value",[1,"@"]]
+, Expected ["value",["cell",6]]
+, Got ["value", ["cell","7"]]
+
+interpreter: Failed ["value",[1,"!"]]
+, Expected ["value","primop domain error"]
+, Got ooopsanswer.AnswerInt cannot be cast to answer.AnswerCell
+
+interpreter: Failed ["store",[["let","f","=",["fun*",["n"],["if-0","n",0,[1,"+",["call","g",["n","+",-1]]]]]],["let","g","=",["fun*",["n"],["if-0","n",0,[1,"+",["call","f",["n","+",-1]]]]]],["call","f",10]]]
+, Expected ["store",["closure","closure",10,9,8,7,6,5,4,3,2,1,0]]
+, Got ["store", ["closure","closure",10,-1,10,9,-1,9,8,-1,8,7,-1,7,6,-1,6,5,-1,5,4,-1,4,3,-1,3,2,-1,2,1,-1,1,0,0,1,1,1,2,1,3,1,4,1,5,1,6,1,7,1,8,1,9,1]]
+
+interpreter: Failed ["store",[["let","1","=",1],["foo","1",1]]]
+, Expected ["store",[1]]
+, Got ooopsanswer.AnswerInt cannot be cast to answer.AnswerFunction
+
+interpreter: Failed ["value",[
+	["let","f","=",["fun*",["*"],["y","+","*"]]],
+	[
+		["let","y","=",5],
+		["call","f",6]
+	]
+]]
+, Expected ["value","variable y undeclared"], Got ["value", 11]
+
+interpreter: Failed ["store",[
+	["let","isOdd","=",
+		["fun*",["*"],["if-0","*",0,["call","isEven",["*","+",-1]]]]
+	],
+	["let","isEven","=",
+		["fun*",["*"],["if-0","*",1,["call","isOdd",["*","+",-1]]]]
+	],
+	[
+	["let","f","=",
+		["fun*",["*"],["call","*",33]
+		]
+	],
+	["let","isOdd","=",
+		["fun*",["*"],["if-0","*",0,["call","isEven",["*","+",-1]]]]
+	],
+	["let","isEven","=",
+		["fun*",["*"],["if-0","*",1,["call","isOdd",["*","+",-1]]]]
+	],
+	[
+	["let","f","=",
+		["fun*",["*"],["call","*",33]
+		]
+	],
+	["let","isOdd","=",
+		["fun*",["*"],["if-0","*",0,["call","isEven",["*","+",-1]]]]
+	],
+	["let","isEven","=",
+		["fun*",["*"],["if-0","*",1,["call","isOdd",["*","+",-1]]]]
+	],
+	[
+	["let","f","=",
+		["fun*",["*"],["call","*",33]
+		]
+	],
+	["let","isOdd","=",
+		["fun*",["*"],["if-0","*",0,["call","isEven",["*","+",-1]]]]
+	],
+	["let","isEven","=",
+		["fun*",["*"],["if-0","*",1,["call","isOdd",["*","+",-1]]]]
+	],
+	[[[[[["call","f","isEven"]]]]]]
+]
+]
+]
+]
+]
+, Expected ["store",["closure","closure","closure","closure","closure","closure","closure","closure","closure","closure","closure","closure",33,32,31,30,29,28,27,26,25,24,23,22,21,20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0]], Got ["store", ["closure","closure","closure","closure","closure","closure","closure","closure","closure","closure","closure","closure",33,-1,33,32,-1,32,31,-1,31,30,-1,30,29,-1,29,28,-1,28,27,-1,27,26,-1,26,25,-1,25,24,-1,24,23,-1,23,22,-1,22,21,-1,21,20,-1,20,19,-1,19,18,-1,18,17,-1,17,16,-1,16,15,-1,15,14,-1,14,13,-1,13,12,-1,12,11,-1,11,10,-1,10,9,-1,9,8,-1,8,7,-1,7,6,-1,6,5,-1,5,4,-1,4,3,-1,3,2,-1,2,1,-1,1,0]]
+
+interpreter: Failed ["store",[
+	["let","val","=",[5,"@"]],
+	[
+		["let","f","=", ["fun*", ["cell"],
+			[
+				["let","curr","=",["cell","=",[["cell","!"],"+",-1]]],
+				["if-0","curr",1,["curr","*",["call","f","cell"]]]
+			]
+		]],
+		["call","f","val"]
+	]
+]]
+, Expected ["store",[["cell",7],-1,"closure",["cell",7],5,["cell",7],4,["cell",7],3,["cell",7],2,["cell",7],1,["cell",7],0]], Got ["store", [5,-1,["cell","7"],"closure",["cell","7"],["cell","7"],-1,5,4,["cell","7"],5,["cell","7"],["cell","7"],-1,4,3,["cell","7"],4,["cell","7"],["cell","7"],-1,3,2,["cell","7"],3,["cell","7"],["cell","7"],-1,2,1,["cell","7"],2,["cell","7"],["cell","7"],-1,1,0,["cell","7"],1,["cell","7"],["cell","7"],-1,0,-1,["cell","7"],0,1,1,1,2,2,3,6,4,24,5]]
+
+interpreter: Failed ["store",[
+	["let","f","=",["fun*",["*"],["y","+","*"]]],
+	[
+		["let","y","=",5],
+		["call","f",6]
+	]
+]]
+, Expected ["store",["closure",5,6]], Got ["store", ["closure",5,6,6,5]]
+
+interpreter: Failed ["store",[
+	["let","x","=",[[5,"*",3],"@"]],
+	["let","z","=",4],
+	["let","y","=",[["z","@"],"=",9]],
+	[["x","!"],"+","y"]
+]]
+, Expected ["store",[["cell",9],4,4,15,9]], Got ["store", [3,5,15,15,["cell","9"],4,4,9,9,["cell","13"],4,["cell","9"],4,15]]
+
+interpreter: Failed ["store", [["let", "w", "=", -1],
+ ["let", "fx", "=", ["fun*", ["x"], ["fun*", [], ["w" , "+", "x"]]]],
+ ["let", "z", "=", 43],
+ ["call", ["call", "fx", "z"]]]]
+, Expected ["store",[-1,"closure",43,43]]
+, Got ["store", [-1,"closure",43,43,43]]
+
+interpreter: Failed ["store", [["let", "f", "=", ["fun*", ["x", "y", "z"], ["x", "+", ["y", "+", "z"]]]], ["let", "y", "=", [1, "f", 2, 3]], "y"]]
+, Expected ["store",["closure",6,1,2,3]]
+, Got ooopsJSON could not be parsed
+
+interpreter: Failed ["store", [["let", "x", "=", [10, "@"]], ["let", "y", "=", [9, "@"]],
+["let", "f", "=",
+	    ["fun*", ["x"], ["if-0", ["y", "!"], ["x", "!"], [["let", "thing", "=", ["x", "=", [["y", "=", [["y", "!"], "+", -1]], "*", ["x", "!"]]]], ["call", "f", "x"]]]]],
+	   ["call", "f", "x"]]]
+
+
+, Expected ["store",[["cell",9],["cell",10],"closure",3628800,0,["cell",9],10,["cell",9],90,["cell",9],720,["cell",9],5040,["cell",9],30240,["cell",9],151200,["cell",9],604800,["cell",9],1814400,["cell",9],3628800,["cell",9]]]
+, Got ["store", [10,3628800,["cell","7"],9,0,["cell","10"],"closure",["cell","7"],["cell","10"],["cell","7"],["cell","10"],-1,9,8,["cell","10"],10,9,90,["cell","7"],10,["cell","7"],["cell","10"],["cell","7"],["cell","10"],-1,8,7,["cell","10"],90,8,720,["cell","7"],90,["cell","7"],["cell","10"],["cell","7"],["cell","10"],-1,7,6,["cell","10"],720,7,5040,["cell","7"],720,["cell","7"],["cell","10"],["cell","7"],["cell","10"],-1,6,5,["cell","10"],5040,6,30240,["cell","7"],5040,["cell","7"],["cell","10"],["cell","7"],["cell","10"],-1,5,4,["cell","10"],30240,5,151200,["cell","7"],30240,["cell","7"],["cell","10"],["cell","7"],["cell","10"],-1,4,3,["cell","10"],151200,4,604800,["cell","7"],151200,["cell","7"],["cell","10"],["cell","7"],["cell","10"],-1,3,2,["cell","10"],604800,3,1814400,["cell","7"],604800,["cell","7"],["cell","10"],["cell","7"],["cell","10"],-1,2,1,["cell","10"],1814400,2,3628800,["cell","7"],1814400,["cell","7"],["cell","10"],["cell","7"],["cell","10"],-1,1,0,["cell","10"],3628800,1,3628800,["cell","7"],3628800,["cell","7"],["cell","10"],["cell","7"]]]
+
+interpreter: Failed ["store", [["let", "+", "=", 5], [5, "+", 5]]]
+, Expected ["store",[5]]
+, Got ooopsanswer.AnswerInt cannot be cast to answer.AnswerFunction
+
+interpreter: Failed ["value", [["let", "w", "=", -1],
+ ["let", "fx", "=", ["fun*", ["x"], ["fun*", [], ["w" , "+", "x"]]]],
+ ["let", "z", "=", 43],
+ ["call", ["call", "fx", "z"]]]]
+, Expected ["value",42]
+, Got ["value", "variable x undeclared"]
+
+interpreter: Failed ["value", [["let", "f", "=", ["fun*", ["x"], ["x", "+", ["call", "h", "x"]]]],["let", "h", "=", ["fun*", ["y"], "y"]],[["let", "h", "=", ["fun*", ["y"], ["y", "+", 10]]],["call", "f", 2]]]]
+, Expected ["value",4]
+, Got ["value", 14]
+
+interpreter: Failed ["value", [["let", "+", "=", 5], [5, "+", 5]]]
+, Expected ["value","closure or primop expected"]
+, Got ooopsanswer.AnswerInt cannot be cast to answer.AnswerFunction
+
+interpreter: Failed ["value", [1, "@"]]
+, Expected ["value",["cell",6]]
+, Got ["value", ["cell","7"]]
+
+interpreter: Failed ["value", [["let", "x", "=", 0], ["let", "y", "=", ["x", "=", ["x", "+", 1]]],
+	   ["if-0",
+	    ["y", "+", "y"],
+	    0,
+	   42]]]
+, Expected ["value","primop domain error"]
+, Got ooopsanswer.AnswerInt cannot be cast to answer.AnswerCell
+
+interpreter: Failed ["store", [5, "+", 5, 5]]
+, Expected ["store", []]
+, Got ooopsJSON could not be parsed
+
+interpreter: Failed ["store", [3, "+", 5]]
+, Expected ["store", []], Got ["store", [5,3]]
+
+interpreter: Failed ["value", [["let", "*", "=", ["fun*", ["x", "y", "z"], ["x", "+", ["y", "+", "z"]]]], [5, "*", 5, 5]]], Expected ["value", 15], Got ooopsJSON could not be parsed
+
+interpreter: Failed ["store", 
+  [["let", "x", "=", 5], 
+    ["let", "add", "=", ["fun*", ["x", "y"], ["x", "+", "y"]]], 
+    ["let", "y", "=", 7],
+["x", "add", "y"]]], Expected ["store",[5,"closure",7,5,7]], Got ["store", [5,"closure",7,7,5,7,5]]
+
+interpreter: Failed ["store",
+   [["let", "swap", "=", ["fun*", ["cell-1"], 
+                    ["fun*", ["cell-2"],
+                          [["let", "tmp", "=", ["cell-1", "!"]],
+                           ["let", "ignore", "=", ["cell-1", "=", ["cell-2", "!"]]],
+                           ["cell-2", "=", "tmp"]]]]],
+    ["let", "a", "=", [20, "@"]],
+	  ["let", "b", "=", [17, "@"]],
+    ["let", "ign", "=", ["call", ["call", "swap", "a"], "b"]],
+    ["a", "!"]]], Expected ["store", 
+  ["closure", ["cell", 10], ["cell", 11], 17, 17, 20, ["cell", 10], ["cell", 11], 20, 20]], Got ["store", ["closure",20,20,["cell","8"],17,17,["cell","11"],["cell","8"],["cell","8"],["cell","11"]]]
+
+interpreter: Failed ["value",
+   [["let", "swap", "=", ["fun*", ["cell-1"], 
+                    ["fun*", ["cell-2"],
+                          [["let", "tmp", "=", ["cell-1", "!"]],
+                           ["let", "ignore", "=", ["cell-1", "=", ["cell-2", "!"]]],
+                           ["cell-2", "=", "tmp"]]]]],
+    ["let", "a", "=", [20, "@"]],
+    ["let", "b", "=", [17, "@"]],
+    ["let", "ign", "=", ["call", ["call", "swap", "a"], "b"]],
+    ["a", "!"]]], Expected ["value", 17], Got ["value", "variable cell-1 undeclared"]
+
+interpreter: Failed ["store", [["let", "@", "=", "+"], ["let", "+", "=", "@"], ["@", "=", "+"]]], Expected ["store", [0, 0]], Got ooopsanswer.AnswerPrimop cannot be cast to answer.AnswerCell
+
+interpreter: Failed ["store", [["let", "y", "=", ["x", "+", 1]], ["let", "x", "=", 3], "y"]], Expected ["store", [1, 3]], Got ["store", []]
+
+interpreter: Failed ["store", [["let", "=", "=", "+"], [1, "=", 2]]], Expected ["store", ["primop"]], Got ["store", ["primop",2,1]]
+
+interpreter: Failed ["value", [["let", "@", "=", "+"], ["let", "+", "=", "@"], ["@", "=", "+"]]], Expected ["value", "primop domain error"], Got ooopsanswer.AnswerPrimop cannot be cast to answer.AnswerCell
+
+interpreter: Failed ["value", [["let", "x", "=", ["x", "+", 1]], [["x", "@"], "=", ["x", "+", 1]]]], Expected ["value", 1], Got ["value", "variable x undeclared"]
+
+interpreter: Failed ["store", [["let", "+", "=", "@"], [[0, "+"], "=", 10]]], Expected ["store", ["primop", 10]], Got ["store", ["primop",0,10,10,["cell","8"]]]
+
+interpreter: Failed ["store", [[[[[[[[1, "@"], "!"], "@"], "!"], "@"], "!"], "@"], "!"]], Expected ["store", [1, 1, 1, 1]], Got ["store", [1,1,["cell","7"],1,1,["cell","10"],1,1,["cell","13"],1,1,["cell","16"]]]
+
+interpreter: Failed ["store", [["let", "x", "=", ["x", "+", 1]], [["x", "@"], "=", ["x", "+", 1]]]], Expected ["store", [1, 2]], Got ["store", []]
+
+interpreter: Failed ["store", [["let", "=", "=", "+"], [1, "+", 2]]], Expected ["store", ["primop"]], Got ["store", ["primop",2,1]]
+
+interpreter: Failed ["value", [["let", "y", "=", ["x", "+", 1]], ["let", "x", "=", 3], "y"]], Expected ["value", 1], Got ["value", "variable x undeclared"]
+
+interpreter: Failed ["store", [["let", "factorial", "=", ["fun*", ["x"],
+                                                                 ["if-0", "x", 1,
+                                                                  ["x", "*", ["call", "factorial", ["x", "+", -1]]]]]],
+                                      ["call", "factorial", 3]]], Expected ["store", ["closure", 3, 2, 1, 0]], Got ["store", ["closure",3,-1,3,2,-1,2,1,-1,1,0,1,1,1,2,2,3]]
+
+interpreter: Failed [
+  "store",
+  [20, "@"]
+]
+, Expected ["store", [20]]
+, Got ["store", [20,20]]
+
+interpreter: Failed [
+  "value",
+  [
+    ["let", "x", "=", 0],
+    ["let", "retx", "=", ["fun*", [], "x"]],
+    [
+      ["let", "x", "=", 5],
+      ["call", "retx"]
+    ]
+  ]
+]
+, Expected ["value", 0]
+, Got ["value", 5]
+
+interpreter: Failed [
+  "store",
+  [
+    ["let", "b", "=", 6],
+    ["let", "y", "=", 9],
+    ["y", "+", "b"]
+  ]
+]
+, Expected ["store", [6, 9]]
+, Got ["store", [6,9,6,9]]
+
+interpreter: Failed ["store", [
+  ["let", "f", "=", 
+    ["fun*", 
+      ["x"],
+      ["if-0", "x", 42, ["call", "g", ["x", "+", -1]]]]],
+      
+  ["let", "g", "=", 
+    ["fun*", 
+      ["x"],
+      ["call", "f", ["x", "+", -1]]]],
+
+  ["let", "h", "=", "*"],
+      
+  ["call", "f", 10]
+]], Expected ["store",["closure","closure","primop",10,9,8,7,6,5,4,3,2,1,0]], Got ["store", ["closure","closure","primop",10,-1,10,9,-1,9,8,-1,8,7,-1,7,6,-1,6,5,-1,5,4,-1,4,3,-1,3,2,-1,2,1,-1,1,0]]
+
+interpreter: Failed ["store", [
+  ["let", "x", "=", 0],
+  ["let", "y", "=", 0],
+  ["let", "2a+b", "=", ["fun*", ["x", "y"], [["x", "*", 2], "+", "y"]]],
+  [10, "2a+b", 7]
+]], Expected ["store",[0,0,"closure",10,7]], Got ["store", [0,0,"closure",7,10,2,10,7,20]]
+
+interpreter: Failed ["store", [
+  ["let", "fact", "=", 
+    ["fun*", 
+      ["x"], 
+      ["if-0", 
+        "x", 
+        1, 
+        ["x", "*", ["call", "fact", ["x", "+", -1]]]]]],
+        
+  [10, "fact"]
+]], Expected ["store",["closure",10,9,8,7,6,5,4,3,2,1,0]], Got ["store", ["closure",10,-1,10,9,-1,9,8,-1,8,7,-1,7,6,-1,6,5,-1,5,4,-1,4,3,-1,3,2,-1,2,1,-1,1,0,1,1,1,2,2,3,6,4,24,5,120,6,720,7,5040,8,40320,9,362880,10]]
+
+interpreter: Failed ["value", [["let", "x", "=", [0, "@"]], ["let", "f", "=", ["fun*", ["y"], [["y", "=", "x"], "+", ["x", "=", 4]]]], ["call", "f", 9]]], Expected ["value", "primop domain error"]
+, Got ooopsanswer.AnswerInt cannot be cast to answer.AnswerCell
+
+interpreter: Failed ["store", [["let", "x", "=", 4], ["x", "^", 2]]]
+, Expected ["store", [4]]
+, Got ["store", [4,2,4]]
+
+interpreter: Failed ["store", ["call", ["fun*", ["c", "v"], ["c", "=", "v"]], [10, "@"], 11]]
+, Expected ["store", [11, ["cell", 6], 11]]
+, Got ["store", [10,11,11,["cell","7"],11,["cell","7"]]]
+
+interpreter: Failed ["value", [[
+  ["let", "addThenSub", "=", ["fun*", ["a", "b", "c"], [["a", "+", "b"], "*", "c"]]],
+  [2, "addThenSub", 5, 10]
+]]], Expected ["value",70], Got ooopsJSON could not be parsed
+
+interpreter: Failed ["value", [["let", "f", "=", ["z", "+", "x"]], ["let", "z", "=", 23], ["let", "x", "=", 12], "f"]]
+, Expected ["value", 0]
+, Got ["value", "variable x undeclared"]
+
+interpreter: Failed ["value", [[[6, "@"], "!"], "@"]]
+, Expected ["value", ["cell", 7]]
+, Got ["value", ["cell","10"]]
+
+interpreter: Failed ["value", [4, "!"]]
+, Expected ["value", "primop domain error"]
+, Got ooopsanswer.AnswerInt cannot be cast to answer.AnswerCell
+
+interpreter: Failed ["value", [["let", "ouch", "=", 12], ["call", "ouch", 12, "x"]]], Expected ["value", "variable x undeclared"]
+, Got ["value", "closure or primop expected"]
+
+interpreter: Failed ["value", [["let", "x" , "=", ["if-0", "y", "x", 2]],
+	   ["let", "y", "=", 1],
+	   ["let", "z", "=", ["if-0", "x", 1, 2]],
+	   "z"]]
+, Expected ["value",1]
+, Got ["value", "variable y undeclared"]
+
+interpreter: Failed ["value",  [["let", "x", "=", ["call", "@", "x"]],
+	   ["let", "y", "=", ["call", "@", "x"]],
+	    ["let", "weirdfact", "=", ["fun*", ["a"],
+			               [["let", "b", "=", ["call", "=", "x",
+						           ["call", "+",
+						            "a",
+						            ["call", "!", "x"]]]],
+			                ["let", "c", "=", ["call", "=", "y",
+						           ["call", "@", ["call", "+",
+								          ["call", "+",
+								           ["call", "!", "x"],
+								           "a"],
+								          ["call", "!",
+								           ["call", "!", "y"]]]]]],
+			                ["if-0", "a", 1, ["call", "*",
+						          ["call", "weirdfact",
+						           ["call", "+", "a", -1]],
+						          ["call", "!", ["call", "!", "y"]]]]]]],
+	    ["call", "weirdfact", 1]]]
+, Expected ["value",3]
+, Got ["value", "variable x undeclared"]
+
+interpreter: Failed ["value", [["let", "f", "=", ["fun*", ["x", "y"], ["y", "^", "x"]]],
+           [["let", "^", "=", "f"],
+	    ["call", "^", 2, -4]]]]
+, Expected ["value",16]
+, Got Exception in thread "main" java.lang.StackOverflowError
+	at java.util.ArrayList.addAll(ArrayList.java:581)
+	at fvexpr.Operator.interpret(Operator.java:35)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+	at fvexpr.Func.apply(Func.java:53)
+	at fvexpr.Operator.interpret(Operator.java:36)
+
+interpreter: Failed ["store", [["let", "x", "=", ["call", "@", "x"]],
+	   ["let", "y", "=", ["call", "@", "x"]],
+	   ["let", "weirdfact", "=", ["fun*", ["a"],
+			              [["let", "b", "=", ["call", "=", "x",
+						          ["call", "+",
+						           "a",
+						           ["call", "!", "x"]]]],
+			               ["let", "c", "=", ["call", "=", "y",
+						          ["call", "@", ["call", "+",
+								         ["call", "+",
+								          ["call", "!", "x"],
+								          "a"],
+								         ["call", "!",
+								          ["call", "!", "y"]]]]]],
+			               ["if-0", "a", 1, ["call", "*",
+						         ["call", "weirdfact",
+						          ["call", "+", "a", -1]],
+						         ["call", "!", ["call", "!", "y"]]]]]]],
+	   ["call", "weirdfact", 1]]]
+, Expected ["store",[["cell",9],["cell",10],"closure",1,["cell",18],1,0,["cell",9],3,0,1,["cell",14],4]]
+, Got ["store", []]
+
+interpreter: Failed ["store", [["let", "z", "=", ["fun*", ["a", "b"], ["if-0", "a", "b", ["call", "+",
+								      "a", "b"]]]],
+	   ["let", "*", "=", ["fun*", ["a"], ["call", "^", 5, "a"]]],
+	   ["let", "+", "=", ["fun*", ["a"], ["call", "^", 5, "a"]]],
+	   ["call", "+", 5, ["call", "*", 1]]]]
+, Expected ["store",["closure","closure","closure",1]]
+, Got ["store", ["closure","closure","closure"]]
+
+interpreter: Failed ["value", [["let", "+", "=", 5],
+	   ["let", "a", "=", ["fun*", ["x", "y"], ["call", "!",
+						   ["=", "x", ["call", "@", "y"]]]]],
+	   ["let", "z", "=", "a"],
+	   ["let", "c", "=", [["let", "z", "=", "c"], 
+			      ["let", "+", "=", ["call", "*", "+", 2]],
+			      ["let", "m", "=", ["call", "^", "z", "+"]], 
+			      ["call", "^", ["call", "*", "m", 2], "m"]]],
+	   ["call", "^", "c", "c"]]]
+								    
+, Expected ["value",4]
+, Got ["value", "variable c undeclared"]
+
+interpreter: Failed ["store",
+  [
+    ["let", "x", "=", 5],
+    ["let", "y", "=", 7],
+    ["let", "z", "=", "c"],
+    ["x", "+", "y"]
+  ]
+], Expected ["store",[5,7,0]], Got ["store", [5,7]]
+
+interpreter: Failed ["value",[
+  "call", "f", ["y", "*", "z"], ["x", "+", 3]
+]], Expected ["value","variable x undeclared"], Got ["value", "variable f undeclared"]
+
+interpreter: Failed ["value",[
+  ["let", "f", "=", ["fun*", ["x"], ["x", "+", "y"]]],
+  [
+    ["let", "y", "=", 10],
+    ["call", "f", 3]
+  ]
+]], Expected ["value","variable y undeclared"], Got ["value", 13]
