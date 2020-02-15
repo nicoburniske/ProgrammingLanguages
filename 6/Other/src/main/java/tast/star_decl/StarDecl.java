@@ -3,8 +3,7 @@ package tast.star_decl;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONAware;
 import tast.star_ast.StarAST;
-import tast.TASTVar;
-import tpal.TVar;
+import type.TVar;
 
 /**
  * TODO: DATA Definition

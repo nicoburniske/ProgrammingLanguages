@@ -2,11 +2,10 @@ package tast;
 
 import org.junit.Test;
 import tast.star_ast.StarAST;
-import tpal.TVar;
+import type.TVar;
 import type.TypeFunction;
 import type.TypeInt;
 
-import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.List;
 

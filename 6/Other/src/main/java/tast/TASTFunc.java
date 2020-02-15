@@ -2,7 +2,7 @@ package tast;
 
 import org.json.simple.JSONArray;
 import tast.star_ast.StarAST;
-import tpal.TVar;
+import type.TVar;
 
 import java.util.List;
 

@@ -2,7 +2,7 @@ package tast;
 
 import org.junit.Test;
 import tast.star_ast.StarAST;
-import tpal.TVar;
+import type.TVar;
 import type.TypeInt;
 
 import java.util.Arrays;

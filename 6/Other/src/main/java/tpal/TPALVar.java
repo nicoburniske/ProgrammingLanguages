@@ -1,7 +1,7 @@
 package tpal;
 
 public class TPALVar implements TPAL {
-    String var;
+    protected String var;
 
     public TPALVar(String var) {
         this.var = var;

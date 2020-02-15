@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import tast.TASTVar;
 import tast.star_ast.StarAST;
-import tpal.TVar;
+import type.TVar;
 import type.TypeFunction;
 import type.TypeInt;
 

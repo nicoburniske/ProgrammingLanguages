@@ -1,7 +1,8 @@
-package tpal;
+package type;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONAware;
+import tpal.TPALVar;
 import type.Type;
 
 public class TVar  extends TPALVar implements JSONAware {
@@ -16,7 +17,7 @@ public class TVar  extends TPALVar implements JSONAware {
     @Override
     public String toJSONString() {
         JSONArray arr = new JSONArray();
-        arr.add(super.var);
+        arr.add(var);
         arr.add(":");
         arr.add(type);
         return arr.toJSONString();
