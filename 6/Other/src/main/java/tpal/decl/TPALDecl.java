@@ -2,12 +2,13 @@ package tpal.decl;
 
 import tpal.TPAL;
 import tpal.TPALVar;
+import type.TVar;
 
 public class TPALDecl {
-    TPALVar var;
+    TVar var;
     TPAL rhs;
 
-    public TPALDecl(TPALVar var, TPAL rhs) {
+    public TPALDecl(TVar var, TPAL rhs) {
         this.var = var;
         this.rhs = rhs;
     }
