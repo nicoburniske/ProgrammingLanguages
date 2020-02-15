@@ -1,0 +1,9 @@
+
+["expr" : ["call", {"expr" : [ "fun*", ]] , "type" : ["int", "int", "int", "->", "int"] }, {"expr" : 5, "type": "int"},  {"expr" : 6, "type": "int"},  {"expr" : 10, "type": "int"}] 
+
+
+
+
+
+
+["call",["fun*", [["left", ":", "int"], ["right", ":", "int"],["None", ":", "int"]], ["left", "^", "right"]], 5, 6, 10]
