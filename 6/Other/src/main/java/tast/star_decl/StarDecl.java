@@ -4,15 +4,16 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONAware;
 import tast.star_ast.StarAST;
 import tast.TASTVar;
+import tpal.TVar;
 
 /**
  * TODO: DATA Definition
  */
 public class StarDecl implements JSONAware {
-    TASTVar name;
+    TVar name;
     StarAST rhs;
 
-    public StarDecl(TASTVar name, StarAST rhs) {
+    public StarDecl(TVar name, StarAST rhs) {
         this.name = name;
         this.rhs = rhs;
     }
