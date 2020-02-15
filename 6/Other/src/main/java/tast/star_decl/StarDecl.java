@@ -26,4 +26,5 @@ public class StarDecl implements JSONAware {
         arr.add(rhs);
         return arr.toJSONString();
     }
+
 }
