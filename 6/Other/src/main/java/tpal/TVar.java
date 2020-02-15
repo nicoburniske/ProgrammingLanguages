@@ -1,12 +1,12 @@
 package type;
 
-import tast.TASTVar;
+import tpal.TPALVar;
 
 public class TVar {
-    TASTVar var;
+    TPALVar var;
     Type type;
 
-    public TVar(TASTVar var, Type type) {
+    public TVar(TPALVar var, Type type) {
         this.var = var;
         this.type = type;
     }
