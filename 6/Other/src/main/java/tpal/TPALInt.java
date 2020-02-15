@@ -8,4 +8,8 @@ public class TPALInt implements TPAL {
     public TPALInt(BigInteger num) {
         this.num = num;
     }
+
+    public TPALInt(long num){
+        this.num = new BigInteger(String.valueOf(num));
+    }
 }
