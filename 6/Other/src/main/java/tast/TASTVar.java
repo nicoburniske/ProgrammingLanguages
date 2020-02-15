@@ -9,6 +9,6 @@ public class TASTVar implements TAST{
 
     @Override
     public String toJSONString() {
-        return variable;
+        return String.format("\"%s\"", variable);
     }
 }
