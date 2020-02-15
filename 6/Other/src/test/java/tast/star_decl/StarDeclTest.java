@@ -12,14 +12,14 @@ import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
 
-class StarDeclTest {
+public class StarDeclTest {
 
     @Before
-    void setUp() {
+    public void setUp() {
     }
 
     @Test
-    void toJSONString() {
+    public void toJSONString() {
         StarDecl starDecl  = new StarDecl(new TASTVar("dec"),new StarAST(new TASTVar("les"),new TypeFunction(Arrays.asList(new TypeInt(), new TypeInt()), new TypeInt())));
         assertEquals("", starDecl.toJSONString());
     }

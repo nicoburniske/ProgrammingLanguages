@@ -8,13 +8,13 @@ import type.TypeInt;
 import static org.junit.Assert.assertEquals;
 
 
-class StarASTTest {
+public class StarASTTest {
     @Before
-    void setUp() {
+    public void setUp() {
     }
 
     @Test
-    void toJSONString() {
+    public void toJSONString() {
         StarAST starAST = new StarAST(new TASTVar("hi"),new TypeInt());
         assertEquals("{\"expr\":\"hi\",\"type\":\"int\"}", starAST.toJSONString());
     }
