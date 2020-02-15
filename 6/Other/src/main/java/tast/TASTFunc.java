@@ -1,7 +1,7 @@
 package tast;
 
 import star_ast.StarAST;
-import type.TVar;
+import tpal.TVar;
 
 import java.util.List;
 

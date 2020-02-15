@@ -1,13 +1,13 @@
-package type;
+package tpal;
 
-import tpal.TPALVar;
+import type.Type;
 
-public class TVar {
-    TPALVar var;
+public class TVar  extends TPALVar{
+    //String var;
     Type type;
 
-    public TVar(TPALVar var, Type type) {
-        this.var = var;
+    public TVar(String var, Type type) {
+        super(var);
         this.type = type;
     }
 }
