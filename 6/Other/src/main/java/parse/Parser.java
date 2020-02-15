@@ -11,6 +11,7 @@ import type.TypeInt;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -44,15 +45,22 @@ public class Parser {
             if (arr.size() == 4 && isStringAndisEqual(arr.get(0), "if-0")) {
                 return new TPALConditional(parseJSON(arr.get(1)), parseJSON(arr.get(2)), parseJSON(arr.get(3)));
             }
+            if (arr.size() >= 2 && arr.get(1) instanceof String ) {
+                List<TPAL> args = new ArrayList<>();
+                args.add(parseJSON(arr.get(0)));
+                arr.subList(2, arr.size()).forEach( e -> args.add(parseJSON(e)));
+                return new TPALCall(parseJSON(arr.get(1)),args);
+            }
             if (arr.size() >= 1) {
                 if (arr.size() == 1) {
-                    return new TPALDeclArray(Arrays.asList(), parseJSON(arr.get(0)));
+                    return new TPALDeclArray(Collections.emptyList(), parseJSON(arr.get(0)));
                 } else {
                     List<TPALDecl> decls = (List<TPALDecl>) arr.subList(0, arr.size() - 1).stream().map(e -> parseDecl(e)).collect(Collectors.toList());
                     return new TPALDeclArray(decls,
                             parseJSON(arr.get(arr.size() - 1)));
                 }
             }
+
 
 
         }

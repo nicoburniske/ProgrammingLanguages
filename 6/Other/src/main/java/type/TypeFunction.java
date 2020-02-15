@@ -3,6 +3,7 @@ package type;
 import org.json.simple.JSONArray;
 
 import java.util.List;
+import java.util.Objects;
 
 public class TypeFunction implements Type{
     List<Type> args;
@@ -20,5 +21,19 @@ public class TypeFunction implements Type{
         arr.add("->");
         arr.add(rhs);
         return arr.toJSONString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TypeFunction that = (TypeFunction) o;
+        return args.equals(that.args) &&
+                rhs.equals(that.rhs);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(args, rhs);
     }
 }
