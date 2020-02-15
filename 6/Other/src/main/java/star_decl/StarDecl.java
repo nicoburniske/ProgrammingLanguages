@@ -3,6 +3,9 @@ package star_decl;
 import star_ast.StarAST;
 import tast.TASTVar;
 
+/**
+ * TODO: DATA Definition
+ */
 public class StarDecl {
     TASTVar name;
     StarAST rhs;
