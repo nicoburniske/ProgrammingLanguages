@@ -6,4 +6,9 @@ public class TASTVar implements TAST{
     public TASTVar(String variable) {
         this.variable = variable;
     }
+
+    @Override
+    public String toJSONString() {
+        return variable;
+    }
 }

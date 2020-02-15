@@ -1,6 +1,7 @@
 package tast;
 
-import star_ast.StarAST;
+import org.json.simple.JSONArray;
+import tast.star_ast.StarAST;
 
 import java.util.List;
 
@@ -11,5 +12,14 @@ public class TASTFuncCall implements TAST {
     public TASTFuncCall(StarAST func, List<StarAST> arguments) {
         this.func = func;
         this.arguments = arguments;
+    }
+
+    @Override
+    public String toJSONString() {
+        JSONArray arr = new JSONArray();
+        arr.add("call");
+        arr.add(func);
+        arr.addAll(arguments);
+        return arr.toJSONString();
     }
 }

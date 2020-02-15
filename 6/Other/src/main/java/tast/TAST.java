@@ -1,5 +1,7 @@
 package tast;
 
+import org.json.simple.JSONAware;
+
 /**
  * A TAST expression has one of these shapes:
  * <ul>
@@ -21,5 +23,5 @@ package tast;
  *     <li>- a JSON array of the shape ["if-0",*AST,*AST,*AST]</li>
  * </ul>
  */
-public interface TAST {
+public interface TAST extends JSONAware {
 }

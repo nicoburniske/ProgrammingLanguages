@@ -1,6 +1,7 @@
 package tast;
 
-import star_ast.StarAST;
+import org.json.simple.JSONArray;
+import tast.star_ast.StarAST;
 import tpal.TVar;
 
 import java.util.List;
@@ -12,5 +13,14 @@ public class TASTFunc implements TAST {
     public TASTFunc(List<TVar> parameters, StarAST body) {
         this.parameters = parameters;
         this.body = body;
+    }
+
+    @Override
+    public String toJSONString() {
+        JSONArray arr = new JSONArray();
+        arr.add("fun*");
+        arr.add(parameters);
+        arr.add(body);
+        return arr.toJSONString();
     }
 }

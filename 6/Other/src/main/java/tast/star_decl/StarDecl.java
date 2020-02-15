@@ -1,6 +1,6 @@
-package star_decl;
+package tast.star_decl;
 
-import star_ast.StarAST;
+import tast.star_ast.StarAST;
 import tast.TASTVar;
 
 /**

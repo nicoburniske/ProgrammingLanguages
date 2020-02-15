@@ -1,5 +1,7 @@
 package type;
 
+import org.json.simple.JSONAware;
+
 /**
  * A Type is one of:
  * <ul>
@@ -7,5 +9,5 @@ package type;
  *      <li>- [Type, ..., Type, "->", Type]</li>
  * </ul>
  **/
-public interface Type {
+public interface Type extends JSONAware {
 }
