@@ -1,4 +1,4 @@
-Total: 81/100
+Total: 78/100
 
 -3 interpreter; Input: ["value",[["let","count!","=",["fun*",["f"],[["let","count","=",[0,"@"]],["fun*",["x"],[["let","_","=",["count","=",[["count","!"],"+",1]]],[["count","!"],"+",["call","f","x"]]]]]]],["let","count","=",["fun*",["x"],["x","+","x"]]],["let","double","=",["fun*",["x"],["x","*","x"]]],["let","f","=",["call","count!","count"]],["let","x","=",["call","count!","double"]],[[["call","f",2],"+",["call","f",3]],"*",[["call","x",2],"+",["call","x",3]]]]]; Expected: ["value",208]
 ; Got: ooopsanswer.AnswerFunction cannot be cast to answer.AnswerCell
@@ -18,33 +18,39 @@ Total: 81/100
 -3 interpreter; Input: ["value",[["let","y","=",1],["let","x","=",["fun*",["x"],["x","+","y"]]],[["let","y","=",2],["call","x",[["let","x","=",0],["x","+","y"]]]]]]; Expected: ["value",3]
 ; Got: ["value", 4]
 
--3, for test 3-in.json; got parse: bad SFV '("@" 5)
-  context...:
-   /usr/share/racket/collects/racket/private/map.rkt:54:19: loop
-   /usr/share/racket/collects/racket/match/compiler.rkt:507:40: f86
-   /home/vagrant/src/20PL/Code/5/xinterpreter:22:0: main
-
 -3, for test 11-in.json; got parse-string: bad Var "shouldNotBeEvaluated"
   context...:
-   /home/vagrant/src/20PL/Code/5/Other/data-rep.rkt:63:0: parse
+   /home/vagrant/src/20PL/Code/5/Other/data-rep.rkt:62:0: parse
    /home/vagrant/src/20PL/Code/5/xinterpreter:22:0: main
 
--3, for test 9-in.json; got parse: bad SFV '("@" 5)
+-3, for test 14-in.json; got parse: bad expression '((("let" "m" "=" 4) ("m" "*" "y")) "*" (("let" "n" "=" 5) (("x" "+" "m") "*" "n")))
   context...:
+   /usr/share/racket/collects/racket/match/compiler.rkt:507:40: f86
+   [repeats 1 more time]
    /home/vagrant/src/20PL/Code/5/xinterpreter:22:0: main
 
 -3, for test 0-in.json; got ["store",[43]]
 
--3, for test 1-in.json; got parse: bad SFV '("@" 5)
+-3, for test 1-in.json; got parse: bad expression '("@" 5)
   context...:
-   /home/vagrant/src/20PL/Code/5/Other/data-rep.rkt:82:0: parse-decl
+   /home/vagrant/src/20PL/Code/5/Other/data-rep.rkt:81:0: parse-decl
    /usr/share/racket/collects/racket/private/map.rkt:35:13: map
    /usr/share/racket/collects/racket/match/compiler.rkt:507:40: f86
    /home/vagrant/src/20PL/Code/5/xinterpreter:22:0: main
 
 -3, for test 10-in.json; got ["value","primop domain error"]
 
--3, for test 4-in.json; got parse: bad SFV '("@" 5)
+-3, for test 9-in.json; got parse: bad expression '("@" 5)
+  context...:
+   /home/vagrant/src/20PL/Code/5/xinterpreter:22:0: main
+
+-3, for test 3-in.json; got parse: bad expression '("@" 5)
+  context...:
+   /usr/share/racket/collects/racket/private/map.rkt:54:19: loop
+   /usr/share/racket/collects/racket/match/compiler.rkt:507:40: f86
+   /home/vagrant/src/20PL/Code/5/xinterpreter:22:0: main
+
+-3, for test 4-in.json; got parse: bad expression '("@" 5)
   context...:
    /usr/share/racket/collects/racket/private/map.rkt:54:19: loop
    /usr/share/racket/collects/racket/match/compiler.rkt:507:40: f86
@@ -121,11 +127,17 @@ interpreter: Failed ["store", [["let", "double", "=", ["fun*", ["a"], ["a", "*",
 ]], Expected ["store",["closure",0,2,3,4,5,0]]
 , Got ["store", ["closure",0,2,3,4,5,0,2,0,4,4,8,3]]
 
+interpreter: Failed ["store", ["if-0", [["let", "zero", "=", 0], "zero"], "zero", [2, "+", 2]]], Expected ["store",[0]], Got ooopsJSON could not be parsed
+
 interpreter: Failed ["store", [["let", "wacky", "=", ["fun*", ["func", "arg", "mult"], ["mult", "*", ["call", "func", "arg"]]]],
 ["let", "double", "=", ["fun*", ["arg"], [2, "*", "arg"]]],
 ["call", "wacky", "double", 3, 5]
 ]], Expected ["store",["closure","closure","closure",3,5,3]]
 , Got ["store", ["closure","closure",5,3,"closure",3,3,2,6,5]]
+
+interpreter: Failed ["value", [["let", "x", "=", ["fun*", ["z"], "z"]], "x"]]
+, Expected ["value", "closure"]
+, Got ooopsJSON could not be parsed
 
 interpreter: Failed ["value", [["let", "u", "=", 5], ["let", "6cell", "=", ["u", "@"]], ["let", "x", "=", [["u", "@"], "!"]],
  [["x", "!"], "=", 42]]], Expected ["value", "primop domain error"]
@@ -159,10 +171,6 @@ interpreter: Failed ["value", [["let", "w", "=", -1],
 interpreter: Failed ["store", [[5, "@"], "=", 7]]
 , Expected ["store",[7]]
 , Got ["store", [5,7,7,["cell","7"]]]
-
-interpreter: Failed ["store", [[[["fun*", ["x"], "x"], "@"], "@"], "!"]]
-, Expected ["store", ["closure", ["cell", 6]]]
-, Got ["store", ["closure","closure",["cell","7"],["cell","7"],["cell","9"]]]
 
 interpreter: Failed ["value", [["let", "f", "=", ["fun*", ["a", "b", "c"], [["a", "+", "b"], "+", "c"]]], [1, "f", 2, 3]]]
 , Expected ["value", 6]
@@ -207,6 +215,9 @@ interpreter: Failed ["store", [["let", "x", "=", [1, "@"]], ["x", "=", "x"]]]
 , Expected ["store", [["cell", 7], ["cell", 7]]]
 , Got ["store", [1,["cell","7"],["cell","7"],["cell","7"],["cell","7"]]]
 
+interpreter: Failed ["value", [["let", "x", "=", [["let", "x", "=", 42], "x"]], "x"]], Expected ["value", 42]
+, Got ooopsJSON could not be parsed
+
 interpreter: Failed ["value", [[42, "@"], "@"]]
 , Expected ["value", ["cell", 7]]
 , Got ["value", ["cell","9"]]
@@ -225,31 +236,6 @@ interpreter: Failed ["store", [
 ]], Expected ["store", [["cell", 11], 31, 30, 29, 28, 27]]
 , Got ["store", [31,27,["cell","7"],30,["cell","7"],31,29,["cell","7"],30,28,["cell","7"],29,27,["cell","7"],28,["cell","7"]]]
 
-interpreter: Failed ["store", [["let", "fib", "=",
-  ["fun*", ["n"],
-    ["if-0",
-      ["n", "+", -1],
-      1,
-      ["if-0", 
-        "n",
-        1,
-        [["call", "fib", ["n", "+", -1]], 
-          "+",
-          ["call", "fib", ["n", "+", -2]]]]]]],
-  ["call", "fib", 4]]], Expected ["store", 
-[
-  "closure",
-  4,
-  2,
-  0,
-  1,
-  3,
-  1,
-  2,
-  0,
-  1
-]], Got ["store", ["closure",4,-1,4,-2,4,2,-1,2,-2,2,0,-1,0,-1,2,1,-1,1,1,1,-1,4,3,-1,3,-2,3,1,-1,1,-1,3,2,-1,2,-2,2,0,-1,0,-1,2,1,-1,1,1,1,1,2,2,3]]
-
 interpreter: Failed ["store", [
   ["let", "func", "=", [
     "fun*",
@@ -264,22 +250,30 @@ interpreter: Failed ["store", [
 
 interpreter: Failed ["value", [["let", "y", "=", ["x", "+", 1]], ["let", "x", "=", 7], "y"]], Expected ["value", 1], Got ["value", "variable x undeclared"]
 
-interpreter: Failed ["value", [
-  ["let", "count!", "=",
-    ["fun*", ["f"], [
-      ["let", "count", "=", [0, "@"]],
-      ["fun*", ["x"], [
-        ["let", "_", "=", ["count", "=", [["count", "!"], "+", 1]]],
-        [["count", "!"], "+", ["call", "f", "x"]]
-      ]]
-    ]]],
-  ["let", "square", "=", ["fun*", ["x"], ["x", "*", "x"]]],
-  ["let", "double", "=", ["fun*", ["x"], ["x", "+", "x"]]],
-  ["let", "f", "=", ["call", "count!", "square"]],
-  ["let", "g", "=", ["call", "count!", "double"]],
-  [[["call", "f", 3], "^", ["call", "f", 3]],
-    "+",
-  [["call", "g", 3], "^", ["call", "g", 3]]]]], Expected ["value", 25939521753], Got ["value", "variable count undeclared"]
+interpreter: Failed ["value", [["let", "x", "=", [
+  ["let", "y", "=", 5],
+  ["let", "z", "=", 8],
+  [["let", "a", "=", 5],
+    "y"]  
+ ]],
+ [["let", "y", "=", 99],
+  ["y", "^", 60]
+]]], Expected ["value", 547156642390761476194741370840006174593084288894372625927973260005098646976716330666955874608367161577767293609297694001], Got ooopsJSON could not be parsed
+
+interpreter: Failed ["store", [
+  ["let", "x", "=", [
+    ["let", "y", "=", 5],
+    ["let", "z", "=", ["y", "+", 1]],
+    [
+      ["let", "a", "=", ["y", "+", "z"]],
+      "a"
+    ]
+  ]],
+  [
+    ["let", "y", "=", ["x", "+", 1]],
+    "y"
+  ]
+]], Expected ["store", [11, 5, 6, 11, 12]], Got ooopsJSON could not be parsed
 
 interpreter: Failed ["store", [["let", "+", "=", ["fun*", ["left", "right"], ["left", "*", "right"]]], [5, "+", 5]]], Expected ["store", ["closure", 5, 5]], Got ["store", ["closure",5,5,5,5]]
 
@@ -481,10 +475,14 @@ interpreter: Failed ["store", [5, "+", 5, 5]]
 , Expected ["store", []]
 , Got ooopsJSON could not be parsed
 
+interpreter: Failed ["value", [["let", "x", "=", [1, "@"]], "x"]], Expected ["value", ["cell", 7]], Got ooopsJSON could not be parsed
+
 interpreter: Failed ["store", [3, "+", 5]]
 , Expected ["store", []], Got ["store", [5,3]]
 
 interpreter: Failed ["value", [["let", "*", "=", ["fun*", ["x", "y", "z"], ["x", "+", ["y", "+", "z"]]]], [5, "*", 5, 5]]], Expected ["value", 15], Got ooopsJSON could not be parsed
+
+interpreter: Failed ["value", [["let", "x", "=", ["fun*", ["x"], "x"]], "x"]], Expected ["value", "closure"], Got ooopsJSON could not be parsed
 
 interpreter: Failed ["store", 
   [["let", "x", "=", 5], 
@@ -514,6 +512,11 @@ interpreter: Failed ["value",
     ["let", "b", "=", [17, "@"]],
     ["let", "ign", "=", ["call", ["call", "swap", "a"], "b"]],
     ["a", "!"]]], Expected ["value", 17], Got ["value", "variable cell-1 undeclared"]
+
+interpreter: Failed ["value", 
+  [
+    ["let", "not", "=", ["fun*", ["n"], ["if-0", "n", 1, 0]]], 
+    "not"]], Expected ["value", "closure"], Got ooopsJSON could not be parsed
 
 interpreter: Failed ["store", [["let", "@", "=", "+"], ["let", "+", "=", "@"], ["@", "=", "+"]]], Expected ["store", [0, 0]], Got ooopsanswer.AnswerPrimop cannot be cast to answer.AnswerCell
 
@@ -596,6 +599,21 @@ interpreter: Failed ["store", [
 ]], Expected ["store",[0,0,"closure",10,7]], Got ["store", [0,0,"closure",7,10,2,10,7,20]]
 
 interpreter: Failed ["store", [
+  ["let", "y", "=", 0],
+
+  ["let", "x", "=",
+    [
+      ["let", "y", "=", ["y", "+", "1"]], 
+      "y"
+    ]
+  ],
+
+  ["let", "z", "=", ["x", "+", ["x", "+", "y"]]],
+
+  10
+]], Expected ["store",[0,0,0,0]], Got ooopsJSON could not be parsed
+
+interpreter: Failed ["store", [
   ["let", "fact", "=", 
     ["fun*", 
       ["x"], 
@@ -610,6 +628,10 @@ interpreter: Failed ["store", [
 interpreter: Failed ["value", [["let", "x", "=", [0, "@"]], ["let", "f", "=", ["fun*", ["y"], [["y", "=", "x"], "+", ["x", "=", 4]]]], ["call", "f", 9]]], Expected ["value", "primop domain error"]
 , Got ooopsanswer.AnswerInt cannot be cast to answer.AnswerCell
 
+interpreter: Failed ["value", [["let", "x", "=", [2, "@"]], [["let", "y", "=", ["x", "=", 3]], [["let", "z", "=", ["x", "=", 4]], "z"]]]]
+, Expected ["value", 3]
+, Got ooopsJSON could not be parsed
+
 interpreter: Failed ["store", [["let", "x", "=", 4], ["x", "^", 2]]]
 , Expected ["store", [4]]
 , Got ["store", [4,2,4]]
@@ -622,6 +644,9 @@ interpreter: Failed ["value", [[
   ["let", "addThenSub", "=", ["fun*", ["a", "b", "c"], [["a", "+", "b"], "*", "c"]]],
   [2, "addThenSub", 5, 10]
 ]]], Expected ["value",70], Got ooopsJSON could not be parsed
+
+interpreter: Failed ["value", [["let", "x", "=", ["fun*", ["x"], "x"]], "x"]]
+, Expected ["value","closure"], Got ooopsJSON could not be parsed
 
 interpreter: Failed ["value", [["let", "f", "=", ["z", "+", "x"]], ["let", "z", "=", 23], ["let", "x", "=", 12], "f"]]
 , Expected ["value", 0]
@@ -637,6 +662,17 @@ interpreter: Failed ["value", [4, "!"]]
 
 interpreter: Failed ["value", [["let", "ouch", "=", 12], ["call", "ouch", 12, "x"]]], Expected ["value", "variable x undeclared"]
 , Got ["value", "closure or primop expected"]
+
+interpreter: Failed ["store", [["let", "x", "=", 10], "x"]]
+, Expected ["store",[10]]
+, Got ooopsJSON could not be parsed
+
+interpreter: Failed ["store", [["let", "+", "=", 5],
+           ["let", "*", "=", 6],
+           [["let", "a", "=", 10],
+            "a"]]]
+, Expected ["store",[5,6,10]]
+, Got ooopsJSON could not be parsed
 
 interpreter: Failed ["value", [["let", "x" , "=", ["if-0", "y", "x", 2]],
 	   ["let", "y", "=", 1],
@@ -672,11 +708,11 @@ interpreter: Failed ["value", [["let", "f", "=", ["fun*", ["x", "y"], ["y", "^",
 	    ["call", "^", 2, -4]]]]
 , Expected ["value",16]
 , Got Exception in thread "main" java.lang.StackOverflowError
-	at java.util.ArrayList.addAll(ArrayList.java:581)
-	at fvexpr.Operator.interpret(Operator.java:35)
-	at fvexpr.Func.apply(Func.java:53)
-	at fvexpr.Operator.interpret(Operator.java:36)
-	at fvexpr.Func.apply(Func.java:53)
+	at store.Store.get(Store.java:71)
+	at store.StoreUtils.isLookupValid(StoreUtils.java:44)
+	at store.StoreUtils.lookup(StoreUtils.java:28)
+	at fvexpr.Var.interpret(Var.java:17)
+	at fvexpr.Func.apply(Func.java:46)
 	at fvexpr.Operator.interpret(Operator.java:36)
 	at fvexpr.Func.apply(Func.java:53)
 	at fvexpr.Operator.interpret(Operator.java:36)
@@ -1727,6 +1763,18 @@ interpreter: Failed ["store", [["let", "z", "=", ["fun*", ["a", "b"], ["if-0", "
 , Expected ["store",["closure","closure","closure",1]]
 , Got ["store", ["closure","closure","closure"]]
 
+interpreter: Failed ["store", [["let", "x", "=", [["let", "y", "=",
+			       ["call", "@", [["let", "y", "=", ["call", "@", 5]],
+					      "y"]]], "y"]],
+	  "x"]]
+
+, Expected ["store",[["cell",10],["cell",10],["cell",9],5,["cell",9]]]
+, Got ooopsJSON could not be parsed
+
+interpreter: Failed ["value", [["let", "x", "=", ["call", "!", 8]], "x"]]
+, Expected ["value","primop domain error"]
+, Got ooopsJSON could not be parsed
+
 interpreter: Failed ["value", [["let", "+", "=", 5],
 	   ["let", "a", "=", ["fun*", ["x", "y"], ["call", "!",
 						   ["=", "x", ["call", "@", "y"]]]]],
@@ -1740,6 +1788,25 @@ interpreter: Failed ["value", [["let", "+", "=", 5],
 , Expected ["value",4]
 , Got ["value", "variable c undeclared"]
 
+interpreter: Failed ["value",
+  [
+    ["let", "f", "=",
+      ["fun*", ["a"], [
+        ["let", "b", "=", 5],
+        "a"]
+      ]
+    ],
+    ["a", "+", "b"]
+  ]
+], Expected ["value","variable b undeclared"], Got ooopsJSON could not be parsed
+
+interpreter: Failed ["store",
+  [
+    ["let", "x", "=", [5, "@"]],
+    "x"
+  ]
+], Expected ["store",[["cell",7],5]], Got ooopsJSON could not be parsed
+
 interpreter: Failed ["store",
   [
     ["let", "x", "=", 5],
@@ -1748,6 +1815,11 @@ interpreter: Failed ["store",
     ["x", "+", "y"]
   ]
 ], Expected ["store",[5,7,0]], Got ["store", [5,7]]
+
+interpreter: Failed ["value",[
+  ["let", "f", "=", ["fun*", ["r", "q"], ["r", "*", ["q", "^", "r"]]]],
+  "f"
+]], Expected ["value","closure"], Got ooopsJSON could not be parsed
 
 interpreter: Failed ["value",[
   "call", "f", ["y", "*", "z"], ["x", "+", 3]
