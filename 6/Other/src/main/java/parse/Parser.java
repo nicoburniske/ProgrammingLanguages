@@ -93,7 +93,7 @@ public class Parser {
         if (obj instanceof JSONArray) {
             JSONArray arr = (JSONArray) obj;
             if (arr.size() == 3 && isStringAndisEqual(arr.get(1), ":")) {
-                return new TypedVar((String) arr.get(0), parseType(arr.get(0)));
+                return new TypedVar((String) arr.get(0), parseType(arr.get(2)));
             }
         }
         throw new IllegalStateException("Unable to Parse JSON into TVar");
@@ -121,7 +121,7 @@ public class Parser {
                 if (!isRHS) {
                     lhs.add(parseType(obj));
                 } else {
-                    new TypeFunction(lhs, parseType(obj));
+                    return new TypeFunction(lhs, parseType(obj));
                 }
             }
 

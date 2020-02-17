@@ -1,4 +1,4 @@
-package constants;
+package utils;
 
 /**
  * The constants that contain the Errors that the program can output.

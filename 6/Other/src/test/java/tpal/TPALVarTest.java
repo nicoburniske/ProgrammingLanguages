@@ -12,7 +12,7 @@ import type.TypeInt;
 
 import java.util.Arrays;
 
-import static constants.Constants.ERROR_UNDECLARED_VARIABLE_TEMPLATE;
+import static utils.Constants.ERROR_UNDECLARED_VARIABLE_TEMPLATE;
 import static org.junit.Assert.*;
 
 public class TPALVarTest {

@@ -5,7 +5,6 @@ import env.IEnvEnd;
 import env.Tuple;
 import org.junit.Test;
 import tast.TASTConditional;
-import tast.TASTConditionalTest;
 import tast.TASTInteger;
 import tast.TASTVar;
 import tast.star_ast.StarAST;
@@ -16,8 +15,8 @@ import type.TypedVar;
 
 import java.util.Arrays;
 
-import static constants.Constants.ERROR_COND_TYPE_ERROR;
-import static constants.Constants.ERROR_INT_EXPECTED;
+import static utils.Constants.ERROR_COND_TYPE_ERROR;
+import static utils.Constants.ERROR_INT_EXPECTED;
 import static org.junit.Assert.*;
 
 public class TPALConditionalTest {

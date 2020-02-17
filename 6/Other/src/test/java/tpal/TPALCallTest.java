@@ -8,15 +8,13 @@ import tast.TASTFunc;
 import tast.TASTFuncCall;
 import tast.TASTInteger;
 import tast.star_ast.StarAST;
-import type.Type;
 import type.TypeFunction;
 import type.TypeInt;
-import type.TypedVar;
 
 import java.util.Arrays;
 
-import static constants.Constants.ERROR_ARGS_PARAMS_COUNT_DONT_MATCH;
-import static constants.Constants.ERROR_FUNCTION_EXPECTED;
+import static utils.Constants.ERROR_ARGS_PARAMS_COUNT_DONT_MATCH;
+import static utils.Constants.ERROR_FUNCTION_EXPECTED;
 import static org.junit.Assert.*;
 
 public class TPALCallTest {

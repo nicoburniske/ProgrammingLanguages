@@ -2,7 +2,6 @@ package tpal;
 
 import env.IEnv;
 import env.Tuple;
-import tast.TASTFunc;
 import tast.TASTFuncCall;
 import tast.star_ast.StarAST;
 import type.Type;
@@ -12,7 +11,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import static constants.Constants.*;
+import static utils.Constants.*;
 
 public class TPALCall implements TPAL  {
     TPAL function;

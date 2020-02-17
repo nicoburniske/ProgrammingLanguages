@@ -1,21 +1,19 @@
 package tpal.decl;
 
 import env.IEnvEnd;
-import env.Tuple;
 import env.TupleGeneric;
 import org.junit.Test;
 import tast.TASTVar;
 import tast.star_ast.StarAST;
 import tast.star_decl.StarDecl;
 import tpal.TPALVar;
-import type.Type;
 import type.TypeFunction;
 import type.TypeInt;
 import type.TypedVar;
 
 import java.util.Arrays;
 
-import static constants.Constants.ERROR_DECL_TYPE_MATCHING;
+import static utils.Constants.ERROR_DECL_TYPE_MATCHING;
 import static org.junit.Assert.*;
 
 public class TPALDeclTest {

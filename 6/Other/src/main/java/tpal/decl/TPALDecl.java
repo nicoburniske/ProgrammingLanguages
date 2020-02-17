@@ -3,19 +3,16 @@ package tpal.decl;
 import env.IEnv;
 import env.Tuple;
 import env.TupleGeneric;
-import tast.TAST;
-import tast.TASTDeclArray;
-import tast.star_ast.StarAST;
 import tast.star_decl.StarDecl;
 import tpal.TPAL;
+import tpal.TPALFunc;
 import tpal.TPALVar;
 import type.Type;
 import type.TypedVar;
 
-import java.util.Arrays;
 import java.util.Objects;
 
-import static constants.Constants.ERROR_DECL_TYPE_MATCHING;
+import static utils.Constants.ERROR_DECL_TYPE_MATCHING;
 
 public class TPALDecl {
 
@@ -61,6 +58,9 @@ public class TPALDecl {
 
     public TupleGeneric<StarDecl, IEnv<TPALVar, Type>> typeCheck(IEnv<TPALVar, Type> env) {
         Tuple varTuple = this.var.typeCheck(env);
+        if(rhs instanceof TPALFunc) {
+            env = varTuple.getRight();
+        }
         Tuple rhsTuple = rhs.typeCheck(env);
         if (varTuple.getLeft().getType().equals(rhsTuple.getLeft().getType())) {
             env = varTuple.getRight();

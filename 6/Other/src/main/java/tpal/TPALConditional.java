@@ -3,15 +3,14 @@ package tpal;
 import env.IEnv;
 import env.Tuple;
 import tast.TASTConditional;
-import tast.TASTInteger;
 import tast.star_ast.StarAST;
 import type.Type;
 import type.TypeInt;
 
 import java.util.Objects;
 
-import static constants.Constants.ERROR_COND_TYPE_ERROR;
-import static constants.Constants.ERROR_INT_EXPECTED;
+import static utils.Constants.ERROR_COND_TYPE_ERROR;
+import static utils.Constants.ERROR_INT_EXPECTED;
 
 public class TPALConditional implements TPAL {
     TPAL clause;

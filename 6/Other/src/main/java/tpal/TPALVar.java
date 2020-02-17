@@ -8,7 +8,7 @@ import type.Type;
 
 import java.util.Objects;
 
-import static constants.Constants.ERROR_UNDECLARED_VARIABLE_TEMPLATE;
+import static utils.Constants.ERROR_UNDECLARED_VARIABLE_TEMPLATE;
 
 public class TPALVar implements TPAL {
     protected String var;
