@@ -2,7 +2,7 @@ package tast;
 
 import org.junit.Test;
 import tast.star_ast.StarAST;
-import type.TVar;
+import type.TypedVar;
 import type.TypeFunction;
 import type.TypeInt;
 
@@ -15,7 +15,7 @@ public class TASTFuncCallTest {
 
     @Test
     public void toJSONString() {
-        List<TVar> params1 = Arrays.asList();
+        List<TypedVar> params1 = Arrays.asList();
         TASTFunc fun1 = new TASTFunc(params1,new StarAST(new TASTVar("a"), new TypeInt()));
 
         assertEquals("[\"call\",{\"expr\":[\"fun*\",[],{\"expr\":\"a\",\"type\":\"int\"}],\"type\":[\"int\",\"->\",\"int\"]}]",

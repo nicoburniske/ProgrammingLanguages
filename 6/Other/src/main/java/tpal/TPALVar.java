@@ -1,6 +1,14 @@
 package tpal;
 
+import env.IEnv;
+import env.Tuple;
+import tast.TASTVar;
+import tast.star_ast.StarAST;
+import type.Type;
+
 import java.util.Objects;
+
+import static constants.Constants.ERROR_UNDECLARED_VARIABLE_TEMPLATE;
 
 public class TPALVar implements TPAL {
     protected String var;
@@ -27,5 +35,15 @@ public class TPALVar implements TPAL {
         return "TPALVar{" +
                 "var='" + var + '\'' +
                 '}';
+    }
+
+    @Override
+    public Tuple typeCheck(IEnv<TPALVar, Type> env) {
+        Type t = env.get(this);
+        if(t == null) {
+            throw new IllegalStateException(String.format(ERROR_UNDECLARED_VARIABLE_TEMPLATE, this.var));
+        } else {
+            return new Tuple(new StarAST(new TASTVar(this.var), t), env);
+        }
     }
 }

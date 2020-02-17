@@ -28,7 +28,14 @@ public class TypeFunction implements Type{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TypeFunction that = (TypeFunction) o;
-        return args.equals(that.args) &&
+        boolean equality = args.size() == that.args.size();
+        for(int ii = 0; ii < args.size(); ii++) {
+            if(!equality) {
+                return false;
+            }
+            equality = equality && args.get(ii).equals(that.args.get(ii));
+        }
+        return equality &&
                 rhs.equals(that.rhs);
     }
 
@@ -36,4 +43,21 @@ public class TypeFunction implements Type{
     public int hashCode() {
         return Objects.hash(args, rhs);
     }
+
+    @Override
+    public String toString() {
+        return "TypeFunction{" +
+                "args=" + args +
+                ", rhs=" + rhs +
+                '}';
+    }
+
+    public List<Type> getArgs() {
+        return args;
+    }
+
+    public Type getRhs() {
+        return rhs;
+    }
+
 }

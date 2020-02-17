@@ -1,16 +1,20 @@
 package tpal.decl;
 
+import env.IEnv;
+import env.Tuple;
+import tast.TAST;
 import tpal.TPAL;
 import tpal.TPALVar;
-import type.TVar;
+import type.Type;
+import type.TypedVar;
 
 import java.util.Objects;
 
 public class TPALDecl {
-    TVar var;
+    TypedVar var;
     TPAL rhs;
 
-    public TPALDecl(TVar var, TPAL rhs) {
+    public TPALDecl(TypedVar var, TPAL rhs) {
         this.var = var;
         this.rhs = rhs;
     }
@@ -35,5 +39,9 @@ public class TPALDecl {
                 "var=" + var +
                 ", rhs=" + rhs +
                 '}';
+    }
+
+
+    public Tuple<TAST, IEnv> typeCheck(IEnv<TPALVar, Type> env) {
     }
 }

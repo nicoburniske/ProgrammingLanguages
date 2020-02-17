@@ -3,16 +3,16 @@ package tast.star_decl;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONAware;
 import tast.star_ast.StarAST;
-import type.TVar;
+import type.TypedVar;
 
 /**
  * TODO: DATA Definition
  */
 public class StarDecl implements JSONAware {
-    TVar name;
+    TypedVar name;
     StarAST rhs;
 
-    public StarDecl(TVar name, StarAST rhs) {
+    public StarDecl(TypedVar name, StarAST rhs) {
         this.name = name;
         this.rhs = rhs;
     }

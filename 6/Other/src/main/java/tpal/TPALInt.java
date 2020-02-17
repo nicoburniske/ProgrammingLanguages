@@ -1,5 +1,12 @@
 package tpal;
 
+import env.IEnv;
+import env.Tuple;
+import tast.TASTInteger;
+import tast.star_ast.StarAST;
+import type.Type;
+import type.TypeInt;
+
 import java.math.BigInteger;
 import java.util.Objects;
 
@@ -32,5 +39,12 @@ public class TPALInt implements TPAL {
         return "TPALInt{" +
                 "num=" + num +
                 '}';
+    }
+
+    @Override
+    public Tuple typeCheck(IEnv<TPALVar, Type> env) {
+        return new Tuple(
+                new StarAST(new TASTInteger(this.num), new TypeInt()),
+                env);
     }
 }

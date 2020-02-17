@@ -2,15 +2,15 @@ package tast;
 
 import org.json.simple.JSONArray;
 import tast.star_ast.StarAST;
-import type.TVar;
+import type.TypedVar;
 
 import java.util.List;
 
 public class TASTFunc implements TAST {
-    List<TVar> parameters;
+    List<TypedVar> parameters;
     StarAST body;
 
-    public TASTFunc(List<TVar> parameters, StarAST body) {
+    public TASTFunc(List<TypedVar> parameters, StarAST body) {
         this.parameters = parameters;
         this.body = body;
     }

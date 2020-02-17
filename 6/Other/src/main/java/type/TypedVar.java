@@ -1,17 +1,20 @@
 package type;
 
+import env.IEnv;
+import env.Tuple;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONAware;
+import tast.TASTVar;
+import tast.star_ast.StarAST;
 import tpal.TPALVar;
-import type.Type;
 
 import java.util.Objects;
 
-public class TVar  extends TPALVar implements JSONAware {
+public class TypedVar extends TPALVar implements JSONAware {
     //String var;
     Type type;
 
-    public TVar(String var, Type type) {
+    public TypedVar(String var, Type type) {
         super(var);
         this.type = type;
     }
@@ -30,12 +33,19 @@ public class TVar  extends TPALVar implements JSONAware {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        TVar tVar = (TVar) o;
-        return type.equals(tVar.type);
+        TypedVar typedVar = (TypedVar) o;
+        return type.equals(typedVar.type);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), type);
+    }
+
+    @Override
+    public Tuple typeCheck(IEnv<TPALVar, Type> env) {
+        return new Tuple<>(
+                new StarAST(new TASTVar(this.var), type),
+                env.put(new TPALVar(this.var), this.type));
     }
 }

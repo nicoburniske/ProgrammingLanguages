@@ -1,6 +1,9 @@
 package tpal;
 
+import env.IEnv;
+import env.Tuple;
 import tpal.decl.TPALDecl;
+import type.Type;
 
 import java.util.List;
 import java.util.Objects;
@@ -34,5 +37,13 @@ public class TPALDeclArray implements TPAL {
                 "declList=" + declList +
                 ", scope=" + scope +
                 '}';
+    }
+
+    @Override
+    public Tuple typeCheck(IEnv<TPALVar, Type> env) {
+        for(TPALDecl decl : declList){
+            env = decl.typeCheck(env).getRight();
+        }
+        return scope.typeCheck(env);
     }
 }

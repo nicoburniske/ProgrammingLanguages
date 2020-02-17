@@ -1,7 +1,18 @@
 package tpal;
 
+import env.IEnv;
+import env.Tuple;
+import tast.TASTFunc;
+import tast.TASTFuncCall;
+import tast.star_ast.StarAST;
+import type.Type;
+import type.TypeFunction;
+
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+
+import static constants.Constants.*;
 
 public class TPALCall implements TPAL  {
     TPAL function;
@@ -32,5 +43,31 @@ public class TPALCall implements TPAL  {
                 "function=" + function +
                 ", arguments=" + arguments +
                 '}';
+    }
+
+    @Override
+    public Tuple typeCheck(IEnv<TPALVar, Type> env) {
+        Tuple funcTup = this.function.typeCheck(env);
+        if (funcTup.getLeft().getType() instanceof TypeFunction) {
+            TypeFunction funcType = (TypeFunction) funcTup.getLeft().getType();
+            List<Type> funcArgs = funcType.getArgs();
+            if(funcArgs.size() == this.arguments.size()) {
+                boolean typesMatch = true;
+                StarAST funcAST = funcTup.getLeft();
+                List<StarAST> argsAst = this.arguments.stream().map(ar -> ar.typeCheck(env).getLeft()).collect(Collectors.toList());
+                for(int ii = 0; ii < funcArgs.size(); ii ++) {
+                    typesMatch = typesMatch &&  funcArgs.get(ii).equals(argsAst.get(ii).getType());
+                }
+                if(typesMatch) {
+                    return new Tuple(new StarAST(new TASTFuncCall(funcAST, argsAst),((TypeFunction)funcAST.getType()).getRhs()), env);
+                } else {
+                    throw new IllegalStateException(ERROR_ARGS_PARAMS_TYPES_DONT_MATCH);
+                }
+            } else {
+                throw new IllegalStateException(ERROR_ARGS_PARAMS_COUNT_DONT_MATCH);
+            }
+        } else {
+            throw new IllegalStateException(ERROR_FUNCTION_EXPECTED);
+        }
     }
 }

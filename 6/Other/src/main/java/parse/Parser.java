@@ -1,19 +1,16 @@
 package parse;
 
 import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import tpal.*;
 import tpal.decl.TPALDecl;
-import type.TVar;
+import type.TypedVar;
 import type.Type;
 import type.TypeFunction;
 import type.TypeInt;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class Parser {
@@ -77,10 +74,10 @@ public class Parser {
         throw new IllegalStateException("Unable to Parse JSON into TPALDecl");
     }
 
-    private static List<TVar> parseParams(Object o) {
+    private static List<TypedVar> parseParams(Object o) {
         if (o instanceof JSONArray) {
             JSONArray arr = (JSONArray) o;
-            List<TVar> l = new ArrayList<>();
+            List<TypedVar> l = new ArrayList<>();
             arr.forEach(e -> l.add(parseTVar(e)));
             return l;
         }
@@ -92,11 +89,11 @@ public class Parser {
         return (obj instanceof String) && ((String) obj).equals(str);
     }
 
-    private static TVar parseTVar(Object obj) {
+    private static TypedVar parseTVar(Object obj) {
         if (obj instanceof JSONArray) {
             JSONArray arr = (JSONArray) obj;
             if (arr.size() == 3 && isStringAndisEqual(arr.get(1), ":")) {
-                return new TVar((String) arr.get(0), parseType(arr.get(0)));
+                return new TypedVar((String) arr.get(0), parseType(arr.get(0)));
             }
         }
         throw new IllegalStateException("Unable to Parse JSON into TVar");

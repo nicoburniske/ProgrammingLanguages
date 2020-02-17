@@ -21,7 +21,15 @@ public class StarAST implements JSONAware {
     public String toJSONString() {
         JSONObject jo = new JSONObject();
         jo.put("expr", this.expr);
-        jo.put("type", type);
+        jo.put("type", this.type);
         return jo.toJSONString();
+    }
+
+    public Type getType() {
+        return this.type;
+    }
+
+    public TAST getExpr() {
+        return this.expr;
     }
 }
