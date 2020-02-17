@@ -14,7 +14,7 @@ public class Main {
             if ("type_check".equals(args[0])) {
                 Object obj = new JSONParser().parse(new FileReader(args[1]));
                 TPAL tpal = Parser.parseJSON(obj);
-                System.out.println(tpal.typeCheck(StandardLib.stdLib()).getLeft());
+                System.out.println(tpal.typeCheck(StandardLib.stdLib()).getLeft().toJSONString());
             } else {
                 throw new IllegalArgumentException("Error: an illegal function was requested");
             }
