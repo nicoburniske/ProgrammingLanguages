@@ -2,9 +2,14 @@ package tpal;
 
 import env.IEnv;
 import env.Tuple;
+import env.TupleGeneric;
+import tast.TASTDeclArray;
+import tast.star_ast.StarAST;
+import tast.star_decl.StarDecl;
 import tpal.decl.TPALDecl;
 import type.Type;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -41,9 +46,17 @@ public class TPALDeclArray implements TPAL {
 
     @Override
     public Tuple typeCheck(IEnv<TPALVar, Type> env) {
-        for(TPALDecl decl : declList){
-            env = decl.typeCheck(env).getRight();
+        List<StarDecl> decls = new ArrayList<>();
+        for (TPALDecl decl : declList) {
+            TupleGeneric<StarDecl, IEnv<TPALVar, Type>> declTuple = decl.typeCheck(env);
+            env = declTuple.getRight();
+            decls.add(declTuple.getLeft());
         }
-        return scope.typeCheck(env);
+        Tuple rhsTuple = scope.typeCheck(env);
+        return new Tuple(
+                new StarAST(
+                        new TASTDeclArray(decls, rhsTuple.getLeft()),
+                        rhsTuple.getLeft().getType()),
+                env);
     }
 }

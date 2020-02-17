@@ -5,6 +5,8 @@ import org.json.simple.JSONAware;
 import tast.star_ast.StarAST;
 import type.TypedVar;
 
+import java.util.Objects;
+
 /**
  * TODO: DATA Definition
  */
@@ -27,4 +29,17 @@ public class StarDecl implements JSONAware {
         return arr.toJSONString();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        StarDecl starDecl = (StarDecl) o;
+        return name.equals(starDecl.name) &&
+                rhs.equals(starDecl.rhs);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, rhs);
+    }
 }

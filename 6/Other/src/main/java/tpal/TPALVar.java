@@ -46,4 +46,8 @@ public class TPALVar implements TPAL {
             return new Tuple(new StarAST(new TASTVar(this.var), t), env);
         }
     }
+
+    public String getVar() {
+        return var;
+    }
 }

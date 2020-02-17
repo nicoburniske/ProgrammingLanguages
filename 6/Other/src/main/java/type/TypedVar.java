@@ -44,8 +44,12 @@ public class TypedVar extends TPALVar implements JSONAware {
 
     @Override
     public Tuple typeCheck(IEnv<TPALVar, Type> env) {
-        return new Tuple<>(
+        return new Tuple(
                 new StarAST(new TASTVar(this.var), type),
                 env.put(new TPALVar(this.var), this.type));
+    }
+
+    public Type getType() {
+        return type;
     }
 }

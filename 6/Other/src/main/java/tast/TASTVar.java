@@ -1,5 +1,7 @@
 package tast;
 
+import java.util.Objects;
+
 public class TASTVar implements TAST{
     String variable;
 
@@ -10,5 +12,18 @@ public class TASTVar implements TAST{
     @Override
     public String toJSONString() {
         return String.format("\"%s\"", variable);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TASTVar tastVar = (TASTVar) o;
+        return variable.equals(tastVar.variable);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(variable);
     }
 }

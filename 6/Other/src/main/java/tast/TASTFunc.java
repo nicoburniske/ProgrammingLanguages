@@ -5,6 +5,7 @@ import tast.star_ast.StarAST;
 import type.TypedVar;
 
 import java.util.List;
+import java.util.Objects;
 
 public class TASTFunc implements TAST {
     List<TypedVar> parameters;
@@ -22,5 +23,19 @@ public class TASTFunc implements TAST {
         arr.add(parameters);
         arr.add(body);
         return arr.toJSONString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TASTFunc tastFunc = (TASTFunc) o;
+        return parameters.equals(tastFunc.parameters) &&
+                body.equals(tastFunc.body);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(parameters, body);
     }
 }

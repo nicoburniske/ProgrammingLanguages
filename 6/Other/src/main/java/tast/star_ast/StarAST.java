@@ -5,6 +5,8 @@ import org.json.simple.JSONObject;
 import tast.TAST;
 import type.Type;
 
+import java.util.Objects;
+
 /**
  * TODO: add data definition
  */
@@ -31,5 +33,19 @@ public class StarAST implements JSONAware {
 
     public TAST getExpr() {
         return this.expr;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        StarAST starAST = (StarAST) o;
+        return expr.equals(starAST.expr) &&
+                type.equals(starAST.type);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(expr, type);
     }
 }
