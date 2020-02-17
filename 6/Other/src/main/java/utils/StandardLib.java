@@ -11,6 +11,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public class StandardLib {
+    /**
+     *
+     * @return the standard library contaning +,*, and ^
+     */
     public static IEnv<TPALVar, Type> stdLib() {
         IEnv<TPALVar, Type> env = new IEnvEnd<TPALVar, Type>();
         Type Int = new TypeInt();

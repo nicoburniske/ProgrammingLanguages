@@ -8,7 +8,7 @@ import type.TypedVar;
 import java.util.Objects;
 
 /**
- * TODO: DATA Definition
+ * A StarDecl is a JSON array: ["let", TVar, "=", *AST ]
  */
 public class StarDecl implements JSONAware {
     TypedVar name;

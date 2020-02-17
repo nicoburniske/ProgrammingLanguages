@@ -15,8 +15,6 @@ import java.util.Objects;
 import static utils.Constants.ERROR_DECL_TYPE_MATCHING;
 
 public class TPALDecl {
-
-
     TypedVar var;
     TPAL rhs;
 

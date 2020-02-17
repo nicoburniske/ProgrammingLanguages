@@ -8,7 +8,7 @@ import type.Type;
 import java.util.Objects;
 
 /**
- * TODO: add data definition
+ * A StarAST is a JSON object { "expr" : TAST, "type" : Type }.
  */
 public class StarAST implements JSONAware {
     TAST expr;

@@ -10,6 +10,9 @@ import tpal.TPALVar;
 
 import java.util.Objects;
 
+/**
+ * This represnts a Var that knows its type
+ */
 public class TypedVar extends TPALVar implements JSONAware {
     //String var;
     Type type;
