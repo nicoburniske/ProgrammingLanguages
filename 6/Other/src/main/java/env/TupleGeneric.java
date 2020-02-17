@@ -4,6 +4,11 @@ import tast.star_ast.StarAST;
 import tpal.TPALVar;
 import type.Type;
 
+/**
+ * A generic tuple class to help us manage return values
+ * @param <Key>
+ * @param <Value>
+ */
 public class TupleGeneric<Key, Value> {
     private Key left;
     private Value right;
@@ -13,10 +18,18 @@ public class TupleGeneric<Key, Value> {
         this.right = right;
     }
 
+    /**
+     *
+     * @return The left side of the tuple
+     */
     public Key getLeft() {
         return left;
     }
 
+    /**
+     *
+     * @return The right side of the tuple
+     */
     public Value getRight() {
         return right;
     }

@@ -13,12 +13,15 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * The class containing the parser for JSON->TPAL
+ */
 public class Parser {
     /**
-     * TODO:DOCUMENT
+     * Takes an Object returned by the JSON reder and turns it into a TPAL
      *
-     * @param obj
-     * @return
+     * @param obj the object to be converted
+     * @return a TPAL
      */
     public static TPAL parseJSON(Object obj) {
         if (obj instanceof Long) {
@@ -42,11 +45,11 @@ public class Parser {
             if (arr.size() == 4 && isStringAndisEqual(arr.get(0), "if-0")) {
                 return new TPALConditional(parseJSON(arr.get(1)), parseJSON(arr.get(2)), parseJSON(arr.get(3)));
             }
-            if (arr.size() >= 2 && arr.get(1) instanceof String ) {
+            if (arr.size() >= 2 && arr.get(1) instanceof String) {
                 List<TPAL> args = new ArrayList<>();
                 args.add(parseJSON(arr.get(0)));
-                arr.subList(2, arr.size()).forEach( e -> args.add(parseJSON(e)));
-                return new TPALCall(parseJSON(arr.get(1)),args);
+                arr.subList(2, arr.size()).forEach(e -> args.add(parseJSON(e)));
+                return new TPALCall(parseJSON(arr.get(1)), args);
             }
             if (arr.size() >= 1) {
                 if (arr.size() == 1) {
@@ -57,13 +60,16 @@ public class Parser {
                             parseJSON(arr.get(arr.size() - 1)));
                 }
             }
-
-
-
         }
         throw new IllegalArgumentException("Unable to Parse JSON into TPAL");
     }
 
+    /**
+     * Converts a object into a decl
+     *
+     * @param e the object to be converted
+     * @return a TPALDecl
+     */
     private static TPALDecl parseDecl(Object e) {
         if (e instanceof JSONArray) {
             JSONArray arr = (JSONArray) e;
@@ -74,6 +80,12 @@ public class Parser {
         throw new IllegalStateException("Unable to Parse JSON into TPALDecl");
     }
 
+    /**
+     * Converts a object into a List of Parmans
+     *
+     * @param o the object to be converted
+     * @return the List of Params
+     */
     private static List<TypedVar> parseParams(Object o) {
         if (o instanceof JSONArray) {
             JSONArray arr = (JSONArray) o;
@@ -85,10 +97,23 @@ public class Parser {
 
     }
 
+    /**
+     * A helper method to check if an obj is a specified string
+     *
+     * @param obj the obj to be checked
+     * @param str the specified string
+     * @return
+     */
     private static boolean isStringAndisEqual(Object obj, String str) {
         return (obj instanceof String) && ((String) obj).equals(str);
     }
 
+    /**
+     * Converts an object into a TypedVar
+     *
+     * @param obj the object to be converted
+     * @return the TypedVar
+     */
     private static TypedVar parseTVar(Object obj) {
         if (obj instanceof JSONArray) {
             JSONArray arr = (JSONArray) obj;
@@ -101,10 +126,10 @@ public class Parser {
 
 
     /**
-     * TODO:DOCUMENT
+     * Converts an object into a Type
      *
-     * @param o
-     * @return
+     * @param o the object to be converted
+     * @return the resultant type
      */
     private static Type parseType(Object o) {
         if (o instanceof String) {

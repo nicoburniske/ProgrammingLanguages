@@ -1,5 +1,10 @@
 package env;
 
+/**
+ * An Liked list lookup structure
+ * @param <Key>
+ * @param <Value>
+ */
 public interface IEnv<Key, Value> {
     /**
      * Adds a new Key Value pair to the Ienv

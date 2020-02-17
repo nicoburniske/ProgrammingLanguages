@@ -1,5 +1,10 @@
 package env;
 
+/**
+ * End of the List
+ * @param <Key>
+ * @param <Value>
+ */
 public class IEnvEnd<Key, Value> implements IEnv<Key, Value> {
     @Override
     public IEnv put(Key key, Value value) {

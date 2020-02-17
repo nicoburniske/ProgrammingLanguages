@@ -2,6 +2,11 @@ package env;
 
 import java.util.Objects;
 
+/**
+ * A pair in the list
+ * @param <Key>
+ * @param <Value>
+ */
 public class IEnvPair<Key, Value> implements IEnv<Key, Value> {
     Key key;
     Value value;
