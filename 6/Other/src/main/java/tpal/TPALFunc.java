@@ -2,9 +2,14 @@ package tpal;
 
 import env.IEnv;
 import env.Tuple;
+import tast.TAST;
+import tast.TASTFunc;
+import tast.star_ast.StarAST;
+import type.TypeFunction;
 import type.TypedVar;
 import type.Type;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -41,9 +46,17 @@ public class TPALFunc implements TPAL {
 
     @Override
     public Tuple typeCheck(IEnv<TPALVar, Type> env) {
+        IEnv<TPALVar, Type> envPlus = env;
+        List<Type> paramTypes = new ArrayList<>();
         for(TypedVar param: parameters) {
-            env = param.typeCheck(env).getRight();
+            Tuple paramTuple =  param.typeCheck(envPlus);
+            envPlus =paramTuple.getRight();
+            paramTypes.add(param.getType());
         }
-        return function.typeCheck(env);
+        Tuple funcTuple = function.typeCheck(envPlus);
+        return new Tuple(
+                  new StarAST(new TASTFunc(parameters,funcTuple.getLeft()),
+                  new TypeFunction(paramTypes,funcTuple.getLeft().getType())),
+                env);
     }
 }

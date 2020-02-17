@@ -10,6 +10,10 @@ public class TASTInteger implements TAST {
         this.i = i;
     }
 
+    public TASTInteger(int i) {
+        this.i = new BigInteger(i + "");
+    }
+
     @Override
     public String toJSONString() {
         return i.toString();

@@ -2,9 +2,11 @@ package tpal;
 
 import env.IEnv;
 import env.Tuple;
+import tast.TASTConditional;
 import tast.TASTInteger;
 import tast.star_ast.StarAST;
 import type.Type;
+import type.TypeInt;
 
 import java.util.Objects;
 
@@ -49,14 +51,20 @@ public class TPALConditional implements TPAL {
     @Override
     public Tuple typeCheck(IEnv<TPALVar, Type> env) {
         Tuple ifClaue = clause.typeCheck(env);
-         if (ifClaue.getLeft().getExpr() instanceof TASTInteger) {
+         if (!(ifClaue.getLeft().getType() instanceof TypeInt)) {
              throw new IllegalStateException(ERROR_INT_EXPECTED);
          } else {
              Tuple ifTrueTuple = this.ifTrue.typeCheck(env);
              Tuple ifFalseTuple = this.ifFalse.typeCheck(env);
              if(ifTrueTuple.getLeft().getType().equals(ifFalseTuple.getLeft().getType())) {
-                 return ifFalseTuple;
-                 //I can just return one of them becase they are the same :)
+                 return new Tuple(
+                         new StarAST(
+                                 new TASTConditional(
+                                         ifClaue.getLeft(),
+                                         ifTrueTuple.getLeft(),
+                                         ifFalseTuple.getLeft()),
+                                 ifFalseTuple.getLeft().getType()),
+                         env);
              } else {
                  throw new IllegalStateException(ERROR_COND_TYPE_ERROR);
              }

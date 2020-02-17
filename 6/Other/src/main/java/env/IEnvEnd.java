@@ -11,4 +11,19 @@ public class IEnvEnd<Key, Value> implements IEnv<Key, Value> {
         return null;
         //TODO:Maybe throw the error here
     }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof IEnvEnd;
+    }
+
+    @Override
+    public String toString() {
+        return "END";
+    }
 }

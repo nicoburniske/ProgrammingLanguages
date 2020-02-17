@@ -1,5 +1,7 @@
 package env;
 
+import java.util.Objects;
+
 public class IEnvPair<Key, Value> implements IEnv<Key, Value> {
     Key key;
     Value value;
@@ -23,5 +25,29 @@ public class IEnvPair<Key, Value> implements IEnv<Key, Value> {
         } else {
             return rest.get(key);
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        IEnvPair<?, ?> iEnvPair = (IEnvPair<?, ?>) o;
+        return key.equals(iEnvPair.key) &&
+                value.equals(iEnvPair.value) &&
+                rest.equals(iEnvPair.rest);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(key, value, rest);
+    }
+
+    @Override
+    public String toString() {
+        return "IEnvPair{" +
+                "key=" + key +
+                ", value=" + value +
+                ", rest=" + rest +
+                '}';
     }
 }
