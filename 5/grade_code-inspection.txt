@@ -1,0 +1,30 @@
+23
+Dustin Jamner
+
+21/70 + Bonus: 2
+
+-5 no interpretation of values
+
+-15 no store-passing versions of +, *, ^
+-5 no abstraction for creating store-passing versions of binary primops
+
+-9 no purpose statements for @,!,=
+-15 no factored out modules for environment, store
+
++ 2 purpose statement for the store is a start, but does not differentiate it well enough from the environment
+
+----------------------------------------
+ Misc Comments
+----------------------------------------
+
+Environments are not stores.
+
+Your store did not need to be mutable.
+
+What you call answer is better called value. Answers are different: the displayable outputs of your program.
+
+At this point your primitive operations really should not be on your value interface. You do not want to have to change the interface whenever you add an operation.
+
+You need to evaluate function arguments.
+
+Operations should not need argument names.
