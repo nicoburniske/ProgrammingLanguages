@@ -24,14 +24,6 @@ public class TPALTest {
         before = "[[\"let\", [\"b\",\":\",[\"int\", \"->\", \"int\"]], \"=\", [\"fun*\", [[\"a\",\":\",\"int\"]], [\"if-0\", \"a\", [\"call\", \"b\", 1], 2]]], [\"call\", \"b\", 0]]\n" ;
         after = "{\"expr\":[[\"let\",[\"b\",\":\",[\"int\",\"->\",\"int\"]],\"=\",{\"expr\":[\"fun*\",[[\"a\",\":\",\"int\"]],{\"expr\":[\"if-0\",{\"expr\":\"a\",\"type\":\"int\"},{\"expr\":[\"call\",{\"expr\":\"b\",\"type\":[\"int\",\"->\",\"int\"]},{\"expr\":1,\"type\":\"int\"}],\"type\":\"int\"},{\"expr\":2,\"type\":\"int\"}],\"type\":\"int\"}],\"type\":[\"int\",\"->\",\"int\"]}],{\"expr\":[\"call\",{\"expr\":\"b\",\"type\":[\"int\",\"->\",\"int\"]},{\"expr\":0,\"type\":\"int\"}],\"type\":\"int\"}],\"type\":\"int\"}";
         myHelperTest(before, after);
-
-        before = "[\n" +
-                "  [\"let\", [\"x\", \":\", [\"->\", \"int\"]], \"=\", [\"fun*\", [], 1]],\n" +
-                "  [\"let\", [\"y\", \":\", [\"->\", \"int\"]], \"=\", \"x\"],\n" +
-                "  [[\"let\", [\"x\", \":\", \"int\"], \"=\", 1], [\"call\", \"y\"]]]";
-        after = "";
-        myHelperTest(before, after);
-
     }
 
     private void myHelperTest(String before, String after) throws ParseException {
