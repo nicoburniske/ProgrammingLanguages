@@ -47,9 +47,13 @@ public class Parser {
             }
             if (arr.size() >= 2 && arr.get(1) instanceof String) {
                 List<TPAL> args = new ArrayList<>();
-                args.add(parseJSON(arr.get(0)));
-                arr.subList(2, arr.size()).forEach(e -> args.add(parseJSON(e)));
-                return new TPALCall(parseJSON(arr.get(1)), args);
+                try {
+                        args.add(parseJSON(arr.get(0)));
+                        arr.subList(2, arr.size()).forEach(e -> args.add(parseJSON(e)));
+                        return new TPALCall(parseJSON(arr.get(1)), args);
+                } catch (Exception ignored) {
+
+                }
             }
             if (arr.size() >= 1) {
                 if (arr.size() == 1) {
