@@ -23,6 +23,13 @@ interpreter: Failed [["let", ["a", ":", "int"], "=", "b"],
 , Expected {"expr": [["let", ["a", ":", "int"], "=", {"expr": "b", "type": "int"}], ["let", ["b", ":", "int"], "=", {"expr": ["call", {"expr": "+", "type": ["int", "int", "->", "int"]}, {"expr": 3, "type": "int"}, {"expr": 2, "type": "int"}], "type": "int"}], {"expr": "a", "type": "int"}], "type": "int"}
 , Got "variable b undeclared"
 
+interpreter: Failed [["let", ["a", ":", "int"], "=", 5],
+    ["let", ["b", ":", ["int", "->", "int"]], "=", ["fun*", [["a", ":", "int"]], ["a", "+", 10]]],
+    ["if-0", [5, "*", 4], 
+    ["fun*", [["a", ":", "int"], ["b", ":", "int"], ["c", ":", "int"]], ["a", "*", ["b", "+", "c"]]],
+    ["call", ["fun*", [["a", ":", "int"], ["b", ":", "int"], ["c", ":", "int"]], ["a", "*", ["b", "+", "c"]]], 3, 4, 5]]], Expected "same type expected for if branches"
+, Got "variable * undeclared"
+
 interpreter: Failed [["let", ["x", ":", ["int", "int", "->", "int"]], "=", 
     ["fun*", [["a", ":", "int"], ["b", ":", "int"]], ["a", "+", ["b", "*", 5]]]],
      ["call", "x", 42, ["fun*", [["z", ":", "int"]], "z"]]], Expected "matching function and argument types expected"
@@ -314,6 +321,22 @@ interpreter: Failed [
 }
 , Got "variable y undeclared"
 
+interpreter: Failed [
+  [
+    "let",
+    ["fact", ":", ["int", "->", "int"]],
+    "=",
+    [
+      "fun*",
+      [["x", ":", "int"]],
+      ["if-0", "x", "fact", ["x", "*", ["call", "fact", ["x", "+", -1]]]]
+    ]
+  ],
+  ["call", "fact", 4]
+]
+, Expected "same type expected for if branches"
+, Got "variable * undeclared"
+
 interpreter: Failed [["let", ["recursive", ":", ["int", "int", "->", "int"]], "=", 
     ["fun*", [["count", ":", "int"], ["acc", ":", "int"]], 
         ["if-0", 
@@ -533,6 +556,29 @@ interpreter: Failed [
 	"undeclared"
 ]
 , Expected "matching function and argument types expected", Got "variable fact undeclared"
+
+interpreter: Failed [
+	["let", ["var",":",["int","->","int"]],"=",
+[
+	["let",["getFact",":",["->",["int","->","int"]]],"=",
+		["fun*",[],"fact"]
+	],
+	["let",["fact",":",["int","->","int"]],"=",
+		["fun*",[["x",":","int"]],
+			["if-0","x",1,
+				["call","*","x",["call","fact",["call","+","x",-1]]]
+			]
+		]
+	],
+	["call", "getFact"]
+]
+	],
+	["let",["err",":","int"],"=",
+		["if-0",["call","var",3],22,"var"]
+	],
+	"undeclared"
+]
+, Expected "same type expected for if branches", Got "variable fact undeclared"
 
 interpreter: Failed [
 	["let", ["var",":",["int","->","int"]],"=",
