@@ -1,10 +1,9 @@
 package main;
 
-import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
-import parse.Parser;
-import tpal.TPAL;
-import utils.StandardLib;
+import typechecker.parse.Parser;
+import typechecker.tpal.TPAL;
+import typechecker.utils.StandardLib;
 
 import java.io.FileReader;
 
