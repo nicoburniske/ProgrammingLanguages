@@ -1,10 +1,9 @@
 package main;
 
-import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
-import parse.Parser;
-import tpal.TPAL;
-import utils.StandardLib;
+import typecheck.parse.Parser;
+import typecheck.tpal.TPAL;
+import typecheck.utils.StandardLib;
 
 import java.io.FileReader;
 
@@ -19,7 +18,7 @@ public class Main {
                 throw new IllegalArgumentException("Error: an illegal function was requested");
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.out.println(String.format("\"type error: %s\"", e.getMessage()));
         }
     }
 }
