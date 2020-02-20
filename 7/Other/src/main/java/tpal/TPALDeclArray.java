@@ -48,9 +48,14 @@ public class TPALDeclArray implements TPAL {
     public Tuple typeCheck(IEnv<TPALVar, Type> env) {
         IEnv<TPALVar, Type> envPlus = env;
         List<StarDecl> decls = new ArrayList<>();
+        //Add everyone to the enviroment
+        for(TPALDecl decl : declList) {
+            envPlus = decl.getVar().typeCheck(envPlus).getRight();
+        }
+        //check all of their types
         for (TPALDecl decl : declList) {
             TupleGeneric<StarDecl, IEnv<TPALVar, Type>> declTuple = decl.typeCheck(envPlus);
-            envPlus = declTuple.getRight();
+            //envPlus = declTuple.getRight();
             decls.add(declTuple.getLeft());
         }
         Tuple rhsTuple = scope.typeCheck(envPlus);
