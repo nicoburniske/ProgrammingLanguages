@@ -1,6 +1,8 @@
 package typechecker.tpal.decl;
 
 import common.LookupTable;
+import interpreter.pal.Decl;
+import interpreter.pal.PALVar;
 import typechecker.env.Tuple;
 import common.TupleGeneric;
 import typechecker.tast.star_decl.StarDecl;
@@ -69,4 +71,7 @@ public class TPALDecl {
         }
     }
 
+    public Decl fillet() {
+        return new Decl(new PALVar(this.var.getVar()),this.rhs.fillet());
+    }
 }

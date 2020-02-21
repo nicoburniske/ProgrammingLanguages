@@ -1,6 +1,8 @@
 package typechecker.tpal;
 
 import common.LookupTable;
+import interpreter.pal.PAL;
+import interpreter.pal.PALCall;
 import typechecker.env.Tuple;
 import typechecker.tast.TASTFuncCall;
 import typechecker.tast.star_ast.StarAST;
@@ -68,5 +70,10 @@ public class TPALCall implements TPAL  {
         } else {
             throw new IllegalStateException(ERROR_FUNCTION_EXPECTED);
         }
+    }
+
+    @Override
+    public PAL fillet() {
+        return new PALCall(function.fillet(), arguments.stream().map(TPAL::fillet).collect(Collectors.toList()));
     }
 }

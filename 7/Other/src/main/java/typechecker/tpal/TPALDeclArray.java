@@ -1,6 +1,8 @@
 package typechecker.tpal;
 
 import common.LookupTable;
+import interpreter.pal.PAL;
+import interpreter.pal.PALDeclArray;
 import typechecker.env.Tuple;
 import common.TupleGeneric;
 import typechecker.tast.TASTDeclArray;
@@ -12,6 +14,7 @@ import typechecker.type.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class TPALDeclArray implements TPAL {
     List<TPALDecl> declList;
@@ -64,5 +67,10 @@ public class TPALDeclArray implements TPAL {
                         new TASTDeclArray(decls, rhsTuple.getLeft()),
                         rhsTuple.getLeft().getType()),
                 env);
+    }
+
+    @Override
+    public PAL fillet() {
+        return new PALDeclArray(this.declList.stream().map(TPALDecl::fillet).collect(Collectors.toList()), scope.fillet());
     }
 }

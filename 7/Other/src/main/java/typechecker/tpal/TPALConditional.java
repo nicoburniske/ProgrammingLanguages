@@ -1,6 +1,8 @@
 package typechecker.tpal;
 
 import common.LookupTable;
+import interpreter.pal.PAL;
+import interpreter.pal.PALConditional;
 import typechecker.env.Tuple;
 import typechecker.tast.TASTConditional;
 import typechecker.tast.star_ast.StarAST;
@@ -68,5 +70,10 @@ public class TPALConditional implements TPAL {
                  throw new IllegalStateException(ERROR_COND_TYPE_ERROR);
              }
          }
+    }
+
+    @Override
+    public PAL fillet() {
+        return new PALConditional(this.clause.fillet(), this.ifTrue.fillet(), this.ifFalse.fillet());
     }
 }
