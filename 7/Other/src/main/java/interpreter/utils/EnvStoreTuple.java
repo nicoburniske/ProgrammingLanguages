@@ -1,6 +1,7 @@
 package interpreter.utils;
 
 import common.TupleGeneric;
+import interpreter.pal.PAL;
 import interpreter.pal.PALVar;
 import interpreter.utils.env.Environment;
 import interpreter.utils.env.EnvironmentEnd;
@@ -42,8 +43,9 @@ public class EnvStoreTuple extends TupleGeneric<Environment, Store> {
         return new EnvStoreTuple(newEnv, newStore);
     }
 
+
     /**
-     * Returns the standard prelude for the interpretaion of PALVars
+     * Returns the standard prelude for the interpretation of PALVars
      * @return
      */
     public static EnvStoreTuple stdLib() {

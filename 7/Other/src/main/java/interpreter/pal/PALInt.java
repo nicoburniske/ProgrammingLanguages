@@ -2,6 +2,7 @@ package interpreter.pal;
 
 import interpreter.value.IValue;
 import interpreter.utils.EnvStoreTuple;
+import interpreter.value.ValueInt;
 
 import java.math.BigInteger;
 
@@ -18,6 +19,6 @@ public class PALInt implements PAL {
 
     @Override
     public IValue interpret(EnvStoreTuple tuple) {
-        return null;
+        return new ValueInt(this.num);
     }
 }

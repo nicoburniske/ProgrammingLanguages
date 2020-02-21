@@ -2,6 +2,9 @@ package interpreter.pal;
 
 import interpreter.value.IValue;
 import interpreter.utils.EnvStoreTuple;
+import interpreter.value.ValueInt;
+
+import java.math.BigInteger;
 
 public class PALConditional implements PAL {
     private PAL clause, ifTrue, ifFalse;
@@ -14,6 +17,11 @@ public class PALConditional implements PAL {
 
     @Override
     public IValue interpret(EnvStoreTuple tuple) {
-        return null;
+        ValueInt cond = (ValueInt) clause.interpret(tuple);
+        if(cond.getNum().compareTo(new BigInteger("0")) == 0) {
+            return ifTrue.interpret(tuple);
+        } else {
+            return ifFalse.interpret(tuple);
+        }
     }
 }

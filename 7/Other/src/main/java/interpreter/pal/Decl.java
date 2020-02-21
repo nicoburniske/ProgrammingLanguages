@@ -1,7 +1,9 @@
 package interpreter.pal;
 
 import interpreter.utils.EnvStoreTuple;
+import interpreter.utils.store.Store;
 import interpreter.value.IValue;
+import interpreter.value.ValueLambdaClosure;
 
 public class Decl {
     private PALVar var;
@@ -12,7 +14,15 @@ public class Decl {
         this.rhs = rhs;
     }
 
-    public IValue interpret(EnvStoreTuple tuple) {
-        return null;
+    public EnvStoreTuple interpret(EnvStoreTuple tuple) {
+        if (rhs instanceof PALInt) {
+            return tuple.insert(this.var, this.rhs.interpret(tuple));
+        } else {
+            return tuple.insert(this.var, (ValueLambdaClosure)(EnvStoreTuple env) -> this.rhs.interpret(env));
+        }
+    }
+
+    public PALVar getVar() {
+        return this.var;
     }
 }

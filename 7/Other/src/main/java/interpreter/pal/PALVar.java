@@ -12,6 +12,6 @@ public class PALVar implements PAL {
 
     @Override
     public IValue interpret(EnvStoreTuple tuple) {
-        return null;
+        return tuple.lookup(this);
     }
 }
