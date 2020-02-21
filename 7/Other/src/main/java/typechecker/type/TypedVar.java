@@ -1,6 +1,6 @@
 package typechecker.type;
 
-import typechecker.env.IEnv;
+import common.LookupTable;
 import typechecker.env.Tuple;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONAware;
@@ -46,7 +46,7 @@ public class TypedVar extends TPALVar implements JSONAware {
     }
 
     @Override
-    public Tuple typeCheck(IEnv<TPALVar, Type> env) {
+    public Tuple typeCheck(LookupTable<TPALVar, Type> env) {
         return new Tuple(
                 new StarAST(new TASTVar(this.var), type),
                 env.put(new TPALVar(this.var), this.type));

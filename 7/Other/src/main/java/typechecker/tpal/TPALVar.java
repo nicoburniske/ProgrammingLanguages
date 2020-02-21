@@ -1,6 +1,8 @@
 package typechecker.tpal;
 
-import typechecker.env.IEnv;
+import common.LookupTable;
+import interpreter.pal.PAL;
+import interpreter.pal.PALVar;
 import typechecker.env.Tuple;
 import typechecker.tast.TASTVar;
 import typechecker.tast.star_ast.StarAST;
@@ -38,13 +40,18 @@ public class TPALVar implements TPAL {
     }
 
     @Override
-    public Tuple typeCheck(IEnv<TPALVar, Type> env) {
+    public Tuple typeCheck(LookupTable<TPALVar, Type> env) {
         Type t = env.get(this);
         if(t == null) {
             throw new IllegalStateException(String.format(ERROR_UNDECLARED_VARIABLE_TEMPLATE, this.var));
         } else {
             return new Tuple(new StarAST(new TASTVar(this.var), t), env);
         }
+    }
+
+    @Override
+    public PAL fillet() {
+        return new PALVar(this.var);
     }
 
     public String getVar() {

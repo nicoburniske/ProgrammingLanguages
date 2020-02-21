@@ -1,6 +1,6 @@
 package typechecker.tpal;
 
-import typechecker.env.IEnv;
+import common.LookupTable;
 import typechecker.env.Tuple;
 import typechecker.tast.TASTFuncCall;
 import typechecker.tast.star_ast.StarAST;
@@ -45,7 +45,7 @@ public class TPALCall implements TPAL  {
     }
 
     @Override
-    public Tuple typeCheck(IEnv<TPALVar, Type> env) {
+    public Tuple typeCheck(LookupTable<TPALVar, Type> env) {
         Tuple funcTup = this.function.typeCheck(env);
         if (funcTup.getLeft().getType() instanceof TypeFunction) {
             TypeFunction funcType = (TypeFunction) funcTup.getLeft().getType();

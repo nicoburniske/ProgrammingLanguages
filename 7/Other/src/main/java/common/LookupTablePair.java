@@ -1,4 +1,4 @@
-package typechecker.env;
+package common;
 
 import java.util.Objects;
 
@@ -7,20 +7,20 @@ import java.util.Objects;
  * @param <Key>
  * @param <Value>
  */
-public class IEnvPair<Key, Value> implements IEnv<Key, Value> {
+public class LookupTablePair<Key, Value> implements LookupTable<Key, Value> {
     Key key;
     Value value;
-    IEnv<Key, Value> rest;
+    LookupTable<Key, Value> rest;
 
-    public IEnvPair(Key key, Value value, IEnv<Key,Value> rest) {
+    public LookupTablePair(Key key, Value value, LookupTable<Key,Value> rest) {
         this.key = key;
         this.value = value;
         this.rest = rest;
     }
 
     @Override
-    public IEnv put(Key key, Value value) {
-        return new IEnvPair(key, value, this);
+    public LookupTable put(Key key, Value value) {
+        return new LookupTablePair(key, value, this);
     }
 
     @Override
@@ -36,7 +36,7 @@ public class IEnvPair<Key, Value> implements IEnv<Key, Value> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        IEnvPair<?, ?> iEnvPair = (IEnvPair<?, ?>) o;
+        LookupTablePair<?, ?> iEnvPair = (LookupTablePair<?, ?>) o;
         return key.equals(iEnvPair.key) &&
                 value.equals(iEnvPair.value) &&
                 rest.equals(iEnvPair.rest);

@@ -1,6 +1,6 @@
 package typechecker.tpal;
 
-import typechecker.env.IEnvEnd;
+import common.LookupTableEnd;
 import typechecker.env.Tuple;
 import org.junit.Test;
 import typechecker.tast.TASTInteger;
@@ -14,8 +14,8 @@ public class TPALIntTest {
     @Test
     public void typeCheck() {
         TPALInt tint = new TPALInt(12);
-        Tuple tintTuple = tint.typeCheck(new IEnvEnd<>());
+        Tuple tintTuple = tint.typeCheck(new LookupTableEnd<>());
         assertEquals(new StarAST(new TASTInteger(12), new TypeInt()), tintTuple.getLeft());
-        assertEquals(new IEnvEnd<>(), tintTuple.getRight());
+        assertEquals(new LookupTableEnd<>(), tintTuple.getRight());
     }
 }

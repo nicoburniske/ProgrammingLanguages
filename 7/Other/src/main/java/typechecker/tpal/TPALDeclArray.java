@@ -1,8 +1,8 @@
 package typechecker.tpal;
 
-import typechecker.env.IEnv;
+import common.LookupTable;
 import typechecker.env.Tuple;
-import typechecker.env.TupleGeneric;
+import common.TupleGeneric;
 import typechecker.tast.TASTDeclArray;
 import typechecker.tast.star_ast.StarAST;
 import typechecker.tast.star_decl.StarDecl;
@@ -45,8 +45,8 @@ public class TPALDeclArray implements TPAL {
     }
 
     @Override
-    public Tuple typeCheck(IEnv<TPALVar, Type> env) {
-        IEnv<TPALVar, Type> envPlus = env;
+    public Tuple typeCheck(LookupTable<TPALVar, Type> env) {
+        LookupTable<TPALVar, Type> envPlus = env;
         List<StarDecl> decls = new ArrayList<>();
         //Add everyone to the enviroment
         for(TPALDecl decl : declList) {
@@ -54,7 +54,7 @@ public class TPALDeclArray implements TPAL {
         }
         //check all of their types
         for (TPALDecl decl : declList) {
-            TupleGeneric<StarDecl, IEnv<TPALVar, Type>> declTuple = decl.typeCheck(envPlus);
+            TupleGeneric<StarDecl, LookupTable<TPALVar, Type>> declTuple = decl.typeCheck(envPlus);
             //envPlus = declTuple.getRight();
             decls.add(declTuple.getLeft());
         }

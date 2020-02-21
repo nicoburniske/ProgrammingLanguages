@@ -1,20 +1,19 @@
-package typechecker.env;
+package common;
 
 /**
  * End of the List
  * @param <Key>
  * @param <Value>
  */
-public class IEnvEnd<Key, Value> implements IEnv<Key, Value> {
+public class LookupTableEnd<Key, Value> implements LookupTable<Key, Value> {
     @Override
-    public IEnv put(Key key, Value value) {
-        return new IEnvPair(key, value, this);
+    public LookupTable put(Key key, Value value) {
+        return new LookupTablePair(key, value, this);
     }
 
     @Override
     public Value get(Key key) {
         return null;
-        //TODO:Maybe throw the error here
     }
 
     @Override
@@ -24,7 +23,7 @@ public class IEnvEnd<Key, Value> implements IEnv<Key, Value> {
 
     @Override
     public boolean equals(Object obj) {
-        return obj instanceof IEnvEnd;
+        return obj instanceof LookupTableEnd;
     }
 
     @Override

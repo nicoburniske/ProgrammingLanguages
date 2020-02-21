@@ -1,6 +1,9 @@
 package typechecker.tpal;
 
-import typechecker.env.IEnv;
+import common.LookupTable;
+import interpreter.pal.PAL;
+import interpreter.pal.PALFunc;
+import interpreter.pal.PALVar;
 import typechecker.env.Tuple;
 import typechecker.tast.TASTFunc;
 import typechecker.tast.star_ast.StarAST;
@@ -11,6 +14,7 @@ import typechecker.type.Type;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class TPALFunc implements TPAL {
     List<TypedVar> parameters;
@@ -44,8 +48,8 @@ public class TPALFunc implements TPAL {
     }
 
     @Override
-    public Tuple typeCheck(IEnv<TPALVar, Type> env) {
-        IEnv<TPALVar, Type> envPlus = env;
+    public Tuple typeCheck(LookupTable<TPALVar, Type> env) {
+        LookupTable<TPALVar, Type> envPlus = env;
         List<Type> paramTypes = new ArrayList<>();
         for(TypedVar param: parameters) {
             Tuple paramTuple =  param.typeCheck(envPlus);
@@ -58,4 +62,11 @@ public class TPALFunc implements TPAL {
                   new TypeFunction(paramTypes,funcTuple.getLeft().getType())),
                 env);
     }
+
+    @Override
+    public PAL fillet() {
+        return new PALFunc(this.parameters.stream().map( p -> new PALVar(p.var)).collect(Collectors.toList()), function.fillet());
+    }
+
+
 }

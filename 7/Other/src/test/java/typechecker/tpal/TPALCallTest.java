@@ -1,7 +1,7 @@
 package typechecker.tpal;
 
-import typechecker.env.IEnv;
-import typechecker.env.IEnvEnd;
+import common.LookupTable;
+import common.LookupTableEnd;
 import typechecker.env.Tuple;
 import org.junit.Test;
 import typechecker.tast.TASTFunc;
@@ -22,7 +22,7 @@ public class TPALCallTest {
     @Test
     public void typeCheck() {
         TPALCall tpalCall = new TPALCall(new TPALVar("a"), Arrays.asList());
-        IEnv env = new IEnvEnd<>();
+        LookupTable env = new LookupTableEnd<>();
         env = env.put(new TPALVar("a"), new TypeInt());
         try {
             tpalCall.typeCheck(env);

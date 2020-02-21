@@ -1,4 +1,4 @@
-package typechecker.env;
+package common;
 
 /**
  * A generic tuple class to help us manage return values

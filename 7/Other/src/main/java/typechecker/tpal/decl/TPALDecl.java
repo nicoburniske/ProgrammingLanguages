@@ -1,8 +1,8 @@
 package typechecker.tpal.decl;
 
-import typechecker.env.IEnv;
+import common.LookupTable;
 import typechecker.env.Tuple;
-import typechecker.env.TupleGeneric;
+import common.TupleGeneric;
 import typechecker.tast.star_decl.StarDecl;
 import typechecker.tpal.TPAL;
 import typechecker.tpal.TPALFunc;
@@ -14,6 +14,7 @@ import java.util.Objects;
 
 import static typechecker.utils.Constants.ERROR_DECL_TYPE_MATCHING;
 
+// TODO: enforce restriction that the rhs must be integer literal or fun*
 public class TPALDecl {
     TypedVar var;
     TPAL rhs;
@@ -54,7 +55,7 @@ public class TPALDecl {
     }
 
 
-    public TupleGeneric<StarDecl, IEnv<TPALVar, Type>> typeCheck(IEnv<TPALVar, Type> env) {
+    public TupleGeneric<StarDecl, LookupTable<TPALVar, Type>> typeCheck(LookupTable<TPALVar, Type> env) {
         Tuple varTuple = this.var.typeCheck(env);
         if(rhs instanceof TPALFunc) {
             env = varTuple.getRight();

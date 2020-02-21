@@ -1,7 +1,7 @@
 package typechecker.tpal.decl;
 
-import typechecker.env.IEnvEnd;
-import typechecker.env.TupleGeneric;
+import common.LookupTableEnd;
+import common.TupleGeneric;
 import org.junit.Test;
 import typechecker.tast.TASTVar;
 import typechecker.tast.star_ast.StarAST;
@@ -22,14 +22,14 @@ public class TPALDeclTest {
     public void typeCheck() {
         TPALDecl decl = new TPALDecl(new TypedVar("a", new TypeInt()), new TypedVar("b", new TypeFunction(Arrays.asList(new TypeInt()), new TypeInt())));
         try {
-            TupleGeneric declTuple = decl.typeCheck(new IEnvEnd<>());
+            TupleGeneric declTuple = decl.typeCheck(new LookupTableEnd<>());
             fail();
         } catch (IllegalStateException e) {
             assertEquals(ERROR_DECL_TYPE_MATCHING, e.getMessage());
         }
         TPALDecl decl2 = new TPALDecl(new TypedVar("a", new TypeFunction(Arrays.asList(new TypeInt()), new TypeInt())), new TypedVar("b", new TypeInt()));
         try {
-            TupleGeneric declTuple = decl.typeCheck(new IEnvEnd<>());
+            TupleGeneric declTuple = decl.typeCheck(new LookupTableEnd<>());
             fail();
         } catch (IllegalStateException e) {
             assertEquals(ERROR_DECL_TYPE_MATCHING, e.getMessage());
@@ -37,9 +37,9 @@ public class TPALDeclTest {
 
 
         TPALDecl decl3 = new TPALDecl(new TypedVar("a", new TypeInt()), new TypedVar("b",new TypeInt()));
-        TupleGeneric decl3Tup = decl3.typeCheck(new IEnvEnd());
+        TupleGeneric decl3Tup = decl3.typeCheck(new LookupTableEnd());
         assertEquals(new StarDecl(new TypedVar("a", new TypeInt()),new StarAST(new TASTVar("b"), new TypeInt())), decl3Tup.getLeft());
-        assertEquals(new IEnvEnd<>().put(new TPALVar("a"), new TypeInt()), decl3Tup.getRight());
+        assertEquals(new LookupTableEnd<>().put(new TPALVar("a"), new TypeInt()), decl3Tup.getRight());
 
 
 

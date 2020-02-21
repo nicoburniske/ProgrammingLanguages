@@ -1,6 +1,8 @@
 package typechecker.tpal;
 
-import typechecker.env.IEnv;
+import common.LookupTable;
+import interpreter.pal.PAL;
+import interpreter.pal.PALInt;
 import typechecker.env.Tuple;
 import typechecker.tast.TASTInteger;
 import typechecker.tast.star_ast.StarAST;
@@ -42,9 +44,14 @@ public class TPALInt implements TPAL {
     }
 
     @Override
-    public Tuple typeCheck(IEnv<TPALVar, Type> env) {
+    public Tuple typeCheck(LookupTable<TPALVar, Type> env) {
         return new Tuple(
                 new StarAST(new TASTInteger(this.num), new TypeInt()),
                 env);
+    }
+
+    @Override
+    public PAL fillet() {
+        return new PALInt(this.num);
     }
 }

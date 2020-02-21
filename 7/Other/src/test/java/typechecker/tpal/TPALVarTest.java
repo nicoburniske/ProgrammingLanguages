@@ -1,7 +1,7 @@
 package typechecker.tpal;
 
-import typechecker.env.IEnv;
-import typechecker.env.IEnvEnd;
+import common.LookupTable;
+import common.LookupTableEnd;
 import typechecker.env.Tuple;
 import org.junit.Test;
 import typechecker.tast.TASTVar;
@@ -21,12 +21,12 @@ public class TPALVarTest {
     public void typeCheck() {
         TPALVar var = new TPALVar("a");
         try {
-            Tuple varTuple = var.typeCheck(new IEnvEnd<>());
+            Tuple varTuple = var.typeCheck(new LookupTableEnd<>());
             fail();
         } catch (IllegalStateException e) {
             assertEquals(e.getMessage(), String.format(ERROR_UNDECLARED_VARIABLE_TEMPLATE, "a"));
         }
-        IEnv<TPALVar, Type> env = new IEnvEnd<>();
+        LookupTable<TPALVar, Type> env = new LookupTableEnd<>();
         env = env.put(new TPALVar("a"), new TypeInt());
         Tuple varTuple = var.typeCheck(env);
         assertEquals(new StarAST(new TASTVar("a"), new TypeInt()), varTuple.getLeft());

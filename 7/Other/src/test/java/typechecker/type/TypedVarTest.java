@@ -1,6 +1,6 @@
 package typechecker.type;
 
-import typechecker.env.IEnvEnd;
+import common.LookupTableEnd;
 import typechecker.env.Tuple;
 import org.junit.Test;
 import typechecker.tast.TASTVar;
@@ -14,8 +14,8 @@ public class TypedVarTest {
     @Test
     public void typeCheck() {
         TypedVar var = new TypedVar("a", new TypeInt());
-        Tuple varTuple = var.typeCheck(new IEnvEnd<>());
+        Tuple varTuple = var.typeCheck(new LookupTableEnd<>());
         assertEquals(new StarAST(new TASTVar("a"), new TypeInt()), varTuple.getLeft());
-        assertEquals(new IEnvEnd<>().put(new TPALVar("a"), new TypeInt()), varTuple.getRight());
+        assertEquals(new LookupTableEnd<>().put(new TPALVar("a"), new TypeInt()), varTuple.getRight());
     }
 }

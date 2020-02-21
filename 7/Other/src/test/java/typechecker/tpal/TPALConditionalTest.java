@@ -1,7 +1,7 @@
 package typechecker.tpal;
 
-import typechecker.env.IEnv;
-import typechecker.env.IEnvEnd;
+import common.LookupTable;
+import common.LookupTableEnd;
 import typechecker.env.Tuple;
 import org.junit.Test;
 import typechecker.tast.TASTConditional;
@@ -24,7 +24,7 @@ public class TPALConditionalTest {
     @Test
     public void typeCheck() {
         TPALConditional conditional = new TPALConditional(new TPALVar("a"), new TPALInt(1), new TPALInt(2));
-        IEnv<TPALVar, Type> env = new IEnvEnd();
+        LookupTable<TPALVar, Type> env = new LookupTableEnd();
         env = env.put(new TPALVar("a"), new TypeFunction(Arrays.asList(new TypeInt()), new TypeInt()));
         try {
             Tuple condTup = conditional.typeCheck(env);

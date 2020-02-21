@@ -1,6 +1,6 @@
 package typechecker.tpal;
 
-import typechecker.env.IEnv;
+import common.LookupTable;
 import typechecker.env.Tuple;
 import typechecker.tast.TASTConditional;
 import typechecker.tast.star_ast.StarAST;
@@ -48,7 +48,7 @@ public class TPALConditional implements TPAL {
     }
 
     @Override
-    public Tuple typeCheck(IEnv<TPALVar, Type> env) {
+    public Tuple typeCheck(LookupTable<TPALVar, Type> env) {
         Tuple ifClaue = clause.typeCheck(env);
          if (!(ifClaue.getLeft().getType() instanceof TypeInt)) {
              throw new IllegalStateException(ERROR_INT_EXPECTED);

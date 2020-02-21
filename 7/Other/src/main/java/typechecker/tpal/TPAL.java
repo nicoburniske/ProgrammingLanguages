@@ -1,6 +1,7 @@
 package typechecker.tpal;
 
-import typechecker.env.IEnv;
+import common.LookupTable;
+import interpreter.pal.PAL;
 import typechecker.env.Tuple;
 import typechecker.type.Type;
 
@@ -25,5 +26,7 @@ public interface TPAL {
      * @param env the enviroment used to type check the TPAL
      * @return A Tuple which holds a modified envoroment (if changed) and the new StarAST value created.
      */
-    public Tuple typeCheck(IEnv<TPALVar, Type> env);
+    Tuple typeCheck(LookupTable<TPALVar, Type> env);
+
+    PAL fillet();
 }

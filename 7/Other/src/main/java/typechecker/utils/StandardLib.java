@@ -1,7 +1,7 @@
 package typechecker.utils;
 
-import typechecker.env.IEnv;
-import typechecker.env.IEnvEnd;
+import common.LookupTable;
+import common.LookupTableEnd;
 import typechecker.tpal.TPALVar;
 import typechecker.type.Type;
 import typechecker.type.TypeFunction;
@@ -15,8 +15,8 @@ public class StandardLib {
      *
      * @return the standard library contaning +,*, and ^
      */
-    public static IEnv<TPALVar, Type> stdLib() {
-        IEnv<TPALVar, Type> env = new IEnvEnd<TPALVar, Type>();
+    public static LookupTable<TPALVar, Type> stdLib() {
+        LookupTable<TPALVar, Type> env = new LookupTableEnd<TPALVar, Type>();
         Type Int = new TypeInt();
         List<Type> IntInt = Arrays.asList(Int,Int);
         env = env.put(new TPALVar("+"), new TypeFunction(IntInt, Int));
