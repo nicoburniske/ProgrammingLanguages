@@ -33,6 +33,11 @@ public class LookupTablePair<Key, Value> implements LookupTable<Key, Value> {
     }
 
     @Override
+    public Integer getSize() {
+        return 1 + rest.getSize();
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

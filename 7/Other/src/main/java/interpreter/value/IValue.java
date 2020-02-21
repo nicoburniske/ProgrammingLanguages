@@ -1,4 +1,6 @@
 package interpreter.value;
 
-public interface IValue {
+import org.json.simple.JSONAware;
+
+public interface IValue extends JSONAware {
 }

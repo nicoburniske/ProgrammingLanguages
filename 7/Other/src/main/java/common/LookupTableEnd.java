@@ -17,6 +17,11 @@ public class LookupTableEnd<Key, Value> implements LookupTable<Key, Value> {
     }
 
     @Override
+    public Integer getSize() {
+        return 0;
+    }
+
+    @Override
     public int hashCode() {
         return super.hashCode();
     }

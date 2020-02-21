@@ -20,4 +20,10 @@ public interface LookupTable<Key, Value> {
      * @return the corresponding value in the Ienv
      */
     public Value get(Key key);
+
+    /**
+     *
+     * @return the size of the Lookup Table
+     */
+    public Integer getSize();
 }
