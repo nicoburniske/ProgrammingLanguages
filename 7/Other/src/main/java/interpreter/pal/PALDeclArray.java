@@ -17,7 +17,9 @@ public class PALDeclArray implements PAL {
 
     @Override
     public IValue interpret(EnvStoreTuple tuple) {
-        List<PALVar> vars = this.declList.stream().map(Decl::getVar).collect(Collectors.toList());
-        return null;
+        for (Decl d : this.declList) {
+            tuple = d.interpret(tuple);
+        }
+        return scope.interpret(tuple);
     }
 }

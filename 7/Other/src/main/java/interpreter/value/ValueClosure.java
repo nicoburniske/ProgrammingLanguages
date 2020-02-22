@@ -7,6 +7,7 @@ import interpreter.utils.EnvStoreTuple;
 import interpreter.utils.env.Environment;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class ValueClosure implements IValue {
@@ -31,5 +32,19 @@ public class ValueClosure implements IValue {
             tuple = tuple.insert(params.get(ii), argsVal.get(ii));
         }
         return this.function.apply(tuple);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ValueClosure that = (ValueClosure) o;
+        return function.equals(that.function) &&
+                env.equals(that.env);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(function, env);
     }
 }

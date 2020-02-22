@@ -1,6 +1,7 @@
 package interpreter.value;
 
 import java.math.BigInteger;
+import java.util.Objects;
 
 public class ValueInt implements IValue {
     private BigInteger num;
@@ -19,5 +20,18 @@ public class ValueInt implements IValue {
 
     public BigInteger getNum() {
         return num;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ValueInt valueInt = (ValueInt) o;
+        return num.equals(valueInt.num);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(num);
     }
 }
