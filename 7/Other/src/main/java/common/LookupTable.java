@@ -12,7 +12,7 @@ public interface LookupTable<Key, Value> {
      * @param value the vlaue to be added
      * @return the new IEnv with the pair consed on to the head
      */
-    public LookupTable put(Key key, Value value);
+    public LookupTable<Key, Value> put(Key key, Value value);
 
     /**
      * Finds the first occurence of the {@param key} in the IEnv

@@ -1,12 +1,9 @@
 package interpreter.utils;
 
 import common.TupleGeneric;
-import interpreter.pal.PAL;
 import interpreter.pal.PALVar;
 import interpreter.utils.env.Environment;
-import interpreter.utils.env.EnvironmentEnd;
 import interpreter.utils.store.Store;
-import interpreter.utils.store.StoreEnd;
 import interpreter.value.IBin;
 import interpreter.value.IValue;
 import interpreter.value.ValueInt;
@@ -49,7 +46,7 @@ public class EnvStoreTuple extends TupleGeneric<Environment, Store> {
      * @return
      */
     public static EnvStoreTuple stdLib() {
-        EnvStoreTuple current = new EnvStoreTuple(new EnvironmentEnd(), new StoreEnd());
+        EnvStoreTuple current = new EnvStoreTuple(new Environment(), new Store());
         current = current.insert(new PALVar("+"), new ValuePrimop(2, (IBin)(IValue left, IValue right)->
                 new ValueInt(((ValueInt)left).getNum().add(((ValueInt)right).getNum()))));
         current = current.insert(new PALVar("*"), new ValuePrimop(2,(IBin)(IValue left, IValue right)->
@@ -64,6 +61,6 @@ public class EnvStoreTuple extends TupleGeneric<Environment, Store> {
             }
         }));
         return current;
-
     }
+
 }

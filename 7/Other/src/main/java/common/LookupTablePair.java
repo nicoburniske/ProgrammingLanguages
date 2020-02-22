@@ -19,8 +19,8 @@ public class LookupTablePair<Key, Value> implements LookupTable<Key, Value> {
     }
 
     @Override
-    public LookupTable put(Key key, Value value) {
-        return new LookupTablePair(key, value, this);
+    public LookupTable<Key, Value> put(Key key, Value value) {
+        return new LookupTablePair<Key, Value>(key, value, this);
     }
 
     @Override
