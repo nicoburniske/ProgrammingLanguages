@@ -3,12 +3,12 @@ package typechecker.utils;
 import common.LookupTable;
 import common.LookupTableEnd;
 import typechecker.tpal.TPALVar;
-import typechecker.type.Type;
-import typechecker.type.TypeFunction;
-import typechecker.type.TypeInt;
+import typechecker.type.*;
 
 import java.util.Arrays;
 import java.util.List;
+
+import static typechecker.utils.Constants.ERROR_ARGS_PARAMS_COUNT_DONT_MATCH;
 
 public class StandardLib {
     /**
@@ -22,6 +22,37 @@ public class StandardLib {
         env = env.put(new TPALVar("+"), new TypeFunction(IntInt, Int));
         env = env.put(new TPALVar("*"), new TypeFunction(IntInt, Int));
         env = env.put(new TPALVar("^"), new TypeFunction(IntInt, Int));
+        env = env.put(new TPALVar("@"), (TypeLambda)(List<Type> types) -> {
+            checkLength(types,1);
+            Type type = types.get(0);
+            return new TypeFunction(type, new TypeRef(type));
+        });
+        env = env.put(new TPALVar("!"), (TypeLambda)(List<Type> types) -> {
+            checkLength(types, 1);
+            if(types.get(0) instanceof TypeRef) {
+                TypeRef ref = (TypeRef) types.get(0);
+                return new TypeFunction(ref, ref.getType());
+            } else {
+                throw new IllegalStateException("//TODO");
+            }
+        });
+        env = env.put(new TPALVar("="), (TypeLambda)(List<Type> types) -> {
+            checkLength(types, 2);
+            Type left = types.get(0);
+            Type right = types.get(1);
+            if(left instanceof TypeRef) {
+                TypeRef ref = (TypeRef) left;
+                return new TypeFunction(ref, new TypeFunction(ref.getType(), right));
+            }else {
+                throw new IllegalStateException("//TODO");
+            }
+        });
         return env;
+    }
+
+    private static void checkLength(List<Type> types, int expectedLen) {
+        if(types.size()  != expectedLen) {
+            throw new IllegalStateException(ERROR_ARGS_PARAMS_COUNT_DONT_MATCH);
+        }
     }
 }

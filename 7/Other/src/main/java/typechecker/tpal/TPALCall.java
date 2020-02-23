@@ -8,6 +8,7 @@ import typechecker.tast.TASTFuncCall;
 import typechecker.tast.star_ast.StarAST;
 import typechecker.type.Type;
 import typechecker.type.TypeFunction;
+import typechecker.type.TypeLambda;
 
 import java.util.List;
 import java.util.Objects;
@@ -49,8 +50,13 @@ public class TPALCall implements TPAL  {
     @Override
     public Tuple typeCheck(LookupTable<TPALVar, Type> env) {
         Tuple funcTup = this.function.typeCheck(env);
-        if (funcTup.getLeft().getType() instanceof TypeFunction) {
-            TypeFunction funcType = (TypeFunction) funcTup.getLeft().getType();
+        if (funcTup.getLeft().getType() instanceof TypeFunction || funcTup.getLeft().getType() instanceof TypeLambda) {
+            TypeFunction funcType;
+            if(funcTup.getLeft().getType() instanceof TypeLambda) {
+                funcType = (TypeFunction) ((TypeLambda)funcTup.getLeft().getType()).call(arguments.stream().map(a -> a.typeCheck(env).getLeft().getType()).collect(Collectors.toList()));
+            } else {
+                funcType = (TypeFunction) funcTup.getLeft().getType();
+            }
             List<Type> funcArgs = funcType.getArgs();
             if(funcArgs.size() == this.arguments.size()) {
                 boolean typesMatch = true;
@@ -60,7 +66,7 @@ public class TPALCall implements TPAL  {
                     typesMatch = typesMatch &&  funcArgs.get(ii).equals(argsAst.get(ii).getType());
                 }
                 if(typesMatch) {
-                    return new Tuple(new StarAST(new TASTFuncCall(funcAST, argsAst),((TypeFunction)funcAST.getType()).getRhs()), env);
+                    return new Tuple(new StarAST(new TASTFuncCall(funcAST, argsAst),(funcType).getRhs()), env);
                 } else {
                     throw new IllegalStateException(ERROR_ARGS_PARAMS_TYPES_DONT_MATCH);
                 }

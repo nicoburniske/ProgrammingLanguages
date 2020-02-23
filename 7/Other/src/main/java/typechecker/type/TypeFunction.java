@@ -2,6 +2,7 @@ package typechecker.type;
 
 import org.json.simple.JSONArray;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -11,6 +12,10 @@ public class TypeFunction implements Type{
 
     public TypeFunction(List<Type> args, Type rhs) {
         this.args = args;
+        this.rhs = rhs;
+    }
+    public TypeFunction(Type args, Type rhs) {
+        this.args = Arrays.asList(args);
         this.rhs = rhs;
     }
 
