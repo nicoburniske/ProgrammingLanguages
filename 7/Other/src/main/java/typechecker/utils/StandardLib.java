@@ -42,7 +42,7 @@ public class StandardLib {
             Type right = types.get(1);
             if(left instanceof TypeRef) {
                 TypeRef ref = (TypeRef) left;
-                return new TypeFunction(ref, new TypeFunction(ref.getType(), right));
+                return new TypeFunction(Arrays.asList(ref, right), ref.getType());
             }else {
                 throw new IllegalStateException("//TODO");
             }

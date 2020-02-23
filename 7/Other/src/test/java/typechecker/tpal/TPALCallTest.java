@@ -68,55 +68,6 @@ public class TPALCallTest {
                                         new StarAST(new TASTInteger(2), new TypeInt()))), new TypeInt()), StandardLib.stdLib()),
                 (new TPALCall(new TPALVar("+"), Arrays.asList(new TPALInt(1L), new TPALInt(2L)))).typeCheck(StandardLib.stdLib()));
 
-        checkAritityFail("+", 0, false);
-        checkAritityFail("+", 1, false);
-        checkAritityFail("+", 2, true);
-        checkAritityFail("+", 3, false);
-        checkAritityFail("*", 0, false);
-        checkAritityFail("*", 1, false);
-        checkAritityFail("*", 2, true);
-        checkAritityFail("*", 3, false);
-        checkAritityFail("^", 0, false);
-        checkAritityFail("^", 1, false);
-        checkAritityFail("^", 2, true);
-        checkAritityFail("^", 3, false);
-        checkAritityFail("@", 0, false);
-        checkAritityFail("@", 1, true);
-        checkAritityFail("@", 2, false);
-        checkAritityFail("@", 3, false);
-        checkAritityFail("!", 0, false);
-//        checkAritityFail("!", 1, true);
-        checkAritityFail("!", 2, false);
-        checkAritityFail("!", 3, false);
-        checkAritityFail("=", 0, false);
-        checkAritityFail("=", 1, false);
-//        checkAritityFail("=", 2, true); // these need to be done seperatly as they need differnt args passed in to work
-        checkAritityFail("=", 3, false);
-
-
-    }
-
-    private void checkAritityFail(String func, int num, boolean pass) {
-            try{
-                if (num == 0) {
-                    Tuple x = (new TPALCall(new TPALVar(func), Arrays.asList())).typeCheck(StandardLib.stdLib());
-                } else if(num == 1) {
-                    Tuple x = (new TPALCall(new TPALVar(func), Arrays.asList(new TPALInt(1L)))).typeCheck(StandardLib.stdLib());
-                } else if (num == 2) {
-                    Tuple x = (new TPALCall(new TPALVar(func), Arrays.asList(new TPALInt(1L), new TPALInt(1L)))).typeCheck(StandardLib.stdLib());
-                } else if (num == 3) {
-                    Tuple x = (new TPALCall(new TPALVar(func), Arrays.asList(new TPALInt(1L), new TPALInt(1L), new TPALInt(1L)))).typeCheck(StandardLib.stdLib());
-                }
-                if(!pass) {
-                    fail();
-                }
-            } catch (IllegalStateException e) {
-                if(!pass) {
-                    assertEquals(ERROR_ARGS_PARAMS_COUNT_DONT_MATCH, e.getMessage());
-                } else {
-                    fail();
-                }
-            }
 
     }
 
