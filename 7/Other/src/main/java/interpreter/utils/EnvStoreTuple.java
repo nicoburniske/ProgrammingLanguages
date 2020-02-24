@@ -1,6 +1,5 @@
 package interpreter.utils;
 
-import com.sun.tools.doclint.Env;
 import common.TupleGeneric;
 import interpreter.pal.PALVar;
 import interpreter.utils.env.Environment;
