@@ -5,6 +5,10 @@ import org.json.simple.JSONAware;
 import java.util.Objects;
 
 public class ValueCell implements IValue{
+    public Cell getCell() {
+        return cell;
+    }
+
     private Cell cell;
 
     public ValueCell(Cell cell) {

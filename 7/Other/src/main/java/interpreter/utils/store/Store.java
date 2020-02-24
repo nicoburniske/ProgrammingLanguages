@@ -28,6 +28,9 @@ public class Store {
         return table.get(key);
     }
 
+    public Store set(Integer key, IValue val) {
+        return new Store(table.set(key, val));
+    }
     public Integer getSize(){
         return table.getSize();
     }

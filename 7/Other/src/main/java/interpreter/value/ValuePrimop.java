@@ -1,6 +1,7 @@
 package interpreter.value;
 
 import interpreter.utils.EnvStoreTuple;
+import interpreter.utils.ValueEnvStoreTuple;
 
 import java.util.List;
 import java.util.Objects;
@@ -13,8 +14,8 @@ public class ValuePrimop implements IValue{
         this.op = op;
         this.arity = arity;
     }
-    public IValue apply (List<IValue> args) {
-        return op.call(args);
+    public ValueEnvStoreTuple apply (List<IValue> args, EnvStoreTuple tuple) {
+        return op.call(args, tuple);
     }
 
     @Override

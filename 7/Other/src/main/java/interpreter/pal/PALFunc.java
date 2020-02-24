@@ -1,5 +1,6 @@
 package interpreter.pal;
 
+import interpreter.utils.ValueEnvStoreTuple;
 import interpreter.value.IValue;
 import interpreter.utils.EnvStoreTuple;
 import interpreter.value.ValueClosure;
@@ -16,15 +17,15 @@ public class PALFunc implements PAL {
     }
 
     @Override
-    public IValue interpret(EnvStoreTuple tuple) {
-        return new ValueClosure(this, tuple.getLeft());
+    public ValueEnvStoreTuple interpret(EnvStoreTuple tuple) {
+        return new ValueEnvStoreTuple(new ValueClosure(this, tuple.getLeft()), tuple);
     }
 
     public List<PALVar> getParams() {
         return params;
     }
 
-    public IValue apply(EnvStoreTuple tuple) {
+    public ValueEnvStoreTuple apply(EnvStoreTuple tuple) {
         return this.function.interpret(tuple);
     }
 }

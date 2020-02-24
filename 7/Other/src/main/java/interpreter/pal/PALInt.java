@@ -1,6 +1,6 @@
 package interpreter.pal;
 
-import interpreter.value.IValue;
+import interpreter.utils.ValueEnvStoreTuple;
 import interpreter.utils.EnvStoreTuple;
 import interpreter.value.ValueInt;
 
@@ -18,7 +18,7 @@ public class PALInt implements PAL {
     }
 
     @Override
-    public IValue interpret(EnvStoreTuple tuple) {
-        return new ValueInt(this.num);
+    public ValueEnvStoreTuple interpret(EnvStoreTuple tuple) {
+        return new ValueEnvStoreTuple(new ValueInt(this.num), tuple);
     }
 }

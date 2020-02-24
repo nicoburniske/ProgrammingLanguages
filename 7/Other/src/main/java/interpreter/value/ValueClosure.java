@@ -4,6 +4,7 @@ import interpreter.pal.PAL;
 import interpreter.pal.PALFunc;
 import interpreter.pal.PALVar;
 import interpreter.utils.EnvStoreTuple;
+import interpreter.utils.ValueEnvStoreTuple;
 import interpreter.utils.env.Environment;
 
 import java.util.List;
@@ -24,14 +25,15 @@ public class ValueClosure implements IValue {
         return null;
     }
 
-    public IValue apply(List<PAL> args, EnvStoreTuple tuple) {
+    public ValueEnvStoreTuple apply(List<PAL> args, EnvStoreTuple tuple) {
+        EnvStoreTuple temp = tuple;
         List<PALVar> params = this.function.getParams();
-        EnvStoreTuple finalTuple = tuple;
-        List<IValue> argsVal = args.stream().map(e -> e.interpret(finalTuple)).collect(Collectors.toList());
+        EnvStoreTuple finalTuple = temp;
+        List<IValue> argsVal = args.stream().map(e -> e.interpret(finalTuple).getLeft()).collect(Collectors.toList());
         for(int ii = 0; ii < args.size(); ii ++) {
-            tuple = tuple.insert(params.get(ii), argsVal.get(ii));
+            temp = temp.insert(params.get(ii), argsVal.get(ii));
         }
-        return this.function.apply(tuple);
+        return new ValueEnvStoreTuple(this.function.apply(temp).getLeft(), tuple);
     }
 
     @Override

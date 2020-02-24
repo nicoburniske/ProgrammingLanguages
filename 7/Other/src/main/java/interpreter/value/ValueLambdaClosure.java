@@ -1,10 +1,11 @@
 package interpreter.value;
 
 import interpreter.utils.EnvStoreTuple;
+import interpreter.utils.ValueEnvStoreTuple;
 
 public interface ValueLambdaClosure extends IValue{
 
-    IValue apply(EnvStoreTuple tup);
+    ValueEnvStoreTuple apply(EnvStoreTuple tup);
 
     @Override
     default String toJSONString() {

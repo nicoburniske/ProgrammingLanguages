@@ -1,6 +1,6 @@
 package interpreter.pal;
 
-import interpreter.value.IValue;
+import interpreter.utils.ValueEnvStoreTuple;
 import interpreter.utils.EnvStoreTuple;
 
 /**
@@ -8,5 +8,5 @@ import interpreter.utils.EnvStoreTuple;
  */
 public interface PAL {
     //TODO: Document interface
-    IValue interpret (EnvStoreTuple tuple);
+    ValueEnvStoreTuple interpret (EnvStoreTuple tuple);
 }

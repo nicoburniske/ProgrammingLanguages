@@ -1,13 +1,11 @@
 package interpreter.utils;
 
+import com.sun.tools.doclint.Env;
 import common.TupleGeneric;
 import interpreter.pal.PALVar;
 import interpreter.utils.env.Environment;
 import interpreter.utils.store.Store;
-import interpreter.value.IBin;
-import interpreter.value.IValue;
-import interpreter.value.ValueInt;
-import interpreter.value.ValuePrimop;
+import interpreter.value.*;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -52,29 +50,56 @@ public class EnvStoreTuple extends TupleGeneric<Environment, Store> {
     public static EnvStoreTuple stdLib() {
         EnvStoreTuple current = new EnvStoreTuple(new Environment(), new Store());
         // Puts a valueprimop into the store representing an addition primop.
-        current = current.insert(new PALVar("+"), new ValuePrimop(2, (List<IValue> values) -> {
-            ValueInt left = (ValueInt) values.get(0);
-            ValueInt right = (ValueInt) values.get(1);
-            return new ValueInt((left).getNum().add((right).getNum()));
+        current = current.insert(new PALVar("+"), new ValuePrimop(2, (List<IValue> args, EnvStoreTuple tuple)  -> {
+            ValueInt left = (ValueInt) args.get(0);
+            ValueInt right = (ValueInt) args.get(1);
+            return new ValueEnvStoreTuple(new ValueInt((left).getNum().add((right).getNum())), tuple);
         }));
 
         // Puts a ValuePrimop into the store representing a multiply primop.
-        current = current.insert(new PALVar("*"), new ValuePrimop(2, (List<IValue> values) -> {
-            ValueInt left = (ValueInt) values.get(0);
-            ValueInt right = (ValueInt) values.get(1);
-            return new ValueInt((left).getNum().multiply((right).getNum()));
+        current = current.insert(new PALVar("*"), new ValuePrimop(2, (List<IValue> args, EnvStoreTuple tuple)  -> {
+            ValueInt left = (ValueInt) args.get(0);
+            ValueInt right = (ValueInt) args.get(1);
+            return new ValueEnvStoreTuple(new ValueInt((left).getNum().multiply((right).getNum())), tuple);
         }));
 
         // Puts a ValuePrimop into the store representing an exponent primop.
         // Will throw an exception at runtime if the exponent (the right argument)is negative
-        current = current.insert(new PALVar("^"), new ValuePrimop(2, (List<IValue> values) -> {
-            ValueInt leftInt = (ValueInt) values.get(0);
-            ValueInt rightInt = (ValueInt) values.get(1);
+        current = current.insert(new PALVar("^"), new ValuePrimop(2, (List<IValue> args, EnvStoreTuple tuple)  -> {
+            ValueInt leftInt = (ValueInt) args.get(0);
+            ValueInt rightInt = (ValueInt) args.get(1);
             if (rightInt.getNum().compareTo(new BigInteger("0")) >= 0) {
-                return new ValueInt(leftInt.getNum().pow(rightInt.getNum().intValue()));
+                return new ValueEnvStoreTuple(new ValueInt(leftInt.getNum().pow(rightInt.getNum().intValue())), tuple);
             } else {
                 throw new IllegalStateException(ARITHMETIC_ERROR);
             }
+        }));
+
+        //@
+        current = current.insert(new PALVar("@"), new ValuePrimop(1, (List<IValue> args, EnvStoreTuple tuple) -> {
+            IValue val = args.get(0);
+            Store store = tuple.getRight();
+            int loc = store.getSize();
+            store = store.put(loc, val);
+            return new ValueEnvStoreTuple(new ValueCell(new Cell(loc)), new EnvStoreTuple(tuple.getLeft(), store));
+        }));
+
+        //!
+        current = current.insert(new PALVar("!"), new ValuePrimop(1, (List<IValue> args, EnvStoreTuple tuple) -> {
+            ValueCell val = (ValueCell) args.get(0);
+            Store store = tuple.getRight();
+            int loc = val.getCell().getLocation();
+            return new ValueEnvStoreTuple(store.get(loc), tuple);
+        }));
+
+        //=
+        current = current.insert(new PALVar("="), new ValuePrimop(2, (List<IValue> args, EnvStoreTuple tuple)-> {
+            ValueCell cellVal = (ValueCell) args.get(0);
+            IValue newVal = args.get(1);
+            Store store = tuple.getRight();
+            IValue oldVal = store.get(cellVal.getCell().getLocation());
+            store = store.set(cellVal.getCell().getLocation(), newVal);
+            return new ValueEnvStoreTuple(oldVal, new EnvStoreTuple(tuple.getLeft(), store));
         }));
         return current;
     }

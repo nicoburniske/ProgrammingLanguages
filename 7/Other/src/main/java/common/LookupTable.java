@@ -1,5 +1,7 @@
 package common;
 
+import javafx.scene.shape.VLineTo;
+
 /**
  * An Liked list lookup structure
  * @param <Key>
@@ -26,4 +28,12 @@ public interface LookupTable<Key, Value> {
      * @return the size of the Lookup Table
      */
     public Integer getSize();
+
+    /**
+     * TODO
+     * @param key
+     * @param val
+     * @return
+     */
+    LookupTable<Key, Value> set(Key key, Value val);
 }

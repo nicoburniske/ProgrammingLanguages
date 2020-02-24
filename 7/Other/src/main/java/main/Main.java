@@ -1,5 +1,7 @@
 package main;
 
+import interpreter.pal.PAL;
+import interpreter.utils.EnvStoreTuple;
 import org.json.simple.parser.JSONParser;
 import typechecker.parse.Parser;
 import typechecker.tpal.TPAL;
@@ -10,13 +12,21 @@ import java.io.FileReader;
 public class Main {
     public static void main(String[] args) {
         try {
-            if ("type_check".equals(args[0])) {
                 Object obj = new JSONParser().parse(new FileReader(args[1]));
                 TPAL tpal = Parser.parseJSON(obj);
-                System.out.println(tpal.typeCheck(StandardLib.stdLib()).getLeft().toJSONString());
-            } else {
-                throw new IllegalArgumentException("Error: an illegal function was requested");
-            }
+                try {
+                    tpal.typeCheck(StandardLib.stdLib()).getLeft().toJSONString();
+                } catch (Exception e) {
+                    System.out.println(String.format("\"type error: %s\"", e.getMessage()));
+                    return;
+                }
+                PAL pal = tpal.fillet();
+                try {
+                    // TODO: toJsonString();
+                    System.out.println(pal.interpret(EnvStoreTuple.stdLib()));
+                } catch (Exception e) {
+                    System.out.println(String.format("\"run-time error: %s\"", e.getMessage()));
+                }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

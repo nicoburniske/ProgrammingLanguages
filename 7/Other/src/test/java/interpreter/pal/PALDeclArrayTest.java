@@ -1,6 +1,7 @@
 package interpreter.pal;
 
 import interpreter.utils.EnvStoreTuple;
+import interpreter.utils.ValueEnvStoreTuple;
 import interpreter.value.ValueInt;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,7 +25,7 @@ public class PALDeclArrayTest {
 
         PALDeclArray darr1 = new PALDeclArray(Arrays.asList(d1, d2, d3), new PALCall(new PALVar("x"), Arrays.asList(new PALVar("z"))));
 
-        assertEquals(new ValueInt(10L), darr1.interpret(stdLib));
+        assertEquals(new ValueEnvStoreTuple(new ValueInt(10L), stdLib), darr1.interpret(stdLib));
 
     }
 }

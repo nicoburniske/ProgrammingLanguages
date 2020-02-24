@@ -38,6 +38,16 @@ public class LookupTablePair<Key, Value> implements LookupTable<Key, Value> {
     }
 
     @Override
+    public LookupTable<Key, Value> set(Key key, Value val) {
+        if(this.key.equals(key)) {
+            return new LookupTablePair<Key, Value>(this.key, val, this.rest);
+        }
+        else {
+            return new LookupTablePair<Key, Value>(this.key, this.value, rest.set(key, val));
+        }
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

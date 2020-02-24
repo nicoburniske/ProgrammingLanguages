@@ -1,6 +1,6 @@
 package interpreter.pal;
 
-import interpreter.value.IValue;
+import interpreter.utils.ValueEnvStoreTuple;
 import interpreter.utils.EnvStoreTuple;
 
 import java.util.Objects;
@@ -13,8 +13,8 @@ public class PALVar implements PAL {
     }
 
     @Override
-    public IValue interpret(EnvStoreTuple tuple) {
-        return tuple.lookup(this);
+    public ValueEnvStoreTuple interpret(EnvStoreTuple tuple) {
+        return new ValueEnvStoreTuple(tuple.lookup(this), tuple);
     }
 
     @Override

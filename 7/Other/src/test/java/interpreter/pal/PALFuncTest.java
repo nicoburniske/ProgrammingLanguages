@@ -1,6 +1,7 @@
 package interpreter.pal;
 
 import interpreter.utils.EnvStoreTuple;
+import interpreter.utils.ValueEnvStoreTuple;
 import interpreter.value.ValueClosure;
 import interpreter.value.ValueInt;
 import org.junit.Before;
@@ -26,10 +27,10 @@ public class PALFuncTest {
 
         PALDeclArray darr1 = new PALDeclArray(Arrays.asList(d1, d2, d3), new PALCall(new PALVar("x"), Arrays.asList(new PALVar("z"))));
 
-        assertEquals(new ValueInt(105L), darr1.interpret(stdLib));
+        assertEquals(new ValueEnvStoreTuple(new ValueInt(105L), stdLib), darr1.interpret(stdLib));
 
         PALFunc func1 = new PALFunc(Arrays.asList(), new PALInt(5L));
-        assertEquals(new ValueClosure(func1, stdLib.getLeft()), func1.interpret(stdLib));
+        assertEquals(new ValueEnvStoreTuple(new ValueClosure(func1, stdLib.getLeft()), stdLib), func1.interpret(stdLib));
     }
 
     @Test

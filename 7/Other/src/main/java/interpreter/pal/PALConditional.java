@@ -1,6 +1,6 @@
 package interpreter.pal;
 
-import interpreter.value.IValue;
+import interpreter.utils.ValueEnvStoreTuple;
 import interpreter.utils.EnvStoreTuple;
 import interpreter.value.ValueInt;
 
@@ -16,8 +16,8 @@ public class PALConditional implements PAL {
     }
 
     @Override
-    public IValue interpret(EnvStoreTuple tuple) {
-        ValueInt cond = (ValueInt) clause.interpret(tuple);
+    public ValueEnvStoreTuple interpret(EnvStoreTuple tuple) {
+        ValueInt cond = (ValueInt) clause.interpret(tuple).getLeft();
         if(cond.getNum().compareTo(new BigInteger("0")) == 0) {
             return ifTrue.interpret(tuple);
         } else {

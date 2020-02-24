@@ -1,6 +1,7 @@
 package interpreter.pal;
 
 import interpreter.utils.EnvStoreTuple;
+import interpreter.utils.ValueEnvStoreTuple;
 import interpreter.value.ValueInt;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,6 +18,6 @@ public class PALVarTest {
     @Test
     public void interpret() {
         stdLib = stdLib.insert(new PALVar("x"), new ValueInt(42L));
-        assertEquals(new ValueInt(42), new PALVar("x").interpret(stdLib));
+        assertEquals(new ValueEnvStoreTuple(new ValueInt(42),stdLib), new PALVar("x").interpret(stdLib));
     }
 }

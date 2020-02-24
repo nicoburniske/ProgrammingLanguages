@@ -1,6 +1,7 @@
 package interpreter.pal;
 
 import interpreter.utils.EnvStoreTuple;
+import interpreter.utils.ValueEnvStoreTuple;
 import interpreter.value.ValueInt;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,6 +17,6 @@ public class PALIntTest {
 
     @Test
     public void interpret() {
-         assertEquals(new ValueInt(42L), new PALInt(42L).interpret(stdLib));
+         assertEquals(new ValueEnvStoreTuple(new ValueInt(42L), stdLib), new PALInt(42L).interpret(stdLib));
     }
 }

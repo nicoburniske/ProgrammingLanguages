@@ -1,5 +1,6 @@
 package interpreter.pal;
 
+import interpreter.utils.ValueEnvStoreTuple;
 import interpreter.value.IValue;
 import interpreter.utils.EnvStoreTuple;
 import interpreter.value.ValueClosure;
@@ -19,16 +20,18 @@ public class PALCall implements PAL {
     }
 
     @Override
-    public IValue interpret(EnvStoreTuple tuple) {
-        IValue val = this.function.interpret(tuple);
+    public ValueEnvStoreTuple interpret(EnvStoreTuple tuple) {
+        EnvStoreTuple temp = tuple;
+        IValue val = this.function.interpret(temp).getLeft();
         if (val instanceof ValueClosure) {
-           return ((ValueClosure) val).apply(args, tuple);
+           return ((ValueClosure) val).apply(args, temp);
         } else if (val instanceof ValueLambdaClosure) {
-            IValue result =  ((ValueLambdaClosure)val).apply(tuple);
+            ValueEnvStoreTuple result =  ((ValueLambdaClosure)val).apply(temp);
+            IValue resultValue = result.getLeft();
             // if the result is a value closure we must then try and apply the function with the current args, otherwise return the result as is.
-            return (result instanceof ValueClosure) ? ((ValueClosure) result).apply(args, tuple) : result;
+            return (resultValue instanceof ValueClosure) ? ((ValueClosure) resultValue).apply(args, temp) : result;
         } else if (val instanceof ValuePrimop){
-            return ((ValuePrimop)val).apply(args.stream().map( a -> a.interpret(tuple)).collect(Collectors.toList()));
+            return ((ValuePrimop)val).apply(args.stream().map( a -> a.interpret(temp).getLeft()).collect(Collectors.toList()), temp);
         } else {
             throw new IllegalStateException(val.getClass().getName());
         }

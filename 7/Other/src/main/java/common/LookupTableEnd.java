@@ -22,6 +22,11 @@ public class LookupTableEnd<Key, Value> implements LookupTable<Key, Value> {
     }
 
     @Override
+    public LookupTable<Key, Value> set(Key key, Value val) {
+        return this;
+    }
+
+    @Override
     public int hashCode() {
         return super.hashCode();
     }

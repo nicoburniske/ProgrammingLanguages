@@ -1,10 +1,9 @@
 package interpreter.pal;
 
-import interpreter.value.IValue;
+import interpreter.utils.ValueEnvStoreTuple;
 import interpreter.utils.EnvStoreTuple;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class PALDeclArray implements PAL {
     private List<Decl> declList;
@@ -16,10 +15,11 @@ public class PALDeclArray implements PAL {
     }
 
     @Override
-    public IValue interpret(EnvStoreTuple tuple) {
+    public ValueEnvStoreTuple interpret(EnvStoreTuple tuple) {
+        EnvStoreTuple temp = tuple;
         for (Decl d : this.declList) {
-            tuple = d.interpret(tuple);
+            temp = d.interpret(temp);
         }
-        return scope.interpret(tuple);
+        return new ValueEnvStoreTuple(scope.interpret(temp).getLeft(),tuple);
     }
 }

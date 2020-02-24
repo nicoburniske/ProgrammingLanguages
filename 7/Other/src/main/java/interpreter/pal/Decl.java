@@ -16,7 +16,7 @@ public class Decl {
 
     public EnvStoreTuple interpret(EnvStoreTuple tuple) {
         if (rhs instanceof PALInt) {
-            return tuple.insert(this.var, this.rhs.interpret(tuple));
+            return tuple.insert(this.var, this.rhs.interpret(tuple).getLeft());
         } else {
             return tuple.insert(this.var, (ValueLambdaClosure)(EnvStoreTuple env) -> this.rhs.interpret(env));
         }

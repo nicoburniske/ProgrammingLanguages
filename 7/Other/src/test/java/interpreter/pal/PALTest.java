@@ -1,6 +1,7 @@
 package interpreter.pal;
 
 import interpreter.utils.EnvStoreTuple;
+import interpreter.utils.ValueEnvStoreTuple;
 import interpreter.value.ValueInt;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,7 +24,7 @@ public class PALTest {
 
         PALDeclArray darr1 = new PALDeclArray(Arrays.asList(d1, d2, d3), new PALCall(new PALVar("x"), Arrays.asList(new PALVar("z"))));
 
-        assertEquals(new ValueInt(105L), darr1.interpret(stdLib));
+        assertEquals(new ValueEnvStoreTuple( new ValueInt(105L), stdLib), darr1.interpret(stdLib));
 
     }
     @Test
@@ -34,13 +35,13 @@ public class PALTest {
 
         PALDeclArray darr1 = new PALDeclArray(Arrays.asList(d1, d2, d3), new PALCall(new PALVar("x"), Arrays.asList(new PALVar("z"))));
 
-        assertEquals(new ValueInt(10L), darr1.interpret(stdLib));
+        assertEquals(new ValueEnvStoreTuple(new ValueInt(10L), stdLib), darr1.interpret(stdLib));
     }
 
     @Test
     public void testHard1() {
         Decl dec = new Decl(new PALVar("a"), new PALFunc(Arrays.asList(new PALVar("a"), new PALVar("b")), new PALCall(new PALVar("+"), Arrays.asList(new PALVar("a"), new PALVar("b")))));
         PALDeclArray acc = new PALDeclArray(Arrays.asList(dec), new PALCall(new PALVar("a"), Arrays.asList(new PALInt(42L), new PALInt(5L))));
-        assertEquals(new ValueInt(47L), acc.interpret(stdLib));
+        assertEquals(new ValueEnvStoreTuple(new ValueInt(47L), stdLib), acc.interpret(stdLib));
     }
 }
