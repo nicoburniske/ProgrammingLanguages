@@ -20,7 +20,7 @@ public class ValuePrimop implements IValue{
 
     @Override
     public String toJSONString() {
-        return null;
+        return "\"primop\"";
     }
 
     @Override

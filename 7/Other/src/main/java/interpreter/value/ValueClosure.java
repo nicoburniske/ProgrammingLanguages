@@ -6,6 +6,7 @@ import interpreter.pal.PALVar;
 import interpreter.utils.EnvStoreTuple;
 import interpreter.utils.ValueEnvStoreTuple;
 import interpreter.utils.env.Environment;
+import org.json.simple.JSONObject;
 
 import java.util.List;
 import java.util.Objects;
@@ -22,11 +23,11 @@ public class ValueClosure implements IValue {
 
     @Override
     public String toJSONString() {
-        return null;
+        return "\"closure\"";
     }
 
     public ValueEnvStoreTuple apply(List<PAL> args, EnvStoreTuple tuple) {
-        EnvStoreTuple temp = tuple;
+        EnvStoreTuple temp = new EnvStoreTuple(this.env, tuple.getRight());
         List<PALVar> params = this.function.getParams();
         EnvStoreTuple finalTuple = temp;
         List<IValue> argsVal = args.stream().map(e -> e.interpret(finalTuple).getLeft()).collect(Collectors.toList());

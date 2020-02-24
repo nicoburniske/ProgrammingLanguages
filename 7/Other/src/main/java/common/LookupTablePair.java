@@ -65,9 +65,9 @@ public class LookupTablePair<Key, Value> implements LookupTable<Key, Value> {
     @Override
     public String toString() {
         return "IEnvPair{" +
-                "key=" + key +
-                ", value=" + value +
-                ", rest=" + rest +
+                "key=" + key.toString() +
+                ", value=" + value.toString() +
+                ", rest=" + rest.toString() +
                 '}';
     }
 }

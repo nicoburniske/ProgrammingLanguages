@@ -12,7 +12,7 @@ import java.io.FileReader;
 public class Main {
     public static void main(String[] args) {
         try {
-                Object obj = new JSONParser().parse(new FileReader(args[1]));
+                Object obj = new JSONParser().parse(new FileReader(args[0]));
                 TPAL tpal = Parser.parseJSON(obj);
                 try {
                     tpal.typeCheck(StandardLib.stdLib()).getLeft().toJSONString();
@@ -20,15 +20,16 @@ public class Main {
                     System.out.println(String.format("\"type error: %s\"", e.getMessage()));
                     return;
                 }
+                System.out.println("Successfully Typechecked");
                 PAL pal = tpal.fillet();
                 try {
                     // TODO: toJsonString();
-                    System.out.println(pal.interpret(EnvStoreTuple.stdLib()));
+                    System.out.println(pal.interpret(EnvStoreTuple.stdLib()).getLeft().toJSONString());
                 } catch (Exception e) {
                     System.out.println(String.format("\"run-time error: %s\"", e.getMessage()));
                 }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
     }
 }

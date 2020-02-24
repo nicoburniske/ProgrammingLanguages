@@ -18,7 +18,7 @@ public class PALDeclArrayTest {
         stdLib = EnvStoreTuple.stdLib();
     }
     @Test
-    public void testInterpret2() {
+    public void testInterpret1() {
         Decl d1 = new Decl(new PALVar("x"), new PALCall(new PALVar("+"), Arrays.asList(new PALInt(5L), new PALVar("y"))));
         Decl d2 = new Decl(new PALVar("y"), new PALInt(5L));
         Decl d3 = new Decl(new PALVar("z"), new PALInt(100L));
@@ -26,6 +26,18 @@ public class PALDeclArrayTest {
         PALDeclArray darr1 = new PALDeclArray(Arrays.asList(d1, d2, d3), new PALCall(new PALVar("x"), Arrays.asList(new PALVar("z"))));
 
         assertEquals(new ValueEnvStoreTuple(new ValueInt(10L), stdLib), darr1.interpret(stdLib));
+    }
 
+    @Test
+    public void testInterpret2() {
+        Decl d1 = new Decl(new PALVar("x"), new PALInt(42L));
+        Decl d2 = new Decl(new PALVar("x"), new PALInt(20L));
+        PALFunc f1 = new PALFunc(Arrays.asList(), new PALVar("x"));
+        Decl d3 = new Decl(new PALVar("fx"), f1);
+        PALCall call = new PALCall(new PALVar("fx"), Arrays.asList());
+        PALDeclArray declArr = new PALDeclArray(Arrays.asList(d1, d3), new PALDeclArray(Arrays.asList(d2), call));
+
+        System.out.println(declArr.interpret(stdLib).getLeft().toJSONString());
+        assertEquals(new ValueInt(42L), declArr.interpret(stdLib).getLeft());
     }
 }

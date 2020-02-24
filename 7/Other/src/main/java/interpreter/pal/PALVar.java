@@ -29,4 +29,10 @@ public class PALVar implements PAL {
     public int hashCode() {
         return Objects.hash(var);
     }
+
+    // for debugging
+    @Override
+    public String toString() {
+        return this.var;
+    }
 }

@@ -9,6 +9,7 @@ public interface ValueLambdaClosure extends IValue{
 
     @Override
     default String toJSONString() {
-        return null;
+        // TODO: ensure this works
+        return "\"closure\"";
     }
 }

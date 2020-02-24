@@ -15,7 +15,7 @@ public class ValueInt implements IValue {
 
     @Override
     public String toJSONString() {
-        return null;
+        return num.toString();
     }
 
     public BigInteger getNum() {

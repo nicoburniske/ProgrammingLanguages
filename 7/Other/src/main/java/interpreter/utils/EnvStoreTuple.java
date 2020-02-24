@@ -35,8 +35,8 @@ public class EnvStoreTuple extends TupleGeneric<Environment, Store> {
      */
     public EnvStoreTuple insert(PALVar variable, IValue value) {
         Integer pos = this.getRight().getSize();
-        Store newStore = (Store) this.getRight().put(pos, value);
-        Environment newEnv = (Environment) this.getLeft().put(variable, pos);
+        Store newStore = this.getRight().put(pos, value);
+        Environment newEnv = this.getLeft().put(variable, pos);
         return new EnvStoreTuple(newEnv, newStore);
     }
 
@@ -103,4 +103,12 @@ public class EnvStoreTuple extends TupleGeneric<Environment, Store> {
         return current;
     }
 
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("EnvStoreTuple{");
+        sb.append(this.getLeft().toString());
+        sb.append(this.getRight().toString());
+        sb.append('}');
+        return sb.toString();
+    }
 }

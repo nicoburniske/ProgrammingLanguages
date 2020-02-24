@@ -1,10 +1,12 @@
 package interpreter.value;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONAware;
+import org.json.simple.JSONObject;
 
 import java.util.Objects;
 
-public class ValueCell implements IValue{
+public class ValueCell implements IValue {
     public Cell getCell() {
         return cell;
     }
@@ -17,7 +19,10 @@ public class ValueCell implements IValue{
 
     @Override
     public String toJSONString() {
-        return null;
+        JSONArray arr = new JSONArray();
+        arr.add("Cell");
+        arr.add(this.cell.location);
+        return arr.toJSONString();
     }
 
     @Override
