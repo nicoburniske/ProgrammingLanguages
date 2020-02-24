@@ -1,1 +1,0 @@
-{"expr":[["let",["x",":",["->","int"]],"=",{"expr":["fun*",[],{"expr":1,"type":"int"}],"type":["->","int"]}],["let",["y",":",["->","int"]],"=",{"expr":"x","type":["->","int"]}],{"expr":[["let",["x",":","int"],"=",{"expr":1,"type":"int"}],{"expr":["call",{"expr":"y","type":["->","int"]}],"type":"int"}],"type":"int"}],"type":"int"}

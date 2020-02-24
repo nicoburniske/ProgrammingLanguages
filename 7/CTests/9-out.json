@@ -1,1 +1,0 @@
-{"expr":[["let",["x",":",["int","->","int"]],"=",{"expr":["fun*",[["5",":","int"]],{"expr":"5","type":"int"}],"type":["int","->","int"]}],{"expr":"x","type":["int","->","int"]}],"type":["int","->","int"]}

@@ -1,2 +1,0 @@
-["call",["fun*", [["left", ":", "int"], ["right", ":", "int"],["None", ":", "int"]], ["left", "^", "right"]], 5, 6, 10]
-
