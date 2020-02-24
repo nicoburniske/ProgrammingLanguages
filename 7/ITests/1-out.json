@@ -1,0 +1,1 @@
+{"expr":["call",{"expr":["fun*",[["left",":","int"],["right",":","int"],["None",":","int"]],{"expr":["call",{"expr":"^","type":["int","int","->","int"]},{"expr":"left","type":"int"},{"expr":"right","type":"int"}],"type":"int"}],"type":["int","int","int","->","int"]},{"expr":5,"type":"int"},{"expr":6,"type":"int"},{"expr":10,"type":"int"}],"type":"int"}
