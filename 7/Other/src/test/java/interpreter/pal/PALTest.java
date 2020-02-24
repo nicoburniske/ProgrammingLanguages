@@ -29,7 +29,7 @@ public class PALTest {
     }
     @Test
     public void testInterpret2() {
-        Decl d1 = new Decl(new PALVar("x"), new PALCall(new PALVar("+"), Arrays.asList(new PALInt(5L), new PALVar("y"))));
+        Decl d1 = new Decl(new PALVar("x"), new PALFunc(Arrays.asList( new PALVar("z")), new PALCall (new PALVar("+"), Arrays.asList(new PALVar("y"), new PALInt(5L)))));
         Decl d2 = new Decl(new PALVar("y"), new PALInt(5L));
         Decl d3 = new Decl(new PALVar("z"), new PALInt(100L));
 

@@ -1,6 +1,8 @@
 package interpreter.pal;
 
 import interpreter.utils.EnvStoreTuple;
+import interpreter.utils.ValueEnvStoreTuple;
+import interpreter.utils.env.Environment;
 import interpreter.utils.store.Store;
 import interpreter.value.IValue;
 import interpreter.value.ValueLambdaClosure;
@@ -18,7 +20,9 @@ public class Decl {
         if (this.rhs instanceof PALInt) {
             return tuple.insert(this.var, this.rhs.interpret(tuple).getLeft());
         } else {
-            return tuple.insert(this.var, (ValueLambdaClosure)(EnvStoreTuple env) -> this.rhs.interpret(env));
+            return tuple.insert(this.var,(ValueLambdaClosure)(EnvStoreTuple oldEnv) ->
+                    new ValueEnvStoreTuple((ValueLambdaClosure)(EnvStoreTuple env) ->
+                            ((PALFunc)this.rhs).interpret(env, oldEnv.getLeft()), tuple));
         }
     }
 

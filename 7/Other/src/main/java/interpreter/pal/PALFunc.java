@@ -1,8 +1,8 @@
 package interpreter.pal;
 
 import interpreter.utils.ValueEnvStoreTuple;
-import interpreter.value.IValue;
 import interpreter.utils.EnvStoreTuple;
+import interpreter.utils.env.Environment;
 import interpreter.value.ValueClosure;
 
 import java.util.List;
@@ -19,6 +19,10 @@ public class PALFunc implements PAL {
     @Override
     public ValueEnvStoreTuple interpret(EnvStoreTuple tuple) {
         return new ValueEnvStoreTuple(new ValueClosure(this, tuple.getLeft()), tuple);
+    }
+
+    public ValueEnvStoreTuple interpret(EnvStoreTuple tuple, Environment env) {
+        return new ValueEnvStoreTuple(new ValueClosure(this, env), tuple);
     }
 
     public List<PALVar> getParams() {

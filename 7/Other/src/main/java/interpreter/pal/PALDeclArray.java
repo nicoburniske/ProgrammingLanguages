@@ -2,6 +2,8 @@ package interpreter.pal;
 
 import interpreter.utils.ValueEnvStoreTuple;
 import interpreter.utils.EnvStoreTuple;
+import interpreter.value.IValue;
+import interpreter.value.ValueLambdaClosure;
 
 import java.util.List;
 
@@ -20,6 +22,14 @@ public class PALDeclArray implements PAL {
         for (Decl d : this.declList) {
             temp = d.interpret(temp);
         }
-        return new ValueEnvStoreTuple(scope.interpret(temp).getLeft(),tuple);
+        for(Decl d : this.declList) {
+            IValue val = temp.lookup(d.getVar());
+            if(val instanceof ValueLambdaClosure) {
+                ValueLambdaClosure closure= (ValueLambdaClosure) val;
+                int loc = temp.getLeft().get(d.getVar());
+                temp = new EnvStoreTuple(temp.getLeft(), temp.getRight().set(loc, closure.apply(temp).getLeft()));
+            }
+        }
+        return new ValueEnvStoreTuple(scope.interpret(temp).getLeft(), tuple);
     }
 }
