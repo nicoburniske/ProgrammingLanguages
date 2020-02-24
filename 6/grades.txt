@@ -596,6 +596,29 @@ interpreter: Failed [
 	["call", "getFact"]
 ]
 	],
+	["let",["err",":","int"],"=",
+		["if-0","var",22,"var"]
+	],
+	"undeclared"
+]
+, Expected "int expected", Got "variable fact undeclared"
+
+interpreter: Failed [
+	["let", ["var",":",["int","->","int"]],"=",
+[
+	["let",["getFact",":",["->",["int","->","int"]]],"=",
+		["fun*",[],"fact"]
+	],
+	["let",["fact",":",["int","->","int"]],"=",
+		["fun*",[["x",":","int"]],
+			["if-0","x",1,
+				["call","*","x",["call","fact",["call","+","x",-1]]]
+			]
+		]
+	],
+	["call", "getFact"]
+]
+	],
 	["let",["err",":",["int","->",["->",["->","int"]]]],"=",
 		["if-0",["call","var",3],22,-1]
 	],
