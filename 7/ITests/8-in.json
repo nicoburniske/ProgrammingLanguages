@@ -1,3 +1,7 @@
-[["let", ["factorial", ":", ["int", "->", "int"]], "=",
-["fun*", ["x", ":", "int"], ["if-0", "x", 1, ["call", "*", "x", ["call", "factorial", ["call", "+", "x", -1]]]]]],
-["call", "factorial", 4]]
+[["let", ["factorial", ":", 
+    ["int", "->", "int"]], "=",
+        ["fun*", [["x", ":", "int"]], 
+            ["if-0", "x", 
+                1, 
+                ["call", "*", "x", ["call", "factorial", ["call", "+", "x", -1]]]]]
+],["call", "factorial", 150]]
