@@ -1,9 +1,14 @@
+``` json
 [
     ["let", ["p", ":", ["->", ["->", "int"]]], "=", ["fun*", [], ["call", "f", "y"]]],
+
     ["let", ["f", ":", [["->", "int"], "->", ["->", "int"]]], "=",["fun*", [["z", ":", ["->", "int"]]], "z"]],
+
     ["let", ["y", ":", ["->", "int"]], "=", ["fun*", [], 5]],
+
     ["call", ["call", "p"]]
 ]
+```
 
 This test should break the type soundness theorem in our interpreter. This will happen because in our interpreter we allow mutually referential DeclArrays. In order to achieve this we must have an initialization value bound to every Var in each decl, meaning that an int (non-function) would be stored in place of a function. Since we copy a value for an argument, if this argument is not yet set to its proper value when invoked, it would be copied as it's temporary non-function value. Meaning when a function is called it will create a runtime exception/error that is not one specified by the type soundness theorem.
 
