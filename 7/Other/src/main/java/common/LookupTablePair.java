@@ -3,7 +3,7 @@ package common;
 import java.util.Objects;
 
 /**
- * A pair in the list
+ * An entry in the list
  * @param <Key>
  * @param <Value>
  */

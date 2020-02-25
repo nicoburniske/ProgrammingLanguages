@@ -7,6 +7,9 @@ import interpreter.utils.EnvStoreTuple;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents the invocation of a PALFunc
+ */
 public class PALCall implements PAL {
     PAL function;
     List<PAL> args;
@@ -39,9 +42,6 @@ public class PALCall implements PAL {
                newTuple = new EnvStoreTuple(newTuple.getLeft(), argTuple.getRight().getRight());
             }
             return ((ValuePrimop)val).apply(interpretedArgs, newTuple);
-            // TODO: there may be an issue here regarding the lack of mutation in the store.
-            // If an argument to the primop is
-            // return ((ValuePrimop) val).apply(args.stream().map(a -> a.interpret(temp).getLeft()).collect(Collectors.toList()), temp);
         } else {
             // should never be called
             return new ValueEnvStoreTuple(new ValueInt(-666L), tuple);

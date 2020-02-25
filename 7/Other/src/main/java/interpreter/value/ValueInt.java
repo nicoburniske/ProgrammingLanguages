@@ -3,6 +3,9 @@ package interpreter.value;
 import java.math.BigInteger;
 import java.util.Objects;
 
+/**
+ * Represents an Integer literal stored in the Store
+ */
 public class ValueInt implements IValue {
     private BigInteger num;
 

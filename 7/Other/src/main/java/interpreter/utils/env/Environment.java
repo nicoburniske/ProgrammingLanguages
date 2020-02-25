@@ -10,15 +10,20 @@ import interpreter.value.IValue;
 
 import java.util.Objects;
 
+/**
+ * Represents a non mutable environment. Composes a LookupTable<PALVar, Integer>
+ */
 public class Environment {
     LookupTable<PALVar, Integer> table;
 
-    public Environment( LookupTable<PALVar, Integer> table) {
+    public Environment(LookupTable<PALVar, Integer> table) {
         this.table = table;
     }
+
     public Environment() {
         this.table = new LookupTableEnd<>();
     }
+
     public Environment(PALVar palVar, Integer integer) {
         table = new LookupTablePair<>(palVar, integer, new LookupTableEnd<>());
     }

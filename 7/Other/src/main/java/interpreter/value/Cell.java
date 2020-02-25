@@ -1,5 +1,8 @@
 package interpreter.value;
 
+/**
+ * Represents a cell that contains a location referencing a spot in the Store
+ */
 public class Cell {
     int location;
 

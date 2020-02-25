@@ -1,11 +1,12 @@
 package interpreter.value;
 
 import org.json.simple.JSONArray;
-import org.json.simple.JSONAware;
-import org.json.simple.JSONObject;
 
 import java.util.Objects;
 
+/**
+ * Represents a Value containing a Cell
+ */
 public class ValueCell implements IValue {
     public Cell getCell() {
         return cell;

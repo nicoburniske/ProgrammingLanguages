@@ -6,6 +6,9 @@ import interpreter.value.ValueInt;
 
 import java.math.BigInteger;
 
+/**
+ * Represents an Integer
+ */
 public class PALInt implements PAL {
     private BigInteger num;
 

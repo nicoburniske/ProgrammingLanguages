@@ -5,6 +5,9 @@ import interpreter.utils.EnvStoreTuple;
 
 import java.util.Objects;
 
+/**
+ * Represents a Variable in
+ */
 public class PALVar implements PAL {
     private String var;
 

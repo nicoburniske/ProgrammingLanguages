@@ -6,6 +6,9 @@ import interpreter.utils.ValueEnvStoreTuple;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Represents a Value containing a Primop added in the Standard Prelude
+ */
 public class ValuePrimop implements IValue{
     private IBin op;
 

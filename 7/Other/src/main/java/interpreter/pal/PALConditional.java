@@ -2,11 +2,13 @@ package interpreter.pal;
 
 import interpreter.utils.ValueEnvStoreTuple;
 import interpreter.utils.EnvStoreTuple;
-import interpreter.value.IValue;
 import interpreter.value.ValueInt;
 
 import java.math.BigInteger;
 
+/**
+ * Represents a conditional statement
+ */
 public class PALConditional implements PAL {
     private PAL clause, ifTrue, ifFalse;
 

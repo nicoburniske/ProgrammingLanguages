@@ -75,6 +75,8 @@ public class EnvStoreTuple extends TupleGeneric<Environment, Store> {
         }));
 
         //@
+        // Allocates a new location for the specified value in the Store and appends it.
+        // Returns the Cell containing the allocated location
         current = current.insert(new PALVar("@"), new ValuePrimop((List<IValue> args, EnvStoreTuple tuple) -> {
             IValue val = args.get(0);
             Store store = tuple.getRight();
@@ -84,6 +86,7 @@ public class EnvStoreTuple extends TupleGeneric<Environment, Store> {
         }));
 
         //!
+        // Obtains the value stored at the location specified in the given Cell and returns it.
         current = current.insert(new PALVar("!"), new ValuePrimop((List<IValue> args, EnvStoreTuple tuple) -> {
             ValueCell val = (ValueCell) args.get(0);
             Store store = tuple.getRight();
@@ -92,6 +95,8 @@ public class EnvStoreTuple extends TupleGeneric<Environment, Store> {
         }));
 
         //=
+        // consumes two argument values —a cell and an arbitrary value— sticks this second value into the location specified by this cell,
+        // and returns the value that used to be at this location.
         current = current.insert(new PALVar("="), new ValuePrimop((List<IValue> args, EnvStoreTuple tuple)-> {
             ValueCell cellVal = (ValueCell) args.get(0);
             IValue newVal = args.get(1);

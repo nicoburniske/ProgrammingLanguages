@@ -7,6 +7,9 @@ import interpreter.value.IValue;
 
 import java.util.Objects;
 
+/**
+ * Represents a non mutable Store. Composes a LookupTable<Integer, IValue>
+ */
 public class Store {
     LookupTable<Integer, IValue> table;
 

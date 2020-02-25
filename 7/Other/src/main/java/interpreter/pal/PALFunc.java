@@ -7,6 +7,9 @@ import interpreter.value.ValueClosure;
 
 import java.util.List;
 
+/**
+ * Represents a function
+ */
 public class PALFunc implements PAL {
     private List<PALVar> params;
     private PAL function;
@@ -21,6 +24,9 @@ public class PALFunc implements PAL {
         return new ValueEnvStoreTuple(new ValueClosure(this, tuple.getLeft()), tuple);
     }
 
+    /**
+     * Allows the construction of a ValueClosure with a different environment. Only usage is in Decl
+     */
     public ValueEnvStoreTuple interpret(EnvStoreTuple tuple, Environment env) {
         return new ValueEnvStoreTuple(new ValueClosure(this, env), tuple);
     }

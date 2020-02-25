@@ -13,6 +13,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+/**
+ * Represents a Function stored in the Store
+ */
 public class ValueClosure implements IValue {
     private PALFunc function;
     private Environment env;
@@ -27,7 +30,15 @@ public class ValueClosure implements IValue {
         return "\"closure\"";
     }
 
+    /**
+     * Applies the function with the given list of arguments using the environment held as a field
+     * @param args The arguments to be used
+     * @param tuple the tuple containing the current environment and store
+     * @return (1) the Value corresponding to the application of this function with the supplied args, and (2) the updated EnvStoreTuple
+     */
     public ValueEnvStoreTuple apply(List<PAL> args, EnvStoreTuple tuple) {
+        // Temp is the EnvStore tuple that we will use in order to use the environment of the function
+        // as well as the current store
         EnvStoreTuple temp = new EnvStoreTuple(this.env, tuple.getRight());
         List<PALVar> params = this.function.getParams();
 
@@ -37,7 +48,6 @@ public class ValueClosure implements IValue {
         for (PAL arg : args) {
             argTuple = arg.interpret(tuple);
             interpretedArgs.add(argTuple.getLeft());
-            temp = argTuple.getRight();
         }
         // Add the params to the local environment
         for(int ii = 0; ii < args.size(); ii ++) {
