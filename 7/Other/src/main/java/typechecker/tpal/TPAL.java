@@ -23,10 +23,16 @@ public interface TPAL {
 
     /**
      * This function takes in an enviroment an uses it ot type check the TPAL to confirm if it is a valid exression.
+     *
      * @param env the enviroment used to type check the TPAL
      * @return A Tuple which holds a modified envoroment (if changed) and the new StarAST value created.
      */
     Tuple typeCheck(LookupTable<TPALVar, Type> env);
 
+    /**
+     * Strips the types from all TPALVars
+     *
+     * @return the equivalent PAL without the types
+     */
     PAL fillet();
 }

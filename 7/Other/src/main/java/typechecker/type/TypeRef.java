@@ -2,6 +2,9 @@ package typechecker.type;
 
 import java.util.Objects;
 
+/**
+ * Represents a reference of a Type
+ */
 public class TypeRef implements Type {
     Type reference;
 

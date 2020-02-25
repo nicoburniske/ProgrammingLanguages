@@ -15,5 +15,4 @@ public class Tuple extends TupleGeneric<StarAST, LookupTable<TPALVar, Type>> {
         super(left, right);
     }
 
-
 }

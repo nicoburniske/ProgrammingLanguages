@@ -7,6 +7,7 @@ import org.json.simple.JSONAware;
  * <ul>
  *      <li>- "int"</li>
  *      <li>- [Type, ..., Type, "->", Type]</li>
+ *      <li>- [Ref Type] </li>
  * </ul>
  **/
 public interface Type extends JSONAware {

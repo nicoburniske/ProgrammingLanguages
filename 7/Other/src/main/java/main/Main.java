@@ -20,7 +20,6 @@ public class Main {
                     System.out.println(String.format("\"type error: %s\"", e.getMessage()));
                     return;
                 }
-                System.out.println("Successfully Typechecked");
                 PAL pal = tpal.fillet();
                 try {
                     // TODO: toJsonString();
