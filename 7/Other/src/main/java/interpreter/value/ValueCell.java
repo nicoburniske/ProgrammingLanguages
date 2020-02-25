@@ -21,7 +21,7 @@ public class ValueCell implements IValue {
     @Override
     public String toJSONString() {
         JSONArray arr = new JSONArray();
-        arr.add("Cell");
+        arr.add("cell");
         arr.add(this.cell.location);
         return arr.toJSONString();
     }
