@@ -15,7 +15,7 @@ This test should break the type soundness theorem in our interpreter. This will 
 
 We tried to break our interpreter with the above test. We think that the way that we initialized values prevented this test from breaking the type soundness theorem. For more information as to our implementation of this solution see files:
 
-src/main/java/interpreter/pal/Decl.java
-src/main/java/interpreter/pal/DeclArray.java
+- src/main/java/interpreter/pal/Decl.java
+- src/main/java/interpreter/pal/DeclArray.java
 
 This test was not included in our integration tests. The value rendered by running this program on our interpreter is 5.
