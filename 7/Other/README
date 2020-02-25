@@ -6,5 +6,12 @@ The code for our implementation is under src/main/java, and our unit tests are i
 
 The entry point for the program is in the class main.Main.java
 
-Interpreter Responses are in the answer Package. Decls are in the fdecl Package SFVexper are in the fvexpr Package and the parser is in the parser package.
-Store (the class for both the environment and the store (I know its a little confusing sorry)) is in the store package. Along with some helpful util functions.
+We have 4 modules
+1. common: contains a generic Tuple and LookupTable
+2. interpreter: contains our modified type-stripped interpreter
+    - This also contains sub-directory for PAL, Value (the type rendered by interpretation), and utils (containing our Environment/Store Tuples
+    - Standard Prelude is contained within interpreter/utils/EnvStoreTuple.java
+3. main: contains the entry point of our program
+4. typechecker: contains our modified typechecker
+    - This contains a parser, TAST, TPAL, Type, and utils sub-directory
+    - utils contains Standard Prelude used for type checking
