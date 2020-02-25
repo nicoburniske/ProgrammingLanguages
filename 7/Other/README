@@ -1,0 +1,20 @@
+
+
+This is a Maven project. Everything is inside the /src directory.
+
+The code for our implementation is under src/main/java, and our unit tests are in src/test/java.
+
+The entry point for the program is in the class main.Main.java
+
+We have 4 modules
+1. common: contains a generic Tuple and LookupTable
+2. interpreter: contains our modified type-stripped interpreter
+    - This also contains sub-directory for :
+        - PAL 
+        - Value (the type rendered by interpretation)
+        - utils (containing our Environment/Store Tuples and Standard Prelude)
+    - Standard Prelude is contained within interpreter/utils/EnvStoreTuple.java
+3. main: contains the entry point of our program
+4. typechecker: contains our modified typechecker
+    - This contains a parser, TAST, TPAL, Type, and utils sub-directory
+    - utils contains Standard Prelude used for type checking
