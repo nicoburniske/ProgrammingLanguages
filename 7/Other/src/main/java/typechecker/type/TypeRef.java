@@ -3,19 +3,19 @@ package typechecker.type;
 import java.util.Objects;
 
 public class TypeRef implements Type {
-    Type refernece;
+    Type reference;
 
-    public TypeRef(Type refernece) {
-        this.refernece = refernece;
+    public TypeRef(Type reference) {
+        this.reference = reference;
     }
 
     @Override
     public String toJSONString() {
-        return String.format("ref(%s)", refernece.toJSONString());
+        return String.format("ref(%s)", reference.toJSONString());
     }
 
     public Type getType() {
-        return refernece;
+        return reference;
     }
 
     @Override
@@ -23,11 +23,11 @@ public class TypeRef implements Type {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TypeRef typeRef = (TypeRef) o;
-        return refernece.equals(typeRef.refernece);
+        return reference.equals(typeRef.reference);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(refernece);
+        return Objects.hash(reference);
     }
 }

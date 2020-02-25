@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static typechecker.utils.Constants.ERROR_ARGS_PARAMS_COUNT_DONT_MATCH;
+import static typechecker.utils.Constants.ERROR_ARGS_PARAMS_TYPES_DONT_MATCH;
 
 public class StandardLib {
     /**
@@ -33,7 +34,7 @@ public class StandardLib {
                 TypeRef ref = (TypeRef) types.get(0);
                 return new TypeFunction(ref, ref.getType());
             } else {
-                throw new IllegalStateException("//TODO");
+                throw new IllegalStateException(ERROR_ARGS_PARAMS_TYPES_DONT_MATCH);
             }
         });
         env = env.put(new TPALVar("="), (TypeLambda)(List<Type> types) -> {
@@ -44,7 +45,7 @@ public class StandardLib {
                 TypeRef ref = (TypeRef) left;
                 return new TypeFunction(Arrays.asList(ref, right), ref.getType());
             }else {
-                throw new IllegalStateException("//TODO");
+                throw new IllegalStateException(ERROR_ARGS_PARAMS_TYPES_DONT_MATCH);
             }
         });
         return env;

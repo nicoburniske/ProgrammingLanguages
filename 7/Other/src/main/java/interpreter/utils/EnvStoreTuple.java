@@ -49,14 +49,14 @@ public class EnvStoreTuple extends TupleGeneric<Environment, Store> {
     public static EnvStoreTuple stdLib() {
         EnvStoreTuple current = new EnvStoreTuple(new Environment(), new Store());
         // Puts a valueprimop into the store representing an addition primop.
-        current = current.insert(new PALVar("+"), new ValuePrimop(2, (List<IValue> args, EnvStoreTuple tuple)  -> {
+        current = current.insert(new PALVar("+"), new ValuePrimop((List<IValue> args, EnvStoreTuple tuple)  -> {
             ValueInt left = (ValueInt) args.get(0);
             ValueInt right = (ValueInt) args.get(1);
             return new ValueEnvStoreTuple(new ValueInt((left).getNum().add((right).getNum())), tuple);
         }));
 
         // Puts a ValuePrimop into the store representing a multiply primop.
-        current = current.insert(new PALVar("*"), new ValuePrimop(2, (List<IValue> args, EnvStoreTuple tuple)  -> {
+        current = current.insert(new PALVar("*"), new ValuePrimop((List<IValue> args, EnvStoreTuple tuple)  -> {
             ValueInt left = (ValueInt) args.get(0);
             ValueInt right = (ValueInt) args.get(1);
             return new ValueEnvStoreTuple(new ValueInt((left).getNum().multiply((right).getNum())), tuple);
@@ -64,7 +64,7 @@ public class EnvStoreTuple extends TupleGeneric<Environment, Store> {
 
         // Puts a ValuePrimop into the store representing an exponent primop.
         // Will throw an exception at runtime if the exponent (the right argument)is negative
-        current = current.insert(new PALVar("^"), new ValuePrimop(2, (List<IValue> args, EnvStoreTuple tuple)  -> {
+        current = current.insert(new PALVar("^"), new ValuePrimop((List<IValue> args, EnvStoreTuple tuple)  -> {
             ValueInt leftInt = (ValueInt) args.get(0);
             ValueInt rightInt = (ValueInt) args.get(1);
             if (rightInt.getNum().compareTo(new BigInteger("0")) >= 0) {
@@ -75,7 +75,7 @@ public class EnvStoreTuple extends TupleGeneric<Environment, Store> {
         }));
 
         //@
-        current = current.insert(new PALVar("@"), new ValuePrimop(1, (List<IValue> args, EnvStoreTuple tuple) -> {
+        current = current.insert(new PALVar("@"), new ValuePrimop((List<IValue> args, EnvStoreTuple tuple) -> {
             IValue val = args.get(0);
             Store store = tuple.getRight();
             int loc = store.getSize();
@@ -84,7 +84,7 @@ public class EnvStoreTuple extends TupleGeneric<Environment, Store> {
         }));
 
         //!
-        current = current.insert(new PALVar("!"), new ValuePrimop(1, (List<IValue> args, EnvStoreTuple tuple) -> {
+        current = current.insert(new PALVar("!"), new ValuePrimop((List<IValue> args, EnvStoreTuple tuple) -> {
             ValueCell val = (ValueCell) args.get(0);
             Store store = tuple.getRight();
             int loc = val.getCell().getLocation();
@@ -92,7 +92,7 @@ public class EnvStoreTuple extends TupleGeneric<Environment, Store> {
         }));
 
         //=
-        current = current.insert(new PALVar("="), new ValuePrimop(2, (List<IValue> args, EnvStoreTuple tuple)-> {
+        current = current.insert(new PALVar("="), new ValuePrimop((List<IValue> args, EnvStoreTuple tuple)-> {
             ValueCell cellVal = (ValueCell) args.get(0);
             IValue newVal = args.get(1);
             Store store = tuple.getRight();

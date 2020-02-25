@@ -1,15 +1,11 @@
 package interpreter.pal;
 
 import interpreter.utils.ValueEnvStoreTuple;
-import interpreter.value.IValue;
+import interpreter.value.*;
 import interpreter.utils.EnvStoreTuple;
-import interpreter.value.ValueClosure;
-import interpreter.value.ValueLambdaClosure;
-import interpreter.value.ValuePrimop;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class PALCall implements PAL {
     PAL function;
@@ -25,7 +21,7 @@ public class PALCall implements PAL {
         EnvStoreTuple temp = tuple;
         ValueEnvStoreTuple resultTuple = this.function.interpret(temp);
         IValue val = resultTuple.getLeft();
-        EnvStoreTuple newTuple = new EnvStoreTuple(tuple.getLeft(), resultTuple.getRight().getRight());
+        EnvStoreTuple newTuple = new EnvStoreTuple(temp.getLeft(), resultTuple.getRight().getRight());
         if (val instanceof ValueClosure) {
             return ((ValueClosure) val).apply(args, newTuple);
         } else if (val instanceof ValueLambdaClosure) {
@@ -47,7 +43,8 @@ public class PALCall implements PAL {
             // If an argument to the primop is
             // return ((ValuePrimop) val).apply(args.stream().map(a -> a.interpret(temp).getLeft()).collect(Collectors.toList()), temp);
         } else {
-            throw new IllegalStateException(val.getClass().getName());
+            // should never be called
+            return new ValueEnvStoreTuple(new ValueInt(-666L), tuple);
         }
     }
 }

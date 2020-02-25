@@ -3,10 +3,7 @@ package typechecker.parse;
 import org.json.simple.JSONArray;
 import typechecker.tpal.*;
 import typechecker.tpal.decl.TPALDecl;
-import typechecker.type.TypedVar;
-import typechecker.type.Type;
-import typechecker.type.TypeFunction;
-import typechecker.type.TypeInt;
+import typechecker.type.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -48,9 +45,9 @@ public class Parser {
             if (arr.size() >= 2 && arr.get(1) instanceof String) {
                 List<TPAL> args = new ArrayList<>();
                 try {
-                        args.add(parseJSON(arr.get(0)));
-                        arr.subList(2, arr.size()).forEach(e -> args.add(parseJSON(e)));
-                        return new TPALCall(parseJSON(arr.get(1)), args);
+                    args.add(parseJSON(arr.get(0)));
+                    arr.subList(2, arr.size()).forEach(e -> args.add(parseJSON(e)));
+                    return new TPALCall(parseJSON(arr.get(1)), args);
                 } catch (Exception ignored) {
 
                 }
@@ -140,20 +137,23 @@ public class Parser {
             return new TypeInt();
         } else if (o instanceof JSONArray) {
             JSONArray arr = (JSONArray) o;
-            boolean isRHS = false;
-            List<Type> lhs = new ArrayList<>();
-            for (Object obj : arr) {
-                if (obj instanceof String && ((String) obj).equals("->")) {
-                    isRHS = true;
-                    continue;
-                }
-                if (!isRHS) {
-                    lhs.add(parseType(obj));
-                } else {
-                    return new TypeFunction(lhs, parseType(obj));
+            if (arr.size() == 2 && isStringAndisEqual(arr.get(1), "cell")) {
+                return new TypeRef(parseType(arr.get(0)));
+            } else {
+                boolean isRHS = false;
+                List<Type> lhs = new ArrayList<>();
+                for (Object obj : arr) {
+                    if (obj instanceof String && ((String) obj).equals("->")) {
+                        isRHS = true;
+                        continue;
+                    }
+                    if (!isRHS) {
+                        lhs.add(parseType(obj));
+                    } else {
+                        return new TypeFunction(lhs, parseType(obj));
+                    }
                 }
             }
-
         }
         throw new IllegalArgumentException("Unable to Parse JSON into Type");
     }
