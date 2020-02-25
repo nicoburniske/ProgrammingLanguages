@@ -30,6 +30,8 @@ public class PALDeclArray implements PAL {
                 temp = new EnvStoreTuple(temp.getLeft(), temp.getRight().set(loc, closure.apply(temp).getLeft()));
             }
         }
-        return new ValueEnvStoreTuple(scope.interpret(temp).getLeft(), tuple);
+        ValueEnvStoreTuple newTuple = scope.interpret(temp);
+        // we change the store but keep the same environment.
+        return new ValueEnvStoreTuple(newTuple.getLeft(), new EnvStoreTuple(tuple.getLeft(), newTuple.getRight().getRight()));
     }
 }

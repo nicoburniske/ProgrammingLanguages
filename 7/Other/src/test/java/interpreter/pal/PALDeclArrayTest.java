@@ -25,7 +25,7 @@ public class PALDeclArrayTest {
 
         PALDeclArray darr1 = new PALDeclArray(Arrays.asList(d1, d2, d3), new PALCall(new PALVar("x"), Arrays.asList(new PALVar("z"))));
 
-        assertEquals(new ValueEnvStoreTuple( new ValueInt(105L), stdLib), darr1.interpret(stdLib));
+        assertEquals(new ValueInt(105L), darr1.interpret(stdLib).getLeft());
     }
 
     @Test

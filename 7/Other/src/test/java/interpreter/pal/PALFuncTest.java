@@ -27,7 +27,7 @@ public class PALFuncTest {
 
         PALDeclArray darr1 = new PALDeclArray(Arrays.asList(d1, d2, d3), new PALCall(new PALVar("x"), Arrays.asList(new PALVar("z"))));
 
-        assertEquals(new ValueEnvStoreTuple(new ValueInt(105L), stdLib), darr1.interpret(stdLib));
+        assertEquals(new ValueInt(105L), darr1.interpret(stdLib).getLeft());
 
         PALFunc func1 = new PALFunc(Arrays.asList(), new PALInt(5L));
         assertEquals(new ValueEnvStoreTuple(new ValueClosure(func1, stdLib.getLeft()), stdLib), func1.interpret(stdLib));
