@@ -1,4 +1,4 @@
-Total: 85/110
+Total: 80/110
 
 -5 interpreter; Input: ["call","^",2,[["let",["x",":","int"],"=",-1],"x"]]; Expected: "run-time error: primop domain error"
 ; Got: "run-time error: "arithmetic error""
@@ -26,7 +26,7 @@ java.lang.ClassCastException: interpreter.value.ValueInt cannot be cast to inter
 -5 interpreter; Input: [["let",["x",":","int"],"=",["fun*",[["x",":","int"]],"x"]],"x"]; Expected: "type error: matching type declarations and types expected in Decl"
 ; Got: "type error: "matching type declarations and types expected in Decl""
 
--5 interpreter; Input: ["call","+",2]; Expected: "type error: number of arguments does match number of parameters"
+-5 interpreter; Input: ["call","+",2]; Expected: "type error: number of arguments does not match number of parameters"
 ; Got: "type error: "number of arguments does not match number of parameters""
 
 -5 interpreter; Input: ["call",1,2]; Expected: "type error: function type expected"
@@ -35,6 +35,8 @@ java.lang.ClassCastException: interpreter.value.ValueInt cannot be cast to inter
 -5, for test 0-in.json; got "type error: domain doesn't match"
 
 -5, for test 6-in.json; got "type error: variable iDontExist undeclared"
+
+-5, for test 3-in.json; got "cell"
 
 -5, for test 7-in.json; got "type error: same type expected for if branches"
 
@@ -77,6 +79,9 @@ java.lang.IllegalStateException: "arithmetic error"
 interpreter: Failed [["let", ["x", ":", "int"], "=", ["fun*", [["a", ":", "int"]], "a"]], "d"]
 , Expected "type error: matching type declarations and types expected in Decl"
 , Got "type error: "matching type declarations and types expected in Decl""
+
+interpreter: Failed ["if-0", 0, [1, "@"], [["call", ["fun*", [["x", ":", "int"]], "x"], 5], "@"]], Expected "cell"
+, Got ["cell",6]
 
 interpreter: Failed [["let", ["addCells", ":", [["int","cell"], ["int","cell"], "->", "int"]], "=",
   ["fun*", [["x", ":",["int", "cell"]], ["y", ":", ["int", "cell"]]],
@@ -146,6 +151,15 @@ interpreter: Failed [["let", ["x", ":", "int"], "=",
 	], ["call", "x", 0]], Expected "type error: matching type declarations and types expected in Decl", Got "type error: "matching type declarations and types expected in Decl""
 
 interpreter: Failed [
+    ["let", ["fc", ":", ["->", ["int", "cell"]]], "=",
+        ["fun*", [],
+            [5, "@"]
+        ]
+    ],
+    ["call", "fc"]
+], Expected "cell", Got ["cell",7]
+
+interpreter: Failed [
     "if-0",
     1,
     ["fun*", [], 0],
@@ -173,6 +187,9 @@ java.lang.IllegalStateException: "arithmetic error"
 	at interpreter.pal.PALDeclArray.interpret(PALDeclArray.java:42)
 	at main.Main.main(Main.java:26)
 
+interpreter: Failed ["call", "+", 1], Expected "type error: number of arguments does not match number of parameters"
+, Got "type error: "number of arguments does not match number of parameters""
+
 interpreter: Failed [["let", ["x", ":", ["int", "int", "->", "int"]], "=", 
     ["fun*", [["a", ":", "int"], ["b", ":", "int"]], ["a", "+", ["b", "*", 5]]]],
      ["call", "x", 42, ["fun*", [["z", ":", "int"]], "z"]]], Expected "type error: matching function and argument types expected"
@@ -186,10 +203,19 @@ interpreter: Failed [["let", ["x", ":", "int"], "=", ["fun*", [["x", ":", "int"]
 
 interpreter: Failed [5, "=", 2], Expected "type error: = ...", Got "type error: "matching function and argument types expected""
 
+interpreter: Failed "+", Expected "closure", Got "primop"
+
+interpreter: Failed [["let", ["x", ":", ["int", "->", ["int", "->", "int"]]], "=", ["fun*", [["a", ":", "int"]], ["fun*", [["b", ":", "int"]], ["a", "+", "b"]]]],
+ ["let", ["y", ":", "int"], "=", 6],
+ ["let", ["z", ":", "int"], "=", 0],
+ ["if-0", "z", "y", "x"]], Expected "type error: same type expected for if branches", Got "type error: "same type expected for if branches""
+
 interpreter: Failed [["let", ["x", ":", ["int", "->", ["int", "->", "int"]]], "=", ["fun*", [["a", ":", "int"]], ["fun*", [["b", ":", "int"]], ["a", "+", "b"]]]],
  ["let", ["v", ":", "int"], "=", 12],
  ["v", "*", "x"]], Expected "type error: matching function and argument types expected"
 , Got "type error: "matching function and argument types expected""
+
+interpreter: Failed ["call", "@", 5], Expected "cell", Got ["cell",6]
 
 interpreter: Failed "x", Expected "type error: variable x undeclared", Got "type error: "variable x undeclared""
 
@@ -203,6 +229,11 @@ interpreter: Failed [["let", ["x", ":", ["int", "->", ["int", "->", "int"]]], "=
  ["let", ["z", ":", "int"], "=", 15],
  ["let", ["v", ":", "int"], "=", 12],
  ["if-0", ["call", ["call", "y", 6], 15], "y", "x"]], Expected "type error: function type expected", Got "type error: "function type expected""
+
+interpreter: Failed [["let", ["z", ":", "int"], "=", 15],
+ ["let", ["v", ":", "int"], "=", 12],
+ ["let", ["t", ":", "int"], "=", 6],
+ ["v", "+", "z", "z"]], Expected "type error: number of arguments does not match number of parameters", Got "type error: "number of arguments does not match number of parameters""
 
 interpreter: Failed [["let", ["x", ":", "int"], "=", 25],
   ["let", ["foo", ":", ["int", ["int", "->", "int"], "->", "int"]], "=", ["fun*", [["x", ":", "int"], ["bar", ":", ["int", "->", "int"]]],
@@ -235,6 +266,19 @@ java.lang.ClassCastException: interpreter.value.ValueCell cannot be cast to inte
 	at interpreter.pal.PALCall.interpret(PALCall.java:29)
 	at main.Main.main(Main.java:26)
 
+interpreter: Failed [["let", ["fx", ":", ["int", "->", "int"]], "=", 
+  ["fun*", [["y", ":", "int"]], "y"]],
+ ["let", ["f", ":", ["->", "int"]], "=", 
+  ["fun*", [], 22]],
+ ["let", ["g", ":", ["->", ["->", "int"]]], "=", 
+  ["fun*", [], ["fun*", [], 20]]],
+ ["if-0",
+  ["call", "fx", 7],
+  ["call", "f"],
+  ["call", "g"]]]
+, Expected "type error: same type expected for if branches"
+, Got "type error: "same type expected for if branches""
+
 interpreter: Failed [["let", ["!", ":", ["int", "int", "->", "int"]], "=", 
   ["fun*", [["x", ":", "int"]], 
    ["if-0", "x", 
@@ -243,6 +287,19 @@ interpreter: Failed [["let", ["!", ":", ["int", "int", "->", "int"]], "=",
  ["call", "!", 5]]
 , Expected "type error: matching type declarations and types expected in Decl"
 , Got "type error: "matching type declarations and types expected in Decl""
+
+interpreter: Failed ["call", ["fun*", [["fx", ":", ["int", "->", "int"]]], ["call", "fx"]], ["fun*", [], 42]]
+, Expected "type error: number of arguments does not match number of parameters"
+, Got "type error: "number of arguments does not match number of parameters""
+
+interpreter: Failed [["let", ["fx", ":", ["int", "->", ["->", "int"]]], "=", 
+  ["fun*", [["x", ":", "int"]], ["fun*", [], ["call", "+", 2, "x"]]]],
+ ["if-0", 
+  ["call", "fx", 40],
+  1, 
+  0]]
+, Expected "type error: int expected"
+, Got "type error: "int expected""
 
 interpreter: Failed ["call", 
   ["call", 
@@ -263,9 +320,17 @@ interpreter: Failed ["call", ["fun*", [["x", ":", ["int", "cell"]]], ["call", "!
 , Expected "type error: matching function and argument types expected"
 , Got "type error: "matching function and argument types expected""
 
+interpreter: Failed [["fun*", [["x", ":", "int"]], "x"], "@"]
+, Expected "cell"
+, Got ["cell",6]
+
 interpreter: Failed ["if-0", ["fun*", [["x", ":", "int"]], "x"], 1, 2]
 , Expected "type error: int expected"
 , Got "type error: "int expected""
+
+interpreter: Failed [["+", "@"], "!"]
+, Expected "closure"
+, Got "primop"
 
 interpreter: Failed ["if-0", 0, [1, "@"], [["fun*", [], 2], "@"]]
 , Expected "type error: same type expected for if branches"
@@ -301,6 +366,10 @@ java.lang.IllegalStateException: "arithmetic error"
 	at interpreter.pal.PALCall.interpret(PALCall.java:44)
 	at main.Main.main(Main.java:26)
 
+interpreter: Failed ["if-0", ["call", ["fun*", [], 3]], ["fun*", [], ["call", ["fun*", [], 3], 3]], 3]
+, Expected "type error: number of arguments does not match number of parameters"
+, Got "type error: "number of arguments does not match number of parameters""
+
 interpreter: Failed ["call", ["fun*", [["t", ":", "int"]], "t"], ["fun*", [["x", ":", "int"]], "x"]]
 , Expected "type error: matching function and argument types expected"
 , Got "type error: "matching function and argument types expected""
@@ -318,6 +387,17 @@ java.lang.IllegalStateException: "arithmetic error"
 interpreter: Failed ["if-0", ["fun*", [], 3], 3, 3]
 , Expected "type error: int expected"
 , Got "type error: "int expected""
+
+interpreter: Failed [["let", ["x", ":", "int"], "=", 4], ["let", ["y", ":", "int"], "=", 4], ["let", ["z", ":", "int"], "=", 4], [["let", ["x", ":", ["->", "int"]], "=", ["fun*", [], 3]], ["if-0", "x", 0, 0]]]
+, Expected "type error: int expected"
+, Got "type error: "int expected""
+
+interpreter: Failed ["call", ["fun*", [], "@"]], Expected "type error: types not sufficiently instantiated", Got "primop"
+
+interpreter: Failed [["let", ["f", ":", ["int", "->", ["int", "cell"]]], "=", 
+  ["fun*", [["x", ":", "int"]], ["x", "@"]]],
+  [3, "f"]
+], Expected "cell", Got ["cell",8]
 
 interpreter: Failed [["let", ["count!", ":", [["int", "->", "int"], "->", ["int", "->", "int"]]], "=",
     ["fun*", [["f", ":", ["int", "->", "int"]]], [
@@ -394,9 +474,17 @@ java.lang.IllegalStateException: "arithmetic error"
 
 interpreter: Failed ["if-0",[[0,"@"],"!"],2,[["fun*",[],3],"@"]], Expected "type error: same type expected for if branches", Got "type error: "same type expected for if branches""
 
+interpreter: Failed [[[2,"@"],"@"],"!"], Expected "cell", Got ["cell",6]
+
 interpreter: Failed [["let",["!",":","int"],"=",2],["call","!",[2,"@"]]], Expected "type error: function type expected", Got "type error: "function type expected""
 
 interpreter: Failed ["@","@"], Expected "type error: @ is polymorphic", Got ["cell",6]
+
+interpreter: Failed [["let",["!",":",["int","->","int"]],"=",["fun*",[["x",":","int"]],"x"]],["if-0","!",2,3]], Expected "type error: int expected", Got "type error: "int expected""
+
+interpreter: Failed "+"
+, Expected "closure"
+, Got "primop"
 
 interpreter: Failed [1,"^",-1]
 , Expected "run-time error: primop domain error"
@@ -407,9 +495,17 @@ java.lang.IllegalStateException: "arithmetic error"
 	at interpreter.pal.PALCall.interpret(PALCall.java:44)
 	at main.Main.main(Main.java:26)
 
+interpreter: Failed ["call",["fun*",[],1],1]
+, Expected "type error: number of arguments does not match number of parameters"
+, Got "type error: "number of arguments does not match number of parameters""
+
 interpreter: Failed ["call",["fun*",[["foo",":","int"]],1],["fun*",[],1]]
 , Expected "type error: matching function and argument types expected"
 , Got "type error: "matching function and argument types expected""
+
+interpreter: Failed [1,"@"]
+, Expected "cell"
+, Got ["cell",6]
 
 interpreter: Failed [1,"!"]
 , Expected "type error: domain doesn't match"
@@ -430,10 +526,42 @@ interpreter: Failed [[[
 			]
 		]
 	],
+	["if-0",["call","getFact"],22,["call","getFact"]]
+
+]]]
+, Expected "type error: int expected", Got "type error: "int expected""
+
+interpreter: Failed [[[
+	["let",["getFact",":",["->",["int","->","int"]]],"=",
+		["fun*",[],"fact"]
+	],
+	["let",["fact",":",["int","->","int"]],"=",
+		["fun*",[["x",":","int"]],
+			["if-0","x",1,
+				["call","*","x",["call","fact",["call","+","x",-1]]]
+			]
+		]
+	],
 	["if-0",["call",["call","getFact"],3],22,["call",["call",["call","getFact"],3]]]
 
 ]]]
 , Expected "type error: function type expected", Got "type error: "function type expected""
+
+interpreter: Failed [[[
+	["let",["getFact",":",["->",["int","->","int"]]],"=",
+		["fun*",[],"fact"]
+	],
+	["let",["fact",":",["int","->","int"]],"=",
+		["fun*",[["x",":","int"]],
+			["if-0","x",1,
+				["call","*","x",["call","fact",["call","+","x",-1]]]
+			]
+		]
+	],
+	["if-0",["call",["call","getFact"],3],22,["call","getFact"]]
+
+]]]
+, Expected "type error: same type expected for if branches", Got "type error: "same type expected for if branches""
 
 interpreter: Failed [[[
 	["let",["getFact",":",["->",["int","->","int"]]],"=",
@@ -472,6 +600,9 @@ java.lang.ClassCastException: interpreter.value.ValueCell cannot be cast to inte
 	at interpreter.pal.PALCall.interpret(PALCall.java:35)
 	at interpreter.pal.PALDeclArray.interpret(PALDeclArray.java:42)
 	at main.Main.main(Main.java:26)
+
+interpreter: Failed "="
+, Expected "type error: types not sufficiently instantiated", Got "primop"
 
 interpreter: Failed ["call","^",2,["call","*",-1,
 [
@@ -517,6 +648,22 @@ interpreter: Failed [
 ]
 ]
 , Expected "type error: variable undeclared undeclared", Got "type error: "variable undeclared undeclared""
+
+interpreter: Failed [[[
+	["let",["getFact",":",["->",["int","->","int"]]],"=",
+		["fun*",[],"fact"]
+	],
+	["let",["fact",":",["int","->","int"]],"=",
+		["fun*",[["x",":","int"]],
+			["if-0","x",1,
+				["call","*","x",["call","fact",["call","+","x",-1]]]
+			]
+		]
+	],
+	["if-0",["call",["call","getFact"],3],22,["call",["call","getFact"], 2, ["call","getFact"]]]
+
+]]]
+, Expected "type error: number of arguments does not match number of parameters", Got "type error: "number of arguments does not match number of parameters""
 
 interpreter: Failed [
 	["let", ["x",":","int"], "=", 1],
@@ -616,6 +763,15 @@ interpreter: Failed ["call", "=", ["call", "@", 5], ["fun*", [], 0]]
 , Expected "type error: domain doesn't match"
 , Got 5
 
+interpreter: Failed [["let", ["f", ":", [["int", "cell"], "->", ["int", "cell"]]], "=", ["fun*", [["x", ":", ["int", "cell"]]], "x"]],
+  ["call", "f", ["call", "@", 100]]]
+, Expected "cell"
+, Got ["cell",7]
+
+interpreter: Failed [1, "+", 2, "z"], Expected "type error: number of arguments does not match number of parameters", Got "type error: "number of arguments does not match number of parameters""
+
+interpreter: Failed "+", Expected "closure", Got "primop"
+
 interpreter: Failed ["call",["call","!",["call", "@", "@"]], 5], Expected "type error: @ is polymorphic", Got ["cell",7]
 
 interpreter: Failed ["call","@","@"], Expected "type error: @ is polymorphic", Got ["cell",6]
@@ -635,12 +791,16 @@ interpreter: Failed [3, "=", 4], Expected "type error: = ...", Got "type error: 
 
 interpreter: Failed ["call", "=", ["call", "@", 3], ["fun*", [], 3]], Expected "type error: domain doesn't match", Got 3
 
+interpreter: Failed ["call", "@"], Expected "type error: number of arguments does not match number of parameters", Got "type error: "number of arguments does not match number of parameters""
+
 interpreter: Failed [1, "^", -1], Expected "run-time error: primop domain error", Got "run-time error: "arithmetic error""
 java.lang.IllegalStateException: "arithmetic error"
 	at interpreter.utils.EnvStoreTuple.lambda$stdLib$2(EnvStoreTuple.java:73)
 	at interpreter.value.ValuePrimop.apply(ValuePrimop.java:19)
 	at interpreter.pal.PALCall.interpret(PALCall.java:44)
 	at main.Main.main(Main.java:26)
+
+interpreter: Failed ["call", "!", 1, 2, 3], Expected "type error: number of arguments does not match number of parameters", Got "type error: "number of arguments does not match number of parameters""
 
 interpreter: Failed [["let", ["f", ":", [[["int", "cell"], "cell"], "->", "int"]], "=", ["fun*", [["C", ":", [["int", "cell"], "cell"]]], [["C", "!"], "!"]]],
     ["call", "f", [[17, "@"], "@"]]], Expected 17, Got "run-time error: null"
@@ -655,6 +815,12 @@ java.lang.NullPointerException
 	at main.Main.main(Main.java:26)
 
 interpreter: Failed [1, "=", 2], Expected "type error: = ...", Got "type error: "matching function and argument types expected""
+
+interpreter: Failed [["let", ["x", ":", [["int", "->", "int"], "->" , ["int", "->", "int"]]],
+  "=",
+  ["fun*", [["z", ":", ["int", "->", "int"]]], "z"]],
+  ["if-0", ["call", "x", ["fun*", [["a", ":", "int"]], ["call", "+", "a", 2]]], [2], "x"]]
+, Expected "type error: int expected", Got "type error: "int expected""
 
 interpreter: Failed [["let", ["double", ":", ["int", "->", "int"]], "=",
                                             ["fun*", [["c", ":", "int"]], ["c", "+", "c"]]],
@@ -699,6 +865,8 @@ interpreter: Failed [
 , Expected "type error: matching type declarations and types expected in Decl"
 , Got "type error: "matching type declarations and types expected in Decl""
 
+interpreter: Failed "=", Expected "type error: types not sufficiently instantiated", Got "primop"
+
 interpreter: Failed ["@", "@"], Expected "type error: @ is polymorphic", Got ["cell",6]
 
 interpreter: Failed [1, "^", -1], Expected "run-time error: primop domain error", Got "run-time error: "arithmetic error""
@@ -723,6 +891,8 @@ interpreter: Failed [
   [0, "@"], 
   [1, "@"]
 ], Expected 1, Got ["cell",6]
+
+interpreter: Failed [1, "@"], Expected "cell", Got ["cell",6]
 
 interpreter: Failed [
   "call",
@@ -769,6 +939,33 @@ interpreter: Failed ["call", 5, 1, 2]
 , Expected "type error: function type expected"
 , Got "type error: "function type expected""
 
+interpreter: Failed ["call", ["fun*", [], 1], [1]]
+, Expected "type error: number of arguments does not match number of parameters"
+, Got "type error: "number of arguments does not match number of parameters""
+
+interpreter: Failed ["call", "@", 4]
+, Expected "cell"
+, Got ["cell",6]
+
+interpreter: Failed [
+  [
+    "let",
+    ["2args", ":", ["int", "int", "->", "int"]],
+    "=",
+    [
+      "fun*",
+      [
+        ["a", ":", "int"],
+        ["b", ":", "int"]
+      ],
+      "a"
+    ]
+  ],
+  ["call", "2args", 1]
+]
+, Expected "type error: number of arguments does not match number of parameters"
+, Got "type error: "number of arguments does not match number of parameters""
+
 interpreter: Failed [
   ["let", ["declared", ":", "int"], "=", 5],
   "undeclared"
@@ -783,6 +980,32 @@ interpreter: Failed [
 , Expected "type error: function type expected"
 , Got "type error: "function type expected""
 
+interpreter: Failed [
+  ["let", ["nint", ":", ["->", "int"]], "=", ["fun*", [], 5]],
+  ["if-0", "nint", 1, 2]
+]
+, Expected "type error: int expected"
+, Got "type error: "int expected""
+
+interpreter: Failed [
+  ["let", ["nint", ":", ["->", "int"]], "=", ["fun*", [], 5]],
+  ["let", ["yint", ":", "int"], "=", 5],
+  ["if-0", 0, "nint", "yint"]
+]
+, Expected "type error: same type expected for if branches"
+, Got "type error: "same type expected for if branches""
+
+interpreter: Failed [
+  ["let", ["veryFun", ":", ["int", "->", ["int", "int", "->", "int"]]], "=", ["fun*", [["x", ":", "int"]], "+"]],
+  ["call", "veryFun", 10]
+]
+, Expected "closure"
+, Got "primop"
+
+interpreter: Failed [[[[[[[[[[42, "@"], "@"], "@"], "@"], "@"], "@"], "!"], "!"], "!"], "=", [[101, "@"], "@"]]
+, Expected "cell"
+, Got ["cell",7]
+
 interpreter: Failed ["call", ["fun*", [["x", ":", "int"]], [1, "^", -2]], 2]
 , Expected "run-time error: primop domain error"
 , Got "run-time error: "arithmetic error""
@@ -795,9 +1018,17 @@ java.lang.IllegalStateException: "arithmetic error"
 	at interpreter.pal.PALCall.interpret(PALCall.java:29)
 	at main.Main.main(Main.java:26)
 
+interpreter: Failed ["if-0", [[0, "@"], "!"], [1, "@"], [2, "@"]]
+, Expected "cell"
+, Got ["cell",7]
+
 interpreter: Failed [[[[[[[[[[[42, "@"], "@"], "@"], "@"], "@"], "@"], "!"], "!"], "!"], "!"], "=", [[101, "@"], "@"]]
 , Expected "type error: domain doesn't match"
 , Got ["cell",6]
+
+interpreter: Failed ["call", ["fun*", [], [1, "^", -2]], 2]
+, Expected "type error: number of arguments does not match number of parameters"
+, Got "type error: "number of arguments does not match number of parameters""
 
 interpreter: Failed [["let", ["x", ":", [["int", "cell"], ["int", "cell"], "->", "int"]], "=",
                 ["fun*", [["x", ":", ["int", "cell"]], ["y", ":", ["int", "cell"]]],  ["x", "=", ["y", "=", ["x", "!"]]]]],
@@ -805,6 +1036,8 @@ interpreter: Failed [["let", ["x", ":", [["int", "cell"], ["int", "cell"], "->",
               ["call", "x", [3, "@"], [9, "@"]]]
 , Expected 3
 , Got ["cell",7]
+
+interpreter: Failed [4, "@"], Expected "cell", Got ["cell",6]
 
 interpreter: Failed [8, "^", -1], Expected "run-time error: primop domain error", Got "run-time error: "arithmetic error""
 java.lang.IllegalStateException: "arithmetic error"
@@ -814,6 +1047,10 @@ java.lang.IllegalStateException: "arithmetic error"
 	at main.Main.main(Main.java:26)
 
 interpreter: Failed [["let", ["+", ":", ["int", "int", "->", "int"]], "=", 9], 9], Expected "type error: matching type declarations and types expected in Decl", Got "type error: "matching type declarations and types expected in Decl""
+
+interpreter: Failed "="
+, Expected "type error: types not sufficiently instantiated"
+, Got "primop"
 
 interpreter: Failed [["let", ["y", ":", ["int", "int", ["int", "int", "->", "int"], "->", "int"]], "=",
   ["fun*", [["x", ":", "int"], ["y", ":", "int"], ["z", ":", ["int", "int", "->", "int"]]], ["call", "z", "x", "y"]]],
@@ -831,6 +1068,19 @@ java.lang.IllegalStateException: "arithmetic error"
 	at interpreter.pal.PALDeclArray.interpret(PALDeclArray.java:42)
 	at main.Main.main(Main.java:26)
 
+interpreter: Failed [["let", ["x", ":", [["int", "cell"], "->", "int"]], "=",
+  ["fun*", [["x", ":", ["int", "cell"]]], ["call", "!", "x"]]],
+ ["call", "@", ["call", "x", ["call", "@", 57]]]]
+, Expected "cell"
+, Got ["cell",8]
+
+interpreter: Failed [["let", ["a", ":", ["->", ["int", "int", "->", "int"]]], "=", ["fun*", [], "+"]],
+ ["let", ["b", ":", ["int", "->", "int"]], "=", ["fun*", [["x", ":", "int"]], ["call", ["call", "a"], 2, "x"]]],
+ ["let", ["c", ":", ["->", "int"]], "=", ["fun*", [], ["call", "b", 3]]],
+ ["call", "b", ["call", "+", ["call", ["call", "a"], 2, 15], ["call", "c", 15]]]]
+, Expected "type error: number of arguments does not match number of parameters"
+, Got "type error: "number of arguments does not match number of parameters""
+
 interpreter: Failed ["if-0", 5,
  ["fun*", [], ["call", "@", ["call", "+", 5, 2]]],
  ["fun*", [], ["call", "@", ["call", "@", ["call", "+", 5, 2]]]]]  
@@ -845,12 +1095,19 @@ interpreter: Failed [["let", ["x", ":", [["int", "cell"], "->", ["->", "int"]]],
 , Got "type error: "matching type declarations and types expected in Decl""
 
 interpreter: Failed [
+  ["let", ["x", ":", ["->", "int"]], "=", ["fun*", [], 5]],
+  ["if-0", "x", "y", "z"]
+], Expected "type error: int expected", Got "type error: "int expected""
+
+interpreter: Failed [
   ["let", ["f", ":", ["->", "int"]], "=", ["fun*", [], ["x", "+", 5]]],
   [
     ["let", ["x", ":", "int"], "=", 5],
     ["call", "f"]
   ]
 ], Expected "type error: variable x undeclared", Got "type error: "variable x undeclared""
+
+interpreter: Failed [5, "@"], Expected "cell", Got ["cell",6]
 
 interpreter: Failed [
   ["let", ["f", ":", [["int", "cell"], "int", "->", "int"]], "=", ["fun*", [["a", ":", ["int", "cell"]], ["b", ":", "int"]], [["a", "!"], "+", "b"]]],
@@ -878,3 +1135,12 @@ interpreter: Failed [
   ["let", ["g", ":", ["->", "int"]], "=", ["fun*", [], 5]],
   ["call", "f", ["g", "@"], 3]
 ], Expected "type error: matching function and argument types expected", Got "type error: "matching function and argument types expected""
+
+interpreter: Failed [
+  ["let", ["x", ":", "int"], "=", 5],
+  ["let", ["y", ":", "int"], "=", 10],
+  ["let", ["z", ":", ["->", "int"]], "=", ["fun*", [], 15]],
+  ["if-0", "x", "y", "z"]
+], Expected "type error: same type expected for if branches", Got "type error: "same type expected for if branches""
+
+interpreter: Failed "+", Expected "closure", Got "primop"
