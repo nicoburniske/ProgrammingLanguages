@@ -1,0 +1,50 @@
+97
+Suzanne Becker
+
+97/140
+
+Task 1
+----------------------------------------
+
+For the "main" interpreter, i.e. the one that combines type checking and interpretation: 
+-10 no unit tests showing that "undeclared variable" is a type error
+-10 no unit tests showing that "number of arguments..." is a type error
+-10 no unit tests showing that "closure or primop expected" is a type error
+
+
+Task 2
+----------------------------------------
+
+-10 the explanation is not correct
+
+You are correct that the problem is with 0-initialization
+storing int values for variables expected to have function values.
+
+Your statement about copying values for arguments is not clear,
+but does not seem correct. Variable references are replaced with 
+their values only when that reference is evaluated. That is why 
+your example will not trigger a type error at runtime: in p, you are 
+referencing functions f and y before their definitions, but since 
+p isn't called until the program body, all variable declarations 
+will have been updated by the time its body is evaluated, and 
+there will be no type mismatches. 
+
+Your example would result in a runtime error if you changed p's 
+value to be the result of calling f on y (remove the function wrapper).
+
+Here is a simpler example demonstrating the problem:
+     [let x = f 0, let f = (fun* (x:int) x), 666]
+
+
+Task 3
+----------------------------------------
+
+-3 base environment: = is missing check for matching argument types. 
+    Should check that the first arg's "inner" type matches type of second arg.
+ 
+
+----------------------------------------
+ Misc Comments
+----------------------------------------
+nice package structure, although preludes would have been 
+nearly impossible to find without your note in readme.
