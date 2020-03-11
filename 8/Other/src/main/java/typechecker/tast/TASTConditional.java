@@ -2,6 +2,7 @@ package typechecker.tast;
 
 import org.json.simple.JSONArray;
 import typechecker.tast.star_ast.StarAST;
+import typechecker.type.Type;
 
 import java.util.Objects;
 
@@ -39,5 +40,10 @@ public class TASTConditional implements TAST {
     @Override
     public int hashCode() {
         return Objects.hash(condClause, ifTrue, ifFalse);
+    }
+
+    @Override
+    public String toJava(Type type) {
+        return String.format("%s == 0 ? %s : %s", this.condClause.toJava(), this.ifTrue.toJava(), this.ifFalse.toJava());
     }
 }

@@ -1,5 +1,7 @@
 package typechecker.tast;
 
+import typechecker.type.Type;
+
 import java.math.BigInteger;
 import java.util.Objects;
 
@@ -30,5 +32,10 @@ public class TASTInteger implements TAST {
     @Override
     public int hashCode() {
         return Objects.hash(i);
+    }
+
+    @Override
+    public String toJava(Type type) {
+        return this.i.toString();
     }
 }

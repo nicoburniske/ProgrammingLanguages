@@ -48,4 +48,8 @@ public class StarAST implements JSONAware {
     public int hashCode() {
         return Objects.hash(expr, type);
     }
+
+    public String toJava() {
+        return this.expr.toJava(this.type);
+    }
 }

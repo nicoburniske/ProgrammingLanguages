@@ -2,10 +2,12 @@ package typechecker.tast;
 
 import org.json.simple.JSONArray;
 import typechecker.tast.star_ast.StarAST;
+import typechecker.type.Type;
 import typechecker.type.TypedVar;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class TASTFunc implements TAST {
     List<TypedVar> parameters;
@@ -37,5 +39,11 @@ public class TASTFunc implements TAST {
     @Override
     public int hashCode() {
         return Objects.hash(parameters, body);
+    }
+
+    @Override
+    public String toJava(Type type) {
+        String params = parameters.stream().map(TypedVar::toJava).collect(Collectors.joining(","));
+        return String.format("((%s)(%s) -> %s)", type.toJava(), params, this.body.toJava());
     }
 }

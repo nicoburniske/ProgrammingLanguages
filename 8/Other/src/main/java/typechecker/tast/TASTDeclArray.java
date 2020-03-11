@@ -3,6 +3,7 @@ package typechecker.tast;
 import org.json.simple.JSONArray;
 import typechecker.tast.star_ast.StarAST;
 import typechecker.tast.star_decl.StarDecl;
+import typechecker.type.Type;
 
 import java.util.List;
 import java.util.Objects;
@@ -36,5 +37,11 @@ public class TASTDeclArray implements TAST {
     @Override
     public int hashCode() {
         return Objects.hash(declList, rhs);
+    }
+
+    @Override
+    public String toJava(Type type) {
+        // left to right?
+        return null;
     }
 }

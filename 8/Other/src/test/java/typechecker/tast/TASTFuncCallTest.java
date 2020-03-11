@@ -2,6 +2,9 @@ package typechecker.tast;
 
 import org.junit.Test;
 import typechecker.tast.star_ast.StarAST;
+import typechecker.tpal.TPALCall;
+import typechecker.tpal.TPALFunc;
+import typechecker.tpal.TPALInt;
 import typechecker.type.TypedVar;
 import typechecker.type.TypeFunction;
 import typechecker.type.TypeInt;
@@ -22,5 +25,11 @@ public class TASTFuncCallTest {
                 new TASTFuncCall(
                         new StarAST(fun1, new TypeFunction(Arrays.asList(new TypeInt()), new TypeInt())), Arrays.asList()).toJSONString());
 
+    }
+    @Test
+    public void toJava() {
+        TASTFuncCall func = new TASTFuncCall(
+                new StarAST(new TASTInteger(5), new TypeInt()), Arrays.asList(new StarAST(new TASTInteger(1), new TypeInt())));
+        assertEquals("((Function<Integer,Integer>)(Integer a) -> 1).apply(3)", func.toJSONString());
     }
 }

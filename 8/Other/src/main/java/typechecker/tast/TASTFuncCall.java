@@ -2,6 +2,8 @@ package typechecker.tast;
 
 import org.json.simple.JSONArray;
 import typechecker.tast.star_ast.StarAST;
+import typechecker.tpal.TPAL;
+import typechecker.type.Type;
 
 import java.util.List;
 import java.util.Objects;
@@ -36,5 +38,13 @@ public class TASTFuncCall implements TAST {
     @Override
     public int hashCode() {
         return Objects.hash(func, arguments);
+    }
+
+    @Override
+    public String toJava(Type type) {
+        String argString = this.arguments.stream()
+                .map(StarAST::toJava)
+                .reduce("", (acc, val) -> acc + ".apply(" + val + ")");
+        return String.format("(%s)%s", this.func.toJava(), argString);
     }
 }

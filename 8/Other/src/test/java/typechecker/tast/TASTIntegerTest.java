@@ -1,6 +1,8 @@
 package typechecker.tast;
 
 import org.junit.Test;
+import typechecker.tpal.TPALInt;
+import typechecker.type.TypeInt;
 
 import java.math.BigInteger;
 
@@ -11,5 +13,10 @@ public class TASTIntegerTest {
     @Test
     public void toJSONString() {
         assertEquals("1", new TASTInteger(new BigInteger("1")).toJSONString());
+    }
+    @Test
+    public void toJava() {
+        TASTInteger i = new TASTInteger(123);
+        assertEquals("123", i.toJava(new TypeInt()));
     }
 }

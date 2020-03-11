@@ -1,5 +1,7 @@
 package typechecker.tast;
 
+import typechecker.type.Type;
+
 import java.util.Objects;
 
 public class TASTVar implements TAST{
@@ -25,5 +27,10 @@ public class TASTVar implements TAST{
     @Override
     public int hashCode() {
         return Objects.hash(variable);
+    }
+
+    @Override
+    public String toJava(Type type) {
+        return this.variable;
     }
 }

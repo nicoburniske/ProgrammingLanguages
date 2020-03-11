@@ -1,6 +1,7 @@
 package typechecker.tast;
 
 import org.json.simple.JSONAware;
+import typechecker.type.Type;
 
 /**
  * A TAST expression has one of these shapes:
@@ -24,4 +25,5 @@ import org.json.simple.JSONAware;
  * </ul>
  */
 public interface TAST extends JSONAware {
+    String toJava(Type type);
 }
