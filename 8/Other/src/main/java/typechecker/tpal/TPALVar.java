@@ -47,7 +47,6 @@ public class TPALVar implements TPAL {
         }
     }
 
-    @Override
     public String toJava() {
         return this.var.toString();
     }

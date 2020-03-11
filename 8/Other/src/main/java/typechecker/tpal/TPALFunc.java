@@ -61,11 +61,5 @@ public class TPALFunc implements TPAL {
                 env);
     }
 
-    @Override
-    public String toJava() {
-        String parms = parameters.stream().map(TypedVar::toJava).collect(Collectors.joining(","));
-        return String.format("(%s) -> %s", parms, function.toJava());
-    }
-
 
 }

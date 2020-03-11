@@ -66,9 +66,4 @@ public class TPALDeclArray implements TPAL {
                 env);
     }
 
-    @Override
-    public String toJava() {
-        return null;
-    }
-
 }

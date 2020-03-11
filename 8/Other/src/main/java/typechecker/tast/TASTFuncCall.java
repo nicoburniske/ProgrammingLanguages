@@ -42,9 +42,13 @@ public class TASTFuncCall implements TAST {
 
     @Override
     public String toJava(Type type) {
-        String argString = this.arguments.stream()
-                .map(StarAST::toJava)
-                .reduce("", (acc, val) -> acc + ".apply(" + val + ")");
-        return String.format("(%s)%s", this.func.toJava(), argString);
+        if (arguments.size() > 0) {
+            String argString = this.arguments.stream()
+                    .map(StarAST::toJava)
+                    .reduce("", (acc, val) -> acc + ".apply(" + val + ")");
+            return String.format("(%s)%s", this.func.toJava(), argString);
+        } else {
+            return String.format("(%s)%s", this.func.toJava(), ".get()");
+        }
     }
 }

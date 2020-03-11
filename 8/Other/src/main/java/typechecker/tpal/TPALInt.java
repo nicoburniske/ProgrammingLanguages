@@ -48,9 +48,4 @@ public class TPALInt implements TPAL {
                 env);
     }
 
-    @Override
-    public String toJava() {
-        return this.num.toString();
-    }
-
 }

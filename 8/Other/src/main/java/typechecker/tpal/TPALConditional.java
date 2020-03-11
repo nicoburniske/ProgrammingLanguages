@@ -70,10 +70,6 @@ public class TPALConditional implements TPAL {
          }
     }
 
-    @Override
-    public String toJava() {
-        //obj == 0 ? ifTrue : ifFalse;
-        return String.format("%s == 0 ? %s : %s", this.clause.toJava(), this.ifTrue.toJava(), this.ifFalse.toJava());
-    }
+
 
 }

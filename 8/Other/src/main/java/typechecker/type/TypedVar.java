@@ -56,7 +56,6 @@ public class TypedVar extends TPALVar implements JSONAware {
         return type;
     }
 
-    @Override
     public String toJava() {
         return this.type.toJava() + " " + super.toJava();
     }

@@ -28,6 +28,4 @@ public interface TPAL {
      */
     Tuple typeCheck(LookupTable<TPALVar, Type> env);
 
-    String toJava();
-
 }

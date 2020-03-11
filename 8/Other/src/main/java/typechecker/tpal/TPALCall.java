@@ -76,12 +76,4 @@ public class TPALCall implements TPAL  {
         }
     }
 
-    @Override
-    public String toJava() {
-        String argString = this.arguments.stream()
-                .map(TPAL::toJava)
-                .reduce("",(acc, val)-> acc + (".apply(" + val + ")"));
-        return String.format("((%s)%s)%s","Function<Integer,?>",this.function.toJava(), argString);
-    }
-
 }

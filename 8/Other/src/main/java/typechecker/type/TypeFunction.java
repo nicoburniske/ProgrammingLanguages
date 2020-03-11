@@ -68,7 +68,11 @@ public class TypeFunction implements Type{
 
     @Override
     public String toJava() {
-        return toJavaHelper(this.args, this.rhs);
+        if (this.args.size() > 0)
+            return toJavaHelper(this.args, this.rhs);
+        else {
+            return "Supplier<" + this.rhs.toJava() + ">";
+        }
     }
 
     private String toJavaHelper(List<Type> arguments, Type outputType) {
