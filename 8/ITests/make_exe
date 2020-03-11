@@ -1,0 +1,3 @@
+#! /bin/sh
+./xtranslate < 1-in.json > ../Prelude/Other/src/main/java/main.java
+mvn -f ./Prelude/Other/pom.xml clean install
