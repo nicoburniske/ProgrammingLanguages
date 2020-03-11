@@ -24,7 +24,7 @@ public class TASTFuncTest {
     @Test
     public void toJava() {
         TASTFunc func = new TASTFunc(Arrays.asList(new TypedVar("a", new TypeFunction(Arrays.asList(new TypeInt()),new TypeInt()))), new StarAST(new TASTInteger(1), new TypeInt()));
-        assertEquals("(Function<Integer,Integer> a) -> 1",
+        assertEquals("((Function<Function<Integer,Integer>,Integer>)(Function<Integer,Integer> a) -> 1)",
                 func.toJava(
                         new TypeFunction(
                                 Arrays.asList(new TypeFunction(Arrays.asList(new TypeInt()), new TypeInt())),

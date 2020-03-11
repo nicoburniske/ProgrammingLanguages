@@ -19,9 +19,5 @@ public class TPALIntTest {
         assertEquals(new LookupTableEnd<>(), tintTuple.getRight());
     }
 
-    @Test
-    public void toJava() {
-        TPALInt i = new TPALInt(123);
-        assertEquals("123", i.toJava());
-    }
+
 }

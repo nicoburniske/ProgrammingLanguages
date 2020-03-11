@@ -29,9 +29,4 @@ public class TPALFuncTest {
 
     }
 
-    @Test
-    public void toJava() {
-        TPALFunc func = new TPALFunc(Arrays.asList(new TypedVar("a", new TypeFunction(Arrays.asList(new TypeInt()),new TypeInt()))), new TPALInt(1));
-        assertEquals("(Function<Integer,Integer> a) -> 1", func.toJava());
-    }
 }

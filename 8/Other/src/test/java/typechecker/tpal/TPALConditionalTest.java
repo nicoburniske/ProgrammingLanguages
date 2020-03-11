@@ -49,9 +49,5 @@ public class TPALConditionalTest {
         }
     }
 
-    @Test
-    public void toJava() {
-        TPALConditional conditional = new TPALConditional(new TPALInt(1), new TPALInt(1), new TPALInt(2));
-        assertEquals("1 == 0 ? 1 : 2", conditional.toJava());
-    }
+
 }
