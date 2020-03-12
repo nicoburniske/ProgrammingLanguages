@@ -44,6 +44,6 @@ public class TASTConditional implements TAST {
 
     @Override
     public String toJava(Type type) {
-        return String.format("%s == 0 ? %s : %s", this.condClause.toJava(), this.ifTrue.toJava(), this.ifFalse.toJava());
+        return String.format("%s.equals(new MyInteger(0)) ? %s : %s", this.condClause.toJava(), this.ifTrue.toJava(), this.ifFalse.toJava());
     }
 }

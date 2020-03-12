@@ -58,7 +58,7 @@ public class TASTDeclArray implements TAST {
             return  toJavaHelper(integers.stream().map(curr -> curr.name).collect(Collectors.toList()), new TypeFunction(overallType, type), functionNames, functionAssignments) + applies;
 
         } else {
-            return String.format("(new Supplier<%s>() {\n@Override\n%s" +
+            return String.format("(new Supplier<%s>() {\n%s@Override\n" +
                             "            public %s get() {%sreturn %s;\n}\n}).get()",
                     type.toJava(),
                     functionNames,
@@ -84,7 +84,7 @@ public class TASTDeclArray implements TAST {
         } else {
             TypeFunction functionType = (TypeFunction) type;
             Type returnType = functionType.removeOneArg();
-            return String.format("(new %s() {\n@Override\n%s" +
+            return String.format("(new %s() {\n%s@Override\n" +
                             "            public %s apply(%s) {%sreturn %s;\n}\n})",
                     functionType.toJava(),
                     functionNames,
