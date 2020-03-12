@@ -17,6 +17,6 @@ public class TASTIntegerTest {
     @Test
     public void toJava() {
         TASTInteger i = new TASTInteger(123);
-        assertEquals("123", i.toJava(new TypeInt()));
+        assertEquals("new MyInteger(123)", i.toJava(new TypeInt()));
     }
 }

@@ -19,6 +19,6 @@ public class TypeFunctionTest {
     @Test
     public void toJava() {
         TypeFunction f = new TypeFunction(Arrays.asList(new TypeInt(), new TypeInt()), new TypeInt());
-        assertEquals("Function<Integer,Function<Integer,Integer>>", f.toJava());
+        assertEquals("Function<MyInteger,Function<MyInteger,MyInteger>>", f.toJava());
     }
 }

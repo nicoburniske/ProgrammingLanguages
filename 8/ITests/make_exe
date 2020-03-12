@@ -1,9 +1,9 @@
 #! /bin/sh
 for file in *.in ; do
   cp $file ./Prelude/Other/src/main/java/utils/OutputtedCode.java
-  mvn -f ./Prelude/Other/pom.xml clean install
+  mvn -f Prelude/Other/pom.xml clean install -DskipTests
   filename="${file%.*}"
-  mv ./Prelude/Other/target/Prelude-1.0-SNAPSHOT-jar-with-dependencies.jar ./$filename.jar
+  mv Prelude/Other/target/Prelude-1.0-SNAPSHOT-jar-with-dependencies.jar ./$filename.jar
   echo "java -jar ./$filename.jar" > ./$filename
   chmod +x ./$filename
 done
