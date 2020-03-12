@@ -75,11 +75,11 @@ public class TypeFunction implements Type{
         }
     }
 
-    private String toJavaHelper(List<Type> arguments, Type outputType) {
+    public static String toJavaHelper(List<Type> arguments, Type outputType) {
         if(arguments.size() == 0) {
             return outputType.toJava();
         } else {
-            return "Function<" + arguments.get(0).toJava() + "," + this.toJavaHelper(arguments.subList(1,arguments.size()), outputType) + ">";
+            return "Function<" + arguments.get(0).toJava() + "," + toJavaHelper(arguments.subList(1,arguments.size()), outputType) + ">";
         }
     }
 }

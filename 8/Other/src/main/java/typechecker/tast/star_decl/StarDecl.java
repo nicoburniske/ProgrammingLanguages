@@ -11,8 +11,8 @@ import java.util.Objects;
  * A StarDecl is a JSON array: ["let", TVar, "=", *AST ]
  */
 public class StarDecl implements JSONAware {
-    TypedVar name;
-    StarAST rhs;
+    public TypedVar name;
+    public StarAST rhs;
 
     public StarDecl(TypedVar name, StarAST rhs) {
         this.name = name;
