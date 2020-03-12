@@ -53,18 +53,18 @@ public class TASTDeclArray implements TAST {
         String applies;
         String typeDecl;
         if(integers.size() > 0) {
-            inputs = integers.stream().map(cur -> ("(" + cur.name.toJava() + ")")).collect(Collectors.joining("->"));
-            applies = integers.stream().map(cur -> ".apply(" + cur.rhs.toJava() + ")").collect(Collectors.joining());
-            typeDecl = TypeFunction.toJavaHelper(integers.stream().map(curr -> curr.name.getType()).collect(Collectors.toList()), this.rhs.getType());
+            List<Type> overallType = integers.stream().map(curr -> curr.name.getType()).collect(Collectors.toList());
+            return  toJavaHelper(integers.stream().map(curr -> curr.name).collect(Collectors.toList()), new TypeFunction(overallType, type), functionNames, functionAssignments);
+
         } else {
-            inputs = "()";
-            applies = ".get()";
-            typeDecl = String.format("Supplier<%s>", this.rhs.getType().toJava());
+            return String.format("(new Supplier<%s>() {\n@Override\n" +
+                            "            public %s get() {%s%sreturn %s;\n}\n}).get()",
+                    type.toJava(),
+                    type.toJava(),
+                    functionNames, functionAssignments,
+                    this.rhs.toJava());
         }
-        String result = this.rhs.toJava();
-        List<Type> overallType = integers.stream().map(curr -> curr.name.getType()).collect(Collectors.toList());
-        return  toJavaHelper(integers.stream().map(curr -> curr.name).collect(Collectors.toList()), new TypeFunction(overallType, type), functionNames, functionAssignments);
-        //return String.format("(new %s() {\n @Override\npublic %s %s {%s%sreturn %s;\n}})%s",typeDecl, inputs, functionNames,functionAssignments, result, applies);
+                //return String.format("(new %s() {\n @Override\npublic %s %s {%s%sreturn %s;\n}})%s",typeDecl, inputs, functionNames,functionAssignments, result, applies);
     }
 
     private String toJavaHelper(List<TypedVar> params, Type type, String functionNames, String functionAssignments) {
