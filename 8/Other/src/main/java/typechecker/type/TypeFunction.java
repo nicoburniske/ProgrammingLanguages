@@ -87,8 +87,10 @@ public class TypeFunction implements Type{
     public Type removeOneArg() {
         if(this.args.size() == 1) {
             return this.rhs;
-        } else {
+        } else if (this.args.size() > 0){
             return new TypeFunction(this.args.subList(1, this.args.size()), this.rhs);
+        } else {
+            return this.rhs;
         }
     }
 }
