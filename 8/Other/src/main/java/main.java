@@ -25,7 +25,9 @@ public class main {
                 .replace("+", "plusRESERVED")
                 .replace("*", "timesRESERVED")
                 .replace("^", "exponentReserved")
-                .replace("^switch", "switch_");
+                .replace("switch", "switch_")
+                .replace("int", "int_")
+                .replace("double", "double_");
 //                .replace("@", "atRESERVED")
                 //.replace("!", "exclaimRESERVED");
 //                .replace("=", "equalsRESERVED");
