@@ -85,7 +85,7 @@ public class TypeFunction implements Type{
 
     //TODO document
     public Type removeOneArg() {
-        if(this.args.size() == 0) {
+        if(this.args.size() == 1) {
             return this.rhs;
         } else {
             return new TypeFunction(this.args.subList(1, this.args.size()), this.rhs);
