@@ -36,6 +36,7 @@ for ii in range(len(sortedIn)):
     # Run xtranslate on all inputs, also copy output file to dir
     os.system(xTranslateShell.format(inF, "{}.in".format(testCount)))
     os.system("cp {} {}.out".format(outF, testCount))
+    testCount += 1
     # actual = open("result.txt", 'r').read()
 os.system("./make_exe")
 
