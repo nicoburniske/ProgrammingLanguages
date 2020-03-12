@@ -36,6 +36,6 @@ public class TypeRef implements Type {
 
     @Override
     public String toJava() {
-        return null;
+        return "Cell";
     }
 }

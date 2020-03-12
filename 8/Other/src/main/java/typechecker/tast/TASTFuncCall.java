@@ -42,6 +42,13 @@ public class TASTFuncCall implements TAST {
 
     @Override
     public String toJava(Type type) {
+        if(func.getExpr().equals(new TASTVar("@"))) {
+            return String.format("new Cell(%s)", this.arguments.get(0).toJava());
+        } else if(func.getExpr().equals(new TASTVar("!"))) {
+            return arguments.get(0).toJava() + ".retrieve()";
+        } else if(func.getExpr().equals(new TASTVar("="))) {
+            return arguments.get(0).toJava() + String.format(".assign(%s)", arguments.get(1).toJava());
+        }
         if (arguments.size() > 0) {
             String argString = this.arguments.stream()
                     .map(StarAST::toJava)
