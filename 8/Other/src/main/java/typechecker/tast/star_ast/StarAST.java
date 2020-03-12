@@ -49,6 +49,10 @@ public class StarAST implements JSONAware {
         return Objects.hash(expr, type);
     }
 
+    /**
+     * This function creates a Java Program that matches the StarAST.
+     * @return a Java Program (represented as a string) that corresponds to this StarAST
+     */
     public String toJava() {
         return this.expr.toJava(this.type);
     }

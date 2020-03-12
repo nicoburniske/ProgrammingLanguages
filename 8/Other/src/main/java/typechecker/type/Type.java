@@ -11,5 +11,9 @@ import org.json.simple.JSONAware;
  * </ul>
  **/
 public interface Type extends JSONAware {
+    /**
+     * This function creates a Java Program that matches the Type.
+     * @return a Java Type that represents this Type
+     */
     public String toJava();
 }

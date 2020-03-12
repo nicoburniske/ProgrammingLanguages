@@ -25,5 +25,13 @@ import typechecker.type.Type;
  * </ul>
  */
 public interface TAST extends JSONAware {
+
+    /**
+     * This function creates a Java Program that matches the TAST.
+     * It takes in its (Java) return type so that it know what (java)
+     * Type it should be returning
+     * @param type the (Java) return type of this
+     * @return a Java Program (represented as a string) that corresponds to this TAST
+     */
     String toJava(Type type);
 }

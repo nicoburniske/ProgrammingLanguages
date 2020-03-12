@@ -20,6 +20,14 @@ public class main {
             return;
         }
     }
+
+    /**
+     * This function creates The file to go around the Java Program.
+     * It add the imports, as well as removing some function names that
+     * Java does not allow
+     * @param val
+     * @return
+     */
     private static String postProcessing(String val) {
         val = val
                 .replace("+", "plusRESERVED")
