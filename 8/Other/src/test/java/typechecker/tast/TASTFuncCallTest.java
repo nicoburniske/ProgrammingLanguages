@@ -34,14 +34,24 @@ public class TASTFuncCallTest {
         TASTFuncCall call1 = new TASTFuncCall(
                 new StarAST(fun1, new TypeFunction(Arrays.asList(new TypeInt()), new TypeInt())), Arrays.asList(new StarAST(new TASTInteger(new BigInteger("4")), new TypeInt())));
         // (Function<Integer, Integer> (int a) -> a).apply(4);
-        assertEquals("(((Function<Integer,Integer>)(Integer a) -> a)).apply(4)", call1.toJava(new TypeInt()));
+        assertEquals("((new Function<MyInteger,MyInteger>() {\n" +
+                "@Override\n" +
+                "            public MyInteger apply(MyInteger a) {\n" +
+                "return a;\n" +
+                "}\n" +
+                "})).apply(new MyInteger(4))", call1.toJava(new TypeInt()));
 
         List<TypedVar> params2 = Arrays.asList();
         TASTFunc fun2 = new TASTFunc(params2,new StarAST(new TASTInteger(new BigInteger("5")), new TypeInt()));
         TASTFuncCall call2 = new TASTFuncCall(
                 new StarAST(fun2, new TypeFunction(Arrays.asList(), new TypeInt())), Arrays.asList());
         // (Function<Integer, Integer> (int a) -> a).apply(4);
-        assertEquals("(((Function<Integer,Integer>)(Integer a) -> a)).apply(4))", call2.toJava(new TypeInt()));
+        assertEquals("((new Supplier<MyInteger>() {\n" +
+                "@Override\n" +
+                "            public MyInteger get() {\n" +
+                "return new MyInteger(5);\n" +
+                "}\n" +
+                "})).get()", call2.toJava(new TypeInt()));
     }
 
     @Test

@@ -36,10 +36,12 @@ public class TASTDeclArrayTest {
         List<StarDecl> decls2 = Arrays.asList(new StarDecl(new TypedVar("b", new TypeInt()), new StarAST(new TASTVar("c"), new TypeInt())),
                 new StarDecl(new TypedVar("d", new TypeFunction(new TypeInt(), new TypeInt())), new StarAST(new TASTVar("e"), new TypeFunction(new TypeInt(), new TypeInt()))));
         TASTDeclArray declArray2 = new TASTDeclArray(decls2, new StarAST(new TASTVar("a"), new TypeInt()));
-        assertEquals("((Function<Integer,Integer>)(Integer b) -> {\n" +
-                "Function<Integer,Integer> d;\n" +
-                "d = e;\n" +
+        assertEquals("(new Function<MyInteger,MyInteger>() {\n" +
+                "Function<MyInteger,MyInteger> d;\n" +
+                "@Override\n" +
+                "            public MyInteger apply(MyInteger b) {d = e;\n" +
                 "return a;\n" +
+                "}\n" +
                 "}).apply(c)", declArray2.toJava(new TypeInt()));
 
     }
