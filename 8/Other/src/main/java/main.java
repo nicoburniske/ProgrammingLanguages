@@ -7,13 +7,24 @@ import typechecker.utils.StandardLib;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class main {
     public static void main(String[] args) throws IOException, ParseException {
         Object obj = new JSONParser().parse(new FileReader(args[0]));
         TPAL tpal = Parser.parseJSON(obj);
+        Map<String, String> reservedKeywords = new HashMap(){{
+            put("!", "bangReplacement");
+            put("*", "multReplacement");
+            put("+", "addReplacement");
+            put("@", "atReplacement");
+            put("^", "exptReplacement");
+            put("=", "equalsReplacement");
+        }};
         try {
             StarAST ast = tpal.typeCheck(StandardLib.stdLib()).getLeft();
+            ast.replaceReservedKeywords(reservedKeywords);
             System.out.println(postProcessing(ast.toJava()));
         } catch (Exception e) {
             System.out.println(String.format("\"type error: %s\"", e.getMessage()));
