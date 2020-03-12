@@ -11,8 +11,8 @@ def isInt(s):
 
 
 shellDiff = "./xinterpret < {} | diff - {}"
-xTranslateShell = "sudo ../xtranslate < {} > {}"
-path = "/Users/nicolasburniske/Documents/collected-tests/7/ITests"
+xTranslateShell = "../xtranslate < {} > {}"
+path = "../../../collected-tests/7/ITests"
 
 translateTable = str.maketrans('', '', string.whitespace)
 files = [os.path.join(path, fn) for fn in next(os.walk(path))[2]]
@@ -32,12 +32,12 @@ for ii in range(len(sortedIn)):
     expected = open(outF).read()
     if not isInt(expected):
         continue
-    testCount += 1
     # os.system("./xinterpret < {} > result.txt".format(inF))
     # Run xtranslate on all inputs, also copy output file to dir
     os.system(xTranslateShell.format(inF, "{}.in".format(testCount)))
     os.system("cp {} {}.out".format(outF, testCount))
     # actual = open("result.txt", 'r').read()
+    testCount += 1
 os.system("./make_exe")
 
 # run executables and then diff
