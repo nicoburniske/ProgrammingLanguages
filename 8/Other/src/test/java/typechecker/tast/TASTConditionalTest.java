@@ -19,6 +19,6 @@ public class TASTConditionalTest {
     @Test
     public void toJava() {
         TASTConditional conditional = new TASTConditional(new StarAST(new TASTInteger(1), new TypeInt()), new StarAST(new TASTInteger(1), new TypeInt()), new StarAST(new TASTInteger(2), new TypeInt()));
-        assertEquals("1 == 0 ? 1 : 2", conditional.toJava(new TypeInt()));
+        assertEquals("new MyInteger(1).equals(new MyInteger(0)) ? new MyInteger(1) : new MyInteger(2)", conditional.toJava(new TypeInt()));
     }
 }

@@ -24,7 +24,12 @@ public class TASTFuncTest {
     @Test
     public void toJava() {
         TASTFunc func = new TASTFunc(Arrays.asList(new TypedVar("a", new TypeFunction(Arrays.asList(new TypeInt()),new TypeInt()))), new StarAST(new TASTInteger(1), new TypeInt()));
-        assertEquals("((Function<Function<Integer,Integer>,Integer>)(Function<Integer,Integer> a) -> 1)",
+        assertEquals("(new Function<Function<MyInteger,MyInteger>,MyInteger>() {\n" +
+                        "@Override\n" +
+                        "            public MyInteger apply(Function<MyInteger,MyInteger> a) {\n" +
+                        "return new MyInteger(1);\n" +
+                        "}\n" +
+                        "})",
                 func.toJava(
                         new TypeFunction(
                                 Arrays.asList(new TypeFunction(Arrays.asList(new TypeInt()), new TypeInt())),
