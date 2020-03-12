@@ -36,6 +36,6 @@ public class TASTInteger implements TAST {
 
     @Override
     public String toJava(Type type) {
-        return this.i.toString();
+        return String.format("new MyInteger(%s)",this.i.toString());
     }
 }

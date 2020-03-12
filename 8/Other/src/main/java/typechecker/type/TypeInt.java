@@ -18,6 +18,6 @@ public class TypeInt implements Type{
 
     @Override
     public String toJava() {
-        return "Integer";
+        return "MyInteger";
     }
 }
