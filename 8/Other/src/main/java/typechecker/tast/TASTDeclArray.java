@@ -9,6 +9,7 @@ import typechecker.type.TypeInt;
 import typechecker.type.TypedVar;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -44,18 +45,49 @@ public class TASTDeclArray implements TAST {
     }
 
     @Override
+    public void replaceReservedKeywords(Map<String, String> reserved) {
+        for (StarDecl d : this.declList) {
+            String currVarName = d.name.getVar();
+            String reservedWord = includesReserved(currVarName, reserved);
+            if (reservedWord != null) {
+                String replacement = reserved.get(reservedWord);
+                String updatedVarName = currVarName.replaceAll(reservedWord, replacement);
+                this.replaceReservedKeyword(currVarName, updatedVarName);
+            }
+        }
+    }
+
+    @Override
+    public void replaceReservedKeyword(String varName, String replacement) {
+        for (StarDecl d : this.declList) {
+            d.replaceReservedKeyword(varName, replacement);
+        }
+    }
+
+    private String includesReserved(String word, Map<String, String> reserved) {
+        for (Map.Entry<String, String> entry : reserved.entrySet()) {
+            if (word.contains(entry.getKey())) {
+                return entry.getKey();
+            }
+        }
+        return null;
+    }
+
+    @Override
     public String toJava(Type type) {
-        List<StarDecl> functions = this.declList.stream().filter(curr -> curr.name.getType() instanceof TypeFunction).collect(Collectors.toList());;
+        List<StarDecl> functions = this.declList.stream().filter(curr -> curr.name.getType() instanceof TypeFunction).collect(Collectors.toList());
+        ;
         String functionNames = functions.stream().map(curr -> curr.name.toJava() + ";\n").collect(Collectors.joining());
         String functionAssignments = functions.stream().map(curr -> curr.name.getVar() + " = " + curr.rhs.toJava() + ";\n").collect(Collectors.joining());
-        List<StarDecl> integers = this.declList.stream().filter(curr -> curr.name.getType() instanceof TypeInt).collect(Collectors.toList());;
+        List<StarDecl> integers = this.declList.stream().filter(curr -> curr.name.getType() instanceof TypeInt).collect(Collectors.toList());
+        ;
         String inputs;
         String applies;
         String typeDecl;
-        if(integers.size() > 0) {
+        if (integers.size() > 0) {
             applies = integers.stream().map(cur -> ".apply(" + cur.rhs.toJava() + ")").collect(Collectors.joining());
             List<Type> overallType = integers.stream().map(curr -> curr.name.getType()).collect(Collectors.toList());
-            return  toJavaHelper(integers.stream().map(curr -> curr.name).collect(Collectors.toList()), new TypeFunction(overallType, type), functionNames, functionAssignments) + applies;
+            return toJavaHelper(integers.stream().map(curr -> curr.name).collect(Collectors.toList()), new TypeFunction(overallType, type), functionNames, functionAssignments) + applies;
 
         } else {
             return String.format("(new Supplier<%s>() {\n%s@Override\n" +
@@ -66,11 +98,11 @@ public class TASTDeclArray implements TAST {
                     functionAssignments,
                     this.rhs.toJava());
         }
-                //return String.format("(new %s() {\n @Override\npublic %s %s {%s%sreturn %s;\n}})%s",typeDecl, inputs, functionNames,functionAssignments, result, applies);
+        //return String.format("(new %s() {\n @Override\npublic %s %s {%s%sreturn %s;\n}})%s",typeDecl, inputs, functionNames,functionAssignments, result, applies);
     }
 
     private String toJavaHelper(List<TypedVar> params, Type type, String functionNames, String functionAssignments) {
-        if(params.size() > 1) {
+        if (params.size() > 1) {
             TypeFunction functionType = (TypeFunction) type;
             Type returnType = functionType.removeOneArg();
             return String.format("(new %s() {\n@Override\n" +
@@ -80,7 +112,7 @@ public class TASTDeclArray implements TAST {
                     params.get(0).toJava(),
                     toJavaHelper(
                             params.subList(1, params.size()),
-                            returnType,functionNames, functionAssignments));
+                            returnType, functionNames, functionAssignments));
         } else {
             TypeFunction functionType = (TypeFunction) type;
             Type returnType = functionType.removeOneArg();

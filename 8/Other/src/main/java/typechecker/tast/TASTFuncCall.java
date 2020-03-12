@@ -2,10 +2,10 @@ package typechecker.tast;
 
 import org.json.simple.JSONArray;
 import typechecker.tast.star_ast.StarAST;
-import typechecker.tpal.TPAL;
 import typechecker.type.Type;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class TASTFuncCall implements TAST {
@@ -58,4 +58,17 @@ public class TASTFuncCall implements TAST {
             return String.format("(%s)%s", this.func.toJava(), ".get()");
         }
     }
+
+    @Override
+    public void replaceReservedKeywords(Map<String, String> reserved) {
+        // doesn't do anything
+    }
+
+    @Override
+    public void replaceReservedKeyword(String varName, String replacement) {
+        this.func.replaceReservedKeyword(varName, replacement);
+        this.arguments.forEach(arg -> arg.replaceReservedKeyword(varName, replacement));
+    }
+
+
 }

@@ -4,6 +4,7 @@ import org.json.simple.JSONArray;
 import typechecker.tast.star_ast.StarAST;
 import typechecker.type.Type;
 
+import java.util.Map;
 import java.util.Objects;
 
 public class TASTConditional implements TAST {
@@ -45,5 +46,17 @@ public class TASTConditional implements TAST {
     @Override
     public String toJava(Type type) {
         return String.format("%s.equals(new MyInteger(0)) ? %s : %s", this.condClause.toJava(), this.ifTrue.toJava(), this.ifFalse.toJava());
+    }
+
+    @Override
+    public void replaceReservedKeywords(Map<String, String> reserved) {
+        // doesn't do anything
+    }
+
+    @Override
+    public void replaceReservedKeyword(String varName, String replacement) {
+        this.condClause.replaceReservedKeyword(varName, replacement);
+        this.ifTrue.replaceReservedKeyword(varName, replacement);
+        this.ifFalse.replaceReservedKeyword(varName, replacement);
     }
 }

@@ -7,8 +7,8 @@ import typechecker.type.TypeFunction;
 import typechecker.type.TypedVar;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class TASTFunc implements TAST {
     List<TypedVar> parameters;
@@ -55,6 +55,17 @@ public class TASTFunc implements TAST {
                     this.body.toJava());
 
         }
+    }
+
+    @Override
+    public void replaceReservedKeywords(Map<String, String> reserved) {
+        // doesn't do anything
+    }
+
+    @Override
+    public void replaceReservedKeyword(String varName, String replacement) {
+        this.parameters.forEach(var -> var.replaceReservedKeyword(varName, replacement));
+        this.body.replaceReservedKeyword(varName, replacement);
     }
 
     private String toJavaHelper(List<TypedVar> params, Type type) {

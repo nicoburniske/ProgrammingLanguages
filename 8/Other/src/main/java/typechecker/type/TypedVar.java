@@ -56,6 +56,10 @@ public class TypedVar extends TPALVar implements JSONAware {
         return type;
     }
 
+    public String getVar() {
+        return super.var;
+    }
+
     public String toJava() {
         return this.type.toJava() + " " + super.toJava();
     }

@@ -54,4 +54,10 @@ public class TPALVar implements TPAL {
     public String getVar() {
         return var;
     }
+
+    public void replaceReservedKeyword(String varName, String replacement) {
+        if (this.var.equals(varName)) {
+            this.var = replacement;
+        }
+    }
 }

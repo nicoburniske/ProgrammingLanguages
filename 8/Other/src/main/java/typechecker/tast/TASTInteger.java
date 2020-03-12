@@ -3,6 +3,7 @@ package typechecker.tast;
 import typechecker.type.Type;
 
 import java.math.BigInteger;
+import java.util.Map;
 import java.util.Objects;
 
 public class TASTInteger implements TAST {
@@ -38,4 +39,15 @@ public class TASTInteger implements TAST {
     public String toJava(Type type) {
         return String.format("new MyInteger(%s)",this.i.toString());
     }
+
+    @Override
+    public void replaceReservedKeywords(Map<String, String> reserved) {
+        // doesn't do anything
+    }
+
+    @Override
+    public void replaceReservedKeyword(String varName, String replacement) {
+        // doesn't do anything
+    }
+
 }

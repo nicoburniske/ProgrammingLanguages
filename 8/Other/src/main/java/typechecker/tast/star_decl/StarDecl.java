@@ -42,4 +42,9 @@ public class StarDecl implements JSONAware {
     public int hashCode() {
         return Objects.hash(name, rhs);
     }
+
+    public void replaceReservedKeyword(String varName, String replacement) {
+        this.name.replaceReservedKeyword(varName, replacement);
+        this.rhs.replaceReservedKeyword(varName, replacement);
+    }
 }

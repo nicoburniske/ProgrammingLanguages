@@ -3,6 +3,8 @@ package typechecker.tast;
 import org.json.simple.JSONAware;
 import typechecker.type.Type;
 
+import java.util.Map;
+
 /**
  * A TAST expression has one of these shapes:
  * <ul>
@@ -26,4 +28,6 @@ import typechecker.type.Type;
  */
 public interface TAST extends JSONAware {
     String toJava(Type type);
+    void replaceReservedKeywords(Map<String, String> reserved);
+    void replaceReservedKeyword(String varName, String replacement);
 }

@@ -2,6 +2,7 @@ package typechecker.tast;
 
 import typechecker.type.Type;
 
+import java.util.Map;
 import java.util.Objects;
 
 public class TASTVar implements TAST{
@@ -32,5 +33,17 @@ public class TASTVar implements TAST{
     @Override
     public String toJava(Type type) {
         return this.variable;
+    }
+
+    @Override
+    public void replaceReservedKeywords(Map<String, String> reserved) {
+        // doesn't need to do anything
+    }
+
+    @Override
+    public void replaceReservedKeyword(String varName, String replacement) {
+        if (this.variable.equals(varName)) {
+            this.variable = replacement;
+        }
     }
 }

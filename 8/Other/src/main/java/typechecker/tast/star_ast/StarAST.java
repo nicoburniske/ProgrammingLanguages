@@ -5,6 +5,7 @@ import org.json.simple.JSONObject;
 import typechecker.tast.TAST;
 import typechecker.type.Type;
 
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -51,5 +52,12 @@ public class StarAST implements JSONAware {
 
     public String toJava() {
         return this.expr.toJava(this.type);
+    }
+
+    public void replaceReservedKeyword(String varName, String replacement) {
+        this.expr.replaceReservedKeyword(varName, replacement);
+    }
+    public void replaceReservedKeywords(Map<String, String> reserved) {
+        this.expr.replaceReservedKeywords(reserved);
     }
 }
