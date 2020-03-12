@@ -14,8 +14,7 @@ public class main {
         TPAL tpal = Parser.parseJSON(obj);
         try {
             StarAST ast = tpal.typeCheck(StandardLib.stdLib()).getLeft();
-            System.out.println(ast.toJSONString());
-            System.out.println(ast.toJava());
+            System.out.println(postProcessing(ast.toJava()));
         } catch (Exception e) {
             System.out.println(String.format("\"type error: %s\"", e.getMessage()));
             return;
