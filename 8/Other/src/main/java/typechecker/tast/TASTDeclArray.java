@@ -53,8 +53,9 @@ public class TASTDeclArray implements TAST {
         String applies;
         String typeDecl;
         if(integers.size() > 0) {
+            applies = integers.stream().map(cur -> ".apply(" + cur.rhs.toJava() + ")").collect(Collectors.joining());
             List<Type> overallType = integers.stream().map(curr -> curr.name.getType()).collect(Collectors.toList());
-            return  toJavaHelper(integers.stream().map(curr -> curr.name).collect(Collectors.toList()), new TypeFunction(overallType, type), functionNames, functionAssignments);
+            return  toJavaHelper(integers.stream().map(curr -> curr.name).collect(Collectors.toList()), new TypeFunction(overallType, type), functionNames, functionAssignments) + applies;
 
         } else {
             return String.format("(new Supplier<%s>() {\n@Override\n" +
