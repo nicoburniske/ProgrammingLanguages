@@ -14,6 +14,10 @@ public interface TypeLambda extends Type {
         return "";
     }
 
+    /**
+     * THIS SHOULD NEVER BE CALLED
+     * @return
+     */
     @Override
     default String toJava() {
         return "";

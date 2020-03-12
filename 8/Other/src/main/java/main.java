@@ -31,14 +31,24 @@ public class main {
             return;
         }
     }
+
+    /**
+     * This function creates The file to go around the Java Program.
+     * It add the imports, as well as removing some function names that
+     * Java does not allow
+     * @param val
+     * @return
+     */
     private static String postProcessing(String val) {
         val = val
                 .replace("+", "plusRESERVED")
                 .replace("*", "timesRESERVED")
-                .replace("^", "exponentReserved")
-                .replace("^switch", "switch_");
+                .replace("^", "exponentRESERVED")
+                .replace("switch", "switch_")
+                .replace("int", "int_")
+                .replace("double", "double_");
 //                .replace("@", "atRESERVED")
-                //.replace("!", "exclaimRESERVED");
+//                .replace("!", "exclaimRESERVED");
 //                .replace("=", "equalsRESERVED");
         return String.format("package utils;\n" + "\n" +
                 "import java.util.function.Function;\n" +

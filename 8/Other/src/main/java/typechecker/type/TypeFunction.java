@@ -75,6 +75,12 @@ public class TypeFunction implements Type{
         }
     }
 
+    /**
+     * This function helps to curry the types so that the Java types make sense
+     * @param arguments the arguments that need to be curried into the Java type
+     * @param outputType the return type of the TypeFunction
+     * @return A Java formatted Function<> type that corresponds to this Type
+     */
     public static String toJavaHelper(List<Type> arguments, Type outputType) {
         if(arguments.size() == 0) {
             return outputType.toJava();
@@ -83,7 +89,11 @@ public class TypeFunction implements Type{
         }
     }
 
-    //TODO document
+
+    /**
+     * This function helps to create curried types as the creation of anonymous classes occurs
+      * @return the Function minus 1 Argument (if there are more than one) else the rhs of the Function
+     */
     public Type removeOneArg() {
         if(this.args.size() == 1) {
             return this.rhs;
