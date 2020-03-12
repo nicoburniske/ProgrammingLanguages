@@ -18,7 +18,7 @@ public class main {
         try {
             StarAST ast = tpal.typeCheck(StandardLib.stdLib()).getLeft();
             System.out.println(ast.toJSONString());
-            System.out.println(ast.toJava());
+            System.out.println(ast.toJava().replace("+", "plusRESERVED"));
         } catch (Exception e) {
             System.out.println(String.format("\"type error: %s\"", e.getMessage()));
             return;

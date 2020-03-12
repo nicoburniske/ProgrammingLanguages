@@ -43,4 +43,12 @@ public class TASTFuncCallTest {
         // (Function<Integer, Integer> (int a) -> a).apply(4);
         assertEquals("(((Function<Integer,Integer>)(Integer a) -> a)).apply(4))", call2.toJava(new TypeInt()));
     }
+
+    @Test
+    public void plusTestToJava() {
+        List<TypedVar> params = Arrays.asList(new TypedVar("left", new TypeInt()), new TypedVar("right", new TypeInt()));
+        TASTFuncCall call = new TASTFuncCall(new StarAST(new TASTVar("+"),
+                new TypeFunction(Arrays.asList(new TypeInt(), new TypeInt()), new TypeInt())),Arrays.asList(new StarAST(new TASTInteger(5), new TypeInt()), new StarAST(new TASTInteger(6), new TypeInt())));
+        //assertEquals("", call.toJava(new TypeInt()));
+    }
 }
