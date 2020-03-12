@@ -43,7 +43,7 @@ public class TASTFuncCall implements TAST {
     @Override
     public String toJava(Type type) {
         if(func.getExpr().equals(new TASTVar("@"))) {
-            return String.format("new Cell(%s)", this.arguments.get(0).toJava());
+            return String.format("new Cell<>(%s)", this.arguments.get(0).toJava());
         } else if(func.getExpr().equals(new TASTVar("!"))) {
             return arguments.get(0).toJava() + ".retrieve()";
         } else if(func.getExpr().equals(new TASTVar("="))) {
