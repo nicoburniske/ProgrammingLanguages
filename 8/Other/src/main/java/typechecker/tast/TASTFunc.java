@@ -67,7 +67,7 @@ public class TASTFunc implements TAST {
                     returnType.toJava(),
                     params.get(0).toJava(),
                     toJavaHelper(
-                            params.subList(0, params.size()),
+                            params.subList(1, params.size()),
                             returnType));
         } else {
             TypeFunction functionType = (TypeFunction) type;
