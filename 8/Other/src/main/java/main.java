@@ -24,12 +24,12 @@ public class main {
         val = val
                 .replace("+", "plusRESERVED")
                 .replace("*", "timesRESERVED")
-                .replace("^", "exponentReserved")
+                .replace("^", "exponentRESERVED")
                 .replace("switch", "switch_")
                 .replace("int", "int_")
                 .replace("double", "double_");
 //                .replace("@", "atRESERVED")
-                //.replace("!", "exclaimRESERVED");
+//                .replace("!", "exclaimRESERVED");
 //                .replace("=", "equalsRESERVED");
         return String.format("package utils;\n" + "\n" +
                 "import java.util.function.Function;\n" +
