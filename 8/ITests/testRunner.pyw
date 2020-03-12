@@ -1,5 +1,6 @@
 import os
 import string
+import subprocess
 
 
 def isInt(s):
@@ -34,16 +35,15 @@ for ii in range(len(sortedIn)):
         continue
     # os.system("./xinterpret < {} > result.txt".format(inF))
     # Run xtranslate on all inputs, also copy output file to dir
-    os.system(xTranslateShell.format(inF, "{}.in".format(testCount)))
-    os.system("cp {} {}.out".format(outF, testCount))
+    subprocess.call(xTranslateShell.format(inF, "{}.in".format(testCount)))
+    subprocess.call("cp {} {}.out".format(outF, testCount))
     # actual = open("result.txt", 'r').read()
-    testCount += 1
-os.system("./make_exe")
+subprocess.call("./make_exe")
 
 # run executables and then diff
 numberOfFailures = 0
 for ii in range(testCount):
-    os.system("./{} > result.txt".format(ii))
+    subprocess.call("./{} > result.txt".format(ii))
     translateResult = open("result.txt", 'r').read()
     expectedResult = open("{}.out".format(ii)).read()
 
@@ -56,4 +56,3 @@ for ii in range(testCount):
         print("Expected: {}".format(expectedResult))
         print("======================================================")
 print(numberOfFailures)
-
