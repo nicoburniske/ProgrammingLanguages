@@ -82,4 +82,13 @@ public class TypeFunction implements Type{
             return "Function<" + arguments.get(0).toJava() + "," + toJavaHelper(arguments.subList(1,arguments.size()), outputType) + ">";
         }
     }
+
+    //TODO document
+    public Type removeOneArg() {
+        if(this.args.size() == 0) {
+            return this.rhs;
+        } else {
+            return new TypeFunction(this.args.subList(1, this.args.size()), this.rhs);
+        }
+    }
 }

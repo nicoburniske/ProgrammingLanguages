@@ -3,6 +3,7 @@ package typechecker.tast;
 import org.json.simple.JSONArray;
 import typechecker.tast.star_ast.StarAST;
 import typechecker.type.Type;
+import typechecker.type.TypeFunction;
 import typechecker.type.TypedVar;
 
 import java.util.List;
@@ -43,7 +44,40 @@ public class TASTFunc implements TAST {
 
     @Override
     public String toJava(Type type) {
-        String params = parameters.stream().map(TypedVar::toJava).collect(Collectors.joining(","));
-        return String.format("((%s)(%s) -> %s)", type.toJava(), params, this.body.toJava());
+        if(parameters.size() > 0) {
+            return toJavaHelper(this.parameters, type);
+        } else {
+            TypeFunction functionType = (TypeFunction) type;
+            return String.format("(new %s() {\n@Override\n" +
+                    "            public %s get() {\nreturn %s;\n}\n})",
+                    functionType.toJava(),
+                    functionType.removeOneArg().toJava(),
+                    this.body.toJava());
+
+        }
+    }
+
+    private String toJavaHelper(List<TypedVar> params, Type type) {
+        if(params.size() > 1) {
+            TypeFunction functionType = (TypeFunction) type;
+            Type returnType = functionType.removeOneArg();
+            return String.format("(new %s() {\n@Override\n" +
+                            "            public %s apply(%s) {\nreturn %s;\n}\n})",
+                    functionType.toJava(),
+                    returnType.toJava(),
+                    params.get(0).toJava(),
+                    toJavaHelper(
+                            params.subList(0, params.size()),
+                            returnType));
+        } else {
+            TypeFunction functionType = (TypeFunction) type;
+            Type returnType = functionType.removeOneArg();
+            return String.format("(new %s() {\n@Override\n" +
+                            "            public %s apply(%s) {\nreturn %s;\n}\n})",
+                    functionType.toJava(),
+                    returnType.toJava(),
+                    params.get(0).toJava(),
+                    this.body.toJava());
+        }
     }
 }
