@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.util.Comparator;
 import java.util.Objects;
 
+// Wrapper class around a Big Integer
 public class MyInteger  extends Number implements Comparable<MyInteger>, Comparator<MyInteger> {
     BigInteger num;
     public MyInteger(Integer i)
