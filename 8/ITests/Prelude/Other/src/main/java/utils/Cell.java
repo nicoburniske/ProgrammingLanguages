@@ -1,5 +1,6 @@
 package utils;
 
+// Cell class from assignment description
 class Cell<T> {
 
     private T c;

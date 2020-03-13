@@ -38,8 +38,6 @@ public class MyInteger  extends Number implements Comparable<MyInteger>, Compara
         return num.doubleValue();
     }
 
-
-
     @Override
     public int compareTo(MyInteger o) {
         return this.num.compareTo(o.num);
