@@ -51,7 +51,7 @@ public class TASTDeclArray implements TAST {
             String reservedWord = includesReserved(currVarName, reserved);
             if (reservedWord != null) {
                 String replacement = reserved.get(reservedWord);
-                String updatedVarName = currVarName.replaceAll(reservedWord, replacement);
+                String updatedVarName = currVarName.replace(reservedWord, replacement);
                 this.replaceReservedKeyword(currVarName, updatedVarName);
             }
         }
@@ -62,6 +62,7 @@ public class TASTDeclArray implements TAST {
         for (StarDecl d : this.declList) {
             d.replaceReservedKeyword(varName, replacement);
         }
+        this.rhs.replaceReservedKeyword(varName, replacement);
     }
 
     private String includesReserved(String word, Map<String, String> reserved) {
