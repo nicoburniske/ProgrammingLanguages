@@ -43,6 +43,11 @@ public class StarDecl implements JSONAware {
         return Objects.hash(name, rhs);
     }
 
+    /**
+     * This function replaces a specified Keyword within a scope with its replacement
+     * @param varName the var to be replaced
+     * @param replacement the replacement var
+     */
     public void replaceReservedKeyword(String varName, String replacement) {
         this.name.replaceReservedKeyword(varName, replacement);
         this.rhs.replaceReservedKeyword(varName, replacement);

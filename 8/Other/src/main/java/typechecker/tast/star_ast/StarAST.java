@@ -58,9 +58,21 @@ public class StarAST implements JSONAware {
         return this.expr.toJava(this.type);
     }
 
+    /**
+     * This function replaces a specified Keyword within a scope with its replacement
+     * @param varName the var to be replaced
+     * @param replacement the replacement var
+     */
     public void replaceReservedKeyword(String varName, String replacement) {
         this.expr.replaceReservedKeyword(varName, replacement);
     }
+
+
+    /**
+     * This function itterates though the TAST and replaces and Decls that
+     * use a reserved key such as !, @, + and replaces. that var with a new String
+     * @param reserved the map of keywords to their replacements.
+     */
     public void replaceReservedKeywords(Map<String, String> reserved) {
         this.expr.replaceReservedKeywords(reserved);
     }
