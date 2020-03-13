@@ -83,11 +83,11 @@ public class TASTDeclArray implements TAST {
     @Override
     public String toJava(Type type) {
         List<StarDecl> functions = this.declList.stream().filter(curr -> curr.name.getType() instanceof TypeFunction).collect(Collectors.toList());
-        ;
+
         String functionNames = functions.stream().map(curr -> curr.name.toJava() + ";\n").collect(Collectors.joining());
         String functionAssignments = functions.stream().map(curr -> curr.name.getVar() + " = " + curr.rhs.toJava() + ";\n").collect(Collectors.joining());
         List<StarDecl> integers = this.declList.stream().filter(curr -> curr.name.getType() instanceof TypeInt).collect(Collectors.toList());
-        ;
+
         String inputs;
         String applies;
         String typeDecl;
@@ -105,7 +105,6 @@ public class TASTDeclArray implements TAST {
                     functionAssignments,
                     this.rhs.toJava());
         }
-        //return String.format("(new %s() {\n @Override\npublic %s %s {%s%sreturn %s;\n}})%s",typeDecl, inputs, functionNames,functionAssignments, result, applies);
     }
 
     private String toJavaHelper(List<TypedVar> params, Type type, String functionNames, String functionAssignments) {
