@@ -69,7 +69,7 @@ public class StarAST implements JSONAware {
 
 
     /**
-     * This function itterates though the TAST and replaces and Decls that
+     * This function itterates though the StarAST and replaces and Decls that
      * use a reserved key such as !, @, + and replaces. that var with a new String
      * @param reserved the map of keywords to their replacements.
      */
