@@ -36,6 +36,18 @@ public interface TAST extends JSONAware {
      * @return a Java Program (represented as a string) that corresponds to this TAST
      */
     String toJava(Type type);
+
+    /**
+     * This function itterates though the TAST and replaces and Decls that
+     * use a reserved key such as !, @, + and replaces. that var with a new String
+     * @param reserved the map of keywords to their replacements.
+     */
     void replaceReservedKeywords(Map<String, String> reserved);
+
+    /**
+     * This function replaces a specified Keyword within a scope with its replacement
+     * @param varName the var to be replaced
+     * @param replacement the replacement var
+     */
     void replaceReservedKeyword(String varName, String replacement);
 }

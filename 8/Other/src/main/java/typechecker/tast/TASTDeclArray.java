@@ -65,6 +65,12 @@ public class TASTDeclArray implements TAST {
         this.rhs.replaceReservedKeyword(varName, replacement);
     }
 
+    /**
+     * Does this {@param word} contain any of the reserved keys
+     * @param word the word be check
+     * @param reserved the keymap
+     * @return the key that is contained in word or null
+     */
     private String includesReserved(String word, Map<String, String> reserved) {
         for (Map.Entry<String, String> entry : reserved.entrySet()) {
             if (word.contains(entry.getKey())) {
