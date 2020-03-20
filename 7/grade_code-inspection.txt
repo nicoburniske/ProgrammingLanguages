@@ -26,14 +26,14 @@ their values only when that reference is evaluated. That is why
 your example will not trigger a type error at runtime: in p, you are 
 referencing functions f and y before their definitions, but since 
 p isn't called until the program body, all variable declarations 
-will have been updated by the time its body is evaluated, and 
+will have been updated by the time p's body is evaluated, and 
 there will be no type mismatches. 
 
 Your example would result in a runtime error if you changed p's 
 value to be the result of calling f on y (remove the function wrapper).
 
 Here is a simpler example demonstrating the problem:
-     [let x = f 0, let f = (fun* (x:int) x), 666]
+     [let x = (call f 0), let f = (fun* (x:int) x), 666]
 
 
 Task 3
