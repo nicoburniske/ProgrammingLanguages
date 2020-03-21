@@ -1,5 +1,7 @@
 package common;
 
+import static interpreter.utils.RuntimeExceptions.ERROR_UNDECLARED_VARIABLE_TEMPLATE;
+
 /**
  * End of the List
  *
@@ -14,7 +16,7 @@ public class LookupTableEnd<Key, Value> implements LookupTable<Key, Value> {
 
     @Override
     public Value get(Key key) {
-        return null;
+        throw new IllegalStateException(String.format(ERROR_UNDECLARED_VARIABLE_TEMPLATE, key));
     }
 
     @Override
