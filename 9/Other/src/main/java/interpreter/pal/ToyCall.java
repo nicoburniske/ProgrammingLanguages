@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static interpreter.utils.RuntimeExceptions.ERROR_FUNCTION_EXPECTED;
+
 /**
  * Represents the invocation of a PALFunc
  */
@@ -48,8 +50,7 @@ public class ToyCall implements Toy {
             }
             return ((ValuePrimop)val).apply(interpretedArgs, new EnvStoreTuple(newTuple.getLeft(), temp.getRight()));
         } else {
-            // should never be called
-            return new ValueEnvStoreTuple(new ValueInt(-666L), tuple);
+            throw new IllegalStateException(ERROR_FUNCTION_EXPECTED);
         }
     }
 }

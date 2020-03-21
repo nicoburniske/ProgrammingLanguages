@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import static interpreter.utils.RuntimeExceptions.ERROR_ARGS_PARAMS_COUNT_DONT_MATCH;
+
 /**
  * Represents a Function stored in the Store
  */
@@ -40,6 +42,9 @@ public class ValueClosure implements IValue {
         EnvStoreTuple temp = new EnvStoreTuple(this.env, tuple.getRight());
         List<ToyVar> params = this.function.getParams();
 
+        if(params.size() != args.size()) {
+            throw new IllegalStateException(ERROR_ARGS_PARAMS_COUNT_DONT_MATCH);
+        }
         List<IValue> interpretedArgs = new ArrayList<>();
         ValueEnvStoreTuple argTuple;
         // Lookup params in given environment/store tuple

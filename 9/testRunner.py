@@ -6,8 +6,8 @@ def isInt(s):
         return True
     except ValueError:
         return False
-shellDiff = "./xinterpret < {} | diff -w - {}"
-path = "/Users/nicolasburniske/Documents/collected-tests/5/ITests"
+shellDiff = "./xinterpreter < {} | diff -w - {}"
+path = "/home/herzberg/Documents/CS4400/collected-tests/5/ITests"
 translateTable = str.maketrans('', '', string.whitespace)
 files = [os.path.join(path, fn) for fn in next(os.walk(path))[2]]
 inFiles = filter(lambda f: "-in" in f, files)
@@ -20,13 +20,11 @@ numberOfFailures = 0
 for ii in range(len(sortedIn)):
     inF = sortedIn[ii]
     outF = sortedOut[ii]
-    actual = open("result.txt", 'r').read()
     expected = open(outF, 'r').read()
-    if not isInt(expected):
-        continue
     os.system("./xinterpreter < {} > result.txt".format(inF))
+    actual = open("result.txt", 'r').read()
     comparison = actual.translate(translateTable) == expected.translate(translateTable)
-    if not comparison and not ("\"type error: domain doesn't match\"" == expected):
+    if not comparison :
         numberOfFailures += 1
         print("======================================================")
         print('FAILURE test #{}, FILE: {}'.format(ii, inF))

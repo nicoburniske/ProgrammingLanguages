@@ -36,7 +36,7 @@ public class Decl {
                             ((ToyFunc)this.rhs).interpret(env, oldEnv.getLeft()), tuple));
         } else {
            // THIS SHOULD NEVER BE CALLED -666
-            return tuple;
+            throw new IllegalStateException("This is a invalid test now");
         }
     }
 
