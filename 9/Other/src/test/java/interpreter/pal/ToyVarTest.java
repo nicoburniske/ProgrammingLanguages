@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class PALVarTest {
+public class ToyVarTest {
 
     EnvStoreTuple stdLib;
     @Before
@@ -17,7 +17,7 @@ public class PALVarTest {
     }
     @Test
     public void interpret() {
-        stdLib = stdLib.insert(new PALVar("x"), new ValueInt(42L));
-        assertEquals(new ValueEnvStoreTuple(new ValueInt(42),stdLib), new PALVar("x").interpret(stdLib));
+        stdLib = stdLib.insert(new ToyVar("x"), new ValueInt(42L));
+        assertEquals(new ValueEnvStoreTuple(new ValueInt(42),stdLib), new ToyVar("x").interpret(stdLib));
     }
 }

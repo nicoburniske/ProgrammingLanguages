@@ -4,9 +4,7 @@ package interpreter.utils.env;
 import common.LookupTable;
 import common.LookupTableEnd;
 import common.LookupTablePair;
-import interpreter.pal.PALVar;
-import interpreter.utils.store.Store;
-import interpreter.value.IValue;
+import interpreter.pal.ToyVar;
 
 import java.util.Objects;
 
@@ -14,9 +12,9 @@ import java.util.Objects;
  * Represents a non mutable environment. Composes a LookupTable<PALVar, Integer>
  */
 public class Environment {
-    LookupTable<PALVar, Integer> table;
+    LookupTable<ToyVar, Integer> table;
 
-    public Environment(LookupTable<PALVar, Integer> table) {
+    public Environment(LookupTable<ToyVar, Integer> table) {
         this.table = table;
     }
 
@@ -24,15 +22,15 @@ public class Environment {
         this.table = new LookupTableEnd<>();
     }
 
-    public Environment(PALVar palVar, Integer integer) {
+    public Environment(ToyVar palVar, Integer integer) {
         table = new LookupTablePair<>(palVar, integer, new LookupTableEnd<>());
     }
 
-    public Environment put(PALVar key, Integer value) {
+    public Environment put(ToyVar key, Integer value) {
         return new Environment(table.put(key, value));
     }
 
-    public Integer get(PALVar key) {
+    public Integer get(ToyVar key) {
         return table.get(key);
     }
 

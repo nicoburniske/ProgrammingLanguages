@@ -10,11 +10,11 @@ import java.util.List;
 /**
  * Represents a sequence of declarations, with a scope
  */
-public class PALDeclArray implements PAL {
+public class ToyDeclArray implements Toy {
     private List<Decl> declList;
-    private PAL scope;
+    private Toy scope;
 
-    public PALDeclArray(List<Decl> declList, PAL scope) {
+    public ToyDeclArray(List<Decl> declList, Toy scope) {
         this.declList = declList;
         this.scope = scope;
     }

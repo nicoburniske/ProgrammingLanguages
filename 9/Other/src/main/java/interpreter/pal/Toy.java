@@ -8,18 +8,18 @@ import interpreter.utils.EnvStoreTuple;
  * The RHS of a Decl must be either a PALInt or a PALFunc
  * XPAL is one of:
  * * <ul>
- * *     <li>- a {@link PALVar}</li>
- * *     <li>- an {@link PALInt}</li>
- * *     <li>- a JSON array of the shape [{@link Decl},...,{@link Decl},{@link PAL}]
+ * *     <li>- a {@link ToyVar}</li>
+ * *     <li>- an {@link ToyInt}</li>
+ * *     <li>- a JSON array of the shape [{@link Decl},...,{@link Decl},{@link Toy}]
  * *       all variables declared in one sequence are pairwise distinct</li>
- * *     <li>- a JSON array of the shape ["fun*",VarList,{@link PAL}]</li>
- * *     <li>- a JSON array of the shape ["call",{@link PAL},{@link PAL},...,{@link PAL}]
+ * *     <li>- a JSON array of the shape ["fun*",VarList,{@link Toy}]</li>
+ * *     <li>- a JSON array of the shape ["call",{@link Toy},{@link Toy},...,{@link Toy}]
  * *       as in all mainstream languages, the first and required
  * *       PAL is to evaluate to a function value</li>
- * *     <li>- a JSON array of the shape ["if-0",{@link PAL},{@link PAL},{@link PAL}]</li>
+ * *     <li>- a JSON array of the shape ["if-0",{@link Toy},{@link Toy},{@link Toy}]</li>
  * *  </ul>
  */
-public interface PAL {
+public interface Toy {
     /**
      * ACCUMULATOR STATEMENT: the Tuple that is being accumulated contains our representation of a Store and an Environment,
      * where the Store is appended to with every instantiation of a variable

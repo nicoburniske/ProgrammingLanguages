@@ -1,6 +1,6 @@
 package interpreter.utils;
 
-import interpreter.pal.PALVar;
+import interpreter.pal.ToyVar;
 import interpreter.utils.env.Environment;
 import interpreter.utils.store.Store;
 import interpreter.value.ValueInt;
@@ -28,9 +28,9 @@ public class EnvStoreTupleTest {
     public void insert() {
         assertEquals(
                 new EnvStoreTuple(
-                    new Environment(new PALVar("q"), 0),
+                    new Environment(new ToyVar("q"), 0),
                     new Store(0, new ValueInt(1L))),
-                empty.insert(new PALVar("q"),new ValueInt(1L)));
+                empty.insert(new ToyVar("q"),new ValueInt(1L)));
     }
 
     @Test

@@ -10,11 +10,11 @@ import java.util.List;
 /**
  * Represents a function
  */
-public class PALFunc implements PAL {
-    private List<PALVar> params;
-    private PAL function;
+public class ToyFunc implements Toy {
+    private List<ToyVar> params;
+    private Toy function;
 
-    public PALFunc(List<PALVar> params, PAL function) {
+    public ToyFunc(List<ToyVar> params, Toy function) {
         this.params = params;
         this.function = function;
     }
@@ -31,7 +31,7 @@ public class PALFunc implements PAL {
         return new ValueEnvStoreTuple(new ValueClosure(this, env), tuple);
     }
 
-    public List<PALVar> getParams() {
+    public List<ToyVar> getParams() {
         return params;
     }
 

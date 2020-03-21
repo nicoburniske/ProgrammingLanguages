@@ -1,7 +1,7 @@
 package interpreter.utils;
 
 import common.TupleGeneric;
-import interpreter.pal.PALVar;
+import interpreter.pal.ToyVar;
 import interpreter.utils.env.Environment;
 import interpreter.utils.store.Store;
 import interpreter.value.*;
@@ -22,7 +22,7 @@ public class EnvStoreTuple extends TupleGeneric<Environment, Store> {
      * @param var the varibale to lookup
      * @return the matching value
      */
-    public IValue lookup(PALVar var) {
+    public IValue lookup(ToyVar var) {
         return this.getRight().get(this.getLeft().get(var));
     }
 
@@ -33,7 +33,7 @@ public class EnvStoreTuple extends TupleGeneric<Environment, Store> {
      * @param value    the value to be inserted into the Store
      * @return the new {@link EnvStoreTuple}
      */
-    public EnvStoreTuple insert(PALVar variable, IValue value) {
+    public EnvStoreTuple insert(ToyVar variable, IValue value) {
         Integer pos = this.getRight().getSize();
         Store newStore = this.getRight().put(pos, value);
         Environment newEnv = this.getLeft().put(variable, pos);
@@ -49,14 +49,14 @@ public class EnvStoreTuple extends TupleGeneric<Environment, Store> {
     public static EnvStoreTuple stdLib() {
         EnvStoreTuple current = new EnvStoreTuple(new Environment(), new Store());
         // Puts a valueprimop into the store representing an addition primop.
-        current = current.insert(new PALVar("+"), new ValuePrimop((List<IValue> args, EnvStoreTuple tuple)  -> {
+        current = current.insert(new ToyVar("+"), new ValuePrimop((List<IValue> args, EnvStoreTuple tuple)  -> {
             ValueInt left = (ValueInt) args.get(0);
             ValueInt right = (ValueInt) args.get(1);
             return new ValueEnvStoreTuple(new ValueInt((left).getNum().add((right).getNum())), tuple);
         }));
 
         // Puts a ValuePrimop into the store representing a multiply primop.
-        current = current.insert(new PALVar("*"), new ValuePrimop((List<IValue> args, EnvStoreTuple tuple)  -> {
+        current = current.insert(new ToyVar("*"), new ValuePrimop((List<IValue> args, EnvStoreTuple tuple)  -> {
             ValueInt left = (ValueInt) args.get(0);
             ValueInt right = (ValueInt) args.get(1);
             return new ValueEnvStoreTuple(new ValueInt((left).getNum().multiply((right).getNum())), tuple);
@@ -64,7 +64,7 @@ public class EnvStoreTuple extends TupleGeneric<Environment, Store> {
 
         // Puts a ValuePrimop into the store representing an exponent primop.
         // Will throw an exception at runtime if the exponent (the right argument)is negative
-        current = current.insert(new PALVar("^"), new ValuePrimop((List<IValue> args, EnvStoreTuple tuple)  -> {
+        current = current.insert(new ToyVar("^"), new ValuePrimop((List<IValue> args, EnvStoreTuple tuple)  -> {
             ValueInt leftInt = (ValueInt) args.get(0);
             ValueInt rightInt = (ValueInt) args.get(1);
             if (rightInt.getNum().compareTo(new BigInteger("0")) >= 0) {
@@ -77,7 +77,7 @@ public class EnvStoreTuple extends TupleGeneric<Environment, Store> {
         //@
         // Allocates a new location for the specified value in the Store and appends it.
         // Returns the Cell containing the allocated location
-        current = current.insert(new PALVar("@"), new ValuePrimop((List<IValue> args, EnvStoreTuple tuple) -> {
+        current = current.insert(new ToyVar("@"), new ValuePrimop((List<IValue> args, EnvStoreTuple tuple) -> {
             IValue val = args.get(0);
             Store store = tuple.getRight();
             int loc = store.getSize();
@@ -87,7 +87,7 @@ public class EnvStoreTuple extends TupleGeneric<Environment, Store> {
 
         //!
         // Obtains the value stored at the location specified in the given Cell and returns it.
-        current = current.insert(new PALVar("!"), new ValuePrimop((List<IValue> args, EnvStoreTuple tuple) -> {
+        current = current.insert(new ToyVar("!"), new ValuePrimop((List<IValue> args, EnvStoreTuple tuple) -> {
             ValueCell val = (ValueCell) args.get(0);
             Store store = tuple.getRight();
             int loc = val.getCell().getLocation();
@@ -97,7 +97,7 @@ public class EnvStoreTuple extends TupleGeneric<Environment, Store> {
         //=
         // consumes two argument values —a cell and an arbitrary value— sticks this second value into the location specified by this cell,
         // and returns the value that used to be at this location.
-        current = current.insert(new PALVar("="), new ValuePrimop((List<IValue> args, EnvStoreTuple tuple)-> {
+        current = current.insert(new ToyVar("="), new ValuePrimop((List<IValue> args, EnvStoreTuple tuple)-> {
             ValueCell cellVal = (ValueCell) args.get(0);
             IValue newVal = args.get(1);
             Store store = tuple.getRight();
