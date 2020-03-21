@@ -9,10 +9,10 @@ import java.math.BigInteger;
 /**
  * Represents a conditional statement
  */
-public class PALConditional implements PAL {
-    private PAL clause, ifTrue, ifFalse;
+public class ToyConditional implements Toy {
+    private Toy clause, ifTrue, ifFalse;
 
-    public PALConditional(PAL clause, PAL ifTrue, PAL ifFalse) {
+    public ToyConditional(Toy clause, Toy ifTrue, Toy ifFalse) {
         this.clause = clause;
         this.ifTrue = ifTrue;
         this.ifFalse = ifFalse;

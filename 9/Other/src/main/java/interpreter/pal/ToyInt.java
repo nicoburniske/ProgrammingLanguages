@@ -9,14 +9,14 @@ import java.math.BigInteger;
 /**
  * Represents an Integer
  */
-public class PALInt implements PAL {
+public class ToyInt implements Toy {
     private BigInteger num;
 
-    public PALInt(BigInteger num) {
+    public ToyInt(BigInteger num) {
         this.num = num;
     }
 
-    public PALInt(Long num) {
+    public ToyInt(Long num) {
         this.num = new BigInteger(String.valueOf(num));
     }
 

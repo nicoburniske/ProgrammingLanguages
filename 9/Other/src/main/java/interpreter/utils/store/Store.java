@@ -4,13 +4,15 @@ import common.LookupTable;
 import common.LookupTableEnd;
 import common.LookupTablePair;
 import interpreter.value.IValue;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONAware;
 
 import java.util.Objects;
 
 /**
  * Represents a non mutable Store. Composes a LookupTable<Integer, IValue>
  */
-public class Store {
+public class Store implements JSONAware {
     LookupTable<Integer, IValue> table;
 
     public Store(Integer integer, IValue value) {
@@ -49,5 +51,14 @@ public class Store {
     @Override
     public int hashCode() {
         return Objects.hash(table);
+    }
+
+    @Override
+    public String toJSONString() {
+        JSONArray arr = new JSONArray();
+        for(int ii = 0; ii < table.getSize(); ii ++ ){
+            arr.add(this.get(ii));
+        }
+        return arr.toJSONString();
     }
 }

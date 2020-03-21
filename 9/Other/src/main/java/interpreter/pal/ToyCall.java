@@ -11,11 +11,11 @@ import java.util.List;
 /**
  * Represents the invocation of a PALFunc
  */
-public class PALCall implements PAL {
-    PAL function;
-    List<PAL> args;
+public class ToyCall implements Toy {
+    Toy function;
+    List<Toy> args;
 
-    public PALCall(PAL function, List<PAL> args) {
+    public ToyCall(Toy function, List<Toy> args) {
         this.function = function;
         this.args = args;
     }
@@ -38,7 +38,7 @@ public class PALCall implements PAL {
             List<IValue> interpretedArgs = new ArrayList<>();
             ValueEnvStoreTuple argTuple;
             Collections.reverse(args);
-            for (PAL arg : args) {
+            for (Toy arg : args) {
                //argTuple = arg.interpret(newTuple);
                EnvStoreTuple forInterpret = new EnvStoreTuple(tuple.getLeft(), temp.getRight());
                argTuple = arg.interpret(forInterpret);

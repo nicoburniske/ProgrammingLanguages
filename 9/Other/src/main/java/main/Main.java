@@ -1,28 +1,48 @@
-//package main;
-//
-//import interpreter.pal.PAL;
-//import interpreter.utils.EnvStoreTuple;
-//import org.json.simple.parser.JSONParser;
-//import typechecker.parse.Parser;
-//import typechecker.tpal.TPAL;
-//import typechecker.utils.StandardLib;
-//
-//import java.io.FileReader;
-//
-//public class Main {
-//    public static void main(String[] args) {
-//        try {
-//                Object obj = new JSONParser().parse("[\"call\",[\"fun*\",[[\"x\",\":\",[\"int\",\"cell\"]]],[[\"x\",\"=\",1],\"+\",[\"x\",\"!\"]]],[0,\"@\"]]");
-//                try {
-//                    // TODO: toJsonString();
-//                    System.out.println(pal.interpret(EnvStoreTuple.stdLib()).getLeft().toJSONString());
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                    System.out.println(String.format("\"run-time error: %s\"", e.getMessage()));
-//                }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-//}
-//
+package main;
+import interpreter.parser.Parser;
+import interpreter.utils.EnvStoreTuple;
+import interpreter.utils.ValueEnvStoreTuple;
+import interpreter.utils.store.Store;
+import jdk.internal.org.objectweb.asm.tree.analysis.Value;
+import org.json.simple.JSONArray;
+import org.json.simple.parser.JSONParser;
+
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
+import interpreter.pal.Toy;
+import org.json.simple.parser.ParseException;
+
+public class Main {
+    public static void main(String[] args) throws IOException, ParseException, IllegalStateException {
+            if ("interpreter".equals(args[0])) {
+                Object obj = new JSONParser().parse(new FileReader(args[1]));
+                if(obj instanceof JSONArray && ((JSONArray)obj).size() > 1 && ((JSONArray)obj).get(0) instanceof String ) {
+                    JSONArray input = (JSONArray)obj;
+                    boolean wantValue = ((String)(input.get(0))).equals("value");
+                    Toy result = Parser.parse(input.get(1));
+                    ValueEnvStoreTuple ans;
+                    Store store;
+                    String finalAns;
+
+                    if(wantValue) {
+                        try {
+                            ans = result.interpret(EnvStoreTuple.stdLib());
+                            finalAns = ans.getLeft().toJSONString();
+                        } catch (IllegalStateException e) {
+                            finalAns = e.getMessage();
+                        }
+                        System.out.println(String.format("[\"value\", %s]", finalAns));
+                    } else {
+                        ans = result.interpret(EnvStoreTuple.stdLib());
+                        store = ans.getRight().getRight();
+                        System.out.println(String.format("[\"store\", %s]", store.toJSONString()));
+                    }
+                }
+            } else {
+                throw new IllegalArgumentException("Error: an illegal function was requested");
+            }
+    }
+}
+

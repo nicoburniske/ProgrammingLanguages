@@ -8,10 +8,10 @@ import java.util.Objects;
 /**
  * Represents a Variable in
  */
-public class PALVar implements PAL {
+public class ToyVar implements Toy {
     private String var;
 
-    public PALVar(String var) {
+    public ToyVar(String var) {
         this.var = var;
     }
 
@@ -24,7 +24,7 @@ public class PALVar implements PAL {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        PALVar palVar = (PALVar) o;
+        ToyVar palVar = (ToyVar) o;
         return var.equals(palVar.var);
     }
 

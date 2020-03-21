@@ -1,26 +1,24 @@
 package interpreter.value;
 
-import interpreter.pal.PAL;
-import interpreter.pal.PALFunc;
-import interpreter.pal.PALVar;
+import interpreter.pal.Toy;
+import interpreter.pal.ToyFunc;
+import interpreter.pal.ToyVar;
 import interpreter.utils.EnvStoreTuple;
 import interpreter.utils.ValueEnvStoreTuple;
 import interpreter.utils.env.Environment;
-import org.json.simple.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 /**
  * Represents a Function stored in the Store
  */
 public class ValueClosure implements IValue {
-    private PALFunc function;
+    private ToyFunc function;
     private Environment env;
 
-    public ValueClosure(PALFunc function, Environment env) {
+    public ValueClosure(ToyFunc function, Environment env) {
         this.function = function;
         this.env = env;
     }
@@ -36,16 +34,16 @@ public class ValueClosure implements IValue {
      * @param tuple the tuple containing the current environment and store
      * @return (1) the Value corresponding to the application of this function with the supplied args, and (2) the updated EnvStoreTuple
      */
-    public ValueEnvStoreTuple apply(List<PAL> args, EnvStoreTuple tuple) {
+    public ValueEnvStoreTuple apply(List<Toy> args, EnvStoreTuple tuple) {
         // Temp is the EnvStore tuple that we will use in order to use the environment of the function
         // as well as the current store
         EnvStoreTuple temp = new EnvStoreTuple(this.env, tuple.getRight());
-        List<PALVar> params = this.function.getParams();
+        List<ToyVar> params = this.function.getParams();
 
         List<IValue> interpretedArgs = new ArrayList<>();
         ValueEnvStoreTuple argTuple;
         // Lookup params in given environment/store tuple
-        for (PAL arg : args) {
+        for (Toy arg : args) {
             EnvStoreTuple forInterpret = new EnvStoreTuple(tuple.getLeft(), temp.getRight());
             argTuple = arg.interpret(forInterpret);
             interpretedArgs.add(argTuple.getLeft());

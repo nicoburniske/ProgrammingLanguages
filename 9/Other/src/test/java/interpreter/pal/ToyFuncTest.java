@@ -11,7 +11,7 @@ import java.util.Arrays;
 
 import static org.junit.Assert.*;
 
-public class PALFuncTest {
+public class ToyFuncTest {
     EnvStoreTuple stdLib;
 
     @Before
@@ -21,15 +21,15 @@ public class PALFuncTest {
 
     @Test
     public void interpret() {
-        Decl d1 = new Decl(new PALVar("x"), new PALFunc(Arrays.asList(new PALVar("param1")), new PALCall(new PALVar("+"), Arrays.asList(new PALVar("param1"), new PALVar("y")))));
-        Decl d2 = new Decl(new PALVar("y"), new PALInt(5L));
-        Decl d3 = new Decl(new PALVar("z"), new PALInt(100L));
+        Decl d1 = new Decl(new ToyVar("x"), new ToyFunc(Arrays.asList(new ToyVar("param1")), new ToyCall(new ToyVar("+"), Arrays.asList(new ToyVar("param1"), new ToyVar("y")))));
+        Decl d2 = new Decl(new ToyVar("y"), new ToyInt(5L));
+        Decl d3 = new Decl(new ToyVar("z"), new ToyInt(100L));
 
-        PALDeclArray darr1 = new PALDeclArray(Arrays.asList(d1, d2, d3), new PALCall(new PALVar("x"), Arrays.asList(new PALVar("z"))));
+        ToyDeclArray darr1 = new ToyDeclArray(Arrays.asList(d1, d2, d3), new ToyCall(new ToyVar("x"), Arrays.asList(new ToyVar("z"))));
 
         assertEquals(new ValueInt(105L), darr1.interpret(stdLib).getLeft());
 
-        PALFunc func1 = new PALFunc(Arrays.asList(), new PALInt(5L));
+        ToyFunc func1 = new ToyFunc(Arrays.asList(), new ToyInt(5L));
         assertEquals(new ValueEnvStoreTuple(new ValueClosure(func1, stdLib.getLeft()), stdLib), func1.interpret(stdLib));
     }
 
