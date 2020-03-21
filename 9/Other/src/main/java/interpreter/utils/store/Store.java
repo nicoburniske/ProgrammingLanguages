@@ -56,7 +56,7 @@ public class Store implements JSONAware {
     @Override
     public String toJSONString() {
         JSONArray arr = new JSONArray();
-        for(int ii = 0; ii < table.getSize(); ii ++ ){
+        for(int ii = 6; ii < table.getSize(); ii ++ ){
             arr.add(this.get(ii));
         }
         return arr.toJSONString();
