@@ -8,6 +8,7 @@ import interpreter.utils.EnvStoreTuple;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static interpreter.utils.RuntimeExceptions.ERROR_FUNCTION_EXPECTED;
 
@@ -58,6 +59,8 @@ public class ToyCall implements Toy {
 
     @Override
     public Toy computeStaticDistance(int currDepth, StaticDistanceEnvironment env) {
-
+        List<Toy> argsSD = this.args.stream().map(arg -> arg.computeStaticDistance(currDepth, env)).collect(Collectors.toList());
+        Toy funcSD = this.function.computeStaticDistance(currDepth, env);
+        return new ToyCall(funcSD, argsSD);
     }
 }

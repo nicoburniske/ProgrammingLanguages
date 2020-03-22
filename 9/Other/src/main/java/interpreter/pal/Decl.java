@@ -43,4 +43,8 @@ public class Decl {
     public ToyVar getVar() {
         return this.var;
     }
+
+    public Toy getRhs() {
+        return this.rhs;
+    }
 }

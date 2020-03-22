@@ -2,10 +2,13 @@ package interpreter.pal;
 
 import interpreter.utils.ValueEnvStoreTuple;
 import interpreter.utils.EnvStoreTuple;
+import interpreter.utils.staticDistance.StaticDistanceEnvironment;
+import interpreter.utils.staticDistance.TupleSD;
 import interpreter.value.IValue;
 import interpreter.value.ValueLambdaClosure;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Represents a sequence of declarations, with a scope
@@ -43,4 +46,22 @@ public class ToyDeclArray implements Toy {
         // we change the store but keep the same environment.
         return new ValueEnvStoreTuple(newTuple.getLeft(), new EnvStoreTuple(tuple.getLeft(), newTuple.getRight().getRight()));
     }
+
+    @Override
+    public Toy computeStaticDistance(int currDepth, StaticDistanceEnvironment env) {
+        for (int ii = 0; ii < this.declList.size(); ii++) {
+            Decl d = this.declList.get(ii);
+            ToyVar var = d.getVar();
+            env = env.put(var, new TupleSD(currDepth, ii));
+        }
+
+        StaticDistanceEnvironment finalEnv = env;
+        List<Decl> declListSD = this.declList.stream().map(d -> {
+           return new Decl(d.getVar(), d.getRhs().computeStaticDistance(currDepth, finalEnv));
+        }).collect(Collectors.toList());
+
+        return new ToyDeclArray(declListSD, this.scope.computeStaticDistance(currDepth + 1, env));
+    }
+
+
 }
