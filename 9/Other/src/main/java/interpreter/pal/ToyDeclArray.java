@@ -56,6 +56,14 @@ public class ToyDeclArray implements Toy {
     }
 
     @Override
+    public Toy splitExpression() {
+        //       [(decl x v body) [decl x (cps/value v) (split-expr body k)]]
+        return new ToyDeclArray(
+                this.declList.stream().map(decl -> new Decl(decl.getVar(), decl.cpsVal())).collect(Collectors.toList()),
+                scope.splitExpression());
+    }
+
+    @Override
     public Toy computeStaticDistance(int currDepth, StaticDistanceEnvironment env) {
         for (int ii = 0; ii < this.declList.size(); ii++) {
             Decl d = this.declList.get(ii);

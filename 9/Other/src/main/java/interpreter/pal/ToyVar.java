@@ -34,7 +34,7 @@ public class ToyVar implements Toy {
     }
 
     @Override
-    public Toy splitExpresion() {
+    public Toy splitExpression() {
         return new ToyCall(CPSUtils.K, new ToyVar(this.var));
     }
 

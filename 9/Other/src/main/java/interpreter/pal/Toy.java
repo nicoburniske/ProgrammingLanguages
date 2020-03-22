@@ -38,7 +38,8 @@ public interface Toy {
     Toy computeStaticDistance(int currDepth, StaticDistanceEnvironment env);
 
     default Toy CPS() {
-        return new ToyFunc(Arrays.asList(CPSUtils.K), this.splitExpresion());
+        return new ToyFunc(Arrays.asList(CPSUtils.K), this.splitExpression());
     }
-    Toy splitExpresion();
+
+    Toy splitExpression();
 }

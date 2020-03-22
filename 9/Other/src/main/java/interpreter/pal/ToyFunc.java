@@ -45,10 +45,10 @@ public class ToyFunc implements Toy {
     }
 
     @Override
-    public Toy splitExpresion() {
+    public Toy splitExpression() {
         List<ToyVar> params2 = new ArrayList<>(this.getParams());
         params2.add(0,CPSUtils.K);
-        return new ToyCall(CPSUtils.K, new ToyFunc(params2, new ToyFunc(this.getParams(), this.getFunction().splitExpresion())));
+        return new ToyCall(CPSUtils.K, new ToyFunc(params2, new ToyFunc(this.getParams(), this.getFunction().splitExpression())));
     }
 
     /**

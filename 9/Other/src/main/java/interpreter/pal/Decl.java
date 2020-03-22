@@ -83,7 +83,7 @@ public class Decl {
             ToyFunc func = (ToyFunc) this.rhs;
             List<ToyVar> params = new ArrayList<>(func.getParams());
             params.add(0,CPSUtils.K);
-            return new ToyFunc(params, new ToyFunc(func.getParams(), func.getFunction().splitExpresion()));
+            return new ToyFunc(params, new ToyFunc(func.getParams(), func.getFunction().splitExpression()));
         } else {
             throw new IllegalStateException("This should never happen, You have an invalid test (Or we screwed up)");
         }

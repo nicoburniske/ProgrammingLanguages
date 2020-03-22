@@ -1,6 +1,5 @@
 package interpreter.pal;
 
-import interpreter.utils.CPSUtils;
 import interpreter.utils.ValueEnvStoreTuple;
 import interpreter.utils.EnvStoreTuple;
 import interpreter.utils.staticDistance.StaticDistanceEnvironment;
@@ -47,9 +46,9 @@ public class ToyConditional implements Toy {
     }
 
     @Override
-    public Toy splitExpresion() {
+    public Toy splitExpression() {
         return new ToyCall(this.clause.CPS(),new ToyFunc(Arrays.asList(new ToyVar("of-tst")),
-                new ToyConditional(new ToyVar("of-tst"), this.ifTrue.splitExpresion(), this.ifFalse.splitExpresion())));
+                new ToyConditional(new ToyVar("of-tst"), this.ifTrue.splitExpression(), this.ifFalse.splitExpression())));
     }
 
     @Override

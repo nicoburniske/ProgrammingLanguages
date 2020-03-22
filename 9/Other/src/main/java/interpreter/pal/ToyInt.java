@@ -34,7 +34,7 @@ public class ToyInt implements Toy {
     }
 
     @Override
-    public Toy splitExpresion() {
+    public Toy splitExpression() {
         return new ToyCall(CPSUtils.K, new ToyInt(num));
     }
 

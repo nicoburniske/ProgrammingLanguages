@@ -1,5 +1,6 @@
 package interpreter.pal;
 
+import interpreter.utils.CPSUtils;
 import interpreter.utils.ValueEnvStoreTuple;
 import interpreter.utils.staticDistance.StaticDistanceEnvironment;
 import interpreter.value.*;
@@ -69,7 +70,7 @@ public class ToyCall implements Toy {
     }
 
     @Override
-    public Toy splitExpresion() {
+    public Toy splitExpression() {
         /*
        [(call f a a1, a2)
        [call (receive-k a)
@@ -77,7 +78,15 @@ public class ToyCall implements Toy {
                   [call (receive-k f)
                         [fun of-f
                              (call (call of-f k) result-of-a)]]]]]
+
+          [call (receive-k f)
+                        [fun of-f
+                             (call (call of-f k) result-of-a)]]]
          */
+        List<Toy> argsCopy = new ArrayList<>(this.args);
+        args.add(0, CPSUtils.K);
+        return new ToyCall(this.function.CPS(),
+                new ToyFunc(Arrays.asList(new ToyVar("of-f")), new ToyCall(new ToyCall(new ToyVar("of-f"), CPSUtils.K), argsCopy)));
 
     }
 
