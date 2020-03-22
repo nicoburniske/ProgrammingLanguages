@@ -1,5 +1,7 @@
 package interpreter.pal;
 
+import java.util.Objects;
+
 public class ToySD extends ToyVar {
     private int depth;
     private int declPosition;
@@ -12,5 +14,20 @@ public class ToySD extends ToyVar {
         super("_");
         this.depth = depth;
         this.declPosition = declPosition;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        ToySD toySD = (ToySD) o;
+        return depth == toySD.depth &&
+                declPosition == toySD.declPosition;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), depth, declPosition);
     }
 }
