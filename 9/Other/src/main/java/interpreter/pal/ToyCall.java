@@ -78,4 +78,12 @@ public class ToyCall implements Toy {
     public int hashCode() {
         return Objects.hash(function, args);
     }
+
+    @Override
+    public String toString() {
+        return "ToyCall{" +
+                "function=" + function +
+                ", args=" + args +
+                '}';
+    }
 }
