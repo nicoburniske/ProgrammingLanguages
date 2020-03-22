@@ -19,16 +19,15 @@ import java.util.stream.Collectors;
  */
 public class ToyFunc implements Toy {
     private List<ToyVar> params;
-
-    public Toy getFunction() {
-        return function;
-    }
-
     private Toy function;
 
     public ToyFunc(List<ToyVar> params, Toy function) {
         this.params = params;
         this.function = function;
+    }
+
+    public Toy getFunction() {
+        return function;
     }
 
     @Override
@@ -48,8 +47,8 @@ public class ToyFunc implements Toy {
     @Override
     public Toy splitExpression() {
         List<ToyVar> params2 = new ArrayList<>(this.getParams());
-        params2.add(0,CPSUtils.K);
-        return new ToyCall(CPSUtils.K, new ToyFunc(params2, new ToyFunc(this.getParams(), this.getFunction().splitExpression())));
+        params2.add(0, CPSUtils.K);
+        return new ToyCall(CPSUtils.K, new ToyFunc(params2, this.function.splitExpression()));
     }
 
     /**

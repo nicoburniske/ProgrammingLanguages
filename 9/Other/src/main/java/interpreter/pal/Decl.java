@@ -85,7 +85,7 @@ public class Decl implements JSONAware {
             ToyFunc func = (ToyFunc) this.rhs;
             List<ToyVar> params = new ArrayList<>(func.getParams());
             params.add(0,CPSUtils.K);
-            return new ToyFunc(params, new ToyFunc(func.getParams(), func.getFunction().splitExpression()));
+            return new ToyFunc(params, func.getFunction().splitExpression());
         } else {
             throw new IllegalStateException("This should never happen, You have an invalid test (Or we screwed up)");
         }
@@ -97,7 +97,7 @@ public class Decl implements JSONAware {
         arr.add("let");
         arr.add(this.var);
         arr.add("=");
-        arr.add(this.rhs.toJSONString());
+        arr.add(this.rhs);
         return arr.toJSONString();
     }
 }
