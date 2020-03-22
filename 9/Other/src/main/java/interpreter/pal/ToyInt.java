@@ -6,6 +6,7 @@ import interpreter.utils.staticDistance.StaticDistanceEnvironment;
 import interpreter.value.ValueInt;
 
 import java.math.BigInteger;
+import java.util.Objects;
 
 /**
  * Represents an Integer
@@ -29,5 +30,18 @@ public class ToyInt implements Toy {
     @Override
     public Toy computeStaticDistance(int currDepth, StaticDistanceEnvironment env) {
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ToyInt toyInt = (ToyInt) o;
+        return num.equals(toyInt.num);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(num);
     }
 }

@@ -8,6 +8,7 @@ import interpreter.utils.staticDistance.TupleSD;
 import interpreter.value.ValueClosure;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Represents a function
@@ -32,7 +33,7 @@ public class ToyFunc implements Toy {
             ToyVar var = params.get(ii);
             env = env.put(var, new TupleSD(currDepth, ii));
         }
-        return new ToyFunc(this.params, computeStaticDistance(currDepth + 1, env));
+        return new ToyFunc(this.params, function.computeStaticDistance(currDepth + 1, env));
     }
 
     /**
@@ -48,5 +49,27 @@ public class ToyFunc implements Toy {
 
     public ValueEnvStoreTuple apply(EnvStoreTuple tuple) {
         return this.function.interpret(tuple);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ToyFunc toyFunc = (ToyFunc) o;
+        return params.equals(toyFunc.params) &&
+                function.equals(toyFunc.function);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(params, function);
+    }
+
+    @Override
+    public String toString() {
+        return "ToyFunc{" +
+                "params=" + params +
+                ", function=" + function +
+                '}';
     }
 }

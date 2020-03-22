@@ -30,4 +30,12 @@ public class ToySD extends ToyVar {
     public int hashCode() {
         return Objects.hash(super.hashCode(), depth, declPosition);
     }
+
+    @Override
+    public String toString() {
+        return "ToySD{" +
+                "depth=" + depth +
+                ", declPosition=" + declPosition +
+                '}';
+    }
 }

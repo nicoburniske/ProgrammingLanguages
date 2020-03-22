@@ -8,6 +8,7 @@ import interpreter.utils.EnvStoreTuple;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static interpreter.utils.RuntimeExceptions.ERROR_FUNCTION_EXPECTED;
@@ -62,5 +63,19 @@ public class ToyCall implements Toy {
         List<Toy> argsSD = this.args.stream().map(arg -> arg.computeStaticDistance(currDepth, env)).collect(Collectors.toList());
         Toy funcSD = this.function.computeStaticDistance(currDepth, env);
         return new ToyCall(funcSD, argsSD);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ToyCall toyCall = (ToyCall) o;
+        return function.equals(toyCall.function) &&
+                args.equals(toyCall.args);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(function, args);
     }
 }

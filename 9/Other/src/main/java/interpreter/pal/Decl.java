@@ -4,6 +4,8 @@ import interpreter.utils.EnvStoreTuple;
 import interpreter.utils.ValueEnvStoreTuple;
 import interpreter.value.ValueLambdaClosure;
 
+import java.util.Objects;
+
 /**
  * Represents an individual declaration where the rhs is constrained to being one of:
  * - PALFunc
@@ -46,5 +48,19 @@ public class Decl {
 
     public Toy getRhs() {
         return this.rhs;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Decl decl = (Decl) o;
+        return var.equals(decl.var) &&
+                rhs.equals(decl.rhs);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(var, rhs);
     }
 }

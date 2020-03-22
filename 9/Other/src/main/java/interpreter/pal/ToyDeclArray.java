@@ -8,6 +8,7 @@ import interpreter.value.IValue;
 import interpreter.value.ValueLambdaClosure;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -63,5 +64,17 @@ public class ToyDeclArray implements Toy {
         return new ToyDeclArray(declListSD, this.scope.computeStaticDistance(currDepth + 1, env));
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ToyDeclArray that = (ToyDeclArray) o;
+        return declList.equals(that.declList) &&
+                scope.equals(that.scope);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(declList, scope);
+    }
 }
