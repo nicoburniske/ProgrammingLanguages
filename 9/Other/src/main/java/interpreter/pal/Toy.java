@@ -2,6 +2,7 @@ package interpreter.pal;
 
 import interpreter.utils.ValueEnvStoreTuple;
 import interpreter.utils.EnvStoreTuple;
+import interpreter.utils.staticDistance.StaticDistanceEnvironment;
 
 /**
  * Represents an untyped XPAL expression that should have been typechecked previously.
@@ -29,4 +30,7 @@ public interface Toy {
      * @return the Tuple of (1) the resulting value yielded from the interpretation of the program and (2) the current Environment and Store Tuple
      */
     ValueEnvStoreTuple interpret(EnvStoreTuple tuple);
+
+    // TODO
+    Toy computeStaticDistance(int currDepth, StaticDistanceEnvironment env);
 }

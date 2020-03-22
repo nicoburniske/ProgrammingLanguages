@@ -2,6 +2,7 @@ package interpreter.pal;
 
 import interpreter.utils.ValueEnvStoreTuple;
 import interpreter.utils.EnvStoreTuple;
+import interpreter.utils.staticDistance.StaticDistanceEnvironment;
 import interpreter.value.ValueInt;
 
 import java.math.BigInteger;
@@ -33,5 +34,12 @@ public class ToyConditional implements Toy {
         } else {
             return ifFalse.interpret(newTuple);
         }
+    }
+
+    @Override
+    public Toy computeStaticDistance(int currDepth, StaticDistanceEnvironment env) {
+        return new ToyConditional(this.clause.computeStaticDistance(currDepth, env),
+                this.ifTrue.computeStaticDistance(currDepth, env),
+                this.ifFalse.computeStaticDistance(currDepth, env));
     }
 }

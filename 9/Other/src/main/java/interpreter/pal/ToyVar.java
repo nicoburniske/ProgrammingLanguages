@@ -2,6 +2,8 @@ package interpreter.pal;
 
 import interpreter.utils.ValueEnvStoreTuple;
 import interpreter.utils.EnvStoreTuple;
+import interpreter.utils.staticDistance.StaticDistanceEnvironment;
+import interpreter.utils.staticDistance.TupleSD;
 
 import java.util.Objects;
 
@@ -18,6 +20,16 @@ public class ToyVar implements Toy {
     @Override
     public ValueEnvStoreTuple interpret(EnvStoreTuple tuple) {
         return new ValueEnvStoreTuple(tuple.lookup(this), tuple);
+    }
+
+    @Override
+    public Toy computeStaticDistance(int currDepth, StaticDistanceEnvironment env) {
+        try {
+            TupleSD sd = env.get(this);
+            return new ToySD(sd.getDepth(currDepth), sd.getPosition());
+        } catch (IllegalStateException e) {
+            return this;
+        }
     }
 
     @Override

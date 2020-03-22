@@ -2,6 +2,7 @@ package interpreter.pal;
 
 import interpreter.utils.ValueEnvStoreTuple;
 import interpreter.utils.EnvStoreTuple;
+import interpreter.utils.staticDistance.StaticDistanceEnvironment;
 import interpreter.value.ValueInt;
 
 import java.math.BigInteger;
@@ -23,5 +24,10 @@ public class ToyInt implements Toy {
     @Override
     public ValueEnvStoreTuple interpret(EnvStoreTuple tuple) {
         return new ValueEnvStoreTuple(new ValueInt(this.num), tuple);
+    }
+
+    @Override
+    public Toy computeStaticDistance(int currDepth, StaticDistanceEnvironment env) {
+        return this;
     }
 }

@@ -1,6 +1,7 @@
 package interpreter.pal;
 
 import interpreter.utils.ValueEnvStoreTuple;
+import interpreter.utils.staticDistance.StaticDistanceEnvironment;
 import interpreter.value.*;
 import interpreter.utils.EnvStoreTuple;
 
@@ -39,6 +40,7 @@ public class ToyCall implements Toy {
         } else if (val instanceof ValuePrimop) {
             List<IValue> interpretedArgs = new ArrayList<>();
             ValueEnvStoreTuple argTuple;
+            //TODO: ensure that the reverse is necessary
             Collections.reverse(args);
             for (Toy arg : args) {
                //argTuple = arg.interpret(newTuple);
@@ -52,5 +54,10 @@ public class ToyCall implements Toy {
         } else {
             throw new IllegalStateException(ERROR_FUNCTION_EXPECTED);
         }
+    }
+
+    @Override
+    public Toy computeStaticDistance(int currDepth, StaticDistanceEnvironment env) {
+
     }
 }
