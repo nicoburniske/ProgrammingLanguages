@@ -22,7 +22,7 @@ public class ToyCallTest {
 
     @Test
     public void computeStaticDistance() {
-        ToyCall basicResult = new ToyCall(new ToyFunc(Arrays.asList(new ToyVar("one"), new ToyVar("two")), new ToySD(1,1)), Arrays.asList(new ToyInt(1L), new ToyInt(2L)));
+        ToyCall basicResult = new ToyCall(new ToyFunc(Arrays.asList(new ToyVar("_"), new ToyVar("_")), new ToySD(1,1)), Arrays.asList(new ToyInt(1L), new ToyInt(2L)));
         assertEquals(basicResult,basicTest.computeStaticDistance(3, new StaticDistanceEnvironment()));
     }
 

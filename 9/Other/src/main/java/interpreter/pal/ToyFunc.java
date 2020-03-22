@@ -9,6 +9,7 @@ import interpreter.value.ValueClosure;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * Represents a function
@@ -33,7 +34,7 @@ public class ToyFunc implements Toy {
             ToyVar var = params.get(ii);
             env = env.put(var, new TupleSD(currDepth, ii));
         }
-        return new ToyFunc(this.params, function.computeStaticDistance(currDepth + 1, env));
+        return new ToyFunc(this.params.stream().map(param -> new ToyVar("_")).collect(Collectors.toList()), function.computeStaticDistance(currDepth + 1, env));
     }
 
     /**

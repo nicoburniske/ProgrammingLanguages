@@ -58,7 +58,7 @@ public class ToyDeclArray implements Toy {
 
         StaticDistanceEnvironment finalEnv = env;
         List<Decl> declListSD = this.declList.stream().map(d -> {
-           return new Decl(d.getVar(), d.getRhs().computeStaticDistance(currDepth + 1, finalEnv));
+           return new Decl(new ToyVar("_"), d.getRhs().computeStaticDistance(currDepth + 1, finalEnv));
         }).collect(Collectors.toList());
 
         return new ToyDeclArray(declListSD, this.scope.computeStaticDistance(currDepth + 2, env));

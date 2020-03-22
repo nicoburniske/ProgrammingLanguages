@@ -23,8 +23,8 @@ public class ToyFuncTest {
 
     @Test
     public void computeStaticDistance() {
-        assertEquals(new ToyFunc(Arrays.asList(new ToyVar("one")), new ToySD(1,0)), basicUnit.computeStaticDistance(3, new StaticDistanceEnvironment()));
-        assertEquals(new ToyFunc(Arrays.asList(new ToyVar("one"), new ToyVar("two")), new ToySD(1,1)), basicUnit2.computeStaticDistance(3, new StaticDistanceEnvironment()));
+        assertEquals(new ToyFunc(Arrays.asList(new ToyVar("_")), new ToySD(1,0)), basicUnit.computeStaticDistance(3, new StaticDistanceEnvironment()));
+        assertEquals(new ToyFunc(Arrays.asList(new ToyVar("_"), new ToyVar("_")), new ToySD(1,1)), basicUnit2.computeStaticDistance(3, new StaticDistanceEnvironment()));
 
     }
 }
