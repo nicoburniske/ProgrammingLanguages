@@ -27,22 +27,13 @@ public class ToyConditional implements Toy {
 
         // keep the old environment but use the (possibly) new store
         ValueEnvStoreTuple condTuple = clause.interpret(tuple);
-        if(! (condTuple.getLeft() instanceof ValueInt)) {
-            throw new IllegalStateException(ERROR_INT_EXPECTED);
-        }
         ValueInt cond = (ValueInt) condTuple.getLeft();
-
         EnvStoreTuple newTuple = new EnvStoreTuple(tuple.getLeft(), condTuple.getRight().getRight());
-        ValueEnvStoreTuple ifFalseInterpreted = ifFalse.interpret(newTuple);
-        ValueEnvStoreTuple ifTrueInterpreted = ifTrue.interpret(newTuple);
-        if(!ifFalseInterpreted.getLeft().getClass().equals(ifTrueInterpreted.getLeft().getClass())){
-            throw new IllegalStateException(ERROR_COND_TYPE_ERROR);
-        }
 
         if (cond.getNum().compareTo(new BigInteger("0")) == 0) {
-            return ifTrueInterpreted;
+            return ifTrue.interpret(newTuple);
         } else {
-            return ifFalseInterpreted;
+            return ifFalse.interpret(newTuple);
         }
     }
 }
