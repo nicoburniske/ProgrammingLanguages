@@ -63,4 +63,12 @@ public class Decl {
     public int hashCode() {
         return Objects.hash(var, rhs);
     }
+
+    @Override
+    public String toString() {
+        return "Decl{" +
+                "var=" + var +
+                ", rhs=" + rhs +
+                '}';
+    }
 }

@@ -44,4 +44,11 @@ public class ToyInt implements Toy {
     public int hashCode() {
         return Objects.hash(num);
     }
+
+    @Override
+    public String toString() {
+        return "ToyInt{" +
+                "num=" + num +
+                '}';
+    }
 }

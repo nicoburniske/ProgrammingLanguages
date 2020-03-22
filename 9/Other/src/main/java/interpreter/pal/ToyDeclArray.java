@@ -58,10 +58,10 @@ public class ToyDeclArray implements Toy {
 
         StaticDistanceEnvironment finalEnv = env;
         List<Decl> declListSD = this.declList.stream().map(d -> {
-           return new Decl(d.getVar(), d.getRhs().computeStaticDistance(currDepth, finalEnv));
+           return new Decl(d.getVar(), d.getRhs().computeStaticDistance(currDepth + 1, finalEnv));
         }).collect(Collectors.toList());
 
-        return new ToyDeclArray(declListSD, this.scope.computeStaticDistance(currDepth + 1, env));
+        return new ToyDeclArray(declListSD, this.scope.computeStaticDistance(currDepth + 2, env));
     }
 
     @Override
@@ -76,5 +76,13 @@ public class ToyDeclArray implements Toy {
     @Override
     public int hashCode() {
         return Objects.hash(declList, scope);
+    }
+
+    @Override
+    public String toString() {
+        return "ToyDeclArray{" +
+                "declList=" + declList +
+                ", scope=" + scope +
+                '}';
     }
 }
