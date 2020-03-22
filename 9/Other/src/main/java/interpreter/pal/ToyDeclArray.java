@@ -6,6 +6,7 @@ import interpreter.utils.staticDistance.StaticDistanceEnvironment;
 import interpreter.utils.staticDistance.TupleSD;
 import interpreter.value.IValue;
 import interpreter.value.ValueLambdaClosure;
+import org.json.simple.JSONArray;
 
 import java.util.List;
 import java.util.Objects;
@@ -99,5 +100,13 @@ public class ToyDeclArray implements Toy {
                 "declList=" + declList +
                 ", scope=" + scope +
                 '}';
+    }
+
+    @Override
+    public String toJSONString() {
+        JSONArray arr = new JSONArray();
+        arr.addAll(this.declList);
+        arr.add(this.scope);
+        return arr.toJSONString();
     }
 }

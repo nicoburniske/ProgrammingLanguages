@@ -4,6 +4,7 @@ import interpreter.utils.CPSUtils;
 import interpreter.utils.ValueEnvStoreTuple;
 import interpreter.utils.EnvStoreTuple;
 import interpreter.utils.staticDistance.StaticDistanceEnvironment;
+import org.json.simple.JSONAware;
 
 import java.util.Arrays;
 
@@ -23,7 +24,7 @@ import java.util.Arrays;
  * *     <li>- a JSON array of the shape ["if-0",{@link Toy},{@link Toy},{@link Toy}]</li>
  * *  </ul>
  */
-public interface Toy {
+public interface Toy extends JSONAware {
     /**
      * ACCUMULATOR STATEMENT: the Tuple that is being accumulated contains our representation of a Store and an Environment,
      * where the Store is appended to with every instantiation of a variable
@@ -41,5 +42,8 @@ public interface Toy {
         return new ToyFunc(Arrays.asList(CPSUtils.K), this.splitExpression());
     }
 
+    static boolean alphaEquals(Toy a, Toy b) {
+        return  a.computeStaticDistance(0, new StaticDistanceEnvironment()).equals(b.computeStaticDistance(0, new StaticDistanceEnvironment()));
+    }
     Toy splitExpression();
 }

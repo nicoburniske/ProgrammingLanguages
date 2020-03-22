@@ -4,6 +4,7 @@ import interpreter.utils.ValueEnvStoreTuple;
 import interpreter.utils.EnvStoreTuple;
 import interpreter.utils.staticDistance.StaticDistanceEnvironment;
 import interpreter.value.ValueInt;
+import org.json.simple.JSONArray;
 
 import java.math.BigInteger;
 import java.util.Arrays;
@@ -73,5 +74,15 @@ public class ToyConditional implements Toy {
                 ", ifTrue=" + ifTrue +
                 ", ifFalse=" + ifFalse +
                 '}';
+    }
+
+    @Override
+    public String toJSONString() {
+        JSONArray arr = new JSONArray();
+        arr.add("if-0");
+        arr.add(this.clause);
+        arr.add(this.ifTrue);
+        arr.add(this.ifFalse);
+        return arr.toJSONString();
     }
 }

@@ -56,4 +56,9 @@ public class ToyVar implements Toy {
     public String toString() {
         return this.var;
     }
+
+    @Override
+    public String toJSONString() {
+        return "\"" + this.var + "\"";
+    }
 }

@@ -7,6 +7,7 @@ import interpreter.utils.env.Environment;
 import interpreter.utils.staticDistance.StaticDistanceEnvironment;
 import interpreter.utils.staticDistance.TupleSD;
 import interpreter.value.ValueClosure;
+import org.json.simple.JSONArray;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,5 +87,14 @@ public class ToyFunc implements Toy {
                 "params=" + params +
                 ", function=" + function +
                 '}';
+    }
+
+    @Override
+    public String toJSONString() {
+        JSONArray ret = new JSONArray();
+        ret.add("fun*");
+        ret.add(this.params);
+        ret.add(this.function);
+        return ret.toJSONString();
     }
 }

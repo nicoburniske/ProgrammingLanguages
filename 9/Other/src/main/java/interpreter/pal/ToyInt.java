@@ -57,4 +57,9 @@ public class ToyInt implements Toy {
                 "num=" + num +
                 '}';
     }
+
+    @Override
+    public String toJSONString() {
+        return this.num.toString();
+    }
 }

@@ -5,6 +5,7 @@ import interpreter.utils.ValueEnvStoreTuple;
 import interpreter.utils.staticDistance.StaticDistanceEnvironment;
 import interpreter.value.*;
 import interpreter.utils.EnvStoreTuple;
+import org.json.simple.JSONArray;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -110,5 +111,14 @@ public class ToyCall implements Toy {
                 "function=" + function +
                 ", args=" + args +
                 '}';
+    }
+
+    @Override
+    public String toJSONString() {
+        JSONArray arr = new JSONArray();
+        arr.add("call");
+        arr.add(this.function);
+        arr.addAll(this.args);
+        return arr.toJSONString();
     }
 }

@@ -1,5 +1,7 @@
 package interpreter.pal;
 
+import org.json.simple.JSONArray;
+
 import java.util.Objects;
 
 public class ToySD extends ToyVar {
@@ -37,5 +39,13 @@ public class ToySD extends ToyVar {
                 "depth=" + depth +
                 ", declPosition=" + declPosition +
                 '}';
+    }
+
+    @Override
+    public String toJSONString() {
+        JSONArray arr = new JSONArray();
+        arr.add(this.depth);
+        arr.add(this.declPosition);
+        return arr.toJSONString();
     }
 }

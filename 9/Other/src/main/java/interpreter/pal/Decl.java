@@ -4,6 +4,8 @@ import interpreter.utils.CPSUtils;
 import interpreter.utils.EnvStoreTuple;
 import interpreter.utils.ValueEnvStoreTuple;
 import interpreter.value.ValueLambdaClosure;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONAware;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +16,7 @@ import java.util.Objects;
  * - PALFunc
  * - PALInt
  */
-public class Decl {
+public class Decl implements JSONAware {
     private ToyVar var;
     private Toy rhs;
 
@@ -87,5 +89,15 @@ public class Decl {
         } else {
             throw new IllegalStateException("This should never happen, You have an invalid test (Or we screwed up)");
         }
+    }
+
+    @Override
+    public String toJSONString() {
+        JSONArray arr = new JSONArray();
+        arr.add("let");
+        arr.add(this.var);
+        arr.add("=");
+        arr.add(this.rhs.toJSONString());
+        return arr.toJSONString();
     }
 }
