@@ -1,5 +1,6 @@
 package interpreter.pal;
 
+import interpreter.utils.CPSUtils;
 import interpreter.utils.ValueEnvStoreTuple;
 import interpreter.utils.EnvStoreTuple;
 import interpreter.utils.staticDistance.StaticDistanceEnvironment;
@@ -30,6 +31,11 @@ public class ToyVar implements Toy {
         } catch (IllegalStateException e) {
             return this;
         }
+    }
+
+    @Override
+    public Toy splitExpresion() {
+        return new ToyCall(CPSUtils.K, new ToyVar(this.var));
     }
 
     @Override

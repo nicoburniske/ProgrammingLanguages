@@ -1,8 +1,11 @@
 package interpreter.pal;
 
+import interpreter.utils.CPSUtils;
 import interpreter.utils.ValueEnvStoreTuple;
 import interpreter.utils.EnvStoreTuple;
 import interpreter.utils.staticDistance.StaticDistanceEnvironment;
+
+import java.util.Arrays;
 
 /**
  * Represents an untyped XPAL expression that should have been typechecked previously.
@@ -33,4 +36,9 @@ public interface Toy {
 
     // TODO
     Toy computeStaticDistance(int currDepth, StaticDistanceEnvironment env);
+
+    default Toy CPS() {
+        return new ToyFunc(Arrays.asList(CPSUtils.K), this.splitExpresion());
+    }
+    Toy splitExpresion();
 }

@@ -1,9 +1,12 @@
 package interpreter.pal;
 
+import interpreter.utils.CPSUtils;
 import interpreter.utils.EnvStoreTuple;
 import interpreter.utils.ValueEnvStoreTuple;
 import interpreter.value.ValueLambdaClosure;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -70,5 +73,19 @@ public class Decl {
                 "var=" + var +
                 ", rhs=" + rhs +
                 '}';
+    }
+
+    public Toy cpsVal() {
+        if(this.rhs instanceof ToyInt) {
+            return this.rhs;
+        } else if(this.rhs instanceof ToyFunc) {
+            //      [(fun x body) (fun k (fun x (split-expr body k)))]))
+            ToyFunc func = (ToyFunc) this.rhs;
+            List<ToyVar> params = new ArrayList<>(func.getParams());
+            params.add(0,CPSUtils.K);
+            return new ToyFunc(params, new ToyFunc(func.getParams(), func.getFunction().splitExpresion()));
+        } else {
+            throw new IllegalStateException("This should never happen, You have an invalid test (Or we screwed up)");
+        }
     }
 }

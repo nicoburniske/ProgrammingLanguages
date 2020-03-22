@@ -1,5 +1,6 @@
 package interpreter.pal;
 
+import interpreter.utils.CPSUtils;
 import interpreter.utils.ValueEnvStoreTuple;
 import interpreter.utils.EnvStoreTuple;
 import interpreter.utils.env.Environment;
@@ -7,6 +8,7 @@ import interpreter.utils.staticDistance.StaticDistanceEnvironment;
 import interpreter.utils.staticDistance.TupleSD;
 import interpreter.value.ValueClosure;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -16,6 +18,11 @@ import java.util.stream.Collectors;
  */
 public class ToyFunc implements Toy {
     private List<ToyVar> params;
+
+    public Toy getFunction() {
+        return function;
+    }
+
     private Toy function;
 
     public ToyFunc(List<ToyVar> params, Toy function) {
@@ -35,6 +42,13 @@ public class ToyFunc implements Toy {
             env = env.put(var, new TupleSD(currDepth, ii));
         }
         return new ToyFunc(this.params.stream().map(param -> new ToyVar("_")).collect(Collectors.toList()), function.computeStaticDistance(currDepth + 1, env));
+    }
+
+    @Override
+    public Toy splitExpresion() {
+        List<ToyVar> params2 = new ArrayList<>(this.getParams());
+        params2.add(0,CPSUtils.K);
+        return new ToyCall(CPSUtils.K, new ToyFunc(params2, new ToyFunc(this.getParams(), this.getFunction().splitExpresion())));
     }
 
     /**

@@ -5,10 +5,7 @@ import interpreter.utils.staticDistance.StaticDistanceEnvironment;
 import interpreter.value.*;
 import interpreter.utils.EnvStoreTuple;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static interpreter.utils.RuntimeExceptions.ERROR_FUNCTION_EXPECTED;
@@ -24,6 +21,12 @@ public class ToyCall implements Toy {
         this.function = function;
         this.args = args;
     }
+
+    public ToyCall(Toy function, Toy arg) {
+        this.function = function;
+        this.args = Arrays.asList(arg);
+    }
+
 
     @Override
     public ValueEnvStoreTuple interpret(EnvStoreTuple tuple) {
@@ -63,6 +66,19 @@ public class ToyCall implements Toy {
         List<Toy> argsSD = this.args.stream().map(arg -> arg.computeStaticDistance(currDepth, env)).collect(Collectors.toList());
         Toy funcSD = this.function.computeStaticDistance(currDepth, env);
         return new ToyCall(funcSD, argsSD);
+    }
+
+    @Override
+    public Toy splitExpresion() {
+        /*
+       [(call f a a1, a2)
+       [call (receive-k a)
+             [fun result-of-a
+                  [call (receive-k f)
+                        [fun of-f
+                             (call (call of-f k) result-of-a)]]]]]
+         */
+
     }
 
     @Override

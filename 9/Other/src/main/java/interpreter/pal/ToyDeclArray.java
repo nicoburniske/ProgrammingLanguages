@@ -49,6 +49,13 @@ public class ToyDeclArray implements Toy {
     }
 
     @Override
+    public Toy CPS() {
+        return new ToyDeclArray(
+                this.declList.stream().map(dec -> new Decl(dec.getVar(), dec.cpsVal())).collect(Collectors.toList()),
+                scope.CPS());
+    }
+
+    @Override
     public Toy computeStaticDistance(int currDepth, StaticDistanceEnvironment env) {
         for (int ii = 0; ii < this.declList.size(); ii++) {
             Decl d = this.declList.get(ii);

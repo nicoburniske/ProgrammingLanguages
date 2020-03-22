@@ -1,11 +1,13 @@
 package interpreter.pal;
 
+import interpreter.utils.CPSUtils;
 import interpreter.utils.ValueEnvStoreTuple;
 import interpreter.utils.EnvStoreTuple;
 import interpreter.utils.staticDistance.StaticDistanceEnvironment;
 import interpreter.value.ValueInt;
 
 import java.math.BigInteger;
+import java.util.Arrays;
 import java.util.Objects;
 
 
@@ -42,6 +44,12 @@ public class ToyConditional implements Toy {
         return new ToyConditional(this.clause.computeStaticDistance(currDepth, env),
                 this.ifTrue.computeStaticDistance(currDepth, env),
                 this.ifFalse.computeStaticDistance(currDepth, env));
+    }
+
+    @Override
+    public Toy splitExpresion() {
+        return new ToyCall(this.clause.CPS(),new ToyFunc(Arrays.asList(new ToyVar("of-tst")),
+                new ToyConditional(new ToyVar("of-tst"), this.ifTrue.splitExpresion(), this.ifFalse.splitExpresion())));
     }
 
     @Override
