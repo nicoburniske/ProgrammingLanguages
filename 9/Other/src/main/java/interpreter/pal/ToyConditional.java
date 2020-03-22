@@ -6,8 +6,6 @@ import interpreter.value.ValueInt;
 
 import java.math.BigInteger;
 
-import static interpreter.utils.RuntimeExceptions.ERROR_COND_TYPE_ERROR;
-import static interpreter.utils.RuntimeExceptions.ERROR_INT_EXPECTED;
 
 /**
  * Represents a conditional statement
