@@ -23,7 +23,7 @@ public class ToyVarTest {
     }
     @Test
     public void testCPS() {
-        // System.out.println(v.CPS().computeStaticDistance(0, new StaticDistanceEnvironment()).toJSONString());
+        System.out.println(v.CPS().toJSONString());
         // System.out.println(vResult.computeStaticDistance(0, new StaticDistanceEnvironment()).toJSONString());
         assertTrue(Toy.alphaEquals(v.CPS(), vResult));
     }
