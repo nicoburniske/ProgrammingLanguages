@@ -7,7 +7,7 @@ def isInt(s):
     except ValueError:
         return False
 shellDiff = "./xinterpreter < {} | diff -w - {}"
-path = "/home/herzberg/Documents/CS4400/collected-tests/5/ITests"
+path = "/Users/nicolasburniske/Documents/collected-tests/5/ITests" 
 translateTable = str.maketrans('', '', string.whitespace)
 files = [os.path.join(path, fn) for fn in next(os.walk(path))[2]]
 inFiles = filter(lambda f: "-in" in f, files)
@@ -23,6 +23,8 @@ for ii in range(len(sortedIn)):
     expected = open(outF, 'r').read()
     os.system("./xinterpreter < {} > result.txt".format(inF))
     actual = open("result.txt", 'r').read()
+    if "invalid test" in actual:
+        continue
     comparison = actual.translate(translateTable) == expected.translate(translateTable)
     if not comparison :
         numberOfFailures += 1
