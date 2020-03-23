@@ -4,6 +4,8 @@ import interpreter.pal.Toy;
 import interpreter.pal.ToyCall;
 import interpreter.pal.ToyFunc;
 import interpreter.pal.ToyVar;
+import interpreter.utils.CPSUtils;
+import interpreter.utils.EnvStoreTuple;
 import interpreter.utils.staticDistance.StaticDistanceEnvironment;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,8 +26,16 @@ public class ToyVarTest {
     @Test
     public void testCPS() {
         System.out.println(v.CPS().toJSONString());
-        // System.out.println(vResult.computeStaticDistance(0, new StaticDistanceEnvironment()).toJSONString());
         assertTrue(Toy.alphaEquals(v.CPS(), vResult));
+    }
+
+    @Test
+    public void testInterpretability() {
+        try {
+            CPSUtils.toTestFormat(v.CPS()).interpret(EnvStoreTuple.stdLib());
+        } catch (IllegalStateException e) {
+            assertEquals("\"variable v undeclared\"", e.getMessage());
+        }
     }
 
     @Test

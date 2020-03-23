@@ -2,6 +2,8 @@ package cps;
 
 import interpreter.pal.*;
 import interpreter.utils.CPSUtils;
+import interpreter.utils.EnvStoreTuple;
+import interpreter.value.ValueInt;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -35,5 +37,13 @@ public class ToyDeclArrayTest {
         assertTrue(Toy.alphaEquals(ex1.CPS(), result1));
         assertTrue(Toy.alphaEquals(ex2.CPS(), result2));
         assertTrue(Toy.alphaEquals(ex3.CPS(), result3));
+    }
+
+    @Test
+    public void testInterpretable() {
+        System.out.println(CPSUtils.toTestFormat(ex3.CPS()).toJSONString());
+        assertEquals(new ValueInt(42L), CPSUtils.toTestFormat(ex1.CPS()).interpret(EnvStoreTuple.stdLib()).getLeft());
+        assertEquals(new ValueInt(4L), CPSUtils.toTestFormat(ex2.CPS()).interpret(EnvStoreTuple.stdLib()).getLeft());
+        assertEquals(new ValueInt(4L), CPSUtils.toTestFormat(ex3.CPS()).interpret(EnvStoreTuple.stdLib()).getLeft());
     }
 }

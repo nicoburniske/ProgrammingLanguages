@@ -35,6 +35,13 @@ public class ToyFunc implements Toy {
         return new ValueEnvStoreTuple(new ValueClosure(this, tuple.getLeft()), tuple);
     }
 
+    /**
+     * Allows the construction of a ValueClosure with a different environment. Only usage is in Decl
+     */
+    public ValueEnvStoreTuple interpret(EnvStoreTuple tuple, Environment env) {
+        return new ValueEnvStoreTuple(new ValueClosure(this, env), tuple);
+    }
+
     @Override
     public Toy computeStaticDistance(int currDepth, StaticDistanceEnvironment env) {
         for (int ii = 0; ii < params.size(); ii++) {
@@ -45,17 +52,17 @@ public class ToyFunc implements Toy {
     }
 
     @Override
+    public Toy CPS() {
+        List<ToyVar> params = new ArrayList<>(this.params);
+        params.add(0, CPSUtils.K);
+        return new ToyFunc(this.params, this.function.splitExpression());
+    }
+
+    @Override
     public Toy splitExpression() {
         List<ToyVar> params2 = new ArrayList<>(this.getParams());
         params2.add(0, CPSUtils.K);
         return new ToyCall(CPSUtils.K, new ToyFunc(params2, this.function.splitExpression()));
-    }
-
-    /**
-     * Allows the construction of a ValueClosure with a different environment. Only usage is in Decl
-     */
-    public ValueEnvStoreTuple interpret(EnvStoreTuple tuple, Environment env) {
-        return new ValueEnvStoreTuple(new ValueClosure(this, env), tuple);
     }
 
     public List<ToyVar> getParams() {

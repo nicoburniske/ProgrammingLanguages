@@ -17,12 +17,17 @@ import static interpreter.utils.RuntimeExceptions.ERROR_ARGS_PARAMS_COUNT_DONT_M
  * Represents a Function stored in the Store
  */
 public class ValueClosure implements IValue {
+
     private ToyFunc function;
     private Environment env;
 
     public ValueClosure(ToyFunc function, Environment env) {
         this.function = function;
         this.env = env;
+    }
+
+    public ToyFunc getFunction() {
+        return function;
     }
 
     @Override

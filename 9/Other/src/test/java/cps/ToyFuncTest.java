@@ -5,6 +5,9 @@ import interpreter.pal.ToyCall;
 import interpreter.pal.ToyFunc;
 import interpreter.pal.ToyVar;
 import interpreter.utils.CPSUtils;
+import interpreter.utils.EnvStoreTuple;
+import interpreter.utils.env.Environment;
+import interpreter.value.ValueClosure;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -24,9 +27,8 @@ public class ToyFuncTest {
     }
     @Test
     public void CPS() {
-        // System.out.println(ex1.CPS().toJSONString());
-        // System.out.println(result1.toJSONString());
         assertTrue(Toy.alphaEquals(ex1.CPS(), result1));
+        assertEquals("\"closure\"", CPSUtils.toTestFormat(ex1.CPS()).interpret(EnvStoreTuple.stdLib()).getLeft().toJSONString());
     }
 
 

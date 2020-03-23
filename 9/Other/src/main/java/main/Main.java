@@ -14,12 +14,18 @@ import org.json.simple.parser.ParseException;
 
 public class Main {
     public static void main(String[] args) throws IOException, ParseException, IllegalStateException {
-            if ("interpreter".equals(args[0])) {
-                Object obj = new JSONParser().parse(new FileReader(args[1]));
-                if(obj instanceof JSONArray && ((JSONArray)obj).size() > 1 && ((JSONArray)obj).get(0) instanceof String ) {
+            if (true) {
+                Object obj = new JSONParser().parse("[\"call\",\n" +
+                        "    [\"fun*\",[\"k\"],\n" +
+                        "        [\"call\",\n" +
+                        "            [\"fun*\",[\"k\",\"left\",\"right\"],\n" +
+                        "                [\"call\",\"k\",[\"call\",\"+\",\"left\",\"right\"]]],\n" +
+                        "        [\"fun*\",[\"of-f\"],[\"call\",[\"call\",\"of-f\",\"k\"], \"k\"]],5,100]],\n" +
+                        "    [\"fun*\",[\"identity\"],\"identity\"]]\n");
+                if(true) {
                     JSONArray input = (JSONArray)obj;
-                    boolean wantValue = ((String)(input.get(0))).equals("value");
-                    Toy result = Parser.parse(input.get(1));
+                    boolean wantValue = true;
+                    Toy result = Parser.parse(input);
                     ValueEnvStoreTuple ans;
                     Store store;
                     String finalAns;

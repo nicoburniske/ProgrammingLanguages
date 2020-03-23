@@ -26,4 +26,8 @@ public class CPSUtils {
         put(times, new ToyFunc(Arrays.asList(K, left, right), new ToyCall(K, new ToyCall(times, Arrays.asList(left, right)))));
         put(exp, new ToyFunc(Arrays.asList(K, left, right), new ToyCall(K, new ToyCall(exp, Arrays.asList(left, right)))));
     }};
+
+    public static Toy toTestFormat(Toy expression) {
+        return new ToyCall(expression, new ToyFunc(Arrays.asList(new ToyVar("identity")), new ToyVar("identity")));
+    }
 }
