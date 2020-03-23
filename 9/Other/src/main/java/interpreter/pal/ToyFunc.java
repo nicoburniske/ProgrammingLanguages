@@ -53,9 +53,9 @@ public class ToyFunc implements Toy {
 
     @Override
     public Toy CPS() {
-        List<ToyVar> params = new ArrayList<>(this.params);
-        params.add(0, CPSUtils.K);
-        return new ToyFunc(this.params, this.function.splitExpression());
+        List<ToyVar> params2 = new ArrayList<>(this.params);
+        params2.add(0, CPSUtils.K);
+        return new ToyFunc(params2, this.function.splitExpression());
     }
 
     @Override

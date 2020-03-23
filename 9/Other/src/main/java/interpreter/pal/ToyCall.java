@@ -85,8 +85,8 @@ public class ToyCall implements Toy {
                              (call (call of-f k) result-of-a)]]]
          */
         List<Toy> argsCopy = new ArrayList<>(this.args);
-        ToyCall innerCall = new ToyCall(new ToyFunc(Arrays.asList(CPSUtils.ofF), new ToyCall(new ToyCall(CPSUtils.ofF, CPSUtils.K), CPSUtils.K)), CPSUtils.K);
-        //argsCopIy.add(0, innerCall);
+//        ToyCall innerCall = new ToyCall(new ToyFunc(Arrays.asList(CPSUtils.ofF), new ToyCall(new ToyCall(CPSUtils.ofF, CPSUtils.K), CPSUtils.K)), CPSUtils.K);
+        argsCopy.add(0, CPSUtils.K);
         return new ToyCall(this.function.CPS(), argsCopy);
 
     }
