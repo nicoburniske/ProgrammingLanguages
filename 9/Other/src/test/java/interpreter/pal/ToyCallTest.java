@@ -17,9 +17,7 @@ public class ToyCallTest {
     @Before
     public void init() {
         ex1 = new ToyCall(new ToyFunc(new ArrayList<>(), new ToyInt(100L)), new ArrayList<>());
-        result1 = new ToyFunc(CPSUtils.KList, new ToyCall(new ToyFunc(CPSUtils.KList, new ToyCall(CPSUtils.K, new ToyFunc(CPSUtils.KList,
-                new ToyCall(CPSUtils.K, new ToyInt(100L))))), new ToyFunc(Arrays.asList(new ToyVar("of-f")), new ToyCall(new ToyCall(new ToyVar("of-f"), Arrays.asList(CPSUtils.K)), CPSUtils.K))));
-
+        result1 = new ToyFunc(CPSUtils.KList, new ToyCall(new ToyFunc(CPSUtils.KList, new ToyCall(CPSUtils.K, new ToyInt(100L))), CPSUtils.K));
     }
     @Test
     public void CPS() {

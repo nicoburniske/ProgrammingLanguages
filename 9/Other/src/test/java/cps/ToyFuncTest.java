@@ -21,14 +21,13 @@ public class ToyFuncTest {
     @Before
     public void setUp() throws Exception {
         ex1 = new ToyFunc(Arrays.asList(new ToyVar("x"), new ToyVar("y")), new ToyVar("y"));
-        result1 = new ToyFunc(Arrays.asList(new ToyVar("k")), new ToyCall(CPSUtils.K,
-                new ToyFunc(Arrays.asList(CPSUtils.K, new ToyVar("x"), new ToyVar("y")), new ToyCall(CPSUtils.K, new ToyVar("y"))
-        )));
+        result1 = new ToyFunc(Arrays.asList(CPSUtils.K, new ToyVar("x"), new ToyVar("y")), new ToyCall(CPSUtils.K, new ToyVar("y")));
     }
     @Test
     public void CPS() {
+        System.out.println(CPSUtils.toTestFormat(ex1.CPS()).toJSONString());
         assertTrue(Toy.alphaEquals(ex1.CPS(), result1));
-        assertEquals("\"closure\"", CPSUtils.toTestFormat(ex1.CPS()).interpret(EnvStoreTuple.stdLib()).getLeft().toJSONString());
+        assertEquals("\"closure\"", ex1.CPS().interpret(EnvStoreTuple.stdLib()).getLeft().toJSONString());
     }
 
 

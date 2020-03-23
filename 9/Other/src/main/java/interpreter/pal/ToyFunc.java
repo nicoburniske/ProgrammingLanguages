@@ -60,9 +60,8 @@ public class ToyFunc implements Toy {
 
     @Override
     public Toy splitExpression() {
-        List<ToyVar> params2 = new ArrayList<>(this.getParams());
-        params2.add(0, CPSUtils.K);
-        return new ToyCall(CPSUtils.K, new ToyFunc(params2, this.function.splitExpression()));
+        // TODO: might be wrong
+        return this.CPS();
     }
 
     public List<ToyVar> getParams() {

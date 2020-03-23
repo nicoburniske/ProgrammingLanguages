@@ -72,23 +72,9 @@ public class ToyCall implements Toy {
 
     @Override
     public Toy splitExpression() {
-        /*
-       [(call f a a1, a2)
-       [call (receive-k a)
-             [fun result-of-a
-                  [call (receive-k f)
-                        [fun of-f
-                             (call (call of-f k) result-of-a)]]]]]
-
-          [call (receive-k f)
-                        [fun of-f
-                             (call (call of-f k) result-of-a)]]]
-         */
         List<Toy> argsCopy = new ArrayList<>(this.args);
-//        ToyCall innerCall = new ToyCall(new ToyFunc(Arrays.asList(CPSUtils.ofF), new ToyCall(new ToyCall(CPSUtils.ofF, CPSUtils.K), CPSUtils.K)), CPSUtils.K);
         argsCopy.add(0, CPSUtils.K);
-        return new ToyCall(this.function.CPS(), argsCopy);
-
+        return new ToyCall(this.function.splitExpression(), argsCopy);
     }
 
     @Override

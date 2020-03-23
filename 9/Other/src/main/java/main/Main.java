@@ -15,13 +15,7 @@ import org.json.simple.parser.ParseException;
 public class Main {
     public static void main(String[] args) throws IOException, ParseException, IllegalStateException {
             if (true) {
-                Object obj = new JSONParser().parse("[\"call\",\n" +
-                        "    [\"fun*\",[\"k\"],\n" +
-                        "        [\"call\",\n" +
-                        "            [\"fun*\",[\"k\",\"left\",\"right\"],\n" +
-                        "                [\"call\",\"k\",[\"call\",\"+\",\"left\",\"right\"]]],\n" +
-                        "        [\"fun*\",[\"of-f\"],[\"call\",[\"call\",\"of-f\",\"k\"], \"k\"]],5,100]],\n" +
-                        "    [\"fun*\",[\"identity\"],\"identity\"]]\n");
+                Object obj = new JSONParser().parse("");
                 if(true) {
                     JSONArray input = (JSONArray)obj;
                     boolean wantValue = true;

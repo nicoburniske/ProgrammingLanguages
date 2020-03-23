@@ -30,15 +30,6 @@ public class ToyCallTest {
 
     @Test
     public void CPS() {
-        // System.out.println(CPSUtils.toTestFormat(ex1.CPS()).toJSONString());
-        // System.out.println(CPSUtils.toTestFormat(ex2.CPS()).toJSONString());
-        // ValueClosure val = (ValueClosure) CPSUtils.toTestFormat(ex2.CPS()).interpret(EnvStoreTuple.stdLib()).getLeft();
-//        System.out.println(ex2.toJSONString());
-//        System.out.println(CPSUtils.toTestFormat(ex2.CPS()).toJSONString());
-//        System.out.println(inputInput.CPS().toJSONString());
-        // System.out.println(val.getFunction().toJSONString());
-
-        // System.out.println(CPSUtils.toTestFormat(val.getFunction()).interpret(EnvStoreTuple.stdLib()).getLeft());
         System.out.println(CPSUtils.toTestFormat(ex1.CPS()).toJSONString());
         assertEquals(new ValueInt(4L), CPSUtils.toTestFormat(ex1.CPS()).interpret(EnvStoreTuple.stdLib()).getLeft());
         System.out.println(CPSUtils.toTestFormat(ex2.CPS()).toJSONString());
