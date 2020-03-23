@@ -35,15 +35,37 @@ public interface Toy extends JSONAware {
      */
     ValueEnvStoreTuple interpret(EnvStoreTuple tuple);
 
-    // TODO
+    /**
+     * This function takes a Toy and converts it into static distance form. This means that
+     * every variable reference is replaced by the variables distance from its declaration
+     * and the variables position in its declaration block {@link interpreter.utils.staticDistance.TupleSD}.
+     * If a variable is undeclared it will not be replaced. This function can then be used to help facilitate testing
+     * @param currDepth the number of decls that have been passed through to reach this point in the Toy
+     * @param env the environment, which holds the location of declarations of variables for referencing.
+     * @return the Toy updated into Static distance form
+     */
     Toy computeStaticDistance(int currDepth, StaticDistanceEnvironment env);
 
+    /**
+     * This function takes in two {@link Toy} expressions and returns whether or not they are equivalent (ie they
+     * have the same structure. variable names may be different, but the expressions should be the same.
+     * @param a One {@link Toy} to be evaluated
+     * @param b the other {@link Toy} to be evaluated
+     * @return whether or not {@param a} and {@param b} are equivalent
+     */
+    static boolean alphaEquals(Toy a, Toy b) {
+        return  a.computeStaticDistance(0, new StaticDistanceEnvironment()).equals(b.computeStaticDistance(0, new StaticDistanceEnvironment()));
+    }
+
+    /**
+     * Converts the given {@link Toy} expression into a continuation passing style expression that when evaluated,
+     * will result in the same answer as the original {@link Toy}
+     * @return the continuation passing style expression
+     */
     default Toy CPS() {
         return new ToyFunc(Arrays.asList(CPSUtils.K), this.splitExpression());
     }
 
-    static boolean alphaEquals(Toy a, Toy b) {
-        return  a.computeStaticDistance(0, new StaticDistanceEnvironment()).equals(b.computeStaticDistance(0, new StaticDistanceEnvironment()));
-    }
+
     Toy splitExpression();
 }
