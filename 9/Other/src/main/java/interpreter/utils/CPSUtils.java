@@ -20,7 +20,8 @@ public class CPSUtils {
     public static ToyVar equ = new ToyVar("=");
     public static ToyVar bang = new ToyVar("!");
     public static ToyVar ofTST = new ToyVar("of-tst");
-    private static List<ToyVar> vars = Arrays.asList(K, left, right, ofTST);
+    public static ToyVar identity = new ToyVar("identity");
+    private static List<ToyVar> vars = Arrays.asList(K, left, right, ofTST, identity);
 
     public static Map<ToyVar, Toy> stdLib = new HashMap<ToyVar, Toy>(){{
         put(plus, new ToyFunc(Arrays.asList(K, left, right), new ToyCall(K, new ToyCall(plus, Arrays.asList(left, right)))));
@@ -32,7 +33,7 @@ public class CPSUtils {
     }};
 
     public static Toy toTestFormat(Toy expression) {
-        return new ToyCall(expression, new ToyFunc(Arrays.asList(new ToyVar("identity")), new ToyVar("identity")));
+        return new ToyCall(expression, new ToyFunc(Arrays.asList(identity), identity));
     }
 
     public static void initializeNames(Toy t) {
