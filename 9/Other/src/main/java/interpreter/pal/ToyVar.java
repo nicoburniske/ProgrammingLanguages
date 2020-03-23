@@ -34,12 +34,17 @@ public class ToyVar implements Toy {
     }
 
     @Override
-    public Toy splitExpression() {
+    public Toy CPS() {
         if(CPSUtils.stdLib.containsKey(this)) {
             return CPSUtils.stdLib.get(this);
         } else {
-            return new ToyCall(CPSUtils.K, new ToyVar(this.var));
+            return Toy.super.CPS();
         }
+    }
+
+    @Override
+    public Toy splitExpression() {
+        return new ToyCall(CPSUtils.K, new ToyVar(this.var));
     }
 
     @Override
