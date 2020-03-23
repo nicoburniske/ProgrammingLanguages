@@ -1,0 +1,35 @@
+75
+Julia Belyakova
+
+75/90 + Bonus: 0
+
+-5 purpose statement for type checker does not mention type errors
+   (type checker does not always return a StarAST)
++0 no accumulator statement for environment
+
+-10 no purpose statement for *AST/TAST-to-JSON renderer
+    (if there is one and I didn't find it, don't hesitate to let me know)
+
+----------------------------------------
+ Misc Comments
+----------------------------------------
+
+Nice file structure and test coverage.
+
+Please, figure out how to write unit tests with assert-throws 
+instead of try-catch! Testing frameworks do have support for checking exceptions.
+
+Unit tests are hard to read. Consider moving examples outside testing functions
+and using aux variables such as
+
+  varAInt = new TypedVar("a", new TypeInt())
+  
+(note that this pattern appears multiple times in the tests).
+And maybe add human readable comments explaining the examples, e.g.
+
+  let b:int = 
+  
+for
+
+  [\"let\",[\"b\",\":\",\"int\"],\"=\"
+
