@@ -16,7 +16,7 @@ import org.json.simple.parser.ParseException;
 
 public class Main {
     public static void main(String[] args) throws IOException, ParseException, IllegalStateException {
-        Object obj = new JSONParser().parse(new FileReader(args[1]));
+        Object obj = new JSONParser().parse(new FileReader(args[0]));
         Toy parsed = Parser.parse(obj);
         CPSUtils.initializeNames(parsed);
         System.out.println(parsed.CPS().toJSONString());
