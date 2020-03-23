@@ -87,7 +87,7 @@ public class ToyCall implements Toy {
         List<Toy> argsCopy = new ArrayList<>(this.args);
         argsCopy.add(0, CPSUtils.K);
         return new ToyCall(this.function.CPS(),
-                new ToyFunc(Arrays.asList(new ToyVar("of-f")), new ToyCall(new ToyCall(new ToyVar("of-f"), CPSUtils.K), argsCopy)));
+                new ToyFunc(Arrays.asList(CPSUtils.ofF), new ToyCall(new ToyCall(CPSUtils.ofF, CPSUtils.K), argsCopy)));
 
     }
 
