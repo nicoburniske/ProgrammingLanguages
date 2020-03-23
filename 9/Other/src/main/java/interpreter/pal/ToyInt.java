@@ -8,6 +8,7 @@ import interpreter.value.ValueInt;
 
 import java.math.BigInteger;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * Represents an Integer
@@ -36,6 +37,11 @@ public class ToyInt implements Toy {
     @Override
     public Toy splitExpression() {
         return new ToyCall(CPSUtils.K, new ToyInt(num));
+    }
+
+    @Override
+    public void getAllNames(Set<String> names) {
+        return;
     }
 
     @Override

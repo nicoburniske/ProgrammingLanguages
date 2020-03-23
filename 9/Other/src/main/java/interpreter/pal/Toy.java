@@ -7,6 +7,7 @@ import interpreter.utils.staticDistance.StaticDistanceEnvironment;
 import org.json.simple.JSONAware;
 
 import java.util.Arrays;
+import java.util.Set;
 
 /**
  * Represents an untyped XPAL expression that should have been typechecked previously.
@@ -68,4 +69,10 @@ public interface Toy extends JSONAware {
 
 
     Toy splitExpression();
+
+    /**
+     * obtains all the names in the
+     * @param names
+     */
+    void getAllNames(Set<String> names);
 }

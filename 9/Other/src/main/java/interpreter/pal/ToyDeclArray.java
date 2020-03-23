@@ -10,6 +10,7 @@ import org.json.simple.JSONArray;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -62,6 +63,11 @@ public class ToyDeclArray implements Toy {
         return new ToyDeclArray(
                 this.declList.stream().map(decl -> new Decl(decl.getVar(), decl.cpsVal())).collect(Collectors.toList()),
                 scope.splitExpression());
+    }
+
+    @Override
+    public void getAllNames(Set<String> names) {
+       this.declList.forEach(decl -> names.add(decl.getVar().toString()));
     }
 
     @Override

@@ -12,6 +12,7 @@ import org.json.simple.JSONArray;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -62,6 +63,12 @@ public class ToyFunc implements Toy {
     public Toy splitExpression() {
         // TODO: might be wrong
         return this.CPS();
+    }
+
+    @Override
+    public void getAllNames(Set<String> names) {
+        this.params.forEach(param -> names.add(param.toString()));
+        this.function.getAllNames(names);
     }
 
     public List<ToyVar> getParams() {

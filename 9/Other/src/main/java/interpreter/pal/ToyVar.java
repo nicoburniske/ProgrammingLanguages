@@ -7,6 +7,7 @@ import interpreter.utils.staticDistance.StaticDistanceEnvironment;
 import interpreter.utils.staticDistance.TupleSD;
 
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * Represents a Variable in
@@ -52,6 +53,11 @@ public class ToyVar implements Toy {
     }
 
     @Override
+    public void getAllNames(Set<String> names) {
+        names.add(this.var);
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -73,5 +79,9 @@ public class ToyVar implements Toy {
     @Override
     public String toJSONString() {
         return "\"" + this.var + "\"";
+    }
+
+    public void setVar(String var) {
+        this.var = var;
     }
 }

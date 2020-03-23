@@ -10,6 +10,7 @@ import org.json.simple.JSONArray;
 import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.Set;
 
 
 /**
@@ -51,6 +52,13 @@ public class ToyConditional implements Toy {
     public Toy splitExpression() {
         return new ToyCall(this.clause.CPS(),new ToyFunc(Arrays.asList(CPSUtils.ofTST),
                 new ToyConditional(CPSUtils.ofTST, this.ifTrue.splitExpression(), this.ifFalse.splitExpression())));
+    }
+
+    @Override
+    public void getAllNames(Set<String> names) {
+        this.clause.getAllNames(names);
+        this.ifTrue.getAllNames(names);
+        this.ifFalse.getAllNames(names);
     }
 
     @Override

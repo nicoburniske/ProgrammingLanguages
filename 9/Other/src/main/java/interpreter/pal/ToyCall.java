@@ -78,6 +78,12 @@ public class ToyCall implements Toy {
     }
 
     @Override
+    public void getAllNames(Set<String> names) {
+        this.args.forEach(arg -> arg.getAllNames(names));
+        this.function.getAllNames(names);
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
