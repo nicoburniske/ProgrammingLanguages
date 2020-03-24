@@ -13,6 +13,7 @@ public class CPSUtilsTest {
         ToyVar k = new ToyVar("k");
         CPSUtils.initializeNames(k);
         assertNotEquals("k", CPSUtils.K.toString());
-        assertEquals(k.CPS().toJSONString().indexOf('k'), k.CPS().toJSONString().lastIndexOf('k'));
+        System.out.println(k.CPS().toJSONString());
+        assertEquals(k.CPS().toJSONString().indexOf("\"k\""), k.CPS().toJSONString().lastIndexOf("\"k\""));
     }
 }
