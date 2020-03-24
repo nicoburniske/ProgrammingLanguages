@@ -10,7 +10,7 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * Represents a Variable in
+ * Represents a Variable
  */
 public class ToyVar implements Toy {
     private String var;

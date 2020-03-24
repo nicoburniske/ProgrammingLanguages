@@ -3,10 +3,15 @@ package interpreter.utils.staticDistance;
 import common.LookupTable;
 import common.LookupTableEnd;
 import common.LookupTablePair;
+import interpreter.pal.Toy;
 import interpreter.pal.ToyVar;
 
 import java.util.Objects;
 
+/**
+ * An environment that is used to convert a {@link Toy} into Static Distance form
+ * this class is a wrapper around a {@link LookupTable<ToyVar,TupleSD>}
+ */
 public class StaticDistanceEnvironment {
     LookupTable<ToyVar, TupleSD> table;
 

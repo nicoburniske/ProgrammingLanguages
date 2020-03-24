@@ -6,9 +6,14 @@ import interpreter.pal.ToyFunc;
 import interpreter.pal.ToyVar;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
+/**
+ * A Utils class For Continuation Passing Form
+ */
 public class CPSUtils {
+    /**
+     * helpful variables
+     */
     public static ToyVar K = new ToyVar("k");
     public static List<ToyVar> KList = Arrays.asList(K);
     public static ToyVar left = new ToyVar("left");
@@ -23,6 +28,7 @@ public class CPSUtils {
     public static ToyVar identity = new ToyVar("identity");
     private static List<ToyVar> vars = Arrays.asList(K, left, right, ofTST, identity);
 
+    //A map of primops to their respective CPS forms
     public static Map<ToyVar, Toy> stdLib = new HashMap<ToyVar, Toy>(){{
         put(plus, new ToyFunc(Arrays.asList(K, left, right), new ToyCall(K, new ToyCall(plus, Arrays.asList(left, right)))));
         put(times, new ToyFunc(Arrays.asList(K, left, right), new ToyCall(K, new ToyCall(times, Arrays.asList(left, right)))));
@@ -32,10 +38,21 @@ public class CPSUtils {
         put(equ, new ToyFunc(Arrays.asList(K, left, right), new ToyCall(K, new ToyCall(equ, Arrays.asList(left, right)))));
     }};
 
+    /**
+     * Passes a Continuation passing form {@link Toy} a continuation that is the identity function
+     * Used for testing if the interpreter gets the same result after CPS() is called on a {@link Toy}
+     * @param expression the {@link Toy} that needs a continuation
+     * @return the new {@link Toy} that can be wrapped with a identity continuation
+     */
     public static Toy toTestFormat(Toy expression) {
         return new ToyCall(expression, new ToyFunc(Arrays.asList(identity), identity));
     }
 
+    /**
+     * This function changes any of the {@link ToyVar}s defined above and replaces their Strings with unique names
+     * if their names are ussed in {@param t}
+     * @param t the {@link Toy} that is begin used
+     */
     public static void initializeNames(Toy t) {
         Set<String> names = new HashSet<>();
         t.getAllNames(names);
@@ -53,7 +70,7 @@ public class CPSUtils {
      */
     private static String nameGenerator(Set<String> names) {
         // !, @, $, %, ^, &, *, _, -, +, :, /, =
-        String ALLPOSSIBLECHARS = "abcdefghijklmnopqrstuvwxyz!@$%^&*_-+:/=";
+        String ALLPOSSIBLECHARS = "abcdefghijklmnopqrstuvwxyz";
         StringBuilder ret = new StringBuilder();
         Random rnd = new Random();
         while (ret.length() < 10) {

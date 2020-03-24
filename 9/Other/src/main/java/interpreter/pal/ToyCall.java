@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 import static interpreter.utils.RuntimeExceptions.ERROR_FUNCTION_EXPECTED;
 
 /**
- * Represents the invocation of a PALFunc
+ * Represents the invocation of a {@link ToyFunc}
  */
 public class ToyCall implements Toy {
     Toy function;

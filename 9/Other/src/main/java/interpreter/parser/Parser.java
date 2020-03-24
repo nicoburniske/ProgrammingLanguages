@@ -9,6 +9,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Parser {
+    /**
+     * Parses a Object into a {@link Toy}
+     * @param obj the object to be parsed
+     * @return the {@link Toy} that represents that object
+     */
     public static Toy parse(Object obj) {
         /**
          *     An Toy is one of:

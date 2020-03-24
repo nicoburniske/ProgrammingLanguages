@@ -14,7 +14,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * Represents a sequence of declarations, with a scope
+ * Represents a sequence of {@link Decl}, with a scope
  */
 public class ToyDeclArray implements Toy {
     private List<Decl> declList;

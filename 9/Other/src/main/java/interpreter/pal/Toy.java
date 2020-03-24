@@ -10,8 +10,8 @@ import java.util.Arrays;
 import java.util.Set;
 
 /**
- * Represents an untyped XPAL expression that should have been typechecked previously.
- * The RHS of a Decl must be either a PALInt or a PALFunc
+ * Represents an untyped Toy expression.
+ * The RHS of a Decl must be either a ToyInt or a ToyFunc
  * XPAL is one of:
  * * <ul>
  * *     <li>- a {@link ToyVar}</li>
@@ -67,12 +67,16 @@ public interface Toy extends JSONAware {
         return new ToyFunc(Arrays.asList(CPSUtils.K), this.splitExpression());
     }
 
-
+    /**
+     * This is a helper Function for CPS. it takes a given Toy expression and converts it into the second half of
+     * the continuation passing form.
+     * @return a Toy in partial Continuation Passing form
+     */
     Toy splitExpression();
 
     /**
-     * obtains all the names in the
-     * @param names
+     * obtains all the names in the {@link Decl}s and {@link ToyFunc}'s params.
+     * @param names The current set of accumulated names.
      */
     void getAllNames(Set<String> names);
 }

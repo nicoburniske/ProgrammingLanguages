@@ -13,8 +13,8 @@ import java.util.Objects;
 
 /**
  * Represents an individual declaration where the rhs is constrained to being one of:
- * - PALFunc
- * - PALInt
+ * - ToyFunc
+ * - ToyInt
  */
 public class Decl implements JSONAware {
     private ToyVar var;
@@ -77,6 +77,10 @@ public class Decl implements JSONAware {
                 '}';
     }
 
+    /**
+     * This functions returns the continueation passing form for the interals of a decl
+     * @return the cps form of a decls left hand side
+     */
     public Toy cpsVal() {
         if(this.rhs instanceof ToyInt) {
             return this.rhs;

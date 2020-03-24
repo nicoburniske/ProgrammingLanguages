@@ -4,6 +4,9 @@ import org.json.simple.JSONArray;
 
 import java.util.Objects;
 
+/**
+ * Represents a Static distance reference to an {@link ToyVar}
+ */
 public class ToySD extends ToyVar {
     private int depth;
     private int declPosition;
