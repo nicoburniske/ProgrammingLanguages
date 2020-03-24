@@ -1,1 +1,1 @@
-["fun*",["k","left"],["call","k",["call","!","left"]]]
+["fun*",["k","left", "right"],["call","k",["call","+","left", "right"]]]
