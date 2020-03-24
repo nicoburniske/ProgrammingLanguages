@@ -37,7 +37,7 @@ public class CPSUtils {
     }
 
     public static void initializeNames(Toy t) {
-        Set<String> names = vars.stream().map(ToyVar::toString).collect(Collectors.toSet());
+        Set<String> names = new HashSet<>();
         t.getAllNames(names);
         for (ToyVar var : vars) {
            if (names.contains(var.toString())) {
@@ -61,7 +61,7 @@ public class CPSUtils {
             ret.append(ALLPOSSIBLECHARS.charAt(index));
         }
         String result = ret.toString();
-        if (names.contains(result)) {
+        if (names.contains(result) || vars.stream().anyMatch( var -> var.toString().equals(result))) {
             return nameGenerator(names);
         } else {
             names.add(result);
