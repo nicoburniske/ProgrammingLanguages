@@ -18,9 +18,11 @@ public class Store implements JSONAware {
     public Store(Integer integer, IValue value) {
         table = new LookupTablePair<>(integer, value, new LookupTableEnd<>());
     }
+
     public Store(LookupTable<Integer, IValue> table) {
         this.table = table;
     }
+
     public Store() {
         this.table = new LookupTableEnd<>();
     }
@@ -36,7 +38,8 @@ public class Store implements JSONAware {
     public Store set(Integer key, IValue val) {
         return new Store(table.set(key, val));
     }
-    public Integer getSize(){
+
+    public Integer getSize() {
         return table.getSize();
     }
 
@@ -56,7 +59,7 @@ public class Store implements JSONAware {
     @Override
     public String toJSONString() {
         JSONArray arr = new JSONArray();
-        for(int ii = 6; ii < table.getSize(); ii ++ ){
+        for (int ii = 6; ii < table.getSize(); ii++) {
             arr.add(this.get(ii));
         }
         return arr.toJSONString();

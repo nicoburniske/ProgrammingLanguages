@@ -50,14 +50,14 @@ public class ToyCall implements Toy {
             //TODO: ensure that the reverse is necessary
             Collections.reverse(args);
             for (Toy arg : args) {
-               //argTuple = arg.interpret(newTuple);
-               EnvStoreTuple forInterpret = new EnvStoreTuple(tuple.getLeft(), temp.getRight());
-               argTuple = arg.interpret(forInterpret);
-               interpretedArgs.add(0, argTuple.getLeft());
-               //newTuple = new EnvStoreTuple(newTuple.getLeft(), argTuple.getRight().getRight());
-                temp = new EnvStoreTuple( temp.getLeft(), argTuple.getRight().getRight());
+                //argTuple = arg.interpret(newTuple);
+                EnvStoreTuple forInterpret = new EnvStoreTuple(tuple.getLeft(), temp.getRight());
+                argTuple = arg.interpret(forInterpret);
+                interpretedArgs.add(0, argTuple.getLeft());
+                //newTuple = new EnvStoreTuple(newTuple.getLeft(), argTuple.getRight().getRight());
+                temp = new EnvStoreTuple(temp.getLeft(), argTuple.getRight().getRight());
             }
-            return ((ValuePrimop)val).apply(interpretedArgs, new EnvStoreTuple(newTuple.getLeft(), temp.getRight()));
+            return ((ValuePrimop) val).apply(interpretedArgs, new EnvStoreTuple(newTuple.getLeft(), temp.getRight()));
         } else {
             throw new IllegalStateException(ERROR_FUNCTION_EXPECTED);
         }

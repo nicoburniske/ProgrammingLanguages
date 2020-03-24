@@ -41,8 +41,9 @@ public interface Toy extends JSONAware {
      * every variable reference is replaced by the variables distance from its declaration
      * and the variables position in its declaration block {@link interpreter.utils.staticDistance.TupleSD}.
      * If a variable is undeclared it will not be replaced. This function can then be used to help facilitate testing
+     *
      * @param currDepth the number of decls that have been passed through to reach this point in the Toy
-     * @param env the environment, which holds the location of declarations of variables for referencing.
+     * @param env       the environment, which holds the location of declarations of variables for referencing.
      * @return the Toy updated into Static distance form
      */
     Toy computeStaticDistance(int currDepth, StaticDistanceEnvironment env);
@@ -50,17 +51,19 @@ public interface Toy extends JSONAware {
     /**
      * This function takes in two {@link Toy} expressions and returns whether or not they are equivalent (ie they
      * have the same structure. variable names may be different, but the expressions should be the same.
+     *
      * @param a One {@link Toy} to be evaluated
      * @param b the other {@link Toy} to be evaluated
      * @return whether or not {@param a} and {@param b} are equivalent
      */
     static boolean alphaEquals(Toy a, Toy b) {
-        return  a.computeStaticDistance(0, new StaticDistanceEnvironment()).equals(b.computeStaticDistance(0, new StaticDistanceEnvironment()));
+        return a.computeStaticDistance(0, new StaticDistanceEnvironment()).equals(b.computeStaticDistance(0, new StaticDistanceEnvironment()));
     }
 
     /**
      * Converts the given {@link Toy} expression into a continuation passing style expression that when evaluated,
      * will result in the same answer as the original {@link Toy}
+     *
      * @return the continuation passing style expression
      */
     default Toy CPS() {
@@ -70,12 +73,14 @@ public interface Toy extends JSONAware {
     /**
      * This is a helper Function for CPS. it takes a given Toy expression and converts it into the second half of
      * the continuation passing form.
+     *
      * @return a Toy in partial Continuation Passing form
      */
     Toy splitExpression();
 
     /**
      * obtains all the names in the {@link Decl}s and {@link ToyFunc}'s params.
+     *
      * @param names The current set of accumulated names.
      */
     void getAllNames(Set<String> names);

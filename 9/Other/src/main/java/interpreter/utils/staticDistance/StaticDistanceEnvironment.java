@@ -38,7 +38,8 @@ public class StaticDistanceEnvironment {
     public StaticDistanceEnvironment set(ToyVar key, TupleSD val) {
         return new StaticDistanceEnvironment(table.set(key, val));
     }
-    public Integer getSize(){
+
+    public Integer getSize() {
         return table.getSize();
     }
 

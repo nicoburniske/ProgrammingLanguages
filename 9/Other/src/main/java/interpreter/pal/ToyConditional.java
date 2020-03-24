@@ -50,7 +50,7 @@ public class ToyConditional implements Toy {
 
     @Override
     public Toy splitExpression() {
-        return new ToyCall(this.clause.CPS(),new ToyFunc(Arrays.asList(CPSUtils.ofTST),
+        return new ToyCall(this.clause.CPS(), new ToyFunc(Arrays.asList(CPSUtils.ofTST),
                 new ToyConditional(CPSUtils.ofTST, this.ifTrue.splitExpression(), this.ifFalse.splitExpression())));
     }
 
