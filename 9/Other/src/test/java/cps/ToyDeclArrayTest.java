@@ -3,10 +3,7 @@ package cps;
 import interpreter.pal.*;
 import interpreter.utils.CPSUtils;
 import interpreter.utils.EnvStoreTuple;
-import interpreter.value.IValue;
-import interpreter.value.ValueClosure;
 import interpreter.value.ValueInt;
-import interpreter.value.ValueLambdaClosure;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -55,4 +52,5 @@ public class ToyDeclArrayTest {
 
         assertEquals(new ValueInt(4L), CPSUtils.toTestFormat(ex3.CPS()).interpret(EnvStoreTuple.stdLib()).getLeft());
     }
+
 }
