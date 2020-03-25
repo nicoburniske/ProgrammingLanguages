@@ -12,13 +12,13 @@ Total: 25/60
 -5 interpreter; Input: ["fun*",["x"],"x"]; Expected: ["fun*",["ka"],["call","ka",["fun*",["kb","x"],["call","kb","x"]]]]
 ; Got: ["fun*",["k","x"],["call","k","x"]]
 
--5, for your test 4-in.json; got [["let","x","=",["fun*",["kb"],["call",["fun*",["kc"],["call","kc","x"]],["fun*",["f"],["call","f","kb"]]]]],["fun*",["kd"],["call",["fun*",["ke"],["call","ke","x"]],["fun*",["fa"],["call","fa","kd"]]]]]
+-5, for your test 2-in.json; got ["fun*",["k"],["call",["fun*",["ka"],["call","ka",8]],["fun*",["f"],["call",["fun*",["kb"],["call","kb",["fun*",["kc","run"],["call","kc","run"]]]],["fun*",["fa"],["call","fa","k","f"]]]]]]
 
--5, for your test 0-in.json; got [["let","fib","=",["fun*",["kb","ii"],["call",["fun*",["kc"],["call","kc","ii"]],["fun*",["tst"],["if-0","tst",["call","kb",0],["call",["fun*",["kd"],["call",["fun*",["ke"],["call",["fun*",["kf"],["call","kf","ii"]],["fun*",["fb"],["call",["fun*",["kg"],["call","kg",-1]],["fun*",["fc"],["call",["fun*",["kh"],["call","kh",["fun*",["k","a","aa"],["call","k",["call","+","a","aa"]]]]],["fun*",["fd"],["call","fd","ke","fc","fb"]]]]]]]],["fun*",["fa"],["call",["fun*",["ki"],["call","ki","fib"]],["fun*",["fe"],["call","fe","kd","fa"]]]]]],["fun*",["f"],["call",["fun*",["kj"],["call","kj","ii"]],["fun*",["ff"],["call",["fun*",["kk"],["call","kk",["fun*",["k","ab","ac"],["call","k",["call","+","ab","ac"]]]]],["fun*",["fg"],["call","fg","kb","ff","f"]]]]]]]]]]]],["fun*",["kl"],["call",["fun*",["km"],["call","km",13]],["fun*",["fh"],["call",["fun*",["kn"],["call","kn","fib"]],["fun*",["fi"],["call","fi","kl","fh"]]]]]]]
-
--5, for your test 2-in.json; got ["fun*",["ka"],["call",["fun*",["kb"],["call","kb",8]],["fun*",["f"],["call",["fun*",["kc"],["call","kc",["fun*",["kd","run"],["call","kd","run"]]]],["fun*",["fa"],["call","fa","ka","f"]]]]]]
+-5, for your test 4-in.json; got [["let","x","=",["fun*",["ka"],["call",["fun*",["kb"],["call","kb","x"]],["fun*",["f"],["call","f","ka"]]]]],["fun*",["kc"],["call",["fun*",["kd"],["call","kd","x"]],["fun*",["fa"],["call","fa","kc"]]]]]
 
 -5, for your test 1-in.json; got [["let","k","=",5],["let","reserved","=",6],["let","uuid","=",8],["let","tim+","=",3],["fun*",["kb"],["call",["fun*",["kc"],["call","kc","k"]],["fun*",["f"],["call",["fun*",["kd"],["call",["fun*",["ke"],["call","ke","reserved"]],["fun*",["fb"],["call",["fun*",["kf"],["call",["fun*",["kg"],["call","kg","uuid"]],["fun*",["fd"],["call",["fun*",["kh"],["call","kh","tim+"]],["fun*",["fe"],["call",["fun*",["ki"],["call","ki",["fun*",["k","a","aa"],["call","k",["call","+","a","aa"]]]]],["fun*",["ff"],["call","ff","kf","fe","fd"]]]]]]]],["fun*",["fc"],["call",["fun*",["kj"],["call","kj",["fun*",["k","ab","ac"],["call","k",["call","+","ab","ac"]]]]],["fun*",["fg"],["call","fg","kd","fc","fb"]]]]]]]],["fun*",["fa"],["call",["fun*",["kk"],["call","kk",["fun*",["k","ad","ae"],["call","k",["call","+","ad","ae"]]]]],["fun*",["fh"],["call","fh","kb","fa","f"]]]]]]]]]
+
+-5, for your test 0-in.json; got [["let","fib","=",["fun*",["ka","ii"],["call",["fun*",["kb"],["call","kb","ii"]],["fun*",["tst"],["if-0","tst",["call","ka",0],["call",["fun*",["kc"],["call",["fun*",["kd"],["call",["fun*",["ke"],["call","ke","ii"]],["fun*",["fb"],["call",["fun*",["kf"],["call","kf",-1]],["fun*",["fc"],["call",["fun*",["kg"],["call","kg",["fun*",["k","a","aa"],["call","k",["call","+","a","aa"]]]]],["fun*",["fd"],["call","fd","kd","fc","fb"]]]]]]]],["fun*",["fa"],["call",["fun*",["kh"],["call","kh","fib"]],["fun*",["fe"],["call","fe","kc","fa"]]]]]],["fun*",["f"],["call",["fun*",["ki"],["call","ki","ii"]],["fun*",["ff"],["call",["fun*",["kj"],["call","kj",["fun*",["k","ab","ac"],["call","k",["call","+","ab","ac"]]]]],["fun*",["fg"],["call","fg","ka","ff","f"]]]]]]]]]]]],["fun*",["kk"],["call",["fun*",["kl"],["call","kl",13]],["fun*",["fh"],["call",["fun*",["km"],["call","km","fib"]],["fun*",["fi"],["call","fi","kk","fh"]]]]]]]
 
 +10 for finding bugs in Matthias' code
 ===============
@@ -123,6 +123,46 @@ interpreter: Failed ["call", ["fun*", ["a", "b"], ["call", "+", "a", "b"]], 2, 3
   ]
 ]
 , Got ["fun*",["k"],["call",["fun*",["k","a","b"],["call",["fun*",["k","left","right"],["call","k",["call","+","left","right"]]],"k",["call","k","a"],["call","k","b"]]],"k",["call","k",2],["call","k",3]]]
+
+interpreter: Failed ["call", "f", "a", "b", "c"]
+, Expected [
+  "fun*",
+  ["k"],
+  [
+    "call",
+    ["fun*", ["argc"], ["call", "argc", "c"]],
+    [
+      "fun*",
+      ["argcf"],
+      [
+        "call",
+        ["fun*", ["argb"], ["call", "argb", "b"]],
+        [
+          "fun*",
+          ["argbf"],
+          [
+            "call",
+            ["fun*", ["arga"], ["call", "arga", "a"]],
+            [
+              "fun*",
+              ["argaf"],
+              [
+                "call",
+                ["fun*", ["contf"], ["call", "contf", "f"]],
+                [
+                  "fun*",
+                  ["contff"],
+                  ["call", "contff", "k", "argaf", "argbf", "argcf"]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ]
+]
+, Got ["fun*",["k"],["call",["call","k","f"],"k",["call","k","a"],["call","k","b"],["call","k","c"]]]
 
 interpreter: Failed "@"
 , Expected [
