@@ -1,4 +1,4 @@
-Total: 15/60
+Total: 25/60
 
 -5 interpreter; Input: ["call","+",5,6]; Expected: ["fun*",["ka"],["call",["fun*",["kb"],["call","kb",6]],["fun*",["f"],["call",["fun*",["kc"],["call","kc",5]],["fun*",["fa"],["call",["fun*",["kd"],["call","kd",["fun*",["k","a","aa"],["call","k",["call","+","a","aa"]]]]],["fun*",["fb"],["call","fb","ka","fa","f"]]]]]]]]
 ; Got: ["fun*",["k"],["call",["fun*",["k","left","right"],["call","k",["call","+","left","right"]]],"k",["call","k",5],["call","k",6]]]
@@ -20,6 +20,7 @@ Total: 15/60
 
 -5, for your test 1-in.json; got [["let","k","=",5],["let","reserved","=",6],["let","uuid","=",8],["let","tim+","=",3],["fun*",["kb"],["call",["fun*",["kc"],["call","kc","k"]],["fun*",["f"],["call",["fun*",["kd"],["call",["fun*",["ke"],["call","ke","reserved"]],["fun*",["fb"],["call",["fun*",["kf"],["call",["fun*",["kg"],["call","kg","uuid"]],["fun*",["fd"],["call",["fun*",["kh"],["call","kh","tim+"]],["fun*",["fe"],["call",["fun*",["ki"],["call","ki",["fun*",["k","a","aa"],["call","k",["call","+","a","aa"]]]]],["fun*",["ff"],["call","ff","kf","fe","fd"]]]]]]]],["fun*",["fc"],["call",["fun*",["kj"],["call","kj",["fun*",["k","ab","ac"],["call","k",["call","+","ab","ac"]]]]],["fun*",["fg"],["call","fg","kd","fc","fb"]]]]]]]],["fun*",["fa"],["call",["fun*",["kk"],["call","kk",["fun*",["k","ad","ae"],["call","k",["call","+","ad","ae"]]]]],["fun*",["fh"],["call","fh","kb","fa","f"]]]]]]]]]
 
++10 for finding bugs in Matthias' code
 ===============
 Code Inspection
 ===============
