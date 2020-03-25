@@ -1,13 +1,10 @@
-Total: 25/60
+Total: 30/60
 
 -5 interpreter; Input: ["call","+",5,6]; Expected: ["fun*",["ka"],["call",["fun*",["kb"],["call","kb",6]],["fun*",["f"],["call",["fun*",["kc"],["call","kc",5]],["fun*",["fa"],["call",["fun*",["kd"],["call","kd",["fun*",["k","a","aa"],["call","k",["call","+","a","aa"]]]]],["fun*",["fb"],["call","fb","ka","fa","f"]]]]]]]]
 ; Got: ["fun*",["k"],["call",["fun*",["k","left","right"],["call","k",["call","+","left","right"]]],"k",["call","k",5],["call","k",6]]]
 
 -5 interpreter; Input: ["call","f!","a!","a!!"]; Expected: ["fun*",["ka"],["call",["fun*",["kb"],["call","kb","a!!"]],["fun*",["f"],["call",["fun*",["kc"],["call","kc","a!"]],["fun*",["fa"],["call",["fun*",["kd"],["call","kd","f!"]],["fun*",["fb"],["call","fb","ka","fa","f"]]]]]]]]
 ; Got: ["fun*",["k"],["call",["call","k","f!"],"k",["call","k","a!"],["call","k","a!!"]]]
-
--5 interpreter; Input: ["if-0",1,2,3]; Expected: ["fun*",["ka"],["call",["fun*",["kb"],["call","kb",1]],["fun*",["tst"],["if-0","tst",["call","ka",2],["call","ka",3]]]]]
-; Got: ["fun*",["k"],["call",["fun*",["k"],["call","k",1]],["fun*",["of-tst"],["if-0","of-tst",["call","k",2],["call","k",3]]]]]
 
 -5 interpreter; Input: ["fun*",["x"],"x"]; Expected: ["fun*",["ka"],["call","ka",["fun*",["kb","x"],["call","kb","x"]]]]
 ; Got: ["fun*",["k","x"],["call","k","x"]]
@@ -35,14 +32,6 @@ interpreter: Failed [["let","a","=",7],"a"], Expected [["let","a","=",7],["fun*"
 interpreter: Failed [["let", "x", "=", 2],"x"]
 , Expected [["let","x","=",2],["fun*",["k"],["call","k","x"]]]
 , Got ["fun*",["k"],["call",["call","k","x"],"k",["call",["call","k","x"],"k",["call","k","let"],["fun*",["k","left","right"],["call","k",["call","=","left","right"]]],["call","k",2]]]]
-
-interpreter: Failed ["if-0", 0, 1, 2], Expected ["fun*",["k"],
-  ["call",
-    ["fun*",["cond"],["call","cond",0]],
-    ["fun*",["ifzero"],
-      ["if-0","ifzero",
-        ["call","k",1],
-        ["call","k",2]]]]], Got ["fun*",["k"],["call",["fun*",["k"],["call","k",0]],["fun*",["of-tst"],["if-0","of-tst",["call","k",1],["call","k",2]]]]]
 
 interpreter: Failed ["call", ["fun*", ["a", "b"], ["call", "+", "a", "b"]], 2, 3]
 , Expected [
@@ -172,16 +161,11 @@ interpreter: Failed "@"
 ]
 , Got ["fun*",["k","left"],["call","k",["call","@","left"]]]
 
-interpreter: Failed ["if-0", 0, ["if-0", 0, 1, 2], ["if-0", 0, 1, 2]]
-, Expected ["fun*", ["ka"], ["call", ["fun*", ["kb"], ["call", "kb", 0]], ["fun*", ["kc"], ["if-0", "kc", ["call", ["fun*", ["kd"], ["call", "kd", 0]], ["fun*", ["ke"], ["if-0", "ke", ["call", "ka", 1], ["call", "ka", 2]]]], ["call", ["fun*", ["kf"], ["call", "kf", 0]], ["fun*", ["kg"], ["if-0", "kg", ["call", "ka", 1], ["call", "ka", 2]]]]]]]]
-, Got ["fun*",["k"],["call",["fun*",["k"],["call","k",0]],["fun*",["of-tst"],["if-0","of-tst",["call",["fun*",["k"],["call","k",0]],["fun*",["of-tst"],["if-0","of-tst",["call","k",1],["call","k",2]]]],["call",["fun*",["k"],["call","k",0]],["fun*",["of-tst"],["if-0","of-tst",["call","k",1],["call","k",2]]]]]]]]
+interpreter: Failed ["call", ["fun*", ["a", "b"], 42], 3, 4], Expected ["fun*",["c"],["call",["fun*",["c"],["call","c",4]],["fun*",["e"],["call",["fun*",["c"],["call","c",3]],["fun*",["d"],["call",["fun*",["c"],["call","c",["fun*",["c","a","b"],["call","c",42]]]],["fun*",["of-f"],["call","of-f","c","d","e"]]]]]]]]
+, Got ["fun*",["k"],["call",["fun*",["k","a","b"],["call","k",42]],"k",["call","k",3],["call","k",4]]]
 
-interpreter: Failed ["if-0",
-  0,
-  1,
-  2
-], Expected ["fun*",["a"],["call",["fun*",["a"],["call","a",0]],["fun*",["b"],["if-0","b",["call","a",1],["call","a",2]]]]]
-, Got ["fun*",["k"],["call",["fun*",["k"],["call","k",0]],["fun*",["of-tst"],["if-0","of-tst",["call","k",1],["call","k",2]]]]]
+interpreter: Failed ["call", "+", 1, 2], Expected ["fun*",["a"],["call",["fun*",["a"],["call","a",2]],["fun*",["c"],["call",["fun*",["a"],["call","a",1]],["fun*",["b"],["call",["fun*",["a"],["call","a",["fun*",["a","x","y"],["call","a",["call","+","x","y"]]]]],["fun*",["of-f"],["call","of-f","a","b","c"]]]]]]]]
+, Got ["fun*",["k"],["call",["fun*",["k","left","right"],["call","k",["call","+","left","right"]]],"k",["call","k",1],["call","k",2]]]
 
 interpreter: Failed ["call",["fun*",[],1]]
 , Expected ["fun*",["a"],["call",["fun*",["c"],["call","c",["fun*",["d"],["call","d",1]]]],["fun*",["b"],["call","b","a"]]]], Got ["fun*",["k"],["call",["fun*",["k"],["call","k",1]],"k"]]
@@ -204,12 +188,3 @@ interpreter: Failed ["fun*", ["x", "y"], 19]
 interpreter: Failed [["let", "x", "=", 1], "x"]
 , Expected [["let", "_x", "=", 1], ["fun*", ["k"], ["call", "k", "_x"]]]
 , Got ["fun*",["k"],["call",["call","k","x"],"k",["call",["call","k","x"],"k",["call","k","let"],["fun*",["k","left","right"],["call","k",["call","=","left","right"]]],["call","k",1]]]]
-
-interpreter: Failed ["if-0", 0, 5, 5], Expected ["fun*", ["k"],
-  ["call",
-    ["fun*",["k"], ["call", "k", 0]],
-    ["fun*", ["mz"],
-      ["if-0",
-        "mz",
-        ["call", "k", 5],
-        ["call", "k", 5]]]]], Got ["fun*",["k"],["call",["fun*",["k"],["call","k",0]],["fun*",["of-tst"],["if-0","of-tst",["call","k",5],["call","k",5]]]]]
