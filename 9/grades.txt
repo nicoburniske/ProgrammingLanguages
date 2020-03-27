@@ -172,6 +172,12 @@ interpreter: Failed ["call",["fun*",[],1]]
 
 interpreter: Failed "!", Expected ["fun*", ["k"], ["call", "k", ["fun*", ["k", "x"], ["call", "k", ["call", "!", "x"]]]]], Got ["fun*",["k","left"],["call","k",["call","!","left"]]]
 
+interpreter: Failed [["let", "k", "=", ["fun*", [], "l"]],
+ ["let", "l", "=", 5],
+ ["call", "k"]], Expected [["let", "k", "=", ["fun*", ["ka"], ["call", "ka", "l"]]], ["let", "l", "=", 5], ["fun*", ["ka"], ["call", ["fun*", ["ka"], ["call", "ka", "k"]], ["fun*", ["of-a"], ["call", "of-a", "ka"]]]]], Got [["let","k","=",["fun*",["bphizxktnh"],["call","bphizxktnh","l"]]],["let","l","=",5],["fun*",["bphizxktnh"],["call",["call","bphizxktnh","k"],"bphizxktnh"]]]
+
+interpreter: Failed ["call", "f", "a", "b", "c"], Expected ["fun*", ["ka"], ["call", ["fun*", ["ka"], ["call", "ka", "c"]], ["fun*", ["of-d"], ["call", ["fun*", ["ka"], ["call", "ka", "b"]], ["fun*", ["of-c"], ["call", ["fun*", ["ka"], ["call", "ka", "a"]], ["fun*", ["of-b"], ["call", ["fun*", ["ka"], ["call", "ka", "f"]], ["fun*", ["of-a"], ["call", "of-a", "ka", "of-b", "of-c", "of-d"]]]]]]]]]], Got ["fun*",["k"],["call",["call","k","f"],"k",["call","k","a"],["call","k","b"],["call","k","c"]]]
+
 interpreter: Failed ["fun*", ["x"], 42]
 
 , Expected ["fun*", ["k"], ["call", "k", ["fun*", ["k", "x"], ["call", "k", 42]]]]
