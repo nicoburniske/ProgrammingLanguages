@@ -27,6 +27,8 @@ public class CPSUtils {
     public static ToyVar ofTST = new ToyVar("of-tst");
     public static ToyVar identity = new ToyVar("identity");
     private static List<ToyVar> vars = Arrays.asList(K, left, right, ofTST, identity);
+    public static Set<String> names = new HashSet<>();
+
 
     //A map of primops to their respective CPS forms
     public static Map<ToyVar, Toy> stdLib = new HashMap<ToyVar, Toy>() {{
@@ -56,11 +58,11 @@ public class CPSUtils {
      * @param t the {@link Toy} that is begin used
      */
     public static void initializeNames(Toy t) {
-        Set<String> names = new HashSet<>();
+        names = new HashSet<>();
         t.getAllNames(names);
         for (ToyVar var : vars) {
             if (names.contains(var.toString())) {
-                var.setVar(nameGenerator(names));
+                var.setVar(nameGenerator());
             }
         }
     }
@@ -68,10 +70,9 @@ public class CPSUtils {
     /**
      * Generates a string that is not in the provided set of strings
      *
-     * @param names the set of strings
      * @return a new string
      */
-    private static String nameGenerator(Set<String> names) {
+    public static String nameGenerator() {
         // !, @, $, %, ^, &, *, _, -, +, :, /, =
         String ALLPOSSIBLECHARS = "abcdefghijklmnopqrstuvwxyz";
         StringBuilder ret = new StringBuilder();
@@ -82,7 +83,7 @@ public class CPSUtils {
         }
         String result = ret.toString();
         if (names.contains(result) || vars.stream().anyMatch(var -> var.toString().equals(result))) {
-            return nameGenerator(names);
+            return nameGenerator();
         } else {
             names.add(result);
             return result;
