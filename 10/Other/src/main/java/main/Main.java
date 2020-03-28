@@ -38,12 +38,12 @@ public class Main {
                 System.out.println("///////////////////////////////////////////////////////////////////////\n");
             }
         } else {
-            Object obj = new JSONParser().parse("[[\"let\", \"x\", \"=\", 2],\"x\"]");
+            Object obj = new JSONParser().parse("[\"call\",\"f\",\"a\",\"b\",\"c\"]");
             Toy parsed = Parser.parse(obj);
 
             CPSUtils.initializeNames(parsed);
-            System.out.println(parsed.toJSONString());
-            //System.out.println(parsed.CPS().toJSONString());
+            //System.out.println(parsed.toJSONString());
+            System.out.println(parsed.CPS().toJSONString());
         }
     }
 }

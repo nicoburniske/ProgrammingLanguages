@@ -52,17 +52,14 @@ public class ToyFunc implements Toy {
         return new ToyFunc(this.params.stream().map(param -> new ToyVar("_")).collect(Collectors.toList()), function.computeStaticDistance(currDepth + 1, env));
     }
 
-    @Override
-    public Toy CPS() {
-        List<ToyVar> params2 = new ArrayList<>(this.params);
-        params2.add(0, CPSUtils.K);
-        return new ToyFunc(params2, this.function.splitExpression());
-    }
 
     @Override
     public Toy splitExpression() {
-        // TODO: might be wrong
-        return this.CPS();
+
+        List<ToyVar> params2 = new ArrayList<>(this.params);
+        params2.add(0, CPSUtils.K);
+        // added an outer call
+        return new ToyCall(CPSUtils.K, new ToyFunc(params2, this.function.splitExpression()));
     }
 
     @Override

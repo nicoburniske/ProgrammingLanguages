@@ -72,9 +72,17 @@ public class ToyCall implements Toy {
 
     @Override
     public Toy splitExpression() {
-        List<Toy> argsCopy = this.args.stream().map(Toy::splitExpression).collect(Collectors.toList());
+        int n = this.args.size();
+        List<Toy> argsCopy = new ArrayList<>(this.args);
         argsCopy.add(0, CPSUtils.K);
-        return new ToyCall(this.function.splitExpression(), argsCopy);
+        Toy result =  new ToyCall(this.function.splitExpression(), argsCopy);
+
+        if (n> 0) {
+            for (int ii = 0; ii < n; ii++) {
+                result = new ToyCall(this.args.get(ii).CPS(), result);
+            }
+        }
+        return result;
     }
 
     @Override

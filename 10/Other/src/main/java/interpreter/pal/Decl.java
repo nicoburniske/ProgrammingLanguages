@@ -86,7 +86,9 @@ public class Decl implements JSONAware {
             return this.rhs;
         } else if(this.rhs instanceof ToyFunc) {
             ToyFunc func = (ToyFunc) this.rhs;
-            return func.CPS();
+            List<ToyVar> params2 = new ArrayList<>(func.getParams());
+            params2.add(0, CPSUtils.K);
+            return new ToyFunc(params2, func.getFunction().splitExpression());
         } else {
             throw new IllegalStateException("This should never happen, You have an invalid test (Or we screwed up)");
         }
