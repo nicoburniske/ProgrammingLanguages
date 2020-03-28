@@ -77,13 +77,13 @@ public class ToyCall implements Toy {
         argsCopy.add(0, CPSUtils.K);
         List<Toy> argsCopy2 = new ArrayList<>(argsCopy);
         ToyVar funcName = new ToyVar(CPSUtils.nameGenerator());
-        Toy funcCPS = this.function.splitExpression();
+        Toy funcCPS = this.function.CPS();
         Toy result =  new ToyCall(funcName, argsCopy2);
         result = new ToyCall(funcCPS, new ToyFunc(Arrays.asList(funcName), result));
 
         if (n> 0) {
             for (int ii = 0; ii < n; ii++) {
-                result = new ToyCall(this.args.get(ii).CPS(), new ToyFunc(Arrays.asList(argsCopy.get(ii)), result));
+                result = new ToyCall(this.args.get(ii).CPS(), new ToyFunc(Arrays.asList(argsCopy.get(ii + 1)), result));
             }
         }
         return result;
