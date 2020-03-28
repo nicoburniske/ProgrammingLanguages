@@ -1,0 +1,40 @@
+98
+Julia Belyakova
+
+91/100 + Bonus: 7/10
+
+Task 1 (alpha-equals)
+----------------------------------------
+
+-2 no alha-equals unit tests for a combination of 
+   decls and functions with arguments, e.g. decl inside function or vice versa
+   (to check that scopes of decls and function arguments are handled correctly,
+   one does need a non-zero arguments function) 
+
+Task 2 (CPS)
+----------------------------------------
+
+-1 it's not documented that the nameGenerator is needed
+   (which generates 10 letters long variable names),
+   to avoid collisions between k and variables in a program
+   (this is crucial for the correctness of your CPS transformation)
+
+-6 (alpha-equal) unit tests for cps do not have examples where the generation
+   of variable names would be necessary for the CPS correctness
+   (variable named "k" in the source program would be such an example) +
+   no unit tests for complex decls and function calls (they are commented
+   out, which suggests that there is a bug somewhere?)
+
++7 unit tests for cps that use interpret (you would have got full bonus points
+   if interpreted source programs instead of hard coding values --
+   it's hard to see if the unit tests are actually correct)
+
+-0 using the same "k" for all continuations might be fine in this homework,
+   but you better generate different variable names in the next one
+
+----------------------------------------
+ Misc Comments
+----------------------------------------
+
+Nice comments and organization of the code. (Except too many nested folders are annoying to grade :))
+
