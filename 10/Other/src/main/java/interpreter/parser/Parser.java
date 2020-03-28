@@ -49,16 +49,6 @@ public class Parser {
                 return new ToyCall(parse(arr.get(1)), args);
             }
 
-            if (arr.size() >= 2 && arr.get(1) instanceof String) {
-                List<Toy> args = new ArrayList<>();
-                try {
-                    args.add(parse(arr.get(0)));
-                    arr.subList(2, arr.size()).forEach(e -> args.add(parse(e)));
-                    return new ToyCall(parse(arr.get(1)), args);
-                } catch (Exception ignored) {
-
-                }
-            }
             if (arr.size() >= 1) {
                 if (arr.size() == 1) {
                     return new ToyDeclArray(Collections.emptyList(), parse(arr.get(0)));

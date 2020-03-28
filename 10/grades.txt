@@ -1,0 +1,196 @@
+Total: 30/60
+
+-5 interpreter; Input: ["call","+",5,6]; Expected: ["fun*",["ka"],["call",["fun*",["kb"],["call","kb",6]],["fun*",["f"],["call",["fun*",["kc"],["call","kc",5]],["fun*",["fa"],["call",["fun*",["kd"],["call","kd",["fun*",["k","a","aa"],["call","k",["call","+","a","aa"]]]]],["fun*",["fb"],["call","fb","ka","fa","f"]]]]]]]]
+; Got: ["fun*",["k"],["call",["fun*",["k","left","right"],["call","k",["call","+","left","right"]]],"k",["call","k",5],["call","k",6]]]
+
+-5 interpreter; Input: ["call","f!","a!","a!!"]; Expected: ["fun*",["ka"],["call",["fun*",["kb"],["call","kb","a!!"]],["fun*",["f"],["call",["fun*",["kc"],["call","kc","a!"]],["fun*",["fa"],["call",["fun*",["kd"],["call","kd","f!"]],["fun*",["fb"],["call","fb","ka","fa","f"]]]]]]]]
+; Got: ["fun*",["k"],["call",["call","k","f!"],"k",["call","k","a!"],["call","k","a!!"]]]
+
+-5 interpreter; Input: ["fun*",["x"],"x"]; Expected: ["fun*",["ka"],["call","ka",["fun*",["kb","x"],["call","kb","x"]]]]
+; Got: ["fun*",["k","x"],["call","k","x"]]
+
+-5, for your test 2-in.json; got ["fun*",["k"],["call",["fun*",["ka"],["call","ka",8]],["fun*",["f"],["call",["fun*",["kb"],["call","kb",["fun*",["kc","run"],["call","kc","run"]]]],["fun*",["fa"],["call","fa","k","f"]]]]]]
+
+-5, for your test 4-in.json; got [["let","x","=",["fun*",["ka"],["call",["fun*",["kb"],["call","kb","x"]],["fun*",["f"],["call","f","ka"]]]]],["fun*",["kc"],["call",["fun*",["kd"],["call","kd","x"]],["fun*",["fa"],["call","fa","kc"]]]]]
+
+-5, for your test 1-in.json; got [["let","k","=",5],["let","reserved","=",6],["let","uuid","=",8],["let","tim+","=",3],["fun*",["kb"],["call",["fun*",["kc"],["call","kc","k"]],["fun*",["f"],["call",["fun*",["kd"],["call",["fun*",["ke"],["call","ke","reserved"]],["fun*",["fb"],["call",["fun*",["kf"],["call",["fun*",["kg"],["call","kg","uuid"]],["fun*",["fd"],["call",["fun*",["kh"],["call","kh","tim+"]],["fun*",["fe"],["call",["fun*",["ki"],["call","ki",["fun*",["k","a","aa"],["call","k",["call","+","a","aa"]]]]],["fun*",["ff"],["call","ff","kf","fe","fd"]]]]]]]],["fun*",["fc"],["call",["fun*",["kj"],["call","kj",["fun*",["k","ab","ac"],["call","k",["call","+","ab","ac"]]]]],["fun*",["fg"],["call","fg","kd","fc","fb"]]]]]]]],["fun*",["fa"],["call",["fun*",["kk"],["call","kk",["fun*",["k","ad","ae"],["call","k",["call","+","ad","ae"]]]]],["fun*",["fh"],["call","fh","kb","fa","f"]]]]]]]]]
+
+-5, for your test 0-in.json; got [["let","fib","=",["fun*",["ka","ii"],["call",["fun*",["kb"],["call","kb","ii"]],["fun*",["tst"],["if-0","tst",["call","ka",0],["call",["fun*",["kc"],["call",["fun*",["kd"],["call",["fun*",["ke"],["call","ke","ii"]],["fun*",["fb"],["call",["fun*",["kf"],["call","kf",-1]],["fun*",["fc"],["call",["fun*",["kg"],["call","kg",["fun*",["k","a","aa"],["call","k",["call","+","a","aa"]]]]],["fun*",["fd"],["call","fd","kd","fc","fb"]]]]]]]],["fun*",["fa"],["call",["fun*",["kh"],["call","kh","fib"]],["fun*",["fe"],["call","fe","kc","fa"]]]]]],["fun*",["f"],["call",["fun*",["ki"],["call","ki","ii"]],["fun*",["ff"],["call",["fun*",["kj"],["call","kj",["fun*",["k","ab","ac"],["call","k",["call","+","ab","ac"]]]]],["fun*",["fg"],["call","fg","ka","ff","f"]]]]]]]]]]]],["fun*",["kk"],["call",["fun*",["kl"],["call","kl",13]],["fun*",["fh"],["call",["fun*",["km"],["call","km","fib"]],["fun*",["fi"],["call","fi","kk","fh"]]]]]]]
+
++10 for finding bugs in Matthias' code
+===============
+Code Inspection
+===============
+Inspection Scores Forthcoming
+
+===============
+Test Fest
+===============
+interpreter: Failed [["let","a","=",7],"a"], Expected [["let","a","=",7],["fun*",["$k"],["call","$k","a"]]]
+, Got ["fun*",["k"],["call",["call","k","a"],"k",["call",["call","k","a"],"k",["call","k","let"],["fun*",["k","left","right"],["call","k",["call","=","left","right"]]],["call","k",7]]]]
+
+interpreter: Failed [["let", "x", "=", 2],"x"]
+, Expected [["let","x","=",2],["fun*",["k"],["call","k","x"]]]
+, Got ["fun*",["k"],["call",["call","k","x"],"k",["call",["call","k","x"],"k",["call","k","let"],["fun*",["k","left","right"],["call","k",["call","=","left","right"]]],["call","k",2]]]]
+
+interpreter: Failed ["call", ["fun*", ["a", "b"], ["call", "+", "a", "b"]], 2, 3]
+, Expected [
+  "fun*",
+  ["knot"],
+  [
+    "call",
+    ["fun*", ["arga"], ["call", "arga", 3]],
+    [
+      "fun*",
+      ["argaf"],
+      [
+        "call",
+        ["fun*", ["argb"], ["call", "argb", 2]],
+        [
+          "fun*",
+          ["argbf"],
+          [
+            "call",
+            [
+              "fun*",
+              ["k"],
+              [
+                "call",
+                "k",
+                [
+                  "fun*",
+                  ["kinside", "a", "b"],
+                  [
+                    "call",
+                    ["fun*", ["argb"], ["call", "argb", "b"]],
+                    [
+                      "fun*",
+                      ["argbf"],
+                      [
+                        "call",
+                        ["fun*", ["arga"], ["call", "arga", "a"]],
+                        [
+                          "fun*",
+                          ["argaf"],
+                          [
+                            "call",
+                            [
+                              "fun*",
+                              ["morecont"],
+                              [
+                                "call",
+                                "morecont",
+                                [
+                                  "fun*",
+                                  ["kp", "a", "b"],
+                                  ["call", "kp", ["call", "+", "a", "b"]]
+                                ]
+                              ]
+                            ],
+                            [
+                              "fun*",
+                              ["anotha"],
+                              ["call", "anotha", "kinside", "argaf", "argbf"]
+                            ]
+                          ]
+                        ]
+                      ]
+                    ]
+                  ]
+                ]
+              ]
+            ],
+            [
+              "fun*",
+              ["lastcont"],
+              ["call", "lastcont", "knot", "argbf", "argaf"]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ]
+]
+, Got ["fun*",["k"],["call",["fun*",["k","a","b"],["call",["fun*",["k","left","right"],["call","k",["call","+","left","right"]]],"k",["call","k","a"],["call","k","b"]]],"k",["call","k",2],["call","k",3]]]
+
+interpreter: Failed ["call", "f", "a", "b", "c"]
+, Expected [
+  "fun*",
+  ["k"],
+  [
+    "call",
+    ["fun*", ["argc"], ["call", "argc", "c"]],
+    [
+      "fun*",
+      ["argcf"],
+      [
+        "call",
+        ["fun*", ["argb"], ["call", "argb", "b"]],
+        [
+          "fun*",
+          ["argbf"],
+          [
+            "call",
+            ["fun*", ["arga"], ["call", "arga", "a"]],
+            [
+              "fun*",
+              ["argaf"],
+              [
+                "call",
+                ["fun*", ["contf"], ["call", "contf", "f"]],
+                [
+                  "fun*",
+                  ["contff"],
+                  ["call", "contff", "k", "argaf", "argbf", "argcf"]
+                ]
+              ]
+            ]
+          ]
+        ]
+      ]
+    ]
+  ]
+]
+, Got ["fun*",["k"],["call",["call","k","f"],"k",["call","k","a"],["call","k","b"],["call","k","c"]]]
+
+interpreter: Failed "@"
+, Expected [
+  "fun*",
+  ["k"],
+  ["call", "k", ["fun*", ["kp", "a"], ["call", "kp", ["call", "@", "a"]]]]
+]
+, Got ["fun*",["k","left"],["call","k",["call","@","left"]]]
+
+interpreter: Failed ["call", ["fun*", ["a", "b"], 42], 3, 4], Expected ["fun*",["c"],["call",["fun*",["c"],["call","c",4]],["fun*",["e"],["call",["fun*",["c"],["call","c",3]],["fun*",["d"],["call",["fun*",["c"],["call","c",["fun*",["c","a","b"],["call","c",42]]]],["fun*",["of-f"],["call","of-f","c","d","e"]]]]]]]]
+, Got ["fun*",["k"],["call",["fun*",["k","a","b"],["call","k",42]],"k",["call","k",3],["call","k",4]]]
+
+interpreter: Failed ["call", "+", 1, 2], Expected ["fun*",["a"],["call",["fun*",["a"],["call","a",2]],["fun*",["c"],["call",["fun*",["a"],["call","a",1]],["fun*",["b"],["call",["fun*",["a"],["call","a",["fun*",["a","x","y"],["call","a",["call","+","x","y"]]]]],["fun*",["of-f"],["call","of-f","a","b","c"]]]]]]]]
+, Got ["fun*",["k"],["call",["fun*",["k","left","right"],["call","k",["call","+","left","right"]]],"k",["call","k",1],["call","k",2]]]
+
+interpreter: Failed ["call",["fun*",[],1]]
+, Expected ["fun*",["a"],["call",["fun*",["c"],["call","c",["fun*",["d"],["call","d",1]]]],["fun*",["b"],["call","b","a"]]]], Got ["fun*",["k"],["call",["fun*",["k"],["call","k",1]],"k"]]
+
+interpreter: Failed "!", Expected ["fun*", ["k"], ["call", "k", ["fun*", ["k", "x"], ["call", "k", ["call", "!", "x"]]]]], Got ["fun*",["k","left"],["call","k",["call","!","left"]]]
+
+interpreter: Failed [["let", "k", "=", ["fun*", [], "l"]],
+ ["let", "l", "=", 5],
+ ["call", "k"]], Expected [["let", "k", "=", ["fun*", ["ka"], ["call", "ka", "l"]]], ["let", "l", "=", 5], ["fun*", ["ka"], ["call", ["fun*", ["ka"], ["call", "ka", "k"]], ["fun*", ["of-a"], ["call", "of-a", "ka"]]]]], Got [["let","k","=",["fun*",["bphizxktnh"],["call","bphizxktnh","l"]]],["let","l","=",5],["fun*",["bphizxktnh"],["call",["call","bphizxktnh","k"],"bphizxktnh"]]]
+
+interpreter: Failed ["call", "f", "a", "b", "c"], Expected ["fun*", ["ka"], ["call", ["fun*", ["ka"], ["call", "ka", "c"]], ["fun*", ["of-d"], ["call", ["fun*", ["ka"], ["call", "ka", "b"]], ["fun*", ["of-c"], ["call", ["fun*", ["ka"], ["call", "ka", "a"]], ["fun*", ["of-b"], ["call", ["fun*", ["ka"], ["call", "ka", "f"]], ["fun*", ["of-a"], ["call", "of-a", "ka", "of-b", "of-c", "of-d"]]]]]]]]]], Got ["fun*",["k"],["call",["call","k","f"],"k",["call","k","a"],["call","k","b"],["call","k","c"]]]
+
+interpreter: Failed ["fun*", ["x"], 42]
+
+, Expected ["fun*", ["k"], ["call", "k", ["fun*", ["k", "x"], ["call", "k", 42]]]]
+, Got ["fun*",["k","x"],["call","k",42]]
+
+interpreter: Failed [["let", "f", "=", ["fun*", ["x"], "x"]], "f"]
+, Expected [["let", "_f", "=", ["fun*", ["k", "_x"], ["call", "k", "_x"]]], ["fun*", ["k"], ["call", "k", "_f"]]]
+, Got ["fun*",["k"],["call",["call","k","f"],"k",["call",["call","k","f"],"k",["call","k","let"],["fun*",["k","left","right"],["call","k",["call","=","left","right"]]],["fun*",["k","x"],["call","k","x"]]]]]
+
+interpreter: Failed ["fun*", ["x", "y"], 19]
+, Expected ["fun*", ["k"], ["call", "k", ["fun*", ["k", "_x", "_y"], ["call", "k", 19]]]]
+, Got ["fun*",["k","x","y"],["call","k",19]]
+
+interpreter: Failed [["let", "x", "=", 1], "x"]
+, Expected [["let", "_x", "=", 1], ["fun*", ["k"], ["call", "k", "_x"]]]
+, Got ["fun*",["k"],["call",["call","k","x"],"k",["call",["call","k","x"],"k",["call","k","let"],["fun*",["k","left","right"],["call","k",["call","=","left","right"]]],["call","k",1]]]]

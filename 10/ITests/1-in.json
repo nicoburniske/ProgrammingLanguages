@@ -1,0 +1,5 @@
+[["let", "k", "=", 5],
+ ["let", "reserved", "=", 6],
+ ["let", "uuid", "=", 8],
+ ["let", "tim+", "=", 3],
+  ["call", "+", ["call", "+", ["call", "+", "tim+", "uuid"], "reserved"], "k"]]
