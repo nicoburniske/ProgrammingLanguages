@@ -4,6 +4,7 @@ import interpreter.utils.CPSUtils;
 import interpreter.utils.ValueEnvStoreTuple;
 import interpreter.utils.EnvStoreTuple;
 import interpreter.utils.staticDistance.StaticDistanceEnvironment;
+import interpreter.value.IValue;
 import org.json.simple.JSONAware;
 
 import java.util.Arrays;
@@ -84,4 +85,10 @@ public interface Toy extends JSONAware {
      * @param names The current set of accumulated names.
      */
     void getAllNames(Set<String> names);
+
+
+    default IValue run() throws IllegalStateException {
+        Toy toEval = new ToyCall(this.CPS(), new ToyFunc(Arrays.asList(CPSUtils.identity), new ToyStop(CPSUtils.identity)));
+        return toEval.interpret(EnvStoreTuple.stdLib()).getLeft();
+    }
 }
