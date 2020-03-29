@@ -1,11 +1,11 @@
 package interpreter.parser;
 
 import interpreter.pal.*;
+import interpreter.utils.CPSUtils;
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Parser {
@@ -47,6 +47,19 @@ public class Parser {
             if (arr.size() >= 2 && isStringAndisEqual(arr.get(0), "call")) {
                 List<Toy> args = (List<Toy>) arr.subList(2, arr.size()).stream().map(e -> parse(e)).collect(Collectors.toList());
                 return new ToyCall(parse(arr.get(1)), args);
+            }
+            if(arr.size() == 2 && isStringAndisEqual(arr.get(0), "stop")){
+                return new ToyStop(parse(arr.get(1)));
+            }
+            if(arr.size() == 3 && isStringAndisEqual(arr.get(0), "grab")) {
+                return new ToyGrab((ToyVar)parse(arr.get(1)), parse(arr.get(2)));
+            }
+            if(arr.size() > 1 && isStringAndisEqual(arr.get(0), "seq*")) {
+                List<JSONObject> toys = arr.subList(1, arr.size());
+                String name = validNames.get(0);
+                Collections.reverse(toys);
+                List<Decl> decls = toys.stream().map(toy -> new Decl(new ToyVar(validNames.remove(0)), parse(toy))).collect(Collectors.toList());
+                return new ToyDeclArray(decls, new ToyVar(name));
             }
 
             if (arr.size() >= 1) {
@@ -111,4 +124,34 @@ public class Parser {
         }
         throw new IllegalStateException("Unable to Parse JSON into Decl");
     }
+
+    private static Set<String> illegalNames = new HashSet<>();
+    private static List<String> validNames = new ArrayList<>();
+    private static int countSeq = 0;
+
+    private static void setupValidSeqNames(Object obj) {
+        if(obj instanceof String) {
+            illegalNames.add((String) obj);
+        } else if (obj instanceof JSONArray){
+            JSONArray arr = (JSONArray) obj;
+            if(arr.size() > 1 && isStringAndisEqual(arr.get(0), "seq*")) {
+                countSeq += arr.size() - 1;
+            }
+            arr.forEach(var -> setupValidSeqNames(var));
+        }
+    }
+
+    public static void generateValidSeqNames(Object obj) {
+        setupValidSeqNames(obj);
+        validNames = new ArrayList<>();
+        for(int ii = 0; ii < countSeq; ii ++) {
+            String currName;
+            do {
+                currName = CPSUtils.nameGenerator();
+            }while (illegalNames.contains(currName));
+            validNames.add(currName);
+        }
+    }
+
+
 }

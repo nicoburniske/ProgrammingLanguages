@@ -38,7 +38,9 @@ public class Main {
                 System.out.println("///////////////////////////////////////////////////////////////////////\n");
             }
         } else {
-            Object obj = new JSONParser().parse("[\"call\",\"f\",\"a\",\"b\",\"c\"]");
+            FileReader reader = new FileReader(args[0]);
+            Object obj = new JSONParser().parse(reader);
+            Parser.generateValidSeqNames(obj);
             Toy parsed = Parser.parse(obj);
 
             CPSUtils.initializeNames(parsed);
