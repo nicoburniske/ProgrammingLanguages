@@ -17,12 +17,11 @@ public class ToyCallTest {
     @Before
     public void init() {
         ex1 = new ToyCall(new ToyFunc(new ArrayList<>(), new ToyInt(100L)), new ArrayList<>());
-        result1 = new ToyFunc(CPSUtils.KList, new ToyCall(new ToyFunc(CPSUtils.KList, new ToyCall(CPSUtils.K, new ToyInt(100L))), CPSUtils.K));
+        result1 = new ToyFunc(CPSUtils.KList, new ToyCall(new ToyFunc(CPSUtils.KList, new ToyCall(CPSUtils.K,
+                new ToyFunc(CPSUtils.KList, new ToyCall(CPSUtils.K, new ToyInt(100L))))), new ToyFunc(Arrays.asList(new ToyVar("yeet")), new ToyCall( new ToyVar("yeet"), CPSUtils.K))));
     }
     @Test
     public void CPS() {
-        System.out.println(ex1.CPS().toJSONString());
-        System.out.println(result1.toJSONString());
         assertTrue(Toy.alphaEquals(this.ex1.CPS(), this.result1));
     }
 }

@@ -29,17 +29,15 @@ public class ToyDeclArrayTest {
         result3 = new ToyDeclArray(Arrays.asList(new Decl(new ToyVar("x"), new ToyInt(4L)), new Decl(new ToyVar("y"), new ToyFunc(CPSUtils.KList, new ToyCall(CPSUtils.K, new ToyVar("x"))))),
                 new ToyFunc(CPSUtils.KList, new ToyCall(new ToyFunc(CPSUtils.KList, new ToyCall(CPSUtils.K, new ToyVar("y"))),
                         new ToyFunc(Arrays.asList(new ToyVar("of-f")), new ToyCall(new ToyCall(new ToyVar("of-f"), CPSUtils.K), CPSUtils.K)))));
-        result4 = new ToyFunc(CPSUtils.KList, new ToyCall(new ToyDeclArray(Arrays.asList(), new ToyFunc(CPSUtils.KList, new ToyCall(CPSUtils.K, new ToyInt(3L)))), CPSUtils.K));
+        result4 = new ToyFunc(CPSUtils.KList, new ToyCall(new ToyDeclArray(Arrays.asList(), new ToyFunc(CPSUtils.KList, new ToyCall(CPSUtils.K, new ToyFunc(CPSUtils.KList, new ToyCall(CPSUtils.K, new ToyInt(3L)))))),
+                new ToyFunc(Arrays.asList(new ToyVar("yeet")), new ToyCall( new ToyVar("yeet"), CPSUtils.K))));
     }
 
     @Test
     public void CPS() {
-        // System.out.println(ex1.CPS().toJSONString());
-        // System.out.println(result1.toJSONString());
-        // System.out.println(ex3.CPS().toJSONString());
         assertTrue(Toy.alphaEquals(ex1.CPS(), result1));
         assertTrue(Toy.alphaEquals(ex2.CPS(), result2));
-         assertTrue(Toy.alphaEquals(test4.CPS(), result4));
+        assertTrue(Toy.alphaEquals(test4.CPS(), result4));
     }
 
     @Test
