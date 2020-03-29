@@ -1,9 +1,6 @@
 package interpreter.utils;
 
-import interpreter.pal.Toy;
-import interpreter.pal.ToyCall;
-import interpreter.pal.ToyFunc;
-import interpreter.pal.ToyVar;
+import interpreter.pal.*;
 
 import java.util.*;
 
@@ -48,6 +45,7 @@ public class CPSUtils {
      * @return the new {@link Toy} that can be wrapped with a identity continuation
      */
     public static Toy toTestFormat(Toy expression) {
+        // return new ToyCall(expression, new ToyFunc(Arrays.asList(CPSUtils.identity), new ToyStop(CPSUtils.identity)));
         return new ToyCall(expression, new ToyFunc(Arrays.asList(identity), identity));
     }
 

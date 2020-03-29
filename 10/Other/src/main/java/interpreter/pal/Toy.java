@@ -1,6 +1,7 @@
 package interpreter.pal;
 
 import interpreter.utils.CPSUtils;
+import interpreter.utils.StopInterpretException;
 import interpreter.utils.ValueEnvStoreTuple;
 import interpreter.utils.EnvStoreTuple;
 import interpreter.utils.staticDistance.StaticDistanceEnvironment;
@@ -88,7 +89,14 @@ public interface Toy extends JSONAware {
 
 
     default IValue run() throws IllegalStateException {
-        Toy toEval = new ToyCall(this.CPS(), new ToyFunc(Arrays.asList(CPSUtils.identity), new ToyStop(CPSUtils.identity)));
-        return toEval.interpret(EnvStoreTuple.stdLib()).getLeft();
+
+        //Toy toEval = new ToyCall(this.CPS(), new ToyFunc(Arrays.asList(CPSUtils.identity), new ToyStop(CPSUtils.identity)));
+        Toy toEval = CPSUtils.toTestFormat(this.CPS());
+        System.out.println(toEval.toJSONString());
+        try {
+            return toEval.interpret(EnvStoreTuple.stdLib()).getLeft();
+        } catch (StopInterpretException exception) {
+            return exception.getResult();
+        }
     }
 }

@@ -2,8 +2,10 @@ package interpreter.pal;
 
 import interpreter.utils.CPSUtils;
 import interpreter.utils.EnvStoreTuple;
+import interpreter.utils.StopInterpretException;
 import interpreter.utils.ValueEnvStoreTuple;
 import interpreter.utils.staticDistance.StaticDistanceEnvironment;
+import interpreter.value.IValue;
 import org.json.simple.JSONArray;
 
 import java.util.Objects;
@@ -18,7 +20,8 @@ public class ToyStop implements Toy {
 
     @Override
     public ValueEnvStoreTuple interpret(EnvStoreTuple tuple) {
-        return CPSUtils.toTestFormat(this.subexpression).interpret(tuple);
+            IValue val = this.subexpression.interpret(tuple).getLeft();
+            throw new StopInterpretException(val);
     }
 
     @Override
