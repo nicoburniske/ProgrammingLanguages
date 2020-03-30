@@ -1,13 +1,13 @@
 package interpreter.pal;
 
+import interpreter.utils.CPSUtils;
 import interpreter.utils.EnvStoreTuple;
 import interpreter.utils.ValueEnvStoreTuple;
 import interpreter.utils.staticDistance.StaticDistanceEnvironment;
 import interpreter.utils.staticDistance.TupleSD;
 import org.json.simple.JSONArray;
 
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public class ToyGrab implements Toy {
     ToyVar var;
@@ -30,7 +30,10 @@ public class ToyGrab implements Toy {
 
     @Override
     public Toy splitExpression() {
-        return null;
+        // ToyVar param = new ToyVar(CPSUtils.nameGenerator());
+        ToyVar param2 = new ToyVar(CPSUtils.nameGenerator());
+        Decl done = new Decl(this.var, new ToyFunc(Arrays.asList(param2, this.var), new ToyCall(CPSUtils.K, Arrays.asList(this.var))));
+        return new ToyDeclArray(Arrays.asList(done), this.rhs.splitExpression());
     }
 
     @Override

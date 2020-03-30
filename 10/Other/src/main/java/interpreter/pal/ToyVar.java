@@ -72,7 +72,12 @@ public class ToyVar implements Toy {
         return "\"" + this.var + "\"";
     }
 
-    public void setVar(String var) {
+    public String setVar(String var) {
+        String old = this.var;
         this.var = var;
+        return old;
+    }
+    public ToyVar copy() {
+        return new ToyVar(this.var);
     }
 }
