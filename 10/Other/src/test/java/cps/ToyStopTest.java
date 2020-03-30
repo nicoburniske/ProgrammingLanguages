@@ -51,9 +51,10 @@ public class ToyStopTest {
         // replace call to func with stop
         ToyCall testStopHard2 =  new ToyCall(new ToyVar("+"),
                         Arrays.asList(new ToyStop(new ToyInt(1L)),new ToyInt(42L)));
-        System.out.println(testStopHard2.toJSONString());
 
-        IValue resHard = testStopHard2.run();
+        System.out.println(testStopHard2.toJSONString());
+        System.out.println(testStopHard2.CPS().toJSONString());
+        IValue resHard = testStopHard.run();
         System.out.println(resHard.toJSONString());
         assertEquals(new ValueInt(1L), resHard);
     }

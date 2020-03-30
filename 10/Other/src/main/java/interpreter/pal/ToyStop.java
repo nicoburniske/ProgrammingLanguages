@@ -32,7 +32,7 @@ public class ToyStop implements Toy {
     @Override
     public Toy splitExpression() {
         //TODO CPS or SplitExpression
-        return new ToyStop(this.subexpression.splitExpression());
+        return new ToyStop(CPSUtils.toTestFormat(this.subexpression.CPS()));
     }
 
     @Override

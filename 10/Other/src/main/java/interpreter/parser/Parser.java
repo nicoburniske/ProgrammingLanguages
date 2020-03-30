@@ -55,11 +55,15 @@ public class Parser {
                 return new ToyGrab((ToyVar)parse(arr.get(1)), parse(arr.get(2)));
             }
             if(arr.size() > 1 && isStringAndisEqual(arr.get(0), "seq*")) {
-                List<JSONObject> toys = arr.subList(1, arr.size());
-                String name = validNames.get(0);
+                //["seq*", 1, 2, 3]
+                //
+                //["call", ["fun*", ["three", "two", "one"], "three"], 3, 2, 1]
+                List<Object> toys = arr.subList(1, arr.size());
                 Collections.reverse(toys);
-                List<Decl> decls = toys.stream().map(toy -> new Decl(new ToyVar(validNames.remove(0)), parse(toy))).collect(Collectors.toList());
-                return new ToyDeclArray(decls, new ToyVar(name));
+                String name = validNames.get(0);
+                List<ToyVar> decls = toys.stream().map(toy -> new ToyVar(validNames.remove(0))).collect(Collectors.toList());
+                List<Toy> args = toys.stream().map(Parser::parse).collect(Collectors.toList());
+                return new ToyCall(new ToyFunc(decls, new ToyVar(name)), args);
             }
 
             if (arr.size() >= 1) {
