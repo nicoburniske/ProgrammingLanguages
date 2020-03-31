@@ -25,7 +25,6 @@ public class ToyFuncTest {
     }
     @Test
     public void CPS() {
-        System.out.println(ex1.CPS().toJSONString());
         assertTrue(Toy.alphaEquals(ex1.CPS(), result1));
         assertEquals("\"closure\"", ex1.CPS().interpret(EnvStoreTuple.stdLib()).getLeft().toJSONString());
     }

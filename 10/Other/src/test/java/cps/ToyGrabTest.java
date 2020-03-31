@@ -25,7 +25,6 @@ public class ToyGrabTest {
      */
     @Test
     public void splitExpression() {
-
         assertEquals(new ValueInt(42L), example1.run());
     }
 }

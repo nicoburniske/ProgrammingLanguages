@@ -17,25 +17,8 @@ public class ToyStopTest {
 
     ToyStop s1 = new ToyStop(new ToyInt(1L));
 
-    @Before
-    public void setUp() throws Exception {
-
-    }
-
-    @Test
-    public void splitExpression() {
-    }
-
     @Test
     public void testInterpret() {
-//        ValueClosure val = (ValueClosure) s1.CPS().interpret(EnvStoreTuple.stdLib()).getLeft();
-//        // System.out.println(val.getFunction().toJSONString());
-//        ValueInt val2 = (ValueInt) s1.run();
-//        // assertEquals(new ValueInt(1L), val);
-//
-//        ToyInt anInt = new ToyInt(5L);
-//        IValue result = anInt.CPS().interpret(EnvStoreTuple.stdLib()).getLeft();
-
         /**
          * [call
          *   [fun f
@@ -51,11 +34,7 @@ public class ToyStopTest {
         // replace call to func with stop
         ToyCall testStopHard2 =  new ToyCall(new ToyVar("+"),
                         Arrays.asList(new ToyStop(new ToyInt(1L)),new ToyInt(42L)));
-
-        System.out.println(testStopHard2.toJSONString());
-        System.out.println(testStopHard2.CPS().toJSONString());
         IValue resHard = testStopHard.run();
-        System.out.println(resHard.toJSONString());
         assertEquals(new ValueInt(1L), resHard);
     }
 }

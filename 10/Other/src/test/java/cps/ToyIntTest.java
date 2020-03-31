@@ -21,10 +21,6 @@ public class ToyIntTest {
     }
     @Test
     public void CPS() {
-       //System.out.println(ex1.CPS().toJSONString());
-       //System.out.println(result1.toJSONString());
        assertTrue(Toy.alphaEquals(ex1.CPS(), result1));
-       System.out.println(new ToyCall(ex1.CPS(), new ToyFunc(Arrays.asList(new ToyVar("crap")), new ToyVar("crap"))).interpret(EnvStoreTuple.stdLib()).getLeft().toJSONString());
-       // System.out.println(new ToyCall(ex1.CPS(), new ToyInt(10L)).interpret(EnvStoreTuple.stdLib()));
     }
 }
