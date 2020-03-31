@@ -48,8 +48,9 @@ public class ToyCall implements Toy {
             List<IValue> interpretedArgs = new ArrayList<>();
             ValueEnvStoreTuple argTuple;
             //TODO: ensure that the reverse is necessary
-            Collections.reverse(args);
-            for (Toy arg : args) {
+            List<Toy> argsReversed = new ArrayList(args);
+            Collections.reverse(argsReversed);
+            for (Toy arg : argsReversed) {
                 //argTuple = arg.interpret(newTuple);
                 EnvStoreTuple forInterpret = new EnvStoreTuple(tuple.getLeft(), temp.getRight());
                 argTuple = arg.interpret(forInterpret);
