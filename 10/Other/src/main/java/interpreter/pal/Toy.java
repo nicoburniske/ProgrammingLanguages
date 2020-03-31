@@ -98,8 +98,6 @@ public interface Toy extends JSONAware {
     default IValue run() throws IllegalStateException {
 
         Toy toEval = new ToyCall(this.CPS(), new ToyFunc(Arrays.asList(CPSUtils.identity), new ToyStop(CPSUtils.identity)));
-        //Toy toEval = CPSUtils.toTestFormat(this.CPS());
-        System.out.println(toEval.toJSONString());
         try {
             return toEval.interpret(EnvStoreTuple.stdLib()).getLeft();
         } catch (StopInterpretException exception) {
