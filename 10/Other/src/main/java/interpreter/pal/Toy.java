@@ -25,6 +25,8 @@ import java.util.Set;
  * *       as in all mainstream languages, the first and required
  * *       PAL is to evaluate to a function value</li>
  * *     <li>- a JSON array of the shape ["if-0",{@link Toy},{@link Toy},{@link Toy}]</li>
+ * *     <li> A JsonArray of the shape ["grab", {@link ToyVar}, {@link Toy}]</li>
+ * *     <li> A JsonArray of the shape ["stop", {@link Toy}]</li>
  * *  </ul>
  */
 public interface Toy extends JSONAware {
@@ -88,6 +90,11 @@ public interface Toy extends JSONAware {
     void getAllNames(Set<String> names);
 
 
+    /**
+     * This function performs a CPS converstion on the Toy and then interprets the resultant expression.
+     * @return the result of interpreatiation on the expression
+     * @throws IllegalStateException when there is a runtime exception for interpretation
+     */
     default IValue run() throws IllegalStateException {
 
         Toy toEval = new ToyCall(this.CPS(), new ToyFunc(Arrays.asList(CPSUtils.identity), new ToyStop(CPSUtils.identity)));

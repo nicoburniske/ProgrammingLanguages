@@ -133,6 +133,10 @@ public class Parser {
     private static List<String> validNames = new ArrayList<>();
     private static int countSeq = 0;
 
+    /**
+     * Creates a list of illegal names that cannot be used for conversion of seq*
+     * @param obj
+     */
     private static void setupValidSeqNames(Object obj) {
         if(obj instanceof String) {
             illegalNames.add((String) obj);
@@ -145,6 +149,11 @@ public class Parser {
         }
     }
 
+
+    /**
+     * Generates names for the parser to use when it is converting seq* into calls/funcs
+     * @param obj
+     */
     public static void generateValidSeqNames(Object obj) {
         setupValidSeqNames(obj);
         validNames = new ArrayList<>();
