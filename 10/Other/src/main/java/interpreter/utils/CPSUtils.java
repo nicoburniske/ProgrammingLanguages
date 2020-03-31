@@ -51,7 +51,7 @@ public class CPSUtils {
 
     /**
      * This function changes any of the {@link ToyVar}s defined above and replaces their Strings with unique names
-     * if their names are ussed in {@param t}
+     * if their names are used in {@param t}
      *
      * @param t the {@link Toy} that is begin used
      */

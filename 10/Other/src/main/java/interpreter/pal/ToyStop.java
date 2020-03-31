@@ -8,9 +8,14 @@ import interpreter.utils.staticDistance.StaticDistanceEnvironment;
 import interpreter.value.IValue;
 import org.json.simple.JSONArray;
 
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * A {@link Toy} that represents a CPS construct which eliminates its continuation
+ * and then evaluates its sub-expression to obtain the final answer.
+ */
 public class ToyStop implements Toy {
     Toy subexpression;
 
@@ -31,8 +36,7 @@ public class ToyStop implements Toy {
 
     @Override
     public Toy splitExpression() {
-        //TODO CPS or SplitExpression
-        return new ToyStop(CPSUtils.toTestFormat(this.subexpression.CPS()));
+        return new ToyCall(this.subexpression.CPS(), new ToyFunc(Arrays.asList(CPSUtils.identity), new ToyStop(CPSUtils.identity)));
     }
 
     @Override
