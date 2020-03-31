@@ -40,6 +40,5 @@ public class ToySeqTest {
         Toy parsed = Parser.parse(obj);
         assertTrue(Toy.alphaEquals(parseResult, parsed));
         assertEquals(new ValueInt(4L), parsed.run());
-
     }
 }
