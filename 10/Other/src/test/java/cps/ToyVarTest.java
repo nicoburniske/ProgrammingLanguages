@@ -25,7 +25,6 @@ public class ToyVarTest {
     }
     @Test
     public void testCPS() {
-        System.out.println(v.CPS().toJSONString());
         assertTrue(Toy.alphaEquals(v.CPS(), vResult));
     }
 

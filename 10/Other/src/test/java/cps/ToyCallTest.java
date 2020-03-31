@@ -43,13 +43,10 @@ public class ToyCallTest {
 
     @Test
     public void CPS() {
-        System.out.println(ex2.CPS().toJSONString());
         assertEquals(new ValueInt(4L), CPSUtils.toTestFormat(ex1.CPS()).interpret(EnvStoreTuple.stdLib()).getLeft());
         assertEquals(new ValueInt(105L), CPSUtils.toTestFormat(ex2.CPS()).interpret(EnvStoreTuple.stdLib()).getLeft());
         assertEquals(new ValueInt(2L), CPSUtils.toTestFormat(get.CPS()).interpret(EnvStoreTuple.stdLib()).getLeft());
         assertEquals(new ValueInt(2L), CPSUtils.toTestFormat(set.CPS()).interpret(EnvStoreTuple.stdLib()).getLeft());
-        // System.out.println(declarr.interpret(EnvStoreTuple.stdLib()).getLeft().toJSONString());
-        // System.out.println(this.sum(12));
         ValueEnvStoreTuple result = CPSUtils.toTestFormat(declarr.CPS()).interpret(EnvStoreTuple.stdLib());
         assertEquals(new ValueInt(this.sum(13)).toJSONString(), result.getLeft().toJSONString());
     }

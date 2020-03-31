@@ -36,7 +36,6 @@ public class ToyDeclArrayTest {
         ToyCall call = new ToyCall(new ToyVar("fx"), Arrays.asList());
         ToyDeclArray declArr = new ToyDeclArray(Arrays.asList(d1, d3), new ToyDeclArray(Arrays.asList(d2), call));
 
-        System.out.println(declArr.interpret(stdLib).getLeft().toJSONString());
         assertEquals(new ValueInt(42L), declArr.interpret(stdLib).getLeft());
     }
 }

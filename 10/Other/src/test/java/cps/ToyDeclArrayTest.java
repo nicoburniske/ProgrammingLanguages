@@ -44,13 +44,6 @@ public class ToyDeclArrayTest {
     public void testInterpretable() {
         assertEquals(new ValueInt(42L), CPSUtils.toTestFormat(ex1.CPS()).interpret(EnvStoreTuple.stdLib()).getLeft());
         assertEquals(new ValueInt(4L), CPSUtils.toTestFormat(ex2.CPS()).interpret(EnvStoreTuple.stdLib()).getLeft());
-        System.out.println(ex3.toJSONString());
-        System.out.println(CPSUtils.toTestFormat(ex3.CPS()).toJSONString());
-//        ValueLambdaClosure val = (ValueLambdaClosure) CPSUtils.toTestFormat(ex3.CPS()).interpret(EnvStoreTuple.stdLib()).getLeft();
-//        EnvStoreTuple envstore = CPSUtils.toTestFormat(ex3.CPS()).interpret(EnvStoreTuple.stdLib()).getRight();
-//        ValueClosure val2 = (ValueClosure) val.apply(envstore).getLeft();
-//        System.out.println(val2.getFunction().toJSONString());
-
         assertEquals(new ValueInt(4L), CPSUtils.toTestFormat(ex3.CPS()).interpret(EnvStoreTuple.stdLib()).getLeft());
         assertEquals(new ValueInt(3L), CPSUtils.toTestFormat(test4.CPS()).interpret(EnvStoreTuple.stdLib()).getLeft());
     }
