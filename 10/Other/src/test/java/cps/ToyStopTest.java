@@ -34,7 +34,14 @@ public class ToyStopTest {
         // replace call to func with stop
         ToyCall testStopHard2 =  new ToyCall(new ToyVar("+"),
                         Arrays.asList(new ToyStop(new ToyInt(1L)),new ToyInt(42L)));
-        IValue resHard = testStopHard.run();
-        assertEquals(new ValueInt(1L), resHard);
+        assertEquals(new ValueInt(1L), testStopHard.run());
+        assertEquals(new ValueInt(1L), testStopHard2.run());
+    }
+
+    @Test
+    public void testStopCPS() {
+        ToyFunc result = new ToyFunc(CPSUtils.KList, new ToyCall(new ToyFunc(CPSUtils.KList, new ToyCall(CPSUtils.K, new ToyInt(1L))),
+                new ToyFunc(Arrays.asList(CPSUtils.identity), new ToyStop(CPSUtils.identity))));
+        assertTrue(Toy.alphaEquals(s1.CPS(), result));
     }
 }

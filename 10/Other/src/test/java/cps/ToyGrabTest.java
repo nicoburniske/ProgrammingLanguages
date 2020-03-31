@@ -4,6 +4,7 @@ import interpreter.pal.ToyCall;
 import interpreter.pal.ToyGrab;
 import interpreter.pal.ToyInt;
 import interpreter.pal.ToyVar;
+import interpreter.utils.EnvStoreTuple;
 import interpreter.value.ValueInt;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,5 +27,14 @@ public class ToyGrabTest {
     @Test
     public void splitExpression() {
         assertEquals(new ValueInt(42L), example1.run());
+    }
+    @Test
+    public void testException() {
+        try {
+            example1.interpret(EnvStoreTuple.stdLib());
+            fail();
+        } catch( IllegalStateException e) {
+            // should not be able to be interpreted since we are processing it in CPS.
+        }
     }
 }
