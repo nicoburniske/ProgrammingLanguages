@@ -13,16 +13,19 @@ import org.junit.Test;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 
+import static interpreter.utils.RuntimeExceptions.ERROR_UNDECLARED_VARIABLE_TEMPLATE;
 import static org.junit.Assert.*;
 
 public class ToyVarTest {
     ToyVar v;
     Toy vResult;
+
     @Before
     public void setUp() throws Exception {
         v = new ToyVar("v");
         vResult = new ToyFunc(Arrays.asList(new ToyVar("x")), new ToyCall(new ToyVar("x"), new ToyVar("v")));
     }
+
     @Test
     public void testCPS() {
         assertTrue(Toy.alphaEquals(v.CPS(), vResult));
@@ -35,15 +38,14 @@ public class ToyVarTest {
         } catch (IllegalStateException e) {
             assertEquals("\"variable v undeclared\"", e.getMessage());
         }
-    }
 
-    @Test
-    public void computeStaticDistance() {
+        try {
+            v.run();
+        } catch (IllegalStateException e) {
+            assertEquals(String.format(ERROR_UNDECLARED_VARIABLE_TEMPLATE, "v"), e.getMessage());
+        }
 
-    }
-
-    @Test
-    public void splitExpression() {
 
     }
+
 }
