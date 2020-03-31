@@ -1,13 +1,1 @@
-[["let","k","=",5],
- ["let","reserved","=",6],
- ["let","uuid","=",8],
- ["let","tim+","=",3],
- ["fun*",
-   ["rqcexpqrfb"],
-   ["call",
-     ["fun*",
-       ["rqcexpqrfb","left","right"],
-       ["call","rqcexpqrfb",
-         ["call","+","left","right"]]],
-    "rqcexpqrfb",
-    ["call",["fun*",["rqcexpqrfb","left","right"],["call","rqcexpqrfb",["call","+","left","right"]]],"rqcexpqrfb",["call",["fun*",["rqcexpqrfb","left","right"],["call","rqcexpqrfb",["call","+","left","right"]]],"rqcexpqrfb",["call","rqcexpqrfb","tim+"],["call","rqcexpqrfb","uuid"]],["call","rqcexpqrfb","reserved"]],["call","rqcexpqrfb","k"]]]]
+420

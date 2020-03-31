@@ -1,1 +1,4 @@
-[["let","fib","=",["fun*",["ii"],["if-0","ii",0,["call","+","ii",["call","fib",["call","+",-1,"ii"]]]]]],["call","fib",13]]
+[["let", "crazy", "=",
+  ["fun*", ["int", "cell"],
+    ["call", "=", "cell", ["call", "+", -1,"int"]]]],
+  ["call", "crazy", 9, ["call", "@", 10]]]
