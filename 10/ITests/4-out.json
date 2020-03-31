@@ -1,1 +1,1 @@
-[["let","x","=",["fun*",["k"],["call",["call","k","x"],"k"]]],["fun*",["k"],["call",["call","k","x"],"k"]]]
+"\"closure\""
