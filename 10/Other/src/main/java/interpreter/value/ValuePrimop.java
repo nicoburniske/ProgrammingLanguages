@@ -21,7 +21,7 @@ public class ValuePrimop implements IValue{
 
     @Override
     public String toJSONString() {
-        return "\"primop\"";
+        return "\"closure\"";
     }
 
     @Override
