@@ -79,7 +79,7 @@ public class ToyCall implements Toy {
         List<Toy> argsCopy2 = new ArrayList<>(argsCopy);
         ToyVar funcName = new ToyVar(CPSUtils.nameGenerator());
         Toy funcCPS = this.function.CPS();
-        Toy result =  new ToyCall(funcName, argsCopy2);
+        Toy result = new ToyCall(funcName, argsCopy2);
         result = new ToyCall(funcCPS, new ToyFunc(Arrays.asList(funcName), result));
 
         for (int ii = 0; ii < n; ii++) {

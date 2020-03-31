@@ -25,8 +25,8 @@ public class ToyStop implements Toy {
 
     @Override
     public ValueEnvStoreTuple interpret(EnvStoreTuple tuple) {
-            IValue val = this.subexpression.interpret(tuple).getLeft();
-            throw new StopInterpretException(val);
+        IValue val = this.subexpression.interpret(tuple).getLeft();
+        throw new StopInterpretException(val);
     }
 
     @Override

@@ -14,13 +14,14 @@ public class ToyIntTest {
     Toy result1;
 
     @Before
-    public void init(){
+    public void init() {
         ex1 = new ToyInt(5L);
         result1 = new ToyFunc(Arrays.asList(new ToyVar("k")), new ToyCall(new ToyVar("k"), new ToyInt(5L)));
 
     }
+
     @Test
     public void CPS() {
-       assertTrue(Toy.alphaEquals(ex1.CPS(), result1));
+        assertTrue(Toy.alphaEquals(ex1.CPS(), result1));
     }
 }

@@ -92,6 +92,7 @@ public interface Toy extends JSONAware {
 
     /**
      * This function performs a CPS converstion on the Toy and then interprets the resultant expression.
+     *
      * @return the result of interpreatiation on the expression
      * @throws IllegalStateException when there is a runtime exception for interpretation
      */

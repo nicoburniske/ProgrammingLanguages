@@ -6,7 +6,7 @@ import interpreter.utils.ValueEnvStoreTuple;
 /**
  * Represents a Lambda containing a closure
  */
-public interface ValueLambdaClosure extends IValue{
+public interface ValueLambdaClosure extends IValue {
 
     ValueEnvStoreTuple apply(EnvStoreTuple tup);
 

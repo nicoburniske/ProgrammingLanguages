@@ -27,6 +27,7 @@ public class Decl implements JSONAware {
 
     /**
      * Adds new variables to the supplied EnvStoreTuple
+     *
      * @return the new EnvStoreTuple with the current decl entry appended to the given EnvStoreTuple.
      * DOES NOT MUTATE
      */
@@ -37,12 +38,12 @@ public class Decl implements JSONAware {
             return
                     // Lambda 1: Holds a temporary value to be evaluated after all Decls in PALDeclArray have been entered into the list
                     // Allows for the decls in the same PALDeclArray to reference each other, no matter their order
-                    tuple.insert(this.var,(ValueLambdaClosure)(EnvStoreTuple oldEnv) ->
+                    tuple.insert(this.var, (ValueLambdaClosure) (EnvStoreTuple oldEnv) ->
                             // Lambda 2: Holds the function to be applied upon access to allow for recursion
-                        new ValueEnvStoreTuple((ValueLambdaClosure)(EnvStoreTuple env) ->
-                            ((ToyFunc)this.rhs).interpret(env, oldEnv.getLeft()), tuple));
+                            new ValueEnvStoreTuple((ValueLambdaClosure) (EnvStoreTuple env) ->
+                                    ((ToyFunc) this.rhs).interpret(env, oldEnv.getLeft()), tuple));
         } else {
-           // THIS SHOULD NEVER BE CALLED -666
+            // THIS SHOULD NEVER BE CALLED -666
             throw new IllegalStateException("This is a invalid test now");
         }
     }
@@ -79,12 +80,13 @@ public class Decl implements JSONAware {
 
     /**
      * This functions returns the continueation passing form for the interals of a decl
+     *
      * @return the cps form of a decls left hand side
      */
     public Toy cpsVal() {
-        if(this.rhs instanceof ToyInt) {
+        if (this.rhs instanceof ToyInt) {
             return this.rhs;
-        } else if(this.rhs instanceof ToyFunc) {
+        } else if (this.rhs instanceof ToyFunc) {
             ToyFunc func = (ToyFunc) this.rhs;
             List<ToyVar> params2 = new ArrayList<>(func.getParams());
             params2.add(0, CPSUtils.K);

@@ -12,16 +12,16 @@ import org.json.simple.parser.ParseException;
 
 public class Main {
     public static void main(String[] args) throws IOException, ParseException, IllegalStateException {
-            FileReader reader = new FileReader(args[0]);
-            Object obj = new JSONParser().parse(reader);
-            Parser.generateValidSeqNames(obj);
-            Toy parsed = Parser.parse(obj);
-            CPSUtils.initializeNames(parsed);
-            try {
-                System.out.println(parsed.run().toJSONString());
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-            }
+        FileReader reader = new FileReader(args[0]);
+        Object obj = new JSONParser().parse(reader);
+        Parser.generateValidSeqNames(obj);
+        Toy parsed = Parser.parse(obj);
+        CPSUtils.initializeNames(parsed);
+        try {
+            System.out.println(parsed.run().toJSONString());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
 

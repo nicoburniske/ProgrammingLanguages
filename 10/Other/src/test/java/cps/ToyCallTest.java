@@ -18,9 +18,10 @@ import static interpreter.utils.RuntimeExceptions.*;
 import static org.junit.Assert.*;
 
 public class ToyCallTest {
-    ToyCall ex1, ex2, allocate, get, set, fib10, primopError,funcExpected, argsParamsCount;
+    ToyCall ex1, ex2, allocate, get, set, fib10, primopError, funcExpected, argsParamsCount;
     ToyFunc inputInput, fib;
     ToyDeclArray declarr;
+
     @Before
     public void setUp() throws Exception {
         ex1 = new ToyCall(new ToyFunc(Arrays.asList(new ToyVar("input")), new ToyVar("input")), new ToyInt(4L));
@@ -35,10 +36,10 @@ public class ToyCallTest {
 
         primopError = new ToyCall(new ToyVar("^"), Arrays.asList(new ToyInt(3L), new ToyInt(-4L)));
         funcExpected = new ToyCall(new ToyInt(4L), Arrays.asList(new ToyInt(3L), new ToyInt(-4L)));
-        argsParamsCount = new ToyCall(new ToyVar("+"),  Arrays.asList(new ToyInt(3L), new ToyInt(-4L), new ToyInt(5L)));
+        argsParamsCount = new ToyCall(new ToyVar("+"), Arrays.asList(new ToyInt(3L), new ToyInt(-4L), new ToyInt(5L)));
     }
 
-    public int sum (int curr) {
+    public int sum(int curr) {
         if (curr == 0) {
             return 0;
         } else {
@@ -58,32 +59,32 @@ public class ToyCallTest {
 
     @Test
     public void testPrimopDomain() {
-        try{
+        try {
             primopError.run();
             fail();
         } catch (Exception e) {
-            assertEquals(ARITHMETIC_ERROR,e.getMessage());
+            assertEquals(ARITHMETIC_ERROR, e.getMessage());
         }
     }
 
     @Test
     public void testFuncExpectedError() {
-        try{
+        try {
             funcExpected.run();
             fail();
         } catch (Exception e) {
-            assertEquals(ERROR_FUNCTION_EXPECTED,e.getMessage());
+            assertEquals(ERROR_FUNCTION_EXPECTED, e.getMessage());
         }
     }
 
 
     @Test
     public void testFuncArgsParamsCount() {
-        try{
+        try {
             argsParamsCount.run();
             fail();
         } catch (Exception e) {
-            assertEquals(ERROR_ARGS_PARAMS_COUNT_DONT_MATCH,e.getMessage());
+            assertEquals(ERROR_ARGS_PARAMS_COUNT_DONT_MATCH, e.getMessage());
         }
     }
 }

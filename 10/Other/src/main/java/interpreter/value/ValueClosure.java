@@ -37,7 +37,8 @@ public class ValueClosure implements IValue {
 
     /**
      * Applies the function with the given list of arguments using the environment held as a field
-     * @param args The arguments to be used
+     *
+     * @param args  The arguments to be used
      * @param tuple the tuple containing the current environment and store
      * @return (1) the Value corresponding to the application of this function with the supplied args, and (2) the updated EnvStoreTuple
      */
@@ -47,7 +48,7 @@ public class ValueClosure implements IValue {
         EnvStoreTuple temp = new EnvStoreTuple(this.env, tuple.getRight());
         List<ToyVar> params = this.function.getParams();
 
-        if(params.size() != args.size()) {
+        if (params.size() != args.size()) {
             throw new IllegalStateException(ERROR_ARGS_PARAMS_COUNT_DONT_MATCH);
         }
         List<IValue> interpretedArgs = new ArrayList<>();
@@ -60,7 +61,7 @@ public class ValueClosure implements IValue {
             temp = new EnvStoreTuple(temp.getLeft(), argTuple.getRight().getRight());
         }
         // Add the params to the local environment
-        for(int ii = 0; ii < args.size(); ii ++) {
+        for (int ii = 0; ii < args.size(); ii++) {
             temp = temp.insert(params.get(ii), interpretedArgs.get(ii));
         }
 

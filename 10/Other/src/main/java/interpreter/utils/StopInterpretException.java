@@ -13,6 +13,7 @@ public class StopInterpretException extends RuntimeException {
     public StopInterpretException(IValue result) {
         this.result = result;
     }
+
     public IValue getResult() {
         return result;
     }

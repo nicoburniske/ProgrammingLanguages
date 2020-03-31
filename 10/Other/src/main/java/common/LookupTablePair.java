@@ -4,6 +4,7 @@ import java.util.Objects;
 
 /**
  * An entry in the list
+ *
  * @param <Key>
  * @param <Value>
  */
@@ -12,7 +13,7 @@ public class LookupTablePair<Key, Value> implements LookupTable<Key, Value> {
     Value value;
     LookupTable<Key, Value> rest;
 
-    public LookupTablePair(Key key, Value value, LookupTable<Key,Value> rest) {
+    public LookupTablePair(Key key, Value value, LookupTable<Key, Value> rest) {
         this.key = key;
         this.value = value;
         this.rest = rest;
@@ -25,7 +26,7 @@ public class LookupTablePair<Key, Value> implements LookupTable<Key, Value> {
 
     @Override
     public Value get(Key key) {
-        if(this.key.equals(key)) {
+        if (this.key.equals(key)) {
             return value;
         } else {
             return rest.get(key);
@@ -39,10 +40,9 @@ public class LookupTablePair<Key, Value> implements LookupTable<Key, Value> {
 
     @Override
     public LookupTable<Key, Value> set(Key key, Value val) {
-        if(this.key.equals(key)) {
+        if (this.key.equals(key)) {
             return new LookupTablePair<Key, Value>(this.key, val, this.rest);
-        }
-        else {
+        } else {
             return new LookupTablePair<Key, Value>(this.key, this.value, rest.set(key, val));
         }
     }

@@ -23,9 +23,9 @@ public class ToyDeclArrayTest {
         decl2R = new Decl(new ToyVar("_"), new ToyInt(2L));
         decl3R = new Decl(new ToyVar("_"), new ToyInt(3L));
         decl4 = new Decl(new ToyVar("four"), new ToyFunc(Arrays.asList(), new ToyVar("one")));
-        test1 = new ToyDeclArray(Arrays.asList(decl1, decl2, decl3),new ToyVar("two"));
-        test2 = new ToyDeclArray(Arrays.asList(decl1, decl4, decl3),new ToyVar("one"));
-        result2 = new ToyDeclArray(Arrays.asList(decl1R, new Decl(new ToyVar("_"), new ToyFunc(Arrays.asList(), new ToySD(2,0))), decl3R),new ToySD(2,0));
+        test1 = new ToyDeclArray(Arrays.asList(decl1, decl2, decl3), new ToyVar("two"));
+        test2 = new ToyDeclArray(Arrays.asList(decl1, decl4, decl3), new ToyVar("one"));
+        result2 = new ToyDeclArray(Arrays.asList(decl1R, new Decl(new ToyVar("_"), new ToyFunc(Arrays.asList(), new ToySD(2, 0))), decl3R), new ToySD(2, 0));
         decl5 = new Decl(new ToyVar("x"), new ToyInt(1L));
         decl6 = new Decl(new ToyVar("x"), new ToyInt(5L));
         decl7 = new Decl(new ToyVar("func"), new ToyFunc(Arrays.asList(), new ToyVar("x")));
@@ -38,8 +38,8 @@ public class ToyDeclArrayTest {
 
     @Test
     public void computeStaticDistance() {
-        assertEquals(new ToyDeclArray(Arrays.asList(decl1R, decl2R, decl3R),new ToySD(2, 1)), test1.computeStaticDistance(4, new StaticDistanceEnvironment()));
-        assertEquals(result2,test2.computeStaticDistance(4, new StaticDistanceEnvironment()));
+        assertEquals(new ToyDeclArray(Arrays.asList(decl1R, decl2R, decl3R), new ToySD(2, 1)), test1.computeStaticDistance(4, new StaticDistanceEnvironment()));
+        assertEquals(result2, test2.computeStaticDistance(4, new StaticDistanceEnvironment()));
 //        assertEquals("", test3.computeStaticDistance(4, new StaticDistanceEnvironment()));
     }
 }

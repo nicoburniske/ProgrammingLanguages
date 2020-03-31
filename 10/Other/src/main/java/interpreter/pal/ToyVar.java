@@ -77,6 +77,7 @@ public class ToyVar implements Toy {
         this.var = var;
         return old;
     }
+
     public ToyVar copy() {
         return new ToyVar(this.var);
     }

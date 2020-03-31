@@ -12,6 +12,7 @@ public class ValueInt implements IValue {
     public ValueInt(BigInteger num) {
         this.num = num;
     }
+
     public ValueInt(long num) {
         this.num = new BigInteger(String.valueOf(num));
     }

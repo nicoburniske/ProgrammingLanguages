@@ -12,7 +12,7 @@ import java.util.*;
 /**
  * This sructure represents a try catch expression. which turns the continuation of the grab expression into a closure,
  * binds it to the specified Var, and evaluates the “body” expression to obtain a value.
- *
+ * <p>
  * This should never be interpreted as Grab will be transformed in .CPS()
  */
 public class ToyGrab implements Toy {
@@ -31,7 +31,7 @@ public class ToyGrab implements Toy {
 
     @Override
     public Toy computeStaticDistance(int currDepth, StaticDistanceEnvironment env) {
-        return new ToyGrab(this.var, this.rhs.computeStaticDistance(currDepth + 1,env.put(this.var, new TupleSD(currDepth, 0)) ));
+        return new ToyGrab(this.var, this.rhs.computeStaticDistance(currDepth + 1, env.put(this.var, new TupleSD(currDepth, 0))));
     }
 
     @Override

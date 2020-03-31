@@ -10,6 +10,7 @@ import static org.junit.Assert.*;
 
 public class ToyIntTest {
     EnvStoreTuple stdLib;
+
     @Before
     public void init() {
         stdLib = EnvStoreTuple.stdLib();
@@ -17,6 +18,6 @@ public class ToyIntTest {
 
     @Test
     public void interpret() {
-         assertEquals(new ValueEnvStoreTuple(new ValueInt(42L), stdLib), new ToyInt(42L).interpret(stdLib));
+        assertEquals(new ValueEnvStoreTuple(new ValueInt(42L), stdLib), new ToyInt(42L).interpret(stdLib));
     }
 }

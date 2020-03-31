@@ -4,7 +4,7 @@ import org.json.simple.JSONAware;
 
 /**
  * An IValue represents a yielded by interpretation
- *
+ * <p>
  * Is one of:
  * <ul>
  *     <li>ValueCell</li>

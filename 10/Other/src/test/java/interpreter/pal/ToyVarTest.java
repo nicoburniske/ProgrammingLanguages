@@ -11,13 +11,15 @@ import static org.junit.Assert.*;
 public class ToyVarTest {
 
     EnvStoreTuple stdLib;
+
     @Before
     public void init() {
-       stdLib = EnvStoreTuple.stdLib();
+        stdLib = EnvStoreTuple.stdLib();
     }
+
     @Test
     public void interpret() {
         stdLib = stdLib.insert(new ToyVar("x"), new ValueInt(42L));
-        assertEquals(new ValueEnvStoreTuple(new ValueInt(42),stdLib), new ToyVar("x").interpret(stdLib));
+        assertEquals(new ValueEnvStoreTuple(new ValueInt(42), stdLib), new ToyVar("x").interpret(stdLib));
     }
 }

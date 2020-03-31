@@ -12,10 +12,12 @@ import static org.junit.Assert.*;
 public class ToyDeclArrayTest {
 
     EnvStoreTuple stdLib;
+
     @Before
     public void init() {
         stdLib = EnvStoreTuple.stdLib();
     }
+
     @Test
     public void testInterpret1() {
         Decl d1 = new Decl(new ToyVar("x"), new ToyFunc(Arrays.asList(new ToyVar("param1")), new ToyCall(new ToyVar("+"), Arrays.asList(new ToyVar("param1"), new ToyVar("y")))));

@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 public class Parser {
     /**
      * Parses a Object into a {@link Toy}
+     *
      * @param obj the object to be parsed
      * @return the {@link Toy} that represents that object
      */
@@ -48,13 +49,13 @@ public class Parser {
                 List<Toy> args = (List<Toy>) arr.subList(2, arr.size()).stream().map(e -> parse(e)).collect(Collectors.toList());
                 return new ToyCall(parse(arr.get(1)), args);
             }
-            if(arr.size() == 2 && isStringAndisEqual(arr.get(0), "stop")){
+            if (arr.size() == 2 && isStringAndisEqual(arr.get(0), "stop")) {
                 return new ToyStop(parse(arr.get(1)));
             }
-            if(arr.size() == 3 && isStringAndisEqual(arr.get(0), "grab")) {
-                return new ToyGrab((ToyVar)parse(arr.get(1)), parse(arr.get(2)));
+            if (arr.size() == 3 && isStringAndisEqual(arr.get(0), "grab")) {
+                return new ToyGrab((ToyVar) parse(arr.get(1)), parse(arr.get(2)));
             }
-            if(arr.size() > 1 && isStringAndisEqual(arr.get(0), "seq*")) {
+            if (arr.size() > 1 && isStringAndisEqual(arr.get(0), "seq*")) {
                 //["seq*", 1, 2, 3]
                 //
                 //["call", ["fun*", ["three", "two", "one"], "three"], 3, 2, 1]
@@ -135,14 +136,15 @@ public class Parser {
 
     /**
      * Creates a list of illegal names that cannot be used for conversion of seq*
+     *
      * @param obj
      */
     private static void setupValidSeqNames(Object obj) {
-        if(obj instanceof String) {
+        if (obj instanceof String) {
             illegalNames.add((String) obj);
-        } else if (obj instanceof JSONArray){
+        } else if (obj instanceof JSONArray) {
             JSONArray arr = (JSONArray) obj;
-            if(arr.size() > 1 && isStringAndisEqual(arr.get(0), "seq*")) {
+            if (arr.size() > 1 && isStringAndisEqual(arr.get(0), "seq*")) {
                 countSeq += arr.size() - 1;
             }
             arr.forEach(var -> setupValidSeqNames(var));
@@ -152,16 +154,17 @@ public class Parser {
 
     /**
      * Generates names for the parser to use when it is converting seq* into calls/funcs
+     *
      * @param obj
      */
     public static void generateValidSeqNames(Object obj) {
         setupValidSeqNames(obj);
         validNames = new ArrayList<>();
-        for(int ii = 0; ii < countSeq; ii ++) {
+        for (int ii = 0; ii < countSeq; ii++) {
             String currName;
             do {
                 currName = CPSUtils.nameGenerator();
-            }while (illegalNames.contains(currName));
+            } while (illegalNames.contains(currName));
             validNames.add(currName);
         }
     }

@@ -4,6 +4,7 @@ import java.util.Objects;
 
 /**
  * A generic tuple class to help us manage return values
+ *
  * @param <Key>
  * @param <Value>
  */
@@ -17,7 +18,6 @@ public class TupleGeneric<Key, Value> {
     }
 
     /**
-     *
      * @return The left side of the tuple
      */
     public Key getLeft() {
@@ -25,7 +25,6 @@ public class TupleGeneric<Key, Value> {
     }
 
     /**
-     *
      * @return The right side of the tuple
      */
     public Value getRight() {

@@ -9,13 +9,14 @@ import java.util.Objects;
 /**
  * Represents a Value containing a Primop added in the Standard Prelude
  */
-public class ValuePrimop implements IValue{
+public class ValuePrimop implements IValue {
     private IBin op;
 
     public ValuePrimop(IBin op) {
         this.op = op;
     }
-    public ValueEnvStoreTuple apply (List<IValue> args, EnvStoreTuple tuple) {
+
+    public ValueEnvStoreTuple apply(List<IValue> args, EnvStoreTuple tuple) {
         return op.call(args, tuple);
     }
 

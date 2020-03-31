@@ -29,11 +29,11 @@ public class ToyStopTest {
          */
         ToyCall testStopHard = new ToyCall(
                 new ToyFunc(Arrays.asList(new ToyVar("f")), new ToyCall(new ToyVar("+"),
-                                                    Arrays.asList(new ToyCall(new ToyVar("f"), new ToyInt(1L)),new ToyInt(42L)))),
+                        Arrays.asList(new ToyCall(new ToyVar("f"), new ToyInt(1L)), new ToyInt(42L)))),
                 new ToyFunc(Arrays.asList(new ToyVar("x")), new ToyStop(new ToyVar("x"))));
         // replace call to func with stop
-        ToyCall testStopHard2 =  new ToyCall(new ToyVar("+"),
-                        Arrays.asList(new ToyStop(new ToyInt(1L)),new ToyInt(42L)));
+        ToyCall testStopHard2 = new ToyCall(new ToyVar("+"),
+                Arrays.asList(new ToyStop(new ToyInt(1L)), new ToyInt(42L)));
         assertEquals(new ValueInt(1L), testStopHard.run());
         assertEquals(new ValueInt(1L), testStopHard2.run());
     }

@@ -13,6 +13,7 @@ import static org.junit.Assert.*;
 
 public class ToyConditionalTest {
     ToyConditional basicTest;
+
     @Before
     public void setUp() throws Exception {
         basicTest = new ToyConditional(new ToyInt(1L), new ToyVar("left"), new ToyVar("right"));
@@ -21,7 +22,7 @@ public class ToyConditionalTest {
     @Test
     public void computeStaticDistance() {
         assertEquals(
-                new ToyConditional(new ToyInt(1L), new ToySD(2,3), new ToyVar("right")),
+                new ToyConditional(new ToyInt(1L), new ToySD(2, 3), new ToyVar("right")),
                 basicTest.computeStaticDistance(3, new StaticDistanceEnvironment().put(new ToyVar("left"), new TupleSD(1, 3))));
     }
 }

@@ -28,9 +28,9 @@ public class EnvStoreTupleTest {
     public void insert() {
         assertEquals(
                 new EnvStoreTuple(
-                    new Environment(new ToyVar("q"), 0),
-                    new Store(0, new ValueInt(1L))),
-                empty.insert(new ToyVar("q"),new ValueInt(1L)));
+                        new Environment(new ToyVar("q"), 0),
+                        new Store(0, new ValueInt(1L))),
+                empty.insert(new ToyVar("q"), new ValueInt(1L)));
     }
 
     @Test

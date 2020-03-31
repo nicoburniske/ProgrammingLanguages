@@ -11,8 +11,9 @@ import static org.junit.Assert.*;
 public class ToyIntTest {
 
     ToyInt basicUnit;
+
     @Before
-    public void before(){
+    public void before() {
         basicUnit = new ToyInt(23L);
     }
 
