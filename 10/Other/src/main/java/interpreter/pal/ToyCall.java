@@ -82,10 +82,9 @@ public class ToyCall implements Toy {
         Toy result =  new ToyCall(funcName, argsCopy2);
         result = new ToyCall(funcCPS, new ToyFunc(Arrays.asList(funcName), result));
 
-        if (n> 0) {
-            for (int ii = 0; ii < n; ii++) {
-                result = new ToyCall(this.args.get(ii).CPS(), new ToyFunc(Arrays.asList(argsCopy.get(ii + 1)), result));
-            }
+        for (int ii = 0; ii < n; ii++) {
+            // ii + 1 because k is at position 0.
+            result = new ToyCall(this.args.get(ii).CPS(), new ToyFunc(Arrays.asList(argsCopy.get(ii + 1)), result));
         }
         return result;
     }
