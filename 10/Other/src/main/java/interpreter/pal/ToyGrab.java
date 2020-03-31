@@ -9,6 +9,12 @@ import org.json.simple.JSONArray;
 
 import java.util.*;
 
+/**
+ * This sructure represents a try catch expression. which turns the continuation of the grab expression into a closure,
+ * binds it to the specified Var, and evaluates the “body” expression to obtain a value.
+ *
+ * This should never be interpreted as Grab will be transformed in .CPS()
+ */
 public class ToyGrab implements Toy {
     ToyVar var;
     Toy rhs;

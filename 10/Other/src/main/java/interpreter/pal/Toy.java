@@ -25,6 +25,8 @@ import java.util.Set;
  * *       as in all mainstream languages, the first and required
  * *       PAL is to evaluate to a function value</li>
  * *     <li>- a JSON array of the shape ["if-0",{@link Toy},{@link Toy},{@link Toy}]</li>
+ * *     <li> A JsonArray of the shape ["grab", {@link ToyVar}, {@link Toy}]</li>
+ * *     <li> A JsonArray of the shape ["stop", {@link Toy}]</li>
  * *  </ul>
  */
 public interface Toy extends JSONAware {
