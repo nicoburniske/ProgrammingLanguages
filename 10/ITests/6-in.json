@@ -1,0 +1,1 @@
+[["let", "cond", "=",["fun*", ["x"],["if-0", "x", ["stop", ["call", "cond", 2]],  45]]], ["call", "cond", 0]]
