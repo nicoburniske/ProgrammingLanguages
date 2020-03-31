@@ -1,0 +1,7 @@
+[["let", "crazy", "=", ["fun*", ["int", "cell"], ["call", "=", "cell", ["call", "+", -1,"int"]]]],
+ ["let", "gr", "=", ["fun*", [],["grab", "done",
+  ["seq*",
+   ["stop", ["call","done", ["call", "crazy", 9, ["call", "@", 420]]]],
+   ["call","done", ["call", "crazy", 9, ["call", "@", 10]]],
+   5]]]],
+ ["call","gr"]]

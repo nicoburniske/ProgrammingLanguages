@@ -1,0 +1,6 @@
+["call","+",
+  ["grab", "done",
+    ["call", "*", 2,
+      ["grab", "done",
+        ["call", "+", 6, ["call","done", 9]]]]
+  ],4]
