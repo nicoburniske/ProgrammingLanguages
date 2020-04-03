@@ -1,0 +1,4 @@
+[["let", "crazy", "=",
+  ["fun*", ["int", "cell"],
+    ["call", "=", "cell", ["call", "+", -1,"int"]]]],
+  ["call", "crazy", 9, ["call", "@", 10]]]

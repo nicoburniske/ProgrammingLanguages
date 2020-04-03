@@ -22,10 +22,8 @@ public class Main {
                 }
                 PAL pal = tpal.fillet();
                 try {
-                    // TODO: toJsonString();
                     System.out.println(pal.interpret(EnvStoreTuple.stdLib()).getLeft().toJSONString());
                 } catch (Exception e) {
-                    e.printStackTrace();
                     System.out.println(String.format("\"run-time error: %s\"", e.getMessage()));
                 }
         } catch (Exception e) {
