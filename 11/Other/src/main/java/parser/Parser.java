@@ -1,9 +1,13 @@
 package parser;
 
-import ast.expression.Expression;
-import ast.stmt.Stmt;
-import ast.stmt.StmtBlock;
+import ast.expression.*;
+import ast.lhs.ArrIndexLoc;
+import ast.lhs.LHS;
+import ast.lhs.VarLoc;
+import ast.stmt.*;
 import ast.var_decl.Decl;
+import ast.var_decl.VarArrDecl;
+import ast.var_decl.VarDecl;
 import org.json.simple.JSONArray;
 import utils.exceptions.ParseException;
 
@@ -11,20 +15,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Parser {
-    /**
-     * An Expression is one of:
-     *  - Int                            % literal constant
-     *  - Var                            % the value of a variable
-     *  - [Expression, "+", Expression]  % addition
-     *  - [Expression, "*", Expression]  % multiplication
-     *  - [Expression, Expression]       % the value of an array index
-     */
 
-    /**
-     * A LHS is one of:            % LHS stands for lefthand-side
-     *  - Var                      % the location of a variable
-     *  - [Expression, Expression] % the location of an array index
-     */
+
 
     /**
      * A Stmt is one of:
@@ -36,12 +28,7 @@ public class Parser {
      *      Stmt, ..., Stmt,               % execute statements in order
      *      Expression]                    % its value is the result
      */
-    /**
-     * A VarDecl has the shape:
-     *  - ["let", Var, "=", Expression]      % declare and initialize variable
-     *  - ["vec", Var, "=", Expression,      % declare array and
-     *                      .., Expression]  % initial field values
-     */
+
     public static StmtBlock parse(Object obj) {
         if(obj instanceof JSONArray){
             JSONArray arr = (JSONArray) obj;
@@ -63,18 +50,114 @@ public class Parser {
 
     }
 
-
+    /**
+     * A VarDecl has the shape:
+     *  - ["let", Var, "=", Expression]      % declare and initialize variable
+     *  - ["vec", Var, "=", Expression,      % declare array and
+     *                      .., Expression]  % initial field values
+     */
     private static Decl parseDecl(Object obj) {
         if(obj instanceof JSONArray) {
             JSONArray arr = (JSONArray) obj;
             if(arr.size() > 3) {
-
+                if(isStringAndisEqual(arr.get(0), "let")) {
+                    return new VarDecl(parseVar(arr.get(1)), parseExpression(arr.get(3)));
+                }
+                if(isStringAndisEqual(arr.get(0), "vec")) {
+                    List<Object> list = arr.subList(3, arr.size());
+                    return new VarArrDecl(parseVar(arr.get(1)), list.stream().map(val -> parseExpression(val)).collect(Collectors.toList()));
+                }
             }
-            throw new ParseException(ParseException.expectedDecl)
+            throw new ParseException(ParseException.expectedDecl);
         } else {
             throw new ParseException(ParseException.expectedArray);
         }
     }
+
+    /**
+     * An Expression is one of:
+     *  - Int                            % literal constant
+     *  - Var                            % the value of a variable
+     *  - [Expression, "+", Expression]  % addition
+     *  - [Expression, "*", Expression]  % multiplication
+     *  - [Expression, Expression]       % the value of an array index
+     */
+    private static Expression parseExpression(Object obj) {
+        if(obj instanceof Long) {
+            return new Int(((Long)obj).intValue());
+        }
+        if(obj instanceof String) {
+            return new Var((String) obj);
+        }
+        if(obj instanceof JSONArray) {
+            JSONArray arr = (JSONArray) obj;
+            if(arr.size() == 3 && (isStringAndisEqual(arr.get(1), "+") || isStringAndisEqual(arr.get(1), "*"))) {
+                new Operator(parseExpression(arr.get(0)), parseExpression(arr.get(2)), (String)arr.get(1));
+            }
+            if(arr.size() == 2) {
+                return new ArrayAccess(parseExpression(arr.get(0)), parseExpression(arr.get(1)));
+            }
+        }
+        throw new ParseException(ParseException.expectedExpression);
+    }
+
+    /**
+     * A Stmt is one of:
+     *  - [LHS, "=", Expression]           % assignment
+     *  - ["if0", Expression, Stmt, Stmt]  % if
+     *  - ["do0", Expression, Stmt]        % loop while not 0
+     *  - [VarDecl, ..., VarDecl,          % declaration block
+     *     "in"                            % set up local variables
+     *      Stmt, ..., Stmt,               % execute statements in order
+     *      Expression]                    % its value is the result
+     */
+    private static Stmt parseStmt(Object obj) {
+        if(obj instanceof JSONArray) {
+            JSONArray arr = (JSONArray) obj;
+            if(arr.size() == 4 && isStringAndisEqual(arr.get(0), "if0")) {
+                return new Conditional(parseExpression(arr.get(1)), parseStmt(arr.get(2)), parseStmt(arr.get(3)));
+            }
+            if(arr.size() == 3 && isStringAndisEqual(arr.get(0), "do0")) {
+                return new LoopConditional(parseExpression(arr.get(1)), parseStmt(arr.get(2)));
+            }
+            if(arr.size() == 3 && isStringAndisEqual(arr.get(1), "=")) {
+                return new Assignment(parseLHS(arr.get(0)), parseExpression(arr.get(2)));
+            }
+            return parse(arr);
+        }
+        throw new ParseException(ParseException.expectedStmt);
+    }
+
+
+    /**
+     * A LHS is one of:            % LHS stands for lefthand-side
+     *  - Var                      % the location of a variable
+     *  - [Expression, Expression] % the location of an array index
+     */
+    private static LHS parseLHS(Object obj) {
+        if(obj instanceof String) {
+            return new VarLoc((String) obj);
+        }
+        if(obj instanceof JSONArray) {
+            JSONArray arr = (JSONArray) obj;
+            if(arr.size() == 2) {
+                return new ArrIndexLoc(parseExpression(arr.get(0)), parseExpression(arr.get(1)));
+            }
+        }
+        throw new ParseException(ParseException.expectedLHS);
+    }
+
+
+    /**
+     * Var is a String
+     */
+    private static Var parseVar(Object obj) {
+        if(obj instanceof String) {
+            return new Var((String) obj);
+        }
+        throw new ParseException(ParseException.expectedVar);
+    }
+
 
 
     /**
