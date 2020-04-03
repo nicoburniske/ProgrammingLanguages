@@ -60,10 +60,10 @@ public class Parser {
         if(obj instanceof JSONArray) {
             JSONArray arr = (JSONArray) obj;
             if(arr.size() > 3) {
-                if(isStringAndisEqual(arr.get(0), "let")) {
+                if(isStringAndIsEqual(arr.get(0), "let")) {
                     return new VarDecl(parseVar(arr.get(1)), parseExpression(arr.get(3)));
                 }
-                if(isStringAndisEqual(arr.get(0), "vec")) {
+                if(isStringAndIsEqual(arr.get(0), "vec")) {
                     List<Object> list = arr.subList(3, arr.size());
                     return new VarArrDecl(parseVar(arr.get(1)), list.stream().map(val -> parseExpression(val)).collect(Collectors.toList()));
                 }
@@ -91,7 +91,7 @@ public class Parser {
         }
         if(obj instanceof JSONArray) {
             JSONArray arr = (JSONArray) obj;
-            if(arr.size() == 3 && (isStringAndisEqual(arr.get(1), "+") || isStringAndisEqual(arr.get(1), "*"))) {
+            if(arr.size() == 3 && (isStringAndIsEqual(arr.get(1), "+") || isStringAndIsEqual(arr.get(1), "*"))) {
                 new Operator(parseExpression(arr.get(0)), parseExpression(arr.get(2)), (String)arr.get(1));
             }
             if(arr.size() == 2) {
@@ -114,13 +114,13 @@ public class Parser {
     private static Stmt parseStmt(Object obj) {
         if(obj instanceof JSONArray) {
             JSONArray arr = (JSONArray) obj;
-            if(arr.size() == 4 && isStringAndisEqual(arr.get(0), "if0")) {
+            if(arr.size() == 4 && isStringAndIsEqual(arr.get(0), "if0")) {
                 return new Conditional(parseExpression(arr.get(1)), parseStmt(arr.get(2)), parseStmt(arr.get(3)));
             }
-            if(arr.size() == 3 && isStringAndisEqual(arr.get(0), "do0")) {
+            if(arr.size() == 3 && isStringAndIsEqual(arr.get(0), "do0")) {
                 return new LoopConditional(parseExpression(arr.get(1)), parseStmt(arr.get(2)));
             }
-            if(arr.size() == 3 && isStringAndisEqual(arr.get(1), "=")) {
+            if(arr.size() == 3 && isStringAndIsEqual(arr.get(1), "=")) {
                 return new Assignment(parseLHS(arr.get(0)), parseExpression(arr.get(2)));
             }
             return parse(arr);
@@ -167,7 +167,7 @@ public class Parser {
      * @param str the specified string
      * @return
      */
-    private static boolean isStringAndisEqual(Object obj, String str) {
+    private static boolean isStringAndIsEqual(Object obj, String str) {
         return (obj instanceof String) && ((String) obj).equals(str);
     }
 
