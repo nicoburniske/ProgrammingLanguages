@@ -11,4 +11,5 @@ import utils.env.StaticCheckEnv;
  */
 public interface LHS extends JSONAware, WhileLang {
     LHS staticCheck(StaticCheckEnv environment);
+
 }

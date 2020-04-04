@@ -8,11 +8,11 @@ import java.util.Objects;
  * @param <Key>
  * @param <Value>
  */
-public class TupleGeneric<Key, Value> {
+public class Tuple<Key, Value> {
     private Key left;
     private Value right;
 
-    public TupleGeneric(Key left, Value right) {
+    public Tuple(Key left, Value right) {
         this.left = left;
         this.right = right;
     }
@@ -35,7 +35,7 @@ public class TupleGeneric<Key, Value> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        TupleGeneric<?, ?> that = (TupleGeneric<?, ?>) o;
+        Tuple<?, ?> that = (Tuple<?, ?>) o;
         return left.equals(that.left) &&
                 right.equals(that.right);
     }
@@ -47,10 +47,6 @@ public class TupleGeneric<Key, Value> {
 
     @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer("[");
-        sb.append(left);
-        sb.append(", ").append(right);
-        sb.append(']');
-        return sb.toString();
+        return String.format("[%s, %s]", this.left.toString(), this.right.toString());
     }
 }
