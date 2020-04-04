@@ -1,4 +1,4 @@
-package common;
+package utils.table;
 
 import java.util.Objects;
 
