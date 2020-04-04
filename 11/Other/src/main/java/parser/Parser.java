@@ -6,9 +6,9 @@ import ast.lhs.ArrIndexLoc;
 import ast.lhs.LHS;
 import ast.lhs.VarLoc;
 import ast.stmt.*;
-import ast.var_decl.Decl;
-import ast.var_decl.VarArrDecl;
-import ast.var_decl.VarDecl;
+import ast.decl.IDecl;
+import ast.decl.ArrDecl;
+import ast.decl.Decl;
 import org.json.simple.JSONArray;
 import utils.exceptions.ParseException;
 
@@ -44,7 +44,7 @@ public class Parser {
                 List<Object> decls = arr.subList(0, indexOfIn);
                 List<Object> stmts = arr.subList(indexOfIn + 1, arr.size() - 1);
 
-                List<Decl> declList = decls.stream().map(decl -> parseDecl(decl)).collect(Collectors.toList());
+                List<IDecl> declList = decls.stream().map(decl -> parseDecl(decl)).collect(Collectors.toList());
                 List<Stmt> stmtList = stmts.stream().map(stmt -> parseStmt(stmt)).collect(Collectors.toList());
 
                 Expression expression = parseExpression(arr.get(arr.size()-1));
@@ -63,17 +63,17 @@ public class Parser {
      *  - ["vec", Var, "=", Expression,      % declare array and
      *                      .., Expression]  % initial field values
      */
-    private static Decl parseDecl(Object obj) {
+    private static IDecl parseDecl(Object obj) {
         if(obj instanceof JSONArray) {
             JSONArray arr = (JSONArray) obj;
             if(arr.size() == 3) {
                 if(isStringAndIsEqual(arr.get(0), "let")) {
-                    return new VarDecl(parseVar(arr.get(1)), parseExpression(arr.get(3)));
+                    return new Decl(parseVar(arr.get(1)), parseExpression(arr.get(3)));
                 }
                 if(isStringAndIsEqual(arr.get(0), "vec") && (arr.get(2) instanceof JSONArray)) {
                     List<Object> array = (JSONArray) arr.get(2);
                     List<Expression> arrayExp = array.stream().map(val -> parseExpression(val)).collect(Collectors.toList());
-                    return new VarArrDecl(parseVar(arr.get(1)), arrayExp);
+                    return new ArrDecl(parseVar(arr.get(1)), arrayExp);
                 }
             }
             throw new ParseException(ParseException.expectedDecl);

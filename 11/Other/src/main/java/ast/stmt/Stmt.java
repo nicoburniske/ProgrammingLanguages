@@ -2,6 +2,7 @@ package ast.stmt;
 
 import ast.WhileLang;
 import org.json.simple.JSONAware;
+import utils.env.Environment;
 
 /**
  * A Stmt is one of:
@@ -14,5 +15,5 @@ import org.json.simple.JSONAware;
  *      Expression]                    % its value is the result
  */
 public interface Stmt extends JSONAware, WhileLang {
-    
+   Stmt typecheck(Environment env);
 }

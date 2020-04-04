@@ -1,28 +1,30 @@
-package ast.var_decl;
+package ast.decl;
 
 import ast.expression.Expression;
 import ast.Var;
 import org.json.simple.JSONArray;
+import utils.env.Environment;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class VarArrDecl implements Decl {
+public class ArrDecl implements IDecl {
     private Var var;
     private List<Expression> value;
 
-    public VarArrDecl(Var var, List<Expression> value) {
+    public ArrDecl(Var var, List<Expression> value) {
         this.var = var;
         this.value = value;
     }
 
 
-    public VarArrDecl(String var, List<Expression> value) {
+    public ArrDecl(String var, List<Expression> value) {
         this.var = new Var(var);
         this.value = value;
     }
 
-    public VarArrDecl(String var, Expression value) {
+    public ArrDecl(String var, Expression value) {
         this.var = new Var(var);
         this.value = Arrays.asList(value);
     }
@@ -40,5 +42,16 @@ public class VarArrDecl implements Decl {
         arr.add("=");
         arr.addAll(value);
         return arr.toJSONString();
+    }
+
+    @Override
+    public IDecl typecheck(Environment environment) {
+        List<Expression> arr = this.value.stream().map(v -> v.typecheck(environment)).collect(Collectors.toList());
+        return new ArrDecl(this.var, arr);
+    }
+
+    @Override
+    public Var getVar() {
+        return this.var;
     }
 }

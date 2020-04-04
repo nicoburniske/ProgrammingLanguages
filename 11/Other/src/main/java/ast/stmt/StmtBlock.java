@@ -1,33 +1,36 @@
 package ast.stmt;
 
 import ast.expression.Expression;
-import ast.var_decl.Decl;
+import ast.decl.IDecl;
 import org.json.simple.JSONArray;
+import utils.env.Environment;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class StmtBlock implements Stmt {
-    private List<Decl> declList;
+    private List<IDecl> declList;
     private List<Stmt> stmtList;
     private Expression body;
 
-    public StmtBlock(List<Decl> declList, List<Stmt> stmtList, Expression body) {
+    public StmtBlock(List<IDecl> declList, List<Stmt> stmtList, Expression body) {
         this.declList = declList;
         this.stmtList = stmtList;
         this.body = body;
     }
 
-    public StmtBlock(Decl declList, Stmt stmtList, Expression body) {
+    public StmtBlock(IDecl declList, Stmt stmtList, Expression body) {
         this(Arrays.asList(declList), Arrays.asList(stmtList), body);
     }
 
-    public StmtBlock(List<Decl> declList, Stmt stmtList, Expression body) {
+    public StmtBlock(List<IDecl> declList, Stmt stmtList, Expression body) {
         this(declList, Arrays.asList(stmtList), body);
     }
 
-    public StmtBlock(Decl declList, List<Stmt> stmtList, Expression body) {
+    public StmtBlock(IDecl declList, List<Stmt> stmtList, Expression body) {
         this(Arrays.asList(declList), stmtList, body);
     }
 
@@ -35,7 +38,7 @@ public class StmtBlock implements Stmt {
         this(Arrays.asList(), stmtList, body);
     }
 
-    public StmtBlock(Decl declList, Expression body) {
+    public StmtBlock(IDecl declList, Expression body) {
         this(declList, Arrays.asList(), body);
     }
 
@@ -73,5 +76,17 @@ public class StmtBlock implements Stmt {
     @Override
     public int hashCode() {
         return Objects.hash(declList, stmtList, body);
+    }
+
+    @Override
+    public Stmt typecheck(Environment env) {
+        List<IDecl> checkedDecls = new ArrayList<>();
+        for (IDecl d : this.declList) {
+            checkedDecls.add(d.typecheck(env));
+            env = env.put(d.getVar());
+        }
+        Environment finalEnv = env;
+        List<Stmt> checkedStatements = this.stmtList.stream().map(stmt -> stmt.typecheck(finalEnv)).collect(Collectors.toList());
+        return new StmtBlock(checkedDecls, checkedStatements, this.body.typecheck(finalEnv));
     }
 }

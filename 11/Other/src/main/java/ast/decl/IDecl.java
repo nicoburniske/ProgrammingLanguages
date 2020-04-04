@@ -1,8 +1,10 @@
-package ast.var_decl;
+package ast.decl;
 
 
+import ast.Var;
 import ast.WhileLang;
 import org.json.simple.JSONAware;
+import utils.env.Environment;
 
 /**
  * A VarDecl has the shape:
@@ -10,5 +12,7 @@ import org.json.simple.JSONAware;
  *  - ["vec", Var, "=", Expression,      % declare array and
  *                      .., Expression]  % initial field values
  */
-public interface Decl extends JSONAware, WhileLang {
+public interface IDecl extends JSONAware, WhileLang{
+   IDecl typecheck(Environment environment);
+   Var getVar();
 }

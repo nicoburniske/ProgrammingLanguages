@@ -3,6 +3,7 @@ package ast.stmt;
 import ast.expression.Expression;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONAware;
+import utils.env.Environment;
 
 import java.util.Objects;
 
@@ -46,5 +47,10 @@ public class Conditional implements Stmt {
     @Override
     public int hashCode() {
         return Objects.hash(condition, ifTrue, ifFalse);
+    }
+
+    @Override
+    public Stmt typecheck(Environment env) {
+        return new Conditional(this.condition.typecheck(env), this.ifTrue.typecheck(env), this.ifFalse.typecheck(env));
     }
 }
