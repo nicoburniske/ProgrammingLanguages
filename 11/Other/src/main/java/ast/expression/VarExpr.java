@@ -1,7 +1,9 @@
 package ast.expression;
 
 import ast.Var;
+import utils.EnvStoreTuple;
 import utils.env.StaticCheckEnv;
+import value.IValue;
 
 import java.util.Objects;
 
@@ -19,6 +21,12 @@ public class VarExpr implements Expression{
     @Override
     public Expression staticCheck(StaticCheckEnv env) {
         return new VarExpr(this.var.typecheck(env));
+    }
+
+    @Override
+    public IValue expressionInterpret(EnvStoreTuple tuple) {
+        //We know it is declared because of {@link staticCheck}
+        return tuple.lookup(this.var);
     }
 
     @Override

@@ -1,10 +1,19 @@
 package ast.expression;
 
 import org.json.simple.JSONArray;
+import utils.EnvStoreTuple;
 import utils.env.StaticCheckEnv;
+import utils.exceptions.IntExpectedException;
 import utils.exceptions.TypeCheckException;
+import value.IValue;
+import value.IValueInt;
 
+import java.math.BigInteger;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
 
 public class Operator implements Expression {
     private Expression lhs;
@@ -50,4 +59,29 @@ public class Operator implements Expression {
     public Expression staticCheck(StaticCheckEnv env) throws TypeCheckException {
         return new Operator(this.lhs.staticCheck(env), this.rhs.staticCheck(env), this.op);
     }
+
+    @Override
+    public IValue expressionInterpret(EnvStoreTuple tuple) {
+        IValue leftVal = this.lhs.expressionInterpret(tuple);
+        IValue rightVal = this.rhs.expressionInterpret(tuple);
+        if(leftVal instanceof IValueInt && rightVal instanceof IValueInt) {
+            IValueInt leftValInt = (IValueInt) leftVal;
+            IValueInt rightValInt = (IValueInt) rightVal;
+            return operators.get(this.op).apply(Arrays.asList(leftValInt, rightValInt));
+        } else {
+            throw new IntExpectedException();
+        }
+    }
+
+
+    public static final HashMap<String, Function<List<IValueInt>,IValue>> operators =
+            new HashMap<String, Function<List<IValueInt>,IValue>>() {{
+                put("+", (List<IValueInt> args) ->
+                        args.stream().reduce(new IValueInt(0),(acc, v) ->
+                                new IValueInt(v.getValue().add(acc.getValue()))));
+                put("*", (List<IValueInt> args) ->
+                        args.stream().reduce(new IValueInt(1),(acc, v) ->
+                                new IValueInt(v.getValue().multiply(acc.getValue()))));
+
+    }};
 }

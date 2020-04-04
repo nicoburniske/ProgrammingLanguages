@@ -2,7 +2,13 @@ package ast.lhs;
 
 import ast.expression.Expression;
 import org.json.simple.JSONArray;
+import utils.EnvStoreTuple;
 import utils.env.StaticCheckEnv;
+import utils.exceptions.ArrayIndexException;
+import value.IValue;
+import value.IValueArray;
+import value.IValueInt;
+import value.Location;
 
 import java.util.Objects;
 
@@ -45,5 +51,18 @@ public class ArrIndexLoc implements LHS {
     @Override
     public LHS staticCheck(StaticCheckEnv environment) {
         return new ArrIndexLoc(this.array.staticCheck(environment), this.index.staticCheck(environment));
+    }
+
+    @Override
+    public Location lhsInterpreter(EnvStoreTuple tuple) {
+        IValue arrValue = this.array.expressionInterpret(tuple);
+        IValue indexValue = this.index.expressionInterpret(tuple);
+        if(arrValue instanceof IValueArray && indexValue instanceof IValueInt) {
+            IValueArray arr = (IValueArray) arrValue;
+            IValueInt idx = (IValueInt) indexValue;
+            return arr.getLocation(idx);
+        } else {
+            throw new ArrayIndexException();
+        }
     }
 }

@@ -2,7 +2,9 @@ package ast.lhs;
 
 import ast.WhileLang;
 import org.json.simple.JSONAware;
+import utils.EnvStoreTuple;
 import utils.env.StaticCheckEnv;
+import value.Location;
 
 /**
  * A LHS is one of:            % LHS stands for lefthand-side
@@ -11,5 +13,7 @@ import utils.env.StaticCheckEnv;
  */
 public interface LHS extends JSONAware, WhileLang {
     LHS staticCheck(StaticCheckEnv environment);
+
+    Location lhsInterpreter(EnvStoreTuple tuple);
 
 }

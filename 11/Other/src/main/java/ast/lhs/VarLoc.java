@@ -1,7 +1,9 @@
 package ast.lhs;
 
 import ast.Var;
+import utils.EnvStoreTuple;
 import utils.env.StaticCheckEnv;
+import value.Location;
 
 import java.util.Objects;
 
@@ -43,5 +45,10 @@ public class VarLoc implements LHS{
     @Override
     public LHS staticCheck(StaticCheckEnv environment) {
         return new VarLoc(var.typecheck(environment));
+    }
+
+    @Override
+    public Location lhsInterpreter(EnvStoreTuple tuple) {
+        return tuple.getLeft().get(this.var);
     }
 }

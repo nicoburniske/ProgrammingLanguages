@@ -19,11 +19,6 @@ import java.util.stream.Collectors;
 
 public class Parser {
 
-    private static Set<String> operators = new HashSet<String>() {{
-       add("+");
-       add("*");
-    }};
-
 
     /**
      * A Stmt is one of:
@@ -99,7 +94,7 @@ public class Parser {
         }
         if(obj instanceof JSONArray) {
             JSONArray arr = (JSONArray) obj;
-            if(arr.size() == 3 && operators.stream().anyMatch(op -> isStringAndIsEqual(arr.get(1), op))) {
+            if(arr.size() == 3 && Operator.operators.keySet().stream().anyMatch(op -> isStringAndIsEqual(arr.get(1), op))) {
                 new Operator(parseExpression(arr.get(0)), parseExpression(arr.get(2)), (String)arr.get(1));
             }
             if(arr.size() == 2) {

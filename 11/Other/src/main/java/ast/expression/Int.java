@@ -1,7 +1,10 @@
 package ast.expression;
 
+import utils.EnvStoreTuple;
 import utils.env.StaticCheckEnv;
 import utils.exceptions.TypeCheckException;
+import value.IValue;
+import value.IValueInt;
 
 import java.math.BigInteger;
 import java.util.Objects;
@@ -45,5 +48,10 @@ public class Int implements Expression {
     @Override
     public Expression staticCheck(StaticCheckEnv env) throws TypeCheckException {
         return new Int(this.integer);
+    }
+
+    @Override
+    public IValue expressionInterpret(EnvStoreTuple tuple) {
+        return new IValueInt(this.integer);
     }
 }
