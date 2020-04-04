@@ -1,24 +1,20 @@
-package ast.lhs;
+package ast.expression;
 
 import ast.Var;
 import utils.env.Environment;
 
 import java.util.Objects;
 
-public class VarLoc implements LHS{
-    private Var var;
+public class VarExpr implements Expression{
+    Var var;
 
-    public VarLoc(Var var) {
+    public VarExpr(Var var) {
         this.var = var;
     }
 
-    public VarLoc(String s) {
-        this.var = new Var(s);
-    }
-
     @Override
-    public String toString() {
-        return this.toJSONString();
+    public Expression typecheck(Environment env) {
+        return new VarExpr(this.var.typecheck(env));
     }
 
     @Override
@@ -26,13 +22,12 @@ public class VarLoc implements LHS{
         return this.var.toJSONString();
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        VarLoc varLoc = (VarLoc) o;
-        return var.equals(varLoc.var);
+        VarExpr varExpr = (VarExpr) o;
+        return var.equals(varExpr.var);
     }
 
     @Override
@@ -41,7 +36,7 @@ public class VarLoc implements LHS{
     }
 
     @Override
-    public LHS typecheck(Environment environment) {
-        return new VarLoc(var.typecheck(environment));
+    public String toString() {
+        return this.toJSONString();
     }
 }

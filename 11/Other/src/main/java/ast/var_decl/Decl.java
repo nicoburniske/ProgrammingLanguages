@@ -1,6 +1,7 @@
 package ast.var_decl;
 
 
+import ast.WhileLang;
 import org.json.simple.JSONAware;
 
 /**
@@ -9,5 +10,5 @@ import org.json.simple.JSONAware;
  *  - ["vec", Var, "=", Expression,      % declare array and
  *                      .., Expression]  % initial field values
  */
-public interface Decl extends JSONAware {
+public interface Decl extends JSONAware, WhileLang {
 }

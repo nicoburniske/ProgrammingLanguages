@@ -1,6 +1,7 @@
 package ast.expression;
 
 import org.json.simple.JSONArray;
+import utils.env.Environment;
 
 import java.util.Objects;
 
@@ -38,5 +39,10 @@ public class ArrayAccess implements Expression {
     @Override
     public int hashCode() {
         return Objects.hash(array, index);
+    }
+
+    @Override
+    public Expression typecheck(Environment env) {
+        return new ArrayAccess(this.array.typecheck(env), this.index.typecheck(env));
     }
 }

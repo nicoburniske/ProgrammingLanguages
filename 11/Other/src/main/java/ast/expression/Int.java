@@ -1,5 +1,9 @@
 package ast.expression;
 
+import ast.WhileLang;
+import utils.env.Environment;
+import utils.exceptions.TypeCheckException;
+
 import java.math.BigInteger;
 import java.util.Objects;
 
@@ -37,5 +41,10 @@ public class Int implements Expression {
     @Override
     public int hashCode() {
         return Objects.hash(integer);
+    }
+
+    @Override
+    public Expression typecheck(Environment env) throws TypeCheckException {
+        return new Int(this.integer);
     }
 }

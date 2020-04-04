@@ -1,14 +1,17 @@
-package ast.expression;
+package ast;
+
+import ast.expression.Expression;
+import utils.env.Environment;
+import utils.exceptions.TypeCheckException;
 
 import java.util.Objects;
 
-public class Var implements Expression {
+public class Var implements WhileLang {
     private String s;
 
     public Var(String s) {
         this.s = s;
     }
-
 
     @Override
     public String toJSONString() {
@@ -31,6 +34,14 @@ public class Var implements Expression {
     @Override
     public int hashCode() {
         return Objects.hash(s);
+    }
+
+    public Var typecheck(Environment env) {
+        if(env.contains(this)) {
+            return new Var(this.s);
+        } else {
+            throw new TypeCheckException();
+        }
     }
 }
 

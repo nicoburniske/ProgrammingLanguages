@@ -1,5 +1,6 @@
 package ast.stmt;
 
+import ast.WhileLang;
 import org.json.simple.JSONAware;
 
 /**
@@ -12,6 +13,6 @@ import org.json.simple.JSONAware;
  *      Stmt, ..., Stmt,               % execute statements in order
  *      Expression]                    % its value is the result
  */
-public interface Stmt extends JSONAware {
+public interface Stmt extends JSONAware, WhileLang {
     
 }

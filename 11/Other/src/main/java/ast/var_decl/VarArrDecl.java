@@ -1,7 +1,7 @@
 package ast.var_decl;
 
 import ast.expression.Expression;
-import ast.expression.Var;
+import ast.Var;
 import org.json.simple.JSONArray;
 
 import java.util.Arrays;

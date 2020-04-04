@@ -1,5 +1,6 @@
 package parser;
 
+import ast.Var;
 import ast.expression.*;
 import ast.lhs.ArrIndexLoc;
 import ast.lhs.LHS;
@@ -11,11 +12,17 @@ import ast.var_decl.VarDecl;
 import org.json.simple.JSONArray;
 import utils.exceptions.ParseException;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Parser {
 
+    private static Set<String> operators = new HashSet<String>() {{
+       add("+");
+       add("*");
+    }};
 
 
     /**
@@ -92,7 +99,7 @@ public class Parser {
         }
         if(obj instanceof JSONArray) {
             JSONArray arr = (JSONArray) obj;
-            if(arr.size() == 3 && (isStringAndIsEqual(arr.get(1), "+") || isStringAndIsEqual(arr.get(1), "*"))) {
+            if(arr.size() == 3 && operators.stream().anyMatch(op -> isStringAndIsEqual(arr.get(1), op))) {
                 new Operator(parseExpression(arr.get(0)), parseExpression(arr.get(2)), (String)arr.get(1));
             }
             if(arr.size() == 2) {

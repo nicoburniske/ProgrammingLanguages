@@ -2,6 +2,7 @@ package ast.lhs;
 
 import ast.expression.Expression;
 import org.json.simple.JSONArray;
+import utils.env.Environment;
 
 import java.util.Objects;
 
@@ -39,5 +40,10 @@ public class ArrIndexLoc implements LHS {
     @Override
     public int hashCode() {
         return Objects.hash(array, index);
+    }
+
+    @Override
+    public LHS typecheck(Environment environment) {
+        return new ArrIndexLoc(this.array.typecheck(environment), this.index.typecheck(environment));
     }
 }
