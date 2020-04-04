@@ -1,7 +1,7 @@
 package ast.expression;
 
 import org.json.simple.JSONArray;
-import utils.env.Environment;
+import utils.env.StaticCheckEnv;
 
 import java.util.Objects;
 
@@ -42,7 +42,7 @@ public class ArrayAccess implements Expression {
     }
 
     @Override
-    public Expression typecheck(Environment env) {
-        return new ArrayAccess(this.array.typecheck(env), this.index.typecheck(env));
+    public Expression staticCheck(StaticCheckEnv env) {
+        return new ArrayAccess(this.array.staticCheck(env), this.index.staticCheck(env));
     }
 }

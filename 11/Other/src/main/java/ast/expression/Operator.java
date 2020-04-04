@@ -1,9 +1,7 @@
 package ast.expression;
 
-import ast.WhileLang;
-import org.graalvm.compiler.lir.amd64.AMD64BinaryConsumer;
 import org.json.simple.JSONArray;
-import utils.env.Environment;
+import utils.env.StaticCheckEnv;
 import utils.exceptions.TypeCheckException;
 
 import java.util.Objects;
@@ -49,7 +47,7 @@ public class Operator implements Expression {
     }
 
     @Override
-    public Expression typecheck(Environment env) throws TypeCheckException {
-        return new Operator(this.lhs.typecheck(env), this.rhs.typecheck(env), this.op);
+    public Expression staticCheck(StaticCheckEnv env) throws TypeCheckException {
+        return new Operator(this.lhs.staticCheck(env), this.rhs.staticCheck(env), this.op);
     }
 }

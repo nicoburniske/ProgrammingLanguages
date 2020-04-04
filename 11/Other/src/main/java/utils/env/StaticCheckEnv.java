@@ -10,23 +10,23 @@ import java.util.Objects;
 /**
  * Represents a non mutable environment. Composes a LookupTable<Var, Integer>
  */
-public class Environment {
+public class StaticCheckEnv {
     private IList<Var> declaredVars;
 
-    public Environment(IList<Var> declaredVars) {
+    public StaticCheckEnv(IList<Var> declaredVars) {
         this.declaredVars = declaredVars;
     }
 
-    public Environment() {
+    public StaticCheckEnv() {
         this.declaredVars = new IMtList<>();
     }
 
-    public Environment(Var var) {
+    public StaticCheckEnv(Var var) {
         this.declaredVars = new IConsList<>(var, new IMtList<>());
     }
 
-    public Environment put(Var key) {
-        return new Environment(declaredVars.add(key));
+    public StaticCheckEnv put(Var key) {
+        return new StaticCheckEnv(declaredVars.add(key));
     }
 
     public boolean contains(Var key) {
@@ -37,7 +37,7 @@ public class Environment {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Environment that = (Environment) o;
+        StaticCheckEnv that = (StaticCheckEnv) o;
         return declaredVars.equals(that.declaredVars);
     }
 

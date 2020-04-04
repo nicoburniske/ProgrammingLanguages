@@ -2,8 +2,7 @@ package ast.stmt;
 
 import ast.expression.Expression;
 import org.json.simple.JSONArray;
-import org.json.simple.JSONAware;
-import utils.env.Environment;
+import utils.env.StaticCheckEnv;
 
 import java.util.Objects;
 
@@ -50,7 +49,7 @@ public class Conditional implements Stmt {
     }
 
     @Override
-    public Stmt typecheck(Environment env) {
-        return new Conditional(this.condition.typecheck(env), this.ifTrue.typecheck(env), this.ifFalse.typecheck(env));
+    public Stmt staticCheck(StaticCheckEnv env) {
+        return new Conditional(this.condition.staticCheck(env), this.ifTrue.staticCheck(env), this.ifFalse.staticCheck(env));
     }
 }

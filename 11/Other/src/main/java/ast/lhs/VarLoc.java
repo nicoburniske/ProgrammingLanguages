@@ -1,7 +1,7 @@
 package ast.lhs;
 
 import ast.Var;
-import utils.env.Environment;
+import utils.env.StaticCheckEnv;
 
 import java.util.Objects;
 
@@ -41,7 +41,7 @@ public class VarLoc implements LHS{
     }
 
     @Override
-    public LHS typecheck(Environment environment) {
+    public LHS staticCheck(StaticCheckEnv environment) {
         return new VarLoc(var.typecheck(environment));
     }
 }

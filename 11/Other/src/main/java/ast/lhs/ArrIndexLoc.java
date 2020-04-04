@@ -2,7 +2,7 @@ package ast.lhs;
 
 import ast.expression.Expression;
 import org.json.simple.JSONArray;
-import utils.env.Environment;
+import utils.env.StaticCheckEnv;
 
 import java.util.Objects;
 
@@ -43,7 +43,7 @@ public class ArrIndexLoc implements LHS {
     }
 
     @Override
-    public LHS typecheck(Environment environment) {
-        return new ArrIndexLoc(this.array.typecheck(environment), this.index.typecheck(environment));
+    public LHS staticCheck(StaticCheckEnv environment) {
+        return new ArrIndexLoc(this.array.staticCheck(environment), this.index.staticCheck(environment));
     }
 }

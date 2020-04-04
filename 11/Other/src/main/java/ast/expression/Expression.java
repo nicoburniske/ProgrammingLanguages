@@ -2,7 +2,7 @@ package ast.expression;
 
 import ast.WhileLang;
 import org.json.simple.JSONAware;
-import utils.env.Environment;
+import utils.env.StaticCheckEnv;
 
 /**
  * An Expression is one of:
@@ -13,5 +13,5 @@ import utils.env.Environment;
  *  - [Expression, Expression]       % the value of an array index
  */
 public interface Expression extends JSONAware, WhileLang {
-    Expression typecheck(Environment env);
+    Expression staticCheck(StaticCheckEnv env);
 }

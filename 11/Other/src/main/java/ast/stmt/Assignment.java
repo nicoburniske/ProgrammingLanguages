@@ -3,7 +3,7 @@ package ast.stmt;
 import ast.expression.Expression;
 import ast.lhs.LHS;
 import org.json.simple.JSONArray;
-import utils.env.Environment;
+import utils.env.StaticCheckEnv;
 
 import java.util.Objects;
 
@@ -45,7 +45,7 @@ public class Assignment implements Stmt {
     }
 
     @Override
-    public Stmt typecheck(Environment env) {
-        return new Assignment(this.leftHandSide.typecheck(env), this.expression.typecheck(env));
+    public Stmt staticCheck(StaticCheckEnv env) {
+        return new Assignment(this.leftHandSide.staticCheck(env), this.expression.staticCheck(env));
     }
 }

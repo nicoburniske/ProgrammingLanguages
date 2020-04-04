@@ -4,7 +4,7 @@ package ast.decl;
 import ast.Var;
 import ast.WhileLang;
 import org.json.simple.JSONAware;
-import utils.env.Environment;
+import utils.env.StaticCheckEnv;
 
 /**
  * A VarDecl has the shape:
@@ -13,6 +13,6 @@ import utils.env.Environment;
  *                      .., Expression]  % initial field values
  */
 public interface IDecl extends JSONAware, WhileLang{
-   IDecl typecheck(Environment environment);
+   IDecl staticCheck(StaticCheckEnv environment);
    Var getVar();
 }

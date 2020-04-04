@@ -2,7 +2,7 @@ package ast.stmt;
 
 import ast.expression.Expression;
 import org.json.simple.JSONArray;
-import utils.env.Environment;
+import utils.env.StaticCheckEnv;
 
 import java.util.Objects;
 
@@ -46,7 +46,7 @@ public class LoopConditional implements Stmt {
     }
 
     @Override
-    public Stmt typecheck(Environment env) {
-        return new LoopConditional(this.condition.typecheck(env), this.body.typecheck(env));
+    public Stmt staticCheck(StaticCheckEnv env) {
+        return new LoopConditional(this.condition.staticCheck(env), this.body.staticCheck(env));
     }
 }

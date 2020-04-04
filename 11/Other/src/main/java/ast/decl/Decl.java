@@ -3,7 +3,7 @@ package ast.decl;
 import ast.expression.Expression;
 import ast.Var;
 import org.json.simple.JSONArray;
-import utils.env.Environment;
+import utils.env.StaticCheckEnv;
 
 import java.util.Objects;
 
@@ -51,8 +51,8 @@ public class Decl implements IDecl {
     }
 
     @Override
-    public IDecl typecheck(Environment environment) {
-        return new Decl(this.var, this.expression.typecheck(environment));
+    public IDecl staticCheck(StaticCheckEnv environment) {
+        return new Decl(this.var, this.expression.staticCheck(environment));
     }
 
     @Override

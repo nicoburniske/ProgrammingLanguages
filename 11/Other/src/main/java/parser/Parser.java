@@ -95,7 +95,7 @@ public class Parser {
             return new Int(((Long)obj).intValue());
         }
         if(obj instanceof String) {
-            return new Var((String) obj);
+            return new VarExpr((String) obj);
         }
         if(obj instanceof JSONArray) {
             JSONArray arr = (JSONArray) obj;

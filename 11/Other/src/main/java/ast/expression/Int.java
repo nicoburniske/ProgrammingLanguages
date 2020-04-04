@@ -1,7 +1,6 @@
 package ast.expression;
 
-import ast.WhileLang;
-import utils.env.Environment;
+import utils.env.StaticCheckEnv;
 import utils.exceptions.TypeCheckException;
 
 import java.math.BigInteger;
@@ -44,7 +43,7 @@ public class Int implements Expression {
     }
 
     @Override
-    public Expression typecheck(Environment env) throws TypeCheckException {
+    public Expression staticCheck(StaticCheckEnv env) throws TypeCheckException {
         return new Int(this.integer);
     }
 }

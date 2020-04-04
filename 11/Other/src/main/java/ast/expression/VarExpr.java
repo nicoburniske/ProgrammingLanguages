@@ -1,7 +1,7 @@
 package ast.expression;
 
 import ast.Var;
-import utils.env.Environment;
+import utils.env.StaticCheckEnv;
 
 import java.util.Objects;
 
@@ -12,8 +12,12 @@ public class VarExpr implements Expression{
         this.var = var;
     }
 
+    public VarExpr(String x) {
+        this.var = new Var(x);
+    }
+
     @Override
-    public Expression typecheck(Environment env) {
+    public Expression staticCheck(StaticCheckEnv env) {
         return new VarExpr(this.var.typecheck(env));
     }
 

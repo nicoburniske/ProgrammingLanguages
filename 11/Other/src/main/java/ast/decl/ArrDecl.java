@@ -3,10 +3,11 @@ package ast.decl;
 import ast.expression.Expression;
 import ast.Var;
 import org.json.simple.JSONArray;
-import utils.env.Environment;
+import utils.env.StaticCheckEnv;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class ArrDecl implements IDecl {
@@ -45,13 +46,27 @@ public class ArrDecl implements IDecl {
     }
 
     @Override
-    public IDecl typecheck(Environment environment) {
-        List<Expression> arr = this.value.stream().map(v -> v.typecheck(environment)).collect(Collectors.toList());
+    public IDecl staticCheck(StaticCheckEnv environment) {
+        List<Expression> arr = this.value.stream().map(v -> v.staticCheck(environment)).collect(Collectors.toList());
         return new ArrDecl(this.var, arr);
     }
 
     @Override
     public Var getVar() {
         return this.var;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ArrDecl arrDecl = (ArrDecl) o;
+        return var.equals(arrDecl.var) &&
+                value.equals(arrDecl.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(var, value);
     }
 }

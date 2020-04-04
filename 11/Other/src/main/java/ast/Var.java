@@ -1,7 +1,6 @@
 package ast;
 
-import ast.expression.Expression;
-import utils.env.Environment;
+import utils.env.StaticCheckEnv;
 import utils.exceptions.TypeCheckException;
 
 import java.util.Objects;
@@ -36,7 +35,7 @@ public class Var implements WhileLang {
         return Objects.hash(s);
     }
 
-    public Var typecheck(Environment env) {
+    public Var typecheck(StaticCheckEnv env) {
         if(env.contains(this)) {
             return new Var(this.s);
         } else {

@@ -3,7 +3,7 @@ package ast.stmt;
 import ast.expression.Expression;
 import ast.decl.IDecl;
 import org.json.simple.JSONArray;
-import utils.env.Environment;
+import utils.env.StaticCheckEnv;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -79,14 +79,14 @@ public class StmtBlock implements Stmt {
     }
 
     @Override
-    public Stmt typecheck(Environment env) {
+    public Stmt staticCheck(StaticCheckEnv env) {
         List<IDecl> checkedDecls = new ArrayList<>();
         for (IDecl d : this.declList) {
-            checkedDecls.add(d.typecheck(env));
+            checkedDecls.add(d.staticCheck(env));
             env = env.put(d.getVar());
         }
-        Environment finalEnv = env;
-        List<Stmt> checkedStatements = this.stmtList.stream().map(stmt -> stmt.typecheck(finalEnv)).collect(Collectors.toList());
-        return new StmtBlock(checkedDecls, checkedStatements, this.body.typecheck(finalEnv));
+        StaticCheckEnv finalEnv = env;
+        List<Stmt> checkedStatements = this.stmtList.stream().map(stmt -> stmt.staticCheck(finalEnv)).collect(Collectors.toList());
+        return new StmtBlock(checkedDecls, checkedStatements, this.body.staticCheck(finalEnv));
     }
 }

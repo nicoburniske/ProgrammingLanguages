@@ -2,7 +2,7 @@ package ast.lhs;
 
 import ast.WhileLang;
 import org.json.simple.JSONAware;
-import utils.env.Environment;
+import utils.env.StaticCheckEnv;
 
 /**
  * A LHS is one of:            % LHS stands for lefthand-side
@@ -10,5 +10,5 @@ import utils.env.Environment;
  *  - [Expression, Expression] % the location of an array index
  */
 public interface LHS extends JSONAware, WhileLang {
-    LHS typecheck(Environment environment);
+    LHS staticCheck(StaticCheckEnv environment);
 }
