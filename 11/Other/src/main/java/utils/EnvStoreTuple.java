@@ -10,6 +10,9 @@ public class EnvStoreTuple extends Tuple<Environment, Store> {
     public EnvStoreTuple(Environment left, Store right) {
         super(left, right);
     }
+    public EnvStoreTuple() {
+        super(new Environment(), new Store());
+    }
 
     /**
      * finds a value in the {@link EnvStoreTuple}

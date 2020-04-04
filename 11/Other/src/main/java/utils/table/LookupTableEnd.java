@@ -17,7 +17,7 @@ public class LookupTableEnd<Key, Value> implements LookupTable<Key, Value> {
 
     @Override
     public Value get(Key key) {
-        throw new TypeCheckException();
+        return null;
     }
 
     @Override

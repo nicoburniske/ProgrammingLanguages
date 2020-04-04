@@ -52,4 +52,9 @@ public class Store {
     public int hashCode() {
         return Objects.hash(table);
     }
+
+    @Override
+    public String toString() {
+        return table.toString();
+    }
 }

@@ -38,5 +38,8 @@ public class Environment {
         return Objects.hash(table);
     }
 
-
+    @Override
+    public String toString() {
+        return table.toString();
+    }
 }
