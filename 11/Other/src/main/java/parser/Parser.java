@@ -95,9 +95,9 @@ public class Parser {
         if(obj instanceof JSONArray) {
             JSONArray arr = (JSONArray) obj;
             if(arr.size() == 3 && Operator.operators.keySet().stream().anyMatch(op -> isStringAndIsEqual(arr.get(1), op))) {
-                new Operator(parseExpression(arr.get(0)), parseExpression(arr.get(2)), (String)arr.get(1));
+                return new Operator(parseExpression(arr.get(0)), parseExpression(arr.get(2)), (String)arr.get(1));
             }
-            if(arr.size() == 2) {
+            else if(arr.size() == 2) {
                 return new ArrayAccess(parseExpression(arr.get(0)), parseExpression(arr.get(1)));
             }
         }

@@ -1,7 +1,10 @@
 package value;
 
+import utils.store.Store;
+
 import java.math.BigInteger;
 import java.util.Objects;
+import java.util.Set;
 
 public class IValueInt implements IValue{
     private BigInteger value;
@@ -39,5 +42,10 @@ public class IValueInt implements IValue{
     @Override
     public String toJSONString() {
         return this.value.toString();
+    }
+
+    @Override
+    public String toOutputString(Store store, Set<IValue> acc) {
+        return this.toJSONString();
     }
 }

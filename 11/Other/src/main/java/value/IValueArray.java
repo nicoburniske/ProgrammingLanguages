@@ -6,14 +6,10 @@ import utils.store.Store;
 
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Set;
 
 public class IValueArray implements IValue {
 
-    //let y = [x1,x2,x3]
-    //[y] Var
-    //[0] Loc
-    //[0,    1 ,2 ,3 ] Loc
-    //[[1,3],x1,x2,x3] IValue
     private Location location;
     private BigInteger length;
 
@@ -49,10 +45,7 @@ public class IValueArray implements IValue {
 
     @Override
     public String toString() {
-        return "IValueArray{" +
-                "location=" + location +
-                ", lenght=" + length +
-                '}';
+        return this.toJSONString();
     }
 
     @Override
@@ -62,5 +55,22 @@ public class IValueArray implements IValue {
         arr.add(this.length);
         arr.add(this.location);
         return arr.toJSONString();
+    }
+
+    public String toOutputString(Store store, Set<IValue> values) {
+        StringBuilder result = new StringBuilder();
+        if (values.contains(this)) {
+           return "cycle";
+        } else {
+            values.add(this);
+            result.append("[");
+            int start = this.location.getLocation().intValue();
+            for (int ii = start; ii < start + this.length.intValue(); ii++) {
+                if(ii != start) result.append(",");
+                result.append(store.get(new Location(ii)).toOutputString(store, values));
+            }
+            result.append("]");
+        }
+        return result.toString();
     }
 }

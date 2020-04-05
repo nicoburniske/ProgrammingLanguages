@@ -11,8 +11,10 @@ import ast.lhs.ArrIndexLoc;
 import ast.lhs.VarLoc;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import utils.EnvStoreTuple;
 import utils.env.StaticCheckEnv;
 import utils.exceptions.TypeCheckException;
+import value.IValueInt;
 
 import java.util.Arrays;
 
@@ -20,6 +22,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class StmtTest {
+    EnvStoreTuple tuple;
+
     StaticCheckEnv mt, containsX;
     Assignment ass1;
     Conditional cond1;
@@ -27,7 +31,7 @@ class StmtTest {
     StmtBlock block1, block2, blockHard1;
 
     Decl d1, dx;
-    ArrDecl arrD1;
+    ArrDecl arrD1, arrD4to6;
 
     ArrIndexLoc arrIndex1, arrIndex2;
     VarLoc varloc1, varloc2;
@@ -39,12 +43,14 @@ class StmtTest {
 
     @BeforeEach
     void setUp() {
+        tuple = new EnvStoreTuple();
         mt = new StaticCheckEnv();
         containsX = mt.put(new Var("x"));
         // init decls
         d1 = new Decl("x", new Int(5));
         dx = new Decl("x", new VarExpr("x"));
         arrD1 = new ArrDecl("y", Arrays.asList(new Int(5), new VarExpr("x")));
+        arrD4to6 = new ArrDecl("z", Arrays.asList(new Int(4), new Int(5), new Int(6)));
 
         //init expressions
         int1 = new Int(1);
@@ -90,5 +96,32 @@ class StmtTest {
 
         assertEquals(block1, block1.staticCheck(mt));
         assertThrows(TypeCheckException.class, () -> block2.staticCheck(mt));
+
+        StmtBlock blockHard2 = new StmtBlock(Arrays.asList(new Decl("x", new Int(1)), arrD4to6),
+                Arrays.asList(new Assignment(new VarLoc("y"), new ArrayAccess(new VarExpr("z"), new Int(0)))), new VarExpr("y"));
+        assertThrows(TypeCheckException.class, () -> blockHard2.staticCheck(new StaticCheckEnv()));
     }
+
+    @Test
+    void CESK() {
+        assertEquals(block1, block1.staticCheck(mt));
+        assertEquals(new IValueInt(3), block1.CESK(tuple).getLeft());
+        // [["let","x","=",1],["vec","z","=",4,5,6],"in",["x","=",["z",0]],"x"]
+        this.blockHard1 = new StmtBlock(Arrays.asList(new Decl("x", new Int(1)), arrD4to6),
+                Arrays.asList(new Assignment(new VarLoc("x"), new ArrayAccess(new VarExpr("z"), new Int(0)))), new VarExpr("x"));
+
+        assertEquals(new IValueInt(4), blockHard1.CESK(tuple).getLeft());
+
+        /**
+         * [
+         *     ["let", "x", "=", 1],
+         *     ["vec", "z", "=", [3, 4, 5]],
+         *     "in",
+         *     ["x", "=", ["z", 0]],
+         *     "x"
+         * ]
+         */
+
+    }
+
 }

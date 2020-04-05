@@ -5,7 +5,6 @@ import ast.decl.ArrDecl;
 import ast.decl.Decl;
 import ast.expression.Expression;
 import ast.decl.IDecl;
-import ast.expression.Int;
 import ast.stmt.frame.ArrDeclFrame;
 import ast.stmt.frame.DeclFrame;
 import org.json.simple.JSONArray;
@@ -19,9 +18,7 @@ import value.IValueArray;
 import value.IValueInt;
 import value.Location;
 
-import javax.lang.model.type.DeclaredType;
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -104,12 +101,11 @@ public class StmtBlock implements Stmt {
         return new StmtBlock(checkedDecls, checkedStatements, this.body.staticCheck(finalEnv));
     }
 
-    public ValueEnvStoreTuple CESK() {
+    public ValueEnvStoreTuple CESK(EnvStoreTuple tuple) {
         WhileLang control;
-        EnvStoreTuple tuple = new EnvStoreTuple();
         Stack<DeclFrame> stack = new Stack<>();
 
-        for (IDecl d : this.declList) {
+       for (IDecl d : this.declList) {
             control = d;
             while (!this.doneCESK(stack, control)) {
                 if (control instanceof Decl) {
@@ -169,11 +165,11 @@ public class StmtBlock implements Stmt {
     }
 
     private boolean doneCESK(Stack<DeclFrame> stack, WhileLang value) {
-        return stack.empty() && (value instanceof IValueInt || value instanceof Location);
+        return stack.empty() && (value instanceof IValue || value instanceof Location);
     }
 
     @Override
     public Store transition(EnvStoreTuple tuple) {
-        return this.CESK().getStore();
+        return this.CESK(tuple).getStore();
     }
 }

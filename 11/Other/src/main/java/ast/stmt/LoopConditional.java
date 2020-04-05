@@ -57,7 +57,7 @@ public class LoopConditional implements Stmt {
     @Override
     public Store transition(EnvStoreTuple tuple) {
         IValue result = this.condition.expressionInterpret(tuple);
-        if (result.equals(new IValueInt(0))) {
+        if (!result.equals(new IValueInt(0))) {
             tuple = new EnvStoreTuple(tuple.getLeft(), this.body.transition(tuple));
             return this.transition(tuple);
         }
