@@ -4,6 +4,7 @@ import ast.WhileLang;
 import org.json.simple.JSONAware;
 import utils.EnvStoreTuple;
 import utils.env.StaticCheckEnv;
+import utils.exceptions.ArrayIndexException;
 import value.Location;
 
 /**
@@ -14,6 +15,6 @@ import value.Location;
 public interface LHS extends JSONAware, WhileLang {
     LHS staticCheck(StaticCheckEnv environment);
 
-    Location lhsInterpreter(EnvStoreTuple tuple);
+    Location lhsInterpreter(EnvStoreTuple tuple) throws ArrayIndexException;
 
 }
