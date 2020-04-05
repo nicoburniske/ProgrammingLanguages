@@ -1,31 +1,36 @@
 package value;
 
-import utils.EnvStoreTuple;
 import utils.store.Store;
-
-import java.util.List;
 
 public class IValueArray implements IValue{
 
 
     //let y = [x1,x2,x3]
-    //[y]
-    //[0]
-    //[0,1 ,2 ,3 ]
-    //[3,x1,x2,x3]
-    private List<Location> locations;
+    //[y] Var
+    //[0] Loc
+    //[0,    1 ,2 ,3 ] Loc
+    //[[1,3],x1,x2,x3] IValue
+    private Location location;
+    private int lenght;
 
-    public IValueArray(List<Location> locations) {
-        this.locations = locations;
+    public IValueArray(Location location, int lenght) {
+        this.location = location;
+        this.lenght = lenght;
     }
 
     public IValue get(IValueInt i, Store store) {
-        return store.get(locations.get(i.getValue().intValue()));
+        return store.get(new Location(i.getValue().add(location.getLocation())));
     }
 
     public Location getLocation(IValueInt i) {
-        return locations.get(i.getValue().intValue());
+        return new Location(location.getLocation().add(i.getValue()));
     }
 
-
+    @Override
+    public String toString() {
+        return "IValueArray{" +
+                "location=" + location +
+                ", lenght=" + lenght +
+                '}';
+    }
 }
