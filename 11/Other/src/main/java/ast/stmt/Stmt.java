@@ -2,8 +2,15 @@ package ast.stmt;
 
 import ast.WhileLang;
 import org.json.simple.JSONAware;
+import utils.EnvStoreTuple;
 import utils.env.StaticCheckEnv;
+import utils.store.Store;
 import value.IValue;
+import value.IValueInt;
+import value.Location;
+
+import java.util.Stack;
+import java.util.function.Function;
 
 /**
  * A Stmt is one of:
@@ -17,4 +24,5 @@ import value.IValue;
  */
 public interface Stmt extends JSONAware, WhileLang {
    Stmt staticCheck(StaticCheckEnv env);
+   Store transition(EnvStoreTuple tuple);
 }

@@ -1,15 +1,29 @@
 package ast.stmt;
 
+import ast.WhileLang;
+import ast.decl.ArrDecl;
+import ast.decl.Decl;
 import ast.expression.Expression;
 import ast.decl.IDecl;
+import ast.expression.Int;
+import ast.stmt.frame.ArrDeclFrame;
+import ast.stmt.frame.DeclFrame;
 import org.json.simple.JSONArray;
+import utils.EnvStoreTuple;
+import utils.ValueEnvStoreTuple;
+import utils.env.Environment;
 import utils.env.StaticCheckEnv;
+import utils.store.Store;
+import value.IValue;
+import value.IValueArray;
+import value.IValueInt;
+import value.Location;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import javax.lang.model.type.DeclaredType;
+import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class StmtBlock implements Stmt {
     private List<IDecl> declList;
@@ -88,5 +102,78 @@ public class StmtBlock implements Stmt {
         StaticCheckEnv finalEnv = env;
         List<Stmt> checkedStatements = this.stmtList.stream().map(stmt -> stmt.staticCheck(finalEnv)).collect(Collectors.toList());
         return new StmtBlock(checkedDecls, checkedStatements, this.body.staticCheck(finalEnv));
+    }
+
+    public ValueEnvStoreTuple CESK() {
+        WhileLang control;
+        EnvStoreTuple tuple = new EnvStoreTuple();
+        Stack<DeclFrame> stack = new Stack<>();
+
+        for (IDecl d : this.declList) {
+            control = d;
+            while (!this.doneCESK(stack, control)) {
+                if (control instanceof Decl) {
+                    Decl decl = (Decl) control;
+                    stack.push(new DeclFrame(decl.getVar(), tuple.getLeft()));
+                    control = decl.getRHS();
+                } else if (control instanceof ArrDecl) {
+                    ArrDecl decl = (ArrDecl) control;
+                    List<Expression> expressions = decl.getRHS();
+                    Environment declEnv = tuple.getLeft();
+                    IntStream.range(0, expressions.size())
+                            .boxed().sorted(Collections.reverseOrder())
+                            .forEach(ii -> {
+                                Expression after = (ii != expressions.size() - 1) ? expressions.get(ii + 1) : null;
+                                stack.push(new ArrDeclFrame(decl.getVar(), declEnv, ii, expressions.size(), after));
+                            });
+                    control = expressions.get(0);
+                } else if (control instanceof Expression) {
+                    Expression controlExpr = (Expression) control;
+                    if (stack.empty()) {
+                        // todo: is this the only condition
+                        control = controlExpr.expressionInterpret(tuple);
+                    } else if (stack.peek() instanceof ArrDeclFrame) {
+                        ArrDeclFrame frame = (ArrDeclFrame) stack.pop();
+                        EnvStoreTuple envDecl = new EnvStoreTuple(frame.getEnv(), tuple.getRight());
+                        if (frame.getIndex() == 0) {
+                            // IValueArray location points to block after head
+                            tuple = tuple.insert(frame.getVar(), new IValueArray(tuple.getRight().getSize() + 1, frame.getLength()));
+                        }
+                        tuple = new EnvStoreTuple(tuple.getLeft(),
+                                tuple.getRight().insert(controlExpr.expressionInterpret(envDecl)));
+
+                        Expression after = frame.getAfter();
+                        if (after != null) control = after;
+                    } else if (stack.peek() instanceof DeclFrame) {
+                        DeclFrame frame = stack.pop();
+                        EnvStoreTuple envDecl = new EnvStoreTuple(frame.getEnv(), tuple.getRight());
+                        tuple = tuple.insert(frame.getVar(), controlExpr.expressionInterpret(envDecl));
+                    }
+                }
+            }
+        }
+        for (Stmt s : this.stmtList) {
+            tuple = new EnvStoreTuple(tuple.getLeft(), s.transition(tuple));
+        }
+        return new ValueEnvStoreTuple(this.body.expressionInterpret(tuple), tuple);
+    }
+
+    private WhileLang initializeControl() {
+        if (this.declList.size() > 0) {
+            return this.declList.get(0);
+        } else if (this.stmtList.size() > 0) {
+            return this.stmtList.get(0);
+        } else {
+            return this.body;
+        }
+    }
+
+    private boolean doneCESK(Stack<DeclFrame> stack, WhileLang value) {
+        return stack.empty() && (value instanceof IValueInt || value instanceof Location);
+    }
+
+    @Override
+    public Store transition(EnvStoreTuple tuple) {
+        return this.CESK().getStore();
     }
 }

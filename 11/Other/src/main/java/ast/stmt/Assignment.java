@@ -3,9 +3,15 @@ package ast.stmt;
 import ast.expression.Expression;
 import ast.lhs.LHS;
 import org.json.simple.JSONArray;
+import utils.EnvStoreTuple;
 import utils.env.StaticCheckEnv;
+import utils.store.Store;
+import value.IValue;
+import value.Location;
 
 import java.util.Objects;
+import java.util.Stack;
+import java.util.function.Function;
 
 public class Assignment implements Stmt {
     private LHS leftHandSide;
@@ -47,5 +53,12 @@ public class Assignment implements Stmt {
     @Override
     public Stmt staticCheck(StaticCheckEnv env) {
         return new Assignment(this.leftHandSide.staticCheck(env), this.expression.staticCheck(env));
+    }
+
+    @Override
+    public Store transition(EnvStoreTuple tuple) {
+        Location loc = this.leftHandSide.lhsInterpreter(tuple);
+        IValue newValue = this.expression.expressionInterpret(tuple);
+        return tuple.getRight().set(loc, newValue);
     }
 }

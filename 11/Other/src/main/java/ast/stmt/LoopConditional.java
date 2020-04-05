@@ -2,7 +2,11 @@ package ast.stmt;
 
 import ast.expression.Expression;
 import org.json.simple.JSONArray;
+import utils.EnvStoreTuple;
 import utils.env.StaticCheckEnv;
+import utils.store.Store;
+import value.IValue;
+import value.IValueInt;
 
 import java.util.Objects;
 
@@ -48,5 +52,15 @@ public class LoopConditional implements Stmt {
     @Override
     public Stmt staticCheck(StaticCheckEnv env) {
         return new LoopConditional(this.condition.staticCheck(env), this.body.staticCheck(env));
+    }
+
+    @Override
+    public Store transition(EnvStoreTuple tuple) {
+        IValue result = this.condition.expressionInterpret(tuple);
+        if (result.equals(new IValueInt(0))) {
+            tuple = new EnvStoreTuple(tuple.getLeft(), this.body.transition(tuple));
+            return this.transition(tuple);
+        }
+        return tuple.getRight();
     }
 }

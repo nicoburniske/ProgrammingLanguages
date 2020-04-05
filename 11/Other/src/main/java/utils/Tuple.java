@@ -9,8 +9,8 @@ import java.util.Objects;
  * @param <Value>
  */
 public class Tuple<Key, Value> {
-    private Key left;
-    private Value right;
+    protected Key left;
+    protected Value right;
 
     public Tuple(Key left, Value right) {
         this.left = left;

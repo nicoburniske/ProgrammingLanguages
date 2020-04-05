@@ -1,4 +1,6 @@
 package value;
 
-public interface IValue {
+import ast.WhileLang;
+
+public interface IValue extends WhileLang {
 }

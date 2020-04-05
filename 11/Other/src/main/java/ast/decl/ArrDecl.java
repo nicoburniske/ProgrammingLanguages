@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class ArrDecl implements IDecl {
+public class ArrDecl implements IDecl<List<Expression>> {
     private Var var;
     private List<Expression> value;
 
@@ -54,6 +54,11 @@ public class ArrDecl implements IDecl {
     @Override
     public Var getVar() {
         return this.var;
+    }
+
+    @Override
+    public List<Expression> getRHS() {
+        return this.value;
     }
 
     @Override

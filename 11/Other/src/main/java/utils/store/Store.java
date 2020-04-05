@@ -36,6 +36,9 @@ public class Store {
     public Store set(Location key, IValue val) {
         return new Store(table.set(key, val));
     }
+    public Store insert(IValue val) {
+        return this.put(new Location(this.table.getSize()), val);
+    }
     public int getSize(){
         return table.getSize();
     }

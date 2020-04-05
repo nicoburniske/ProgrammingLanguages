@@ -7,7 +7,7 @@ import utils.env.StaticCheckEnv;
 
 import java.util.Objects;
 
-public class Decl implements IDecl {
+public class Decl implements IDecl<Expression> {
     private Var var;
     private Expression expression;
 
@@ -58,5 +58,10 @@ public class Decl implements IDecl {
     @Override
     public Var getVar() {
         return this.var;
+    }
+
+    @Override
+    public Expression getRHS() {
+        return this.expression;
     }
 }

@@ -1,10 +1,17 @@
 package ast.stmt;
 
+import ast.WhileLang;
 import ast.expression.Expression;
 import org.json.simple.JSONArray;
+import utils.EnvStoreTuple;
 import utils.env.StaticCheckEnv;
+import utils.store.Store;
+import value.IValue;
+import value.IValueInt;
 
 import java.util.Objects;
+import java.util.Stack;
+import java.util.function.Function;
 
 public class Conditional implements Stmt {
 
@@ -51,5 +58,16 @@ public class Conditional implements Stmt {
     @Override
     public Stmt staticCheck(StaticCheckEnv env) {
         return new Conditional(this.condition.staticCheck(env), this.ifTrue.staticCheck(env), this.ifFalse.staticCheck(env));
+    }
+
+    @Override
+    public Store transition(EnvStoreTuple tuple) {
+        // TODO: number expected exception?
+        IValue result = this.condition.expressionInterpret(tuple);
+        if (result.equals(new IValueInt(0)))  {
+            return this.ifTrue.transition(tuple);
+        } else {
+            return this.ifFalse.transition(tuple);
+        }
     }
 }

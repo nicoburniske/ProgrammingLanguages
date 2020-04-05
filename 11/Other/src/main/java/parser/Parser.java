@@ -61,12 +61,12 @@ public class Parser {
     private static IDecl parseDecl(Object obj) {
         if(obj instanceof JSONArray) {
             JSONArray arr = (JSONArray) obj;
-            if(arr.size() == 3) {
+            if(arr.size() == 4) {
                 if(isStringAndIsEqual(arr.get(0), "let")) {
                     return new Decl(parseVar(arr.get(1)), parseExpression(arr.get(3)));
                 }
-                if(isStringAndIsEqual(arr.get(0), "vec") && (arr.get(2) instanceof JSONArray)) {
-                    List<Object> array = (JSONArray) arr.get(2);
+                if(isStringAndIsEqual(arr.get(0), "vec") && (arr.get(3) instanceof JSONArray)) {
+                    List<Object> array = (JSONArray) arr.get(3);
                     List<Expression> arrayExp = array.stream().map(val -> parseExpression(val)).collect(Collectors.toList());
                     return new ArrDecl(parseVar(arr.get(1)), arrayExp);
                 }

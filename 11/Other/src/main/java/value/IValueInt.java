@@ -35,4 +35,9 @@ public class IValueInt implements IValue{
     public String toString() {
         return value.toString();
     }
+
+    @Override
+    public String toJSONString() {
+        return this.value.toString();
+    }
 }
