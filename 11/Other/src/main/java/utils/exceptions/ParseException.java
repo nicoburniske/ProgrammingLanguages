@@ -6,12 +6,13 @@ package utils.exceptions;
 public class ParseException extends RuntimeException {
 
     public ParseException(String message) {
-        super("parser error");
+        super(basicMessage);
         //Uncomment this for debugging an issue with parsing
         //super("parser error: " + message);
     }
 
     //Parser error messages that are helpful for debugging
+    public static String basicMessage = "parser error";
     public static String expectedArray = "Expected an Array";
     public static String expectedStmtBlock = "Expected a stmt Block";
     public static String expectedDecl = "Expected a Decl";
