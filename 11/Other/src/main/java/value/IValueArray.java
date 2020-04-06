@@ -68,8 +68,8 @@ public class IValueArray implements IValue {
     }
 
     private boolean isIndexInbouds(IValueInt i) {
-        BigInteger zero = new BigInteger("0");
-        if(i.getValue().min(length).equals(length) || i.getValue().max(zero).equals(zero)) {
+        BigInteger neg = new BigInteger("-1");
+        if(i.getValue().min(length).equals(length) || i.getValue().max(neg).equals(neg)) {
             throw new ArrayIndexException();
         } else {
             return true;
