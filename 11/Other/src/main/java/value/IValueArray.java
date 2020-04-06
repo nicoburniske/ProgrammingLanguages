@@ -5,7 +5,6 @@ import utils.exceptions.ArrayIndexException;
 import utils.store.Store;
 
 import java.math.BigInteger;
-import java.util.List;
 import java.util.Set;
 
 public class IValueArray implements IValue {
@@ -28,19 +27,13 @@ public class IValueArray implements IValue {
     }
 
     public IValue get(IValueInt i, Store store) {
-        if (i.getValue().min(length).equals(length)) {
-            throw new ArrayIndexException();
-        } else {
-            return store.get(new Location(i.getValue().add(location.getLocation())));
-        }
+        isIndexInbouds(i);
+        return store.get(new Location(i.getValue().add(location.getLocation())));
     }
 
     public Location getLocation(IValueInt i) {
-        if (i.getValue().min(length).equals(length)) {
-            throw new ArrayIndexException();
-        } else {
-            return new Location(location.getLocation().add(i.getValue()));
-        }
+        isIndexInbouds(i);
+        return new Location(location.getLocation().add(i.getValue()));
     }
 
     @Override
@@ -72,5 +65,13 @@ public class IValueArray implements IValue {
             result.append("]");
         }
         return result.toString();
+    }
+
+    private boolean isIndexInbouds(IValueInt i) {
+        if(i.getValue().min(length).max(new BigInteger("0")).equals(length)) {
+            throw new ArrayIndexException();
+        } else {
+            return true;
+        }
     }
 }
