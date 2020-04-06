@@ -1,4 +1,10 @@
-Total: 100/110
+Total: 120/110
+
+-5 interpreter; Input: ["call",["fun*",["resume"],[["let","gen","=",["fun*",["x"],["call",["call","!","resume"],"x"]]],["let","pythn","=",["fun*",["x"],["if-0","x",111,["call",["fun*",["a","aa"],"a"],["call","pythn",["call","+","x",-1]],["call","yield","x"]]]]],["let","using","=",["fun*",["f"],["call","+",["call","f",33],["call","+",["call","f",33],["call","f",2]]]]],["let","yield","=",["fun*",["y"],["grab","c",["call",["call","=","resume",["call","enter","c"]],"y"]]]],["let","enter","=",["fun*",["c"],["fun*",["z"],["grab","k",["call",["fun*",["a","aa"],"a"],["call","c","z"],["call","=","resume",["call","enter","k"]]]]]]],["call",["fun*",["a","aa"],"a"],["call","using","gen"],["call","=","resume",["call","enter",["fun*",["x"],["stop",["call","pythn","x"]]]]]]]],["call","@",0]]; Expected: 111
+; Got: "number of arguments does not match number of parameters"
+
+-5 interpreter; Input: ["call",["fun*",["resume"],[["let","gen","=",["fun*",["x"],["call",["call","!","resume"],"x"]]],["let","pythn","=",["fun*",["x"],["if-0","x",111,["call",["fun*",["a","aa"],"a"],["call","pythn",["call","+","x",-1]],["call","yield","x"]]]]],["let","using","=",["fun*",["f"],["call","+",["call","f",33],["call","+",["call","f",33],["call","f",10]]]]],["let","yield","=",["fun*",["y"],["grab","c",["call",["call","=","resume",["call","enter","c"]],"y"]]]],["let","enter","=",["fun*",["c"],["fun*",["z"],["grab","k",["call",["fun*",["a","aa"],"a"],["call","c","z"],["call","=","resume",["call","enter","k"]]]]]]],["call",["fun*",["a","aa"],"a"],["call","using","gen"],["call","=","resume",["call","enter",["fun*",["x"],["stop",["call","pythn","x"]]]]]]]],["call","@",0]]; Expected: 27
+; Got: "number of arguments does not match number of parameters"
 
 -5, for your test 1-in.json; got parse: bad Int 420
   context...:
@@ -19,8 +25,6 @@ Total: 100/110
    /usr/share/racket/collects/racket/match/compiler.rkt:507:40: f131
    /home/vagrant/src/20PL/Code/10/Other/data-rep.rkt:86:0: parse4
    ...
-
--5, for your test 7-in.json; got ["cell",13]
 
 +25 Bonus for your tests
 ===============
@@ -128,6 +132,11 @@ interpreter: Failed ["call", ["fun*", ["resume"],
   ["call", "@", 0]]
 , Expected 297
 , Got "number of arguments does not match number of parameters"
+
+interpreter: Failed ["call",["fun*",["cell"],["call",["fun*", ["a", "b"], "a"],
+  ["if-0", ["call", "!", "cell"], 42,["call", ["call", "!", "cell"], 0]],
+  ["call","=","cell",["grab", "done",["if-0", ["call", "!", "cell"], 0,"done"]]]]],
+  ["call", "@", ["fun*", ["x"], "x"]]], Expected 42, Got interpreter.value.ValueClosure cannot be cast to interpreter.value.ValueInt
 
 interpreter: Failed ["call", "!", 1], Expected "primop domain error", Got interpreter.value.ValueInt cannot be cast to interpreter.value.ValueCell
 
