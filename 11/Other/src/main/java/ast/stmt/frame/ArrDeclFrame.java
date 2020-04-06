@@ -8,8 +8,6 @@ public class ArrDeclFrame extends DeclFrame {
     private int index, length;
     private Expression after;
 
-
-
     public ArrDeclFrame(Var var, Environment env, int index, int length, Expression after) {
         super(var, env);
         this.index = index;

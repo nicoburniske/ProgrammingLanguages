@@ -3,7 +3,7 @@ package ast.stmt.frame;
 import ast.Var;
 import utils.env.Environment;
 
-public class DeclFrame {
+public class DeclFrame implements IFrame{
    private Var var;
    private Environment env;
 
