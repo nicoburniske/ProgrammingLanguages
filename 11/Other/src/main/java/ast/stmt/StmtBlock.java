@@ -12,6 +12,10 @@ import utils.EnvStoreTuple;
 import utils.ValueEnvStoreTuple;
 import utils.env.Environment;
 import utils.env.StaticCheckEnv;
+import utils.exceptions.ArrayIndexException;
+import utils.exceptions.IntExpectedException;
+import utils.exceptions.ParseException;
+import utils.exceptions.TypeCheckException;
 import utils.store.Store;
 import value.IValue;
 import value.IValueArray;
@@ -72,7 +76,6 @@ public class StmtBlock implements Stmt {
     public String toString() {
         return this.toJSONString();
     }
-
 
     @Override
     public boolean equals(Object o) {
@@ -154,13 +157,13 @@ public class StmtBlock implements Stmt {
         return new ValueEnvStoreTuple(this.body.expressionInterpret(tuple), tuple);
     }
 
-    private WhileLang initializeControl() {
-        if (this.declList.size() > 0) {
-            return this.declList.get(0);
-        } else if (this.stmtList.size() > 0) {
-            return this.stmtList.get(0);
-        } else {
-            return this.body;
+    public String run() {
+        try {
+          this.staticCheck(new StaticCheckEnv());
+          ValueEnvStoreTuple result = this.CESK(new EnvStoreTuple());
+          return result.getLeft().toOutputString(result.getStore(), new HashSet<>());
+        } catch (TypeCheckException | IntExpectedException | ParseException | ArrayIndexException exception) {
+            return exception.getMessage();
         }
     }
 

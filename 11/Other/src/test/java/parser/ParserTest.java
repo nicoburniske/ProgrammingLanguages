@@ -12,21 +12,24 @@ import java.util.HashSet;
 
 public class ParserTest {
     String example1 = "[\n" +
-            "    [\"vec\", \"a\", \"=\", [1, 2, 3]],\n" +
-            "    [\"vec\", \"b\", \"=\", [\"a\", 4, 5]],\n" +
-            "    [\"vec\", \"c\", \"=\", [\"a\", \"b\"]],\n" +
+            "    [\"vec\", \"n\", \"=\", [22,23,24]],\n" +
             "    \"in\",\n" +
-            "    [[\"a\", 1], \"=\", \"b\"],\n" +
-            "    \"c\"\n" +
-            "]\n";
+            "        [\n" +
+            "            [\"vec\", \"a\", \"=\", [32, 12, 17]],\n" +
+            "            \"in\", \n" +
+            "            [[\"n\", 2], \"=\", \"a\"],\n" +
+            "            5\n" +
+            "        ],\n" +
+            "    \"n\"\n" +
+            "]";
     @Test
     public void parse() throws ParseException {
         Object arr = new JSONParser().parse(example1);
         StmtBlock block = Parser.parse(arr);
-        block.staticCheck(new StaticCheckEnv());
-        EnvStoreTuple tuple = new EnvStoreTuple();
-        ValueEnvStoreTuple results = block.CESK(tuple);
-        System.out.println(results.getLeft().toOutputString(results.getStore(), new HashSet<>()));
-        System.out.println(results.getStore().toString());
+        // EnvStoreTuple tuple = new EnvStoreTuple();
+        // ValueEnvStoreTuple results = block.CESK(tuple);
+        // System.out.println(results.getLeft().toOutputString(results.getStore(), new HashSet<>()));
+        // System.out.println(results.getStore().toString());
+        System.out.println(block.run());
     }
 }

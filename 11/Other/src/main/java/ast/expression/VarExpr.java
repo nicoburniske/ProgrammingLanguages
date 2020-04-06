@@ -8,7 +8,7 @@ import value.IValue;
 import java.util.Objects;
 
 public class VarExpr implements Expression{
-    Var var;
+    private Var var;
 
     public VarExpr(Var var) {
         this.var = var;
