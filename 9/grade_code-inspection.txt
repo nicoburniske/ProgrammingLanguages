@@ -1,7 +1,7 @@
-98
+99
 Julia Belyakova
 
-91/100 + Bonus: 7/10
+92/100 + Bonus: 7/10
 
 Task 1 (alpha-equals)
 ----------------------------------------
@@ -19,7 +19,7 @@ Task 2 (CPS)
    to avoid collisions between k and variables in a program
    (this is crucial for the correctness of your CPS transformation)
 
--6 (alpha-equal) unit tests for cps do not have examples where the generation
+-5 (alpha-equal) unit tests for cps do not have examples where the generation
    of variable names would be necessary for the CPS correctness
    (variable named "k" in the source program would be such an example) +
    no unit tests for complex decls and function calls (they are commented
