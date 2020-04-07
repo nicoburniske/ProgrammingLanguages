@@ -9,6 +9,9 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class main {
+    /**
+     * This is the main entry point to run the code. Arg[0] should be the input file
+     */
     public static void main(String[] args) throws IOException, ParseException {
         FileReader reader = new FileReader(args[0]);
         try {
