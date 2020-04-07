@@ -20,18 +20,20 @@ import java.util.stream.Collectors;
 public class Parser {
 
 
-    /**
-     * A Stmt is one of:
-     *  - [LHS, "=", Expression]           % assignment
-     *  - ["if0", Expression, Stmt, Stmt]  % if
-     *  - ["do0", Expression, Stmt]        % loop while not 0
-     *  - [VarDecl, ..., VarDecl,          % declaration block
-     *     "in"                            % set up local variables
-     *      Stmt, ..., Stmt,               % execute statements in order
-     *      Expression]                    % its value is the result
-     */
 
+
+    /**
+     * This function pases a {@link StmtBlock} from an {@param obj}
+     * @param obj
+     * @return the {@link Stmt} parsed
+     */
     public static StmtBlock parse(Object obj) {
+        /**
+         *  - [VarDecl, ..., VarDecl,          % declaration block
+         *     "in"                            % set up local variables
+         *      Stmt, ..., Stmt,               % execute statements in order
+         *      Expression]                    % its value is the result
+         */
         if(obj instanceof JSONArray){
             JSONArray arr = (JSONArray) obj;
             if(arr.size() >= 2 && arr.contains("in")) {
@@ -52,13 +54,17 @@ public class Parser {
 
     }
 
+
     /**
-     * A VarDecl has the shape:
-     *  - ["let", Var, "=", Expression]      % declare and initialize variable
-     *  - ["vec", Var, "=", Expression,      % declare array and
-     *                      .., Expression]  % initial field values
+     * This function parses Decls from objects and throws an error if it fails to do so
      */
     private static IDecl parseDecl(Object obj) {
+        /**
+         * A VarDecl has the shape:
+         *  - ["let", Var, "=", Expression]      % declare and initialize variable
+         *  - ["vec", Var, "=", Expression,      % declare array and
+         *                      .., Expression]  % initial field values
+         */
         if(obj instanceof JSONArray) {
             JSONArray arr = (JSONArray) obj;
             if(arr.size() == 4) {
@@ -77,15 +83,19 @@ public class Parser {
         }
     }
 
+
     /**
-     * An Expression is one of:
-     *  - Int                            % literal constant
-     *  - Var                            % the value of a variable
-     *  - [Expression, "+", Expression]  % addition
-     *  - [Expression, "*", Expression]  % multiplication
-     *  - [Expression, Expression]       % the value of an array index
+     * This function parses {@link Expression}s from an Object
      */
     private static Expression parseExpression(Object obj) {
+        /**
+         * An Expression is one of:
+         *  - Int                            % literal constant
+         *  - Var                            % the value of a variable
+         *  - [Expression, "+", Expression]  % addition
+         *  - [Expression, "*", Expression]  % multiplication
+         *  - [Expression, Expression]       % the value of an array index
+         */
         if(obj instanceof Long) {
             return new Int(((Long)obj).intValue());
         }
@@ -104,17 +114,21 @@ public class Parser {
         throw new ParseException(ParseException.expectedExpression);
     }
 
+
     /**
-     * A Stmt is one of:
-     *  - [LHS, "=", Expression]           % assignment
-     *  - ["if0", Expression, Stmt, Stmt]  % if
-     *  - ["do0", Expression, Stmt]        % loop while not 0
-     *  - [VarDecl, ..., VarDecl,          % declaration block
-     *     "in"                            % set up local variables
-     *      Stmt, ..., Stmt,               % execute statements in order
-     *      Expression]                    % its value is the result
+     * This function parses {@link Stmt}s from a Object
      */
     private static Stmt parseStmt(Object obj) {
+        /**
+         * A Stmt is one of:
+         *  - [LHS, "=", Expression]           % assignment
+         *  - ["if0", Expression, Stmt, Stmt]  % if
+         *  - ["do0", Expression, Stmt]        % loop while not 0
+         *  - [VarDecl, ..., VarDecl,          % declaration block
+         *     "in"                            % set up local variables
+         *      Stmt, ..., Stmt,               % execute statements in order
+         *      Expression]                    % its value is the result
+         */
         if(obj instanceof JSONArray) {
             JSONArray arr = (JSONArray) obj;
             if(arr.size() == 4 && isStringAndIsEqual(arr.get(0), "if0")) {
@@ -133,11 +147,14 @@ public class Parser {
 
 
     /**
-     * A LHS is one of:            % LHS stands for lefthand-side
-     *  - Var                      % the location of a variable
-     *  - [Expression, Expression] % the location of an array index
+     * This function parses {@link LHS} from objects.
      */
     private static LHS parseLHS(Object obj) {
+        /**
+         * A LHS is one of:            % LHS stands for lefthand-side
+         *  - Var                      % the location of a variable
+         *  - [Expression, Expression] % the location of an array index
+         */
         if(obj instanceof String) {
             return new VarLoc((String) obj);
         }
@@ -150,11 +167,13 @@ public class Parser {
         throw new ParseException(ParseException.expectedLHS);
     }
 
-
     /**
-     * Var is a String
+     * This function parses functions from objects.
      */
     private static Var parseVar(Object obj) {
+        /**
+         * Var is a String
+         */
         if(obj instanceof String) {
             return new Var((String) obj);
         }
