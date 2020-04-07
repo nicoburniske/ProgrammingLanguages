@@ -1,0 +1,14 @@
+[
+  ["vec", "a", "=", [5, 42, 25, 32, 13]],
+  ["let", "counter", "=", 5],
+  ["let", "sum", "=", 0],
+  "in",
+  ["do0", "counter",
+    [
+      "in",
+      ["sum", "=", [["a", ["counter", "+", -1]], "+", "sum"]],
+      ["counter", "=", ["counter", "+", -1]],
+      "counter"
+    ]],
+  "sum"
+]
