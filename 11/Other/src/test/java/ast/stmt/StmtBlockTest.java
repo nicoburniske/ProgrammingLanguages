@@ -42,7 +42,6 @@ class StmtBlockTest {
         assertEquals(result1, test1.CESK(new EnvStoreTuple()).getLeft());
         assertEquals(result2, test2.CESK(new EnvStoreTuple()).getLeft());
         assertEquals(result3, test3.CESK(new EnvStoreTuple()).getLeft());
-
     }
 
     @Test
@@ -57,6 +56,5 @@ class StmtBlockTest {
         assertEquals(new Store(), test1.transition(new EnvStoreTuple()));
         assertEquals(result2Store.toString(), test2.transition(new EnvStoreTuple()).toString());
         assertEquals(result3Store.toString(), test3.transition(new EnvStoreTuple()).toString());
-
     }
 }
