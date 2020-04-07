@@ -5,6 +5,7 @@ import utils.exceptions.ArrayIndexException;
 import utils.store.Store;
 
 import java.math.BigInteger;
+import java.util.Objects;
 import java.util.Set;
 
 public class IValueArray implements IValue {
@@ -74,5 +75,19 @@ public class IValueArray implements IValue {
         } else {
             return true;
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        IValueArray that = (IValueArray) o;
+        return Objects.equals(location, that.location) &&
+                Objects.equals(length, that.length);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(location, length);
     }
 }
