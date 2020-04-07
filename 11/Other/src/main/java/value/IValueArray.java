@@ -5,6 +5,7 @@ import utils.exceptions.ArrayIndexException;
 import utils.store.Store;
 
 import java.math.BigInteger;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -51,6 +52,7 @@ public class IValueArray implements IValue {
         return arr.toJSONString();
     }
 
+    @Override
     public String toOutputString(Store store, Set<IValue> values) {
         StringBuilder result = new StringBuilder();
         if (values.contains(this)) {
@@ -61,13 +63,18 @@ public class IValueArray implements IValue {
             int start = this.location.getLocation().intValue();
             for (int ii = start; ii < start + this.length.intValue(); ii++) {
                 if(ii != start) result.append(",");
-                result.append(store.get(new Location(ii)).toOutputString(store, values));
+                result.append(store.get(new Location(ii)).toOutputString(store, new HashSet<>(values)));
             }
             result.append("]");
         }
         return result.toString();
     }
 
+    /**
+     * This function checks to make sure that array access does not occur out of bounds of the array
+     * @param i the index to be access
+     * @return true if the index is valid. This will throw an Exception if the index is invalid
+     */
     private boolean isIndexInbouds(IValueInt i) {
         BigInteger neg = new BigInteger("-1");
         if(i.getValue().min(length).equals(length) || i.getValue().max(neg).equals(neg)) {

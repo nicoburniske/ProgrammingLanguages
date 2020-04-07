@@ -1,8 +1,14 @@
 package value;
 
+import utils.env.Environment;
+import utils.store.Store;
+
 import java.math.BigInteger;
 import java.util.Objects;
 
+/**
+ * This class represents a Location in the {@link Store} and {@link Environment}
+ */
 public class Location {
     private BigInteger location;
 
