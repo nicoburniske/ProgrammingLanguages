@@ -9,7 +9,7 @@ import value.Location;
 import java.util.Objects;
 
 /**
- * Represents a non mutable Store. Composes a LookupTable<Location, IValue>
+ * Represents a non mutable Store. Composes a {@link LookupTable<Location,IValue>}
  */
 public class Store {
     LookupTable<Location, IValue> table;

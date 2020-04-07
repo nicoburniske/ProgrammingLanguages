@@ -8,7 +8,7 @@ import utils.list.IMtList;
 import java.util.Objects;
 
 /**
- * Represents a non mutable environment. Composes a LookupTable<Var, Integer>
+ * Represents a non mutable environment. Composes a {@link IList<Var>}
  */
 public class StaticCheckEnv {
     private IList<Var> declaredVars;

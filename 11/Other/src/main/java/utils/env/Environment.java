@@ -7,6 +7,9 @@ import value.Location;
 
 import java.util.Objects;
 
+/**
+ * This is a wrapper class around a {@link LookupTable<Var,Location>} that is used as an enviroment.
+ */
 public class Environment {
     LookupTable<Var, Location> table;
 

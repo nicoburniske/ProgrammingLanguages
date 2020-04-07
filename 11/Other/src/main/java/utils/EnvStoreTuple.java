@@ -41,20 +41,6 @@ public class EnvStoreTuple extends Tuple<Environment, Store> {
         return new EnvStoreTuple(newEnv, newStore);
     }
 
-    public void insertMutate(Var variable, IValue value) {
-        EnvStoreTuple newTuple = this.insert(variable, value);
-        this.left = newTuple.getLeft();
-        this.right = newTuple.getRight();
-    }
-
-
-    public void setMutate(Var variable, IValue value) {
-        Location l = this.left.get(variable);
-        this.right = this.right.set(l, value);
-    }
-
-
-
     /**
      * inserts a new value into the {@link EnvStoreTuple}
      *
