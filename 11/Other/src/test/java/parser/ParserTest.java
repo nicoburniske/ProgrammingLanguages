@@ -19,10 +19,11 @@ import org.junit.jupiter.api.*;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ParserTest {
 
-    String testDecls, arrayAccess, operations, do0, if0;
+    String testDecls, arrayAccess, operations, do0, if0, fail1;
     StmtBlock resultDecls, resultArrayAccess, resultOperations, resultDo0, resultIf0;
 
     @BeforeEach
@@ -104,6 +105,8 @@ public class ParserTest {
                         new Assignment(new VarLoc("x"), new Int(12)),
                                 new Assignment(new VarLoc("x"), new Int(42)))), new VarExpr("x"));
 
+        fail1 = "[\"x\", \"+\", 3]";
+
     }
 
     @Test
@@ -113,5 +116,6 @@ public class ParserTest {
         assertEquals(resultOperations, Parser.parse(new JSONParser().parse(operations)));
         assertEquals(resultDo0, Parser.parse(new JSONParser().parse(do0)));
         assertEquals(resultIf0, Parser.parse(new JSONParser().parse(if0)));
+        assertThrows(utils.exceptions.ParseException.class, () ->Parser.parse((fail1)));
     }
 }
