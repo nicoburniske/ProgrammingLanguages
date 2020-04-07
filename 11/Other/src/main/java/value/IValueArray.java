@@ -56,7 +56,7 @@ public class IValueArray implements IValue {
     public String toOutputString(Store store, Set<IValue> values) {
         StringBuilder result = new StringBuilder();
         if (values.contains(this)) {
-           return "cycle";
+           return "\"cycle\"";
         } else {
             values.add(this);
             result.append("[");
