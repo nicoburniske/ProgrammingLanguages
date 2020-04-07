@@ -5,6 +5,9 @@ import utils.exceptions.TypeCheckException;
 
 import java.util.Objects;
 
+/**
+ * This class represents a String
+ */
 public class Var implements WhileLang {
     private String s;
 
