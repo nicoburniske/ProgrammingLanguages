@@ -169,7 +169,7 @@ public class StmtBlock implements Stmt {
           ValueEnvStoreTuple result = this.CESK(new EnvStoreTuple());
           return result.getLeft().toOutputString(result.getStore(), new HashSet<>());
         } catch (TypeCheckException | IntExpectedException | ParseException | ArrayIndexException exception) {
-            return exception.getMessage();
+            return "\"" + exception.getMessage() + "\"";
         }
     }
 

@@ -12,7 +12,7 @@ public class ParseException extends RuntimeException {
     }
 
     //Parser error messages that are helpful for debugging
-    public static String basicMessage = "parser error";
+    public static String basicMessage = "\"parser error\"";
     public static String expectedArray = "Expected an Array";
     public static String expectedStmtBlock = "Expected a stmt Block";
     public static String expectedDecl = "Expected a Decl";
