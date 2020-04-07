@@ -1,16 +1,13 @@
 package ast.stmt;
 
+import ast.Var;
 import ast.WhileLang;
 import org.json.simple.JSONAware;
 import utils.EnvStoreTuple;
 import utils.env.StaticCheckEnv;
+import utils.exceptions.TypeCheckException;
 import utils.store.Store;
-import value.IValue;
-import value.IValueInt;
-import value.Location;
 
-import java.util.Stack;
-import java.util.function.Function;
 
 /**
  * A Stmt is one of:
@@ -23,6 +20,20 @@ import java.util.function.Function;
  *      Expression]                    % its value is the result
  */
 public interface Stmt extends JSONAware, WhileLang {
-   Stmt staticCheck(StaticCheckEnv env);
+
+   /**
+    * This function runs pre-processing on a {@link Stmt} to ensure that all variables that are used are declared.
+    *
+    * @param env the currently declared variables in this scope
+    * @return the {@link Stmt} copied if there are no undeclared uses of a {@link Var}
+    * @throws TypeCheckException if there is an undeclared variable used in the {@link Stmt}
+    */
+   Stmt staticCheck(StaticCheckEnv env) throws TypeCheckException;
+
+   /**
+    * this function performs the transition table for the {@link Stmt}
+    * @param tuple the current evaluation context
+    * @return the store, updated by thr {@link Stmt}
+    */
    Store transition(EnvStoreTuple tuple);
 }

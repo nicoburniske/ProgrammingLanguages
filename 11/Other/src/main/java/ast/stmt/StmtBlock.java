@@ -104,6 +104,12 @@ public class StmtBlock implements Stmt {
         return new StmtBlock(checkedDecls, checkedStatements, this.body.staticCheck(finalEnv));
     }
 
+    /**
+     * This function performs a CESK program on the {@link DeclFrame}
+     * @param tuple the current evaluation context of this machine
+     * @return a tuple containing the resultant {@link IValue} and the {@link EnvStoreTuple} that is the result
+     *  of the evaluation
+     */
     public ValueEnvStoreTuple CESK(EnvStoreTuple tuple) {
         WhileLang control;
         Stack<DeclFrame> stack = new Stack<>();
