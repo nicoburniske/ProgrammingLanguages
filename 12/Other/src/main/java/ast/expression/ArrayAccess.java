@@ -7,6 +7,7 @@ import utils.exceptions.ArrayIndexException;
 import value.IValue;
 import value.IValueArray;
 import value.IValueInt;
+import value.IValueReference;
 
 import java.util.Objects;
 
@@ -55,6 +56,9 @@ public class ArrayAccess implements Expression {
     public IValue expressionInterpret(EnvStoreTuple tuple) {
         IValue arrValue = this.array.expressionInterpret(tuple);
         IValue indexValue = this.index.expressionInterpret(tuple);
+        if(arrValue instanceof IValueReference) {
+            arrValue = tuple.getRight().get(((IValueReference) arrValue).getLoc());
+        }
         if(arrValue instanceof IValueArray && indexValue instanceof IValueInt) {
             IValueArray arr = (IValueArray) arrValue;
             IValueInt idx = (IValueInt) indexValue;

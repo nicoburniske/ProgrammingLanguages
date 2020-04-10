@@ -5,10 +5,7 @@ import org.json.simple.JSONArray;
 import utils.EnvStoreTuple;
 import utils.env.StaticCheckEnv;
 import utils.exceptions.ArrayIndexException;
-import value.IValue;
-import value.IValueArray;
-import value.IValueInt;
-import value.Location;
+import value.*;
 
 import java.util.Objects;
 
@@ -57,6 +54,9 @@ public class ArrIndexLoc implements LHS {
     public Location lhsInterpreter(EnvStoreTuple tuple) {
         IValue arrValue = this.array.expressionInterpret(tuple);
         IValue indexValue = this.index.expressionInterpret(tuple);
+        if(arrValue instanceof IValueReference) {
+            arrValue = tuple.getRight().get(((IValueReference) arrValue).getLoc());
+        }
         if(arrValue instanceof IValueArray && indexValue instanceof IValueInt) {
             IValueArray arr = (IValueArray) arrValue;
             IValueInt idx = (IValueInt) indexValue;

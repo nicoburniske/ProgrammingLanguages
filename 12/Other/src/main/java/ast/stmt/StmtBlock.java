@@ -18,10 +18,7 @@ import utils.exceptions.IntExpectedException;
 import utils.exceptions.ParseException;
 import utils.exceptions.TypeCheckException;
 import utils.store.Store;
-import value.IValue;
-import value.IValueArray;
-import value.IValueInt;
-import value.Location;
+import value.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -148,7 +145,9 @@ public class StmtBlock implements Stmt {
                         EnvStoreTuple envDecl = new EnvStoreTuple(frame.getEnv(), tuple.getRight());
                         if (frame.getIndex() == -1) {
                             // IValueArray location points to block after head
-                            tuple = tuple.insert(frame.getVar(), new IValueArray(tuple.getRight().getSize() + 1, frame.getLength()));
+                            //tuple = tuple.insert(frame.getVar(), new IValueArray(tuple.getRight().getSize() + 1, frame.getLength()));
+                            tuple = tuple.insert(frame.getVar(), new IValueReference(new Location(tuple.getRight().getSize() + 1)));
+                            tuple = new EnvStoreTuple(tuple.getLeft(), tuple.getRight().insert(new IValueArray(tuple.getRight().getSize() + 1, frame.getLength())));
                         } else {
                             tuple = new EnvStoreTuple(tuple.getLeft(),
                                     tuple.getRight().insert(controlExpr.expressionInterpret(envDecl)));

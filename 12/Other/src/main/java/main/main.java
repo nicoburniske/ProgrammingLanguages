@@ -15,11 +15,7 @@ public class main {
     public static void main(String[] args) throws IOException, ParseException {
         //FileReader reader = new FileReader(args[0]);
         try {
-            Object obj = new JSONParser().parse("[[\"vec\", \"blub\", \"=\", []],\n" +
-                    "  \"in\",\n" +
-                    "  [\"if0\", \"blub\",\n" +
-                    "    [\"blub\", \"=\", 50],\n" +
-                    "    [\"blub\", \"=\", 5]], \"blub\"]");
+            Object obj = new JSONParser().parse("[[\"vec\", \"x\", \"=\", [1, 2, 3]], [\"vec\", \"a\", \"=\", [\"x\", \"x\", \"x\"]], \"in\", [\"x\", \"=\", 4], \"a\"]");
             StmtBlock block = Parser.parse(obj);
             System.out.println(block.run());
         } catch (ParseException ex) {

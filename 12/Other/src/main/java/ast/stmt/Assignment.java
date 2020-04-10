@@ -7,6 +7,7 @@ import utils.EnvStoreTuple;
 import utils.env.StaticCheckEnv;
 import utils.store.Store;
 import value.IValue;
+import value.IValueReference;
 import value.Location;
 
 import java.util.Objects;
@@ -59,6 +60,10 @@ public class Assignment implements Stmt {
     public Store transition(EnvStoreTuple tuple) {
         Location loc = this.leftHandSide.lhsInterpreter(tuple);
         IValue newValue = this.expression.expressionInterpret(tuple);
-        return tuple.getRight().set(loc, newValue);
+        if(tuple.getRight().get(loc) instanceof IValueReference) {
+            return tuple.getRight().set(((IValueReference) tuple.getRight().get(loc)).getLoc(), newValue);
+        } else {
+            return tuple.getRight().set(loc, newValue);
+        }
     }
 }

@@ -74,4 +74,11 @@ public class ArrDecl implements IDecl<List<Expression>> {
     public int hashCode() {
         return Objects.hash(var, value);
     }
+
+
+    //[let x = [1,2,3]][y = x]
+    //[x][y]
+    //[0][5]
+    //[0][1][2][3][4][5]
+    //[1][3,2][1][2][3][1]
 }
