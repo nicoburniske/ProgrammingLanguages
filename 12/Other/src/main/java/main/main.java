@@ -13,9 +13,9 @@ public class main {
      * This is the main entry point to run the code. Arg[0] should be the input file
      */
     public static void main(String[] args) throws IOException, ParseException {
-        //FileReader reader = new FileReader(args[0]);
+        FileReader reader = new FileReader(args[0]);
         try {
-            Object obj = new JSONParser().parse("[[\"vec\", \"x\", \"=\", [1, 2, 3]], [\"vec\", \"a\", \"=\", [\"x\", \"x\", \"x\"]], \"in\", [\"x\", \"=\", 4], \"a\"]");
+            Object obj = new JSONParser().parse(reader);
             StmtBlock block = Parser.parse(obj);
             System.out.println(block.run());
         } catch (ParseException ex) {
