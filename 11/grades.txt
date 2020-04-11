@@ -1,9 +1,4 @@
-Total: 155/110
-
--5, for your test 2-in.json; got var undeclared
-  context...:
-   /usr/share/racket/collects/racket/private/more-scheme.rkt:163:2: select-handler/no-breaks
-   /home/vagrant/src/20PL/Code/11/xrun:18:0: main
+Total: 160/110
 
 +50 Bonus for your tests
 ===============
@@ -29,6 +24,43 @@ interpreter: Failed [["vec", "blub", "=", []],
 interpreter: Failed [["vec", "x", "=", []],
   "in",
   "x"], Expected [], Got Exception in thread "main" java.lang.IndexOutOfBoundsException: Index: 0, Size: 0
+	at java.util.ArrayList.rangeCheck(ArrayList.java:657)
+	at java.util.ArrayList.get(ArrayList.java:433)
+	at ast.stmt.StmtBlock.CESK(StmtBlock.java:134)
+	at ast.stmt.StmtBlock.run(StmtBlock.java:169)
+	at main.main.main(main.java:20)
+
+interpreter: Failed [["vec", "x", "=", []],
+  "in",
+  ["x", 0]], Expected "indexing error", Got Exception in thread "main" java.lang.IndexOutOfBoundsException: Index: 0, Size: 0
+	at java.util.ArrayList.rangeCheck(ArrayList.java:657)
+	at java.util.ArrayList.get(ArrayList.java:433)
+	at ast.stmt.StmtBlock.CESK(StmtBlock.java:134)
+	at ast.stmt.StmtBlock.run(StmtBlock.java:169)
+	at main.main.main(main.java:20)
+
+interpreter: Failed [["let", "+", "=", -1],
+ "in",
+ "+"]
+, Expected "var undeclared"
+, Got -1
+
+interpreter: Failed [["vec", "x", "=", []],
+    "in",
+    ["if0", [["x", 0], "+", "x"], ["x", "=", 1], ["x", "=", 2]],
+    "x"
+]
+, Expected "indexing error"
+, Got Exception in thread "main" java.lang.IndexOutOfBoundsException: Index: 0, Size: 0
+	at java.util.ArrayList.rangeCheck(ArrayList.java:657)
+	at java.util.ArrayList.get(ArrayList.java:433)
+	at ast.stmt.StmtBlock.CESK(StmtBlock.java:134)
+	at ast.stmt.StmtBlock.run(StmtBlock.java:169)
+	at main.main.main(main.java:20)
+
+interpreter: Failed [["vec", "x", "=", []], "in", ["x", 0]]
+, Expected "indexing error"
+, Got Exception in thread "main" java.lang.IndexOutOfBoundsException: Index: 0, Size: 0
 	at java.util.ArrayList.rangeCheck(ArrayList.java:657)
 	at java.util.ArrayList.get(ArrayList.java:433)
 	at ast.stmt.StmtBlock.CESK(StmtBlock.java:134)
@@ -71,13 +103,24 @@ interpreter: Failed [["vec", "a", "=", [0,1,[1,"+",1]]], ["vec", "b", "=", []], 
 	at ast.stmt.StmtBlock.run(StmtBlock.java:169)
 	at main.main.main(main.java:20)
 
+interpreter: Failed [["let", "x", "=", 5],
+ ["vec", "y", "=", []],
+ "in",
+ ["x", "+", "y"]]
+, Expected "number expected"
+, Got Exception in thread "main" java.lang.IndexOutOfBoundsException: Index: 0, Size: 0
+	at java.util.ArrayList.rangeCheck(ArrayList.java:657)
+	at java.util.ArrayList.get(ArrayList.java:433)
+	at ast.stmt.StmtBlock.CESK(StmtBlock.java:134)
+	at ast.stmt.StmtBlock.run(StmtBlock.java:169)
+	at main.main.main(main.java:20)
+
 interpreter: Failed [["let", "x", "=", [256, "*", 256]],
   "in",
   ["do0", "x", ["x", "=", ["x", "+", -1]]],
   "x"]
 , Expected 0
 , Got Exception in thread "main" java.lang.StackOverflowError
-	at java.math.BigInteger.add(BigInteger.java:1240)
 	at ast.expression.Operator$1.lambda$null$0(Operator.java:81)
 	at java.util.stream.ReduceOps$1ReducingSink.accept(ReduceOps.java:80)
 	at java.util.Spliterators$ArraySpliterator.forEachRemaining(Spliterators.java:948)
@@ -90,6 +133,7 @@ interpreter: Failed [["let", "x", "=", [256, "*", 256]],
 	at ast.expression.Operator.expressionInterpret(Operator.java:70)
 	at ast.stmt.Assignment.transition(Assignment.java:61)
 	at ast.stmt.LoopConditional.transition(LoopConditional.java:61)
+	at ast.stmt.LoopConditional.transition(LoopConditional.java:62)
 	at ast.stmt.LoopConditional.transition(LoopConditional.java:62)
 	at ast.stmt.LoopConditional.transition(LoopConditional.java:62)
 	at ast.stmt.LoopConditional.transition(LoopConditional.java:62)
