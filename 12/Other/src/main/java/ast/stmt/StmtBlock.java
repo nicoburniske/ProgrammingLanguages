@@ -8,6 +8,7 @@ import ast.decl.IDecl;
 import ast.expression.Int;
 import ast.stmt.frame.ArrDeclFrame;
 import ast.stmt.frame.DeclFrame;
+import ast.stmt.frame.IFrame;
 import org.json.simple.JSONArray;
 import utils.EnvStoreTuple;
 import utils.ValueEnvStoreTuple;
@@ -110,7 +111,7 @@ public class StmtBlock implements Stmt {
      */
     public ValueEnvStoreTuple CESK(EnvStoreTuple tuple) {
         WhileLang control;
-        Stack<DeclFrame> stack = new Stack<>();
+        Stack<IFrame> stack = new Stack<>();
 
        for (IDecl d : this.declList) {
             control = d;
@@ -146,18 +147,18 @@ public class StmtBlock implements Stmt {
                         if (frame.getIndex() == -1) {
                             // IValueArray location points to block after head
                             //tuple = tuple.insert(frame.getVar(), new IValueArray(tuple.getRight().getSize() + 1, frame.getLength()));
-                            tuple = tuple.insert(frame.getVar(), new IValueReference(new Location(tuple.getRight().getSize() + 1)));
-                            tuple = new EnvStoreTuple(tuple.getLeft(), tuple.getRight().insert(new IValueArray(tuple.getRight().getSize() + 1, frame.getLength())));
+                            tuple = tuple.insert(frame.getVar(), new IValueReference(new Location(tuple.getRight().getSize() + 1)), tuple, stack, control);
+                            tuple = new EnvStoreTuple(tuple.getLeft(), tuple.getRight().insert(new IValueArray(tuple.getRight().getSize() + 1, frame.getLength()), tuple, stack, control));
                         } else {
                             tuple = new EnvStoreTuple(tuple.getLeft(),
-                                    tuple.getRight().insert(controlExpr.expressionInterpret(envDecl)));
+                                    tuple.getRight().insert(controlExpr.expressionInterpret(envDecl), tuple, stack, control));
                         }
                         Expression after = frame.getAfter();
                         if (after != null) control = after;
                     } else if (stack.peek() instanceof DeclFrame) {
-                        DeclFrame frame = stack.pop();
+                        DeclFrame frame = (DeclFrame) stack.pop();
                         EnvStoreTuple envDecl = new EnvStoreTuple(frame.getEnv(), tuple.getRight());
-                        tuple = tuple.insert(frame.getVar(), controlExpr.expressionInterpret(envDecl));
+                        tuple = tuple.insert(frame.getVar(), controlExpr.expressionInterpret(envDecl), tuple, stack, control);
                     }
                 }
             }
@@ -178,7 +179,7 @@ public class StmtBlock implements Stmt {
         }
     }
 
-    private boolean doneCESK(Stack<DeclFrame> stack, WhileLang value) {
+    private boolean doneCESK(Stack<IFrame> stack, WhileLang value) {
         return stack.empty() && (value instanceof IValue || value instanceof Location);
     }
 

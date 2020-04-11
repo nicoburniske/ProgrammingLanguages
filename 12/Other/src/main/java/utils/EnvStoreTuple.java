@@ -1,20 +1,24 @@
 package utils;
 
 import ast.Var;
+import ast.WhileLang;
+import ast.stmt.frame.IFrame;
 import utils.env.Environment;
 import utils.store.Store;
 import value.IValue;
 import value.IValueArray;
 import value.Location;
 
+import java.awt.*;
 import java.util.List;
+import java.util.Stack;
 
 public class EnvStoreTuple extends Tuple<Environment, Store> {
     public EnvStoreTuple(Environment left, Store right) {
         super(left, right);
     }
     public EnvStoreTuple() {
-        super(new Environment(), new Store());
+        super(new Environment(), new Store(100));
     }
 
     /**
@@ -26,6 +30,21 @@ public class EnvStoreTuple extends Tuple<Environment, Store> {
     public IValue lookup(Var var) {
         return this.getRight().get(this.getLeft().get(var));
     }
+
+    /**
+     * inserts a new value into the {@link EnvStoreTuple}
+     *
+     * @param variable the variable to be inserted into the Env
+     * @param value    the value to be inserted into the Store
+     * @return the new {@link EnvStoreTuple}
+     */
+    public EnvStoreTuple insert(Var variable, IValue value, EnvStoreTuple tuple, Stack<IFrame> stack , WhileLang control) {
+        Integer pos = this.getRight().getSize();
+        Store newStore = this.getRight().put(new Location(pos), value, tuple, stack, control);
+        Environment newEnv = this.getLeft().put(variable, pos);
+        return new EnvStoreTuple(newEnv, newStore);
+    }
+
 
     /**
      * inserts a new value into the {@link EnvStoreTuple}

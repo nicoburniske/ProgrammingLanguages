@@ -1,6 +1,9 @@
 package utils.table;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * An Linked list lookup structure
  *
@@ -38,4 +41,12 @@ public interface LookupTable<Key, Value> {
      * @return a new lookup table, or null if the key is not found
      */
     LookupTable<Key, Value> set(Key key, Value val);
+
+    boolean containsKey(Key reference);
+
+    default List<Value> getValues() {
+        return this.getValuesHelper(new ArrayList<>());
+    }
+
+    List<Value> getValuesHelper(List<Value> valuesAcc);
 }

@@ -1,5 +1,9 @@
 package utils.store;
 
+import ast.WhileLang;
+import ast.stmt.frame.IFrame;
+import utils.EnvStoreTuple;
+import utils.exceptions.StoreSizeException;
 import utils.table.LookupTable;
 import utils.table.LookupTableEnd;
 import utils.table.LookupTablePair;
@@ -7,26 +11,44 @@ import value.IValue;
 import value.Location;
 
 import java.util.Objects;
+import java.util.Stack;
 
 /**
  * Represents a non mutable Store. Composes a {@link LookupTable<Location,IValue>}
  */
 public class Store {
     LookupTable<Location, IValue> table;
+    private int maxSize;
 
-    public Store(LookupTable<Location, IValue> table) {
+    public Store(LookupTable<Location, IValue> table, int maxSize) {
         this.table = table;
+        setMaxSize(maxSize);
     }
 
-    public Store(Location key, IValue value) {
-        table = new LookupTablePair<>(key, value, new LookupTableEnd<>());
-    }
-    public Store() {
+    public Store(int maxSize) {
         this.table = new LookupTableEnd<>();
+        setMaxSize(maxSize);
     }
+
+    public Store put(Location key, IValue value, EnvStoreTuple tuple, Stack<IFrame> stack , WhileLang control) {
+        if(table.getSize() < maxSize) {
+            return new Store(table.put(key, value), maxSize);
+        }
+        else {
+            //TODO:Signal an error
+            return (Heap.findRoots(control, tuple.getLeft(), stack, tuple.getRight())).put(key, value, tuple, stack, control);
+        }
+    }
+
 
     public Store put(Location key, IValue value) {
-        return new Store(table.put(key, value));
+        if(table.getSize() < maxSize) {
+            return new Store(table.put(key, value), maxSize);
+        }
+        else {
+            //TODO:Signal an error
+            throw new StoreSizeException();
+        }
     }
 
     public IValue get(Location key) {
@@ -34,13 +56,19 @@ public class Store {
     }
 
     public Store set(Location key, IValue val) {
-        return new Store(table.set(key, val));
+        return new Store(table.set(key, val), maxSize);
     }
-    public Store insert(IValue val) {
-        return this.put(new Location(this.table.getSize()), val);
+
+    public Store insert(IValue val, EnvStoreTuple tuple, Stack<IFrame> stack , WhileLang control) {
+        return this.put(new Location(this.table.getSize()), val, tuple, stack,control);
     }
+
     public int getSize(){
         return table.getSize();
+    }
+
+    public void setMaxSize(int maxSize) {
+        this.maxSize = maxSize;
     }
 
     @Override
@@ -59,5 +87,13 @@ public class Store {
     @Override
     public String toString() {
         return table.toString();
+    }
+
+    public boolean containsKey(Location reference) {
+        return table.containsKey(reference);
+    }
+
+    public int getMaxSize() {
+        return maxSize;
     }
 }

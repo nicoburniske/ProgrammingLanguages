@@ -43,6 +43,10 @@ public class IValueArray implements IValue {
         return this.toJSONString();
     }
 
+    public BigInteger getLength() {
+        return length;
+    }
+
     @Override
     public String toJSONString() {
         //todo fix this

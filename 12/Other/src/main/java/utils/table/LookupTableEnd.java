@@ -3,6 +3,8 @@ package utils.table;
 
 import utils.exceptions.TypeCheckException;
 
+import java.util.List;
+
 /**
  * End of the List
  *
@@ -28,6 +30,16 @@ public class LookupTableEnd<Key, Value> implements LookupTable<Key, Value> {
     @Override
     public LookupTable<Key, Value> set(Key key, Value val) {
         return this;
+    }
+
+    @Override
+    public boolean containsKey(Key reference) {
+        return false;
+    }
+
+    @Override
+    public List<Value> getValuesHelper(List<Value> valuesAcc) {
+        return valuesAcc;
     }
 
     @Override

@@ -5,6 +5,7 @@ import utils.table.LookupTable;
 import utils.table.LookupTableEnd;
 import value.Location;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -44,5 +45,9 @@ public class Environment {
     @Override
     public String toString() {
         return table.toString();
+    }
+
+    public List<Location> getValues() {
+        return table.getValues();
     }
 }

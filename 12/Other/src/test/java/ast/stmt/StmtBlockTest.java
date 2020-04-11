@@ -27,11 +27,11 @@ class StmtBlockTest {
         result1 = new IValueInt(4);
         test2 = new StmtBlock(Arrays.asList(new ArrDecl("a", Arrays.asList(new Int(1), new Int(2), new Int(3)))),Arrays.asList(), new VarExpr("a"));
         result2 = new IValueReference(new Location(1));
-        result2Store = new Store().put(new Location(0), new IValueReference(new Location(1))).put(new Location(1), new IValueArray(2,3)).put(new Location(2), new IValueInt(1)).put(new Location(3), new IValueInt(2)).put(new Location(4), new IValueInt(3));
+        result2Store = new Store(7).put(new Location(0), new IValueReference(new Location(1))).put(new Location(1), new IValueArray(2,3)).put(new Location(2), new IValueInt(1)).put(new Location(3), new IValueInt(2)).put(new Location(4), new IValueInt(3));
 
         test3 = new StmtBlock(Arrays.asList(new ArrDecl("a", Arrays.asList(new Int(1), new Int(2), new Int(3)))),Arrays.asList(new Assignment(new ArrIndexLoc(new VarExpr("a"), new Int(1)), new Int(5))), new VarExpr("a"));
         result3 = new IValueReference(new Location(1));
-        result3Store = new Store().put(new Location(0), new IValueReference(new Location(1))).put(new Location(1), new IValueArray(2,3)).put(new Location(2), new IValueInt(1)).put(new Location(3), new IValueInt(5)).put(new Location(4), new IValueInt(3));
+        result3Store = new Store(7).put(new Location(0), new IValueReference(new Location(1))).put(new Location(1), new IValueArray(2,3)).put(new Location(2), new IValueInt(1)).put(new Location(3), new IValueInt(5)).put(new Location(4), new IValueInt(3));
     }
 
     @Test
@@ -50,7 +50,7 @@ class StmtBlockTest {
 
     @Test
     void transition() {
-        assertEquals(new Store(), test1.transition(new EnvStoreTuple()));
+        assertEquals(new Store(4), test1.transition(new EnvStoreTuple()));
         assertEquals(result2Store.toString(), test2.transition(new EnvStoreTuple()).toString());
         assertEquals(result3Store.toString(), test3.transition(new EnvStoreTuple()).toString());
     }

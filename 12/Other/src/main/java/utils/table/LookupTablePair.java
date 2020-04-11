@@ -1,5 +1,6 @@
 package utils.table;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -45,6 +46,21 @@ public class LookupTablePair<Key, Value> implements LookupTable<Key, Value> {
         } else {
             return new LookupTablePair<Key, Value>(this.key, this.value, rest.set(key, val));
         }
+    }
+
+    @Override
+    public boolean containsKey(Key reference) {
+        if(this.key.equals(reference)) {
+            return true;
+        } else {
+            return this.rest.containsKey(reference);
+        }
+    }
+
+    @Override
+    public List<Value> getValuesHelper(List<Value> valuesAcc) {
+        valuesAcc.add(value);
+        return valuesAcc;
     }
 
     @Override
