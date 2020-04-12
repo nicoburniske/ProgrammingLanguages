@@ -16,13 +16,9 @@ public class main {
     public static void main(String[] args) throws IOException, ParseException {
         //FileReader reader = new FileReader(args[0]);
         try {
-            Object obj = new JSONParser().parse("{\"space\":  14,\n" +
-                    "  \"program\": [\n" +
-                    "  [\"vec\", \"z\", \"=\", [3, 4, 5]],\n" +
-                    "  \"in\",\n" +
-                    "  [[\"vec\", \"w\", \"=\", [1, 2, 3]],\"in\", \"w\"],\n" +
-                    "  [[\"vec\", \"a\", \"=\", [88, 21, 39]],\"in\", \"a\"],\n" +
-                    "  [\"z\", 2]]\n" +
+            Object obj = new JSONParser().parse("{\"space\":  15,\n" +
+                    "  \"program\":\n" +
+                    "  [[\"vec\", \"x\", \"=\", [1, 2, 3]], [\"vec\", \"a\", \"=\", [\"x\", \"x\", \"x\"]], \"in\", [\"x\", \"=\", 4], \"a\"]\n" +
                     "}");
             Object program = Parser.parseProgram(obj);
             int size = Parser.parseSize(obj);

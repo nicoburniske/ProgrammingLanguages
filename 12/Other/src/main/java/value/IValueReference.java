@@ -31,9 +31,7 @@ public class IValueReference implements IValue {
 
     @Override
     public String toString() {
-        return "IValueReference{" +
-                "loc=" + loc +
-                '}';
+        return this.toJSONString();
     }
 
     @Override

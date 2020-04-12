@@ -60,10 +60,6 @@ public class Assignment implements Stmt {
     public Store transition(EnvStoreTuple tuple) {
         Location loc = this.leftHandSide.lhsInterpreter(tuple);
         IValue newValue = this.expression.expressionInterpret(tuple);
-        if(tuple.getRight().get(loc) instanceof IValueReference) {
-            return tuple.getRight().set(((IValueReference) tuple.getRight().get(loc)).getLoc(), newValue);
-        } else {
-            return tuple.getRight().set(loc, newValue);
-        }
+        return tuple.getRight().set(loc, newValue);
     }
 }

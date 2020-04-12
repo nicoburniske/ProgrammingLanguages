@@ -147,8 +147,8 @@ public class StmtBlock implements Stmt {
                         if (frame.getIndex() == -1) {
                             // IValueArray location points to block after head
                             //tuple = tuple.insert(frame.getVar(), new IValueArray(tuple.getRight().getSize() + 1, frame.getLength()));
-                            tuple = tuple.insert(frame.getVar(), new IValueReference(new Location(tuple.getRight().getSize() + 1)), tuple, stack, control);
-                            tuple = new EnvStoreTuple(tuple.getLeft(), tuple.getRight().insert(new IValueArray(tuple.getRight().getSize() + 1, frame.getLength()), tuple, stack, control));
+                            tuple = tuple.insert(frame.getVar(), new IValueReference(new Location(tuple.getRight().getCounter() + 1)), tuple, stack, control);
+                            tuple = new EnvStoreTuple(tuple.getLeft(), tuple.getRight().insert(new IValueArray(tuple.getRight().getCounter() + 1, frame.getLength()), tuple, stack, control));
                         } else {
                             tuple = new EnvStoreTuple(tuple.getLeft(),
                                     tuple.getRight().insert(controlExpr.expressionInterpret(envDecl), tuple, stack, control));
@@ -173,6 +173,7 @@ public class StmtBlock implements Stmt {
         try {
           this.staticCheck(new StaticCheckEnv());
           ValueEnvStoreTuple result = this.CESK(new EnvStoreTuple(maxSize));
+          System.out.println(result.getStore().toString());
           return result.getLeft().toOutputString(result.getStore(), new HashSet<>());
         } catch (TypeCheckException | IntExpectedException | ParseException | ArrayIndexException exception) {
             exception.printStackTrace();

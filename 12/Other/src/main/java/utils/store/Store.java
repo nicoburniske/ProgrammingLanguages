@@ -102,4 +102,8 @@ public class Store {
     public int getCounter() {
         return this.counter;
     }
+
+    public void setCounter(int counter) {
+        this.counter = counter;
+    }
 }

@@ -60,7 +60,7 @@ public class LookupTablePair<Key, Value> implements LookupTable<Key, Value> {
     @Override
     public List<Value> getValuesHelper(List<Value> valuesAcc) {
         valuesAcc.add(value);
-        return valuesAcc;
+        return this.rest.getValuesHelper(valuesAcc);
     }
 
     @Override

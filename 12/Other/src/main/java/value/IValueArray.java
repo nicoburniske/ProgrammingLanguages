@@ -38,6 +38,10 @@ public class IValueArray implements IValue {
         return new Location(location.getLocation().add(i.getValue()));
     }
 
+    public Location getLocation() {
+        return location;
+    }
+
     @Override
     public String toString() {
         return this.toJSONString();

@@ -76,7 +76,7 @@ public class EnvStoreTuple extends Tuple<Environment, Store> {
         Integer pos = this.getRight().getCounter();
         Store newStore = this.getRight().put(new Location(pos), new IValueArray(new Location(pos+ 1), arr.size()));
         int ii = 0;
-        int storesize = newStore.getSize();
+        int storesize = newStore.getCounter();
         for (IValue iValue : arr) {
             newStore = newStore.put(new Location(storesize + ii), iValue);
             ii ++;
