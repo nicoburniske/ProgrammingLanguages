@@ -188,7 +188,12 @@ public class Parser {
     public static int parseSize(Object obj) {
         if (obj instanceof JSONObject) {
             JSONObject json = (JSONObject) obj;
-            return ((Long)json.get("space")).intValue();
+            Integer a =  ((Long)json.get("space")).intValue();
+            if(a >= 0) {
+                return a;
+            } else {
+                throw new ParseException("negative size received");
+            }
         } else {
             throw new ParseException("Could not parse program space");
         }
