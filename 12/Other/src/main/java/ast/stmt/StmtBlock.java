@@ -169,12 +169,13 @@ public class StmtBlock implements Stmt {
         return new ValueEnvStoreTuple(this.body.expressionInterpret(tuple), tuple);
     }
 
-    public String run() {
+    public String run(int maxSize) {
         try {
           this.staticCheck(new StaticCheckEnv());
-          ValueEnvStoreTuple result = this.CESK(new EnvStoreTuple());
+          ValueEnvStoreTuple result = this.CESK(new EnvStoreTuple(maxSize));
           return result.getLeft().toOutputString(result.getStore(), new HashSet<>());
         } catch (TypeCheckException | IntExpectedException | ParseException | ArrayIndexException exception) {
+            exception.printStackTrace();
             return "\"" + exception.getMessage() + "\"";
         }
     }

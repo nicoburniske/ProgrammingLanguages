@@ -21,6 +21,11 @@ public class EnvStoreTuple extends Tuple<Environment, Store> {
         super(new Environment(), new Store(100));
     }
 
+    public EnvStoreTuple(int maxSize) {
+        super(new Environment(), new Store(maxSize));
+    }
+
+
     /**
      * finds a value in the {@link EnvStoreTuple}
      *
@@ -39,7 +44,7 @@ public class EnvStoreTuple extends Tuple<Environment, Store> {
      * @return the new {@link EnvStoreTuple}
      */
     public EnvStoreTuple insert(Var variable, IValue value, EnvStoreTuple tuple, Stack<IFrame> stack , WhileLang control) {
-        Integer pos = this.getRight().getSize();
+        Integer pos = this.getRight().getCounter();
         Store newStore = this.getRight().put(new Location(pos), value, tuple, stack, control);
         Environment newEnv = this.getLeft().put(variable, pos);
         return new EnvStoreTuple(newEnv, newStore);
@@ -54,7 +59,7 @@ public class EnvStoreTuple extends Tuple<Environment, Store> {
      * @return the new {@link EnvStoreTuple}
      */
     public EnvStoreTuple insert(Var variable, IValue value) {
-        Integer pos = this.getRight().getSize();
+        Integer pos = this.getRight().getCounter();
         Store newStore = this.getRight().put(new Location(pos), value);
         Environment newEnv = this.getLeft().put(variable, pos);
         return new EnvStoreTuple(newEnv, newStore);
@@ -68,7 +73,7 @@ public class EnvStoreTuple extends Tuple<Environment, Store> {
      * @return the new {@link EnvStoreTuple}
      */
     public EnvStoreTuple insert(Var variable, List<IValue> arr) {
-        Integer pos = this.getRight().getSize();
+        Integer pos = this.getRight().getCounter();
         Store newStore = this.getRight().put(new Location(pos), new IValueArray(new Location(pos+ 1), arr.size()));
         int ii = 0;
         int storesize = newStore.getSize();

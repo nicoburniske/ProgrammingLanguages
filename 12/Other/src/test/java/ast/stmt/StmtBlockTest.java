@@ -43,9 +43,9 @@ class StmtBlockTest {
 
     @Test
     void run() {
-        assertEquals(result1.toJSONString(), test1.run());
-        assertEquals(result2.toOutputString(result2Store, new HashSet<>()), test2.run());
-        assertEquals(result3.toOutputString(result3Store, new HashSet<>()), test3.run());
+        assertEquals(result1.toJSONString(), test1.run(10));
+        assertEquals(result2.toOutputString(result2Store, new HashSet<>()), test2.run(10));
+        assertEquals(result3.toOutputString(result3Store, new HashSet<>()), test3.run(10));
     }
 
     @Test

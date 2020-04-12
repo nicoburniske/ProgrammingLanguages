@@ -38,27 +38,27 @@ public class Heap {
 
     public static Store cleanupStore(Store oldStore, Store newStore, Set<Location> currentLocations) {
         Set<Location> nextLocations = new HashSet<>();
-        currentLocations.forEach(loc -> {
+        for (Location loc : currentLocations) {
             IValue val = oldStore.get(loc);
             if (val instanceof IValueInt) {
-                newStore.put(loc, val);
+                newStore = newStore.put(loc, val);
             } else if (val instanceof IValueArray) {
                 IValueArray arr = (IValueArray) val;
-                newStore.put(loc, val);
+                newStore = newStore.put(loc, val);
                 IntStream.range(loc.getLocation().intValue(), arr.getLength().intValue()).forEach(i -> {
                     nextLocations.add(new Location(i));
                 });
             } else if (val instanceof IValueReference) {
-                newStore.put(loc, val);
+                newStore = newStore.put(loc, val);
                 Location reference = ((IValueReference) val).getLoc();
                 //If the reference is already in the store do not add it to the set of next locations becasue this will
                 //create a loop
-                if(!newStore.containsKey(reference)) {
-                    currentLocations.add(reference);
+                if (!newStore.containsKey(reference)) {
+                    nextLocations.add(reference);
                 }
 
             }
-        });
+        }
         if (nextLocations.size() > 0) {
             return cleanupStore(oldStore, newStore, nextLocations);
         } else {

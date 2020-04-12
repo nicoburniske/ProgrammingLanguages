@@ -10,6 +10,7 @@ import ast.decl.IDecl;
 import ast.decl.ArrDecl;
 import ast.decl.Decl;
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import utils.exceptions.ParseException;
 
 import java.util.HashSet;
@@ -178,6 +179,28 @@ public class Parser {
             return new Var((String) obj);
         }
         throw new ParseException(ParseException.expectedVar);
+    }
+
+    /**
+     * @param obj
+     * @return
+     */
+    public static int parseSize(Object obj) {
+        if (obj instanceof JSONObject) {
+            JSONObject json = (JSONObject) obj;
+            return ((Long)json.get("space")).intValue();
+        } else {
+            throw new ParseException("Could not parse program space");
+        }
+    }
+
+    public static Object parseProgram(Object obj) {
+        if (obj instanceof JSONObject) {
+            JSONObject json = (JSONObject) obj;
+            return json.get("program");
+        } else {
+            throw new ParseException("Could not parse program body");
+        }
     }
 
 

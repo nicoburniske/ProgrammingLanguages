@@ -19,20 +19,23 @@ import java.util.Stack;
 public class Store {
     LookupTable<Location, IValue> table;
     private int maxSize;
+    private int counter;
 
-    public Store(LookupTable<Location, IValue> table, int maxSize) {
+    public Store(LookupTable<Location, IValue> table, int maxSize, int counter) {
         this.table = table;
         setMaxSize(maxSize);
+        this.counter = counter;
     }
 
     public Store(int maxSize) {
         this.table = new LookupTableEnd<>();
         setMaxSize(maxSize);
+        this.counter = 0;
     }
 
     public Store put(Location key, IValue value, EnvStoreTuple tuple, Stack<IFrame> stack , WhileLang control) {
         if(table.getSize() < maxSize) {
-            return new Store(table.put(key, value), maxSize);
+            return new Store(table.put(key, value), maxSize, this.counter + 1);
         }
         else {
             //TODO:Signal an error
@@ -43,7 +46,7 @@ public class Store {
 
     public Store put(Location key, IValue value) {
         if(table.getSize() < maxSize) {
-            return new Store(table.put(key, value), maxSize);
+            return new Store(table.put(key, value), maxSize, this.counter + 1);
         }
         else {
             //TODO:Signal an error
@@ -56,11 +59,11 @@ public class Store {
     }
 
     public Store set(Location key, IValue val) {
-        return new Store(table.set(key, val), maxSize);
+        return new Store(table.set(key, val), maxSize, this.counter + 1);
     }
 
     public Store insert(IValue val, EnvStoreTuple tuple, Stack<IFrame> stack , WhileLang control) {
-        return this.put(new Location(this.table.getSize()), val, tuple, stack,control);
+        return this.put(new Location(this.counter), val, tuple, stack,control);
     }
 
     public int getSize(){
@@ -95,5 +98,8 @@ public class Store {
 
     public int getMaxSize() {
         return maxSize;
+    }
+    public int getCounter() {
+        return this.counter;
     }
 }
