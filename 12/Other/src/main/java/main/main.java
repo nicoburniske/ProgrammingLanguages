@@ -17,10 +17,10 @@ public class main {
         FileReader reader = new FileReader(args[0]);
         try {
             Object obj = new JSONParser().parse(reader);
-            //Object program = Parser.parseProgram(obj);
-            //int size = Parser.parseSize(obj);
-            StmtBlock block = Parser.parse(obj);
-            System.out.println(block.run(1000000));
+            Object program = Parser.parseProgram(obj);
+            int size = Parser.parseSize(obj);
+            StmtBlock block = Parser.parse(program);
+            System.out.println(block.run(size));
         } catch (ParseException ex) {
             System.out.println(ex.getMessage());
         } catch (org.json.simple.parser.ParseException exception) {
