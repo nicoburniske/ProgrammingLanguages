@@ -175,7 +175,7 @@ public class Parser {
         /**
          * Var is a String
          */
-        if(obj instanceof String) {
+        if(obj instanceof String && !Operator.operators.containsKey(obj)) {
             return new Var((String) obj);
         }
         throw new ParseException(ParseException.expectedVar);
