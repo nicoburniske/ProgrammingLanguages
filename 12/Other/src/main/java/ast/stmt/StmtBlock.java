@@ -173,10 +173,10 @@ public class StmtBlock implements Stmt {
         try {
           this.staticCheck(new StaticCheckEnv());
           ValueEnvStoreTuple result = this.CESK(new EnvStoreTuple(maxSize));
-          System.out.println(result.getStore().toString());
+          // System.out.println(result.getStore().toString());
           return result.getLeft().toOutputString(result.getStore(), new HashSet<>());
         } catch (TypeCheckException | IntExpectedException | ParseException | ArrayIndexException exception) {
-            exception.printStackTrace();
+            //exception.printStackTrace();
             return "\"" + exception.getMessage() + "\"";
         }
     }
