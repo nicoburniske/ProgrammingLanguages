@@ -14,16 +14,13 @@ public class main {
      * This is the main entry point to run the code. Arg[0] should be the input file
      */
     public static void main(String[] args) throws IOException, ParseException {
-        //FileReader reader = new FileReader(args[0]);
+        FileReader reader = new FileReader(args[0]);
         try {
-            Object obj = new JSONParser().parse("{\"space\":  15,\n" +
-                    "  \"program\":\n" +
-                    "  [[\"vec\", \"x\", \"=\", [1, 2, 3]], [\"vec\", \"a\", \"=\", [\"x\", \"x\", \"x\"]], \"in\", [\"x\", \"=\", 4], \"a\"]\n" +
-                    "}");
-            Object program = Parser.parseProgram(obj);
-            int size = Parser.parseSize(obj);
-            StmtBlock block = Parser.parse(program);
-            System.out.println(block.run(size));
+            Object obj = new JSONParser().parse(reader);
+            //Object program = Parser.parseProgram(obj);
+            //int size = Parser.parseSize(obj);
+            StmtBlock block = Parser.parse(obj);
+            System.out.println(block.run(1000000));
         } catch (ParseException ex) {
             System.out.println(ex.getMessage());
         } catch (org.json.simple.parser.ParseException exception) {

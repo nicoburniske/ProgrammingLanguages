@@ -1,13 +1,7 @@
 import os
 import string
-def isInt(s):
-    try:
-        int(s)
-        return True
-    except ValueError:
-        return False
-shellDiff = "./xinterpret < {} | diff - {}"
-path = "/Users/nicolasburniske/Documents/collected-tests/7/ITests"
+
+path = "/Users/nicolasburniske/Documents/collected-tests/11/ITests"
 translateTable = str.maketrans('', '', string.whitespace)
 files = [os.path.join(path, fn) for fn in next(os.walk(path))[2]]
 inFiles = filter(lambda f: "-in" in f, files)
@@ -20,13 +14,11 @@ numberOfFailures = 0
 for ii in range(len(sortedIn)):
     inF = sortedIn[ii]
     outF = sortedOut[ii]
-    actual = open("result.txt", 'r').read()
     expected = open(outF, 'r').read()
-    if not isInt(expected):
-        continue
-    os.system("./xinterpret < {} > result.txt".format(inF))
+    os.system("./xrun < {} > result.txt".format(inF))
+    actual = open("result.txt", 'r').read()
     comparison = actual.translate(translateTable) == expected.translate(translateTable)
-    if not comparison and not ("\"type error: domain doesn't match\"" == expected):
+    if not comparison:
         numberOfFailures += 1
         print("======================================================")
         print('FAILURE test #{}, FILE: {}'.format(ii, inF))
