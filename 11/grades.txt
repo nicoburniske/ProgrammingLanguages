@@ -21,6 +21,8 @@ interpreter: Failed [["vec", "blub", "=", []],
 	at ast.stmt.StmtBlock.run(StmtBlock.java:169)
 	at main.main.main(main.java:20)
 
+interpreter: Failed ["in","+"], Expected "parser error", Got "var undeclared"
+
 interpreter: Failed [["vec", "x", "=", []],
   "in",
   "x"], Expected [], Got Exception in thread "main" java.lang.IndexOutOfBoundsException: Index: 0, Size: 0
@@ -38,12 +40,6 @@ interpreter: Failed [["vec", "x", "=", []],
 	at ast.stmt.StmtBlock.CESK(StmtBlock.java:134)
 	at ast.stmt.StmtBlock.run(StmtBlock.java:169)
 	at main.main.main(main.java:20)
-
-interpreter: Failed [["let", "+", "=", -1],
- "in",
- "+"]
-, Expected "var undeclared"
-, Got -1
 
 interpreter: Failed [["vec", "x", "=", []],
     "in",
@@ -121,6 +117,7 @@ interpreter: Failed [["let", "x", "=", [256, "*", 256]],
   "x"]
 , Expected 0
 , Got Exception in thread "main" java.lang.StackOverflowError
+	at java.math.BigInteger.add(BigInteger.java:1240)
 	at ast.expression.Operator$1.lambda$null$0(Operator.java:81)
 	at java.util.stream.ReduceOps$1ReducingSink.accept(ReduceOps.java:80)
 	at java.util.Spliterators$ArraySpliterator.forEachRemaining(Spliterators.java:948)
@@ -1144,7 +1141,8 @@ interpreter: Failed [["let", "x", "=", [256, "*", 256]],
 	at ast.stmt.LoopConditional.transition(LoopConditional.java:62)
 	at ast.stmt.LoopConditional.transition(LoopConditional.java:62)
 	at ast.stmt.LoopConditional.transition(LoopConditional.java:62)
-	at ast.stmt.LoopConditional.transition(LoopConditional.java:62)
+
+interpreter: Failed ["in", "="], Expected "parser error", Got "var undeclared"
 
 interpreter: Failed [["vec", "x", "=", []], "in", "x"], Expected [], Got Exception in thread "main" java.lang.IndexOutOfBoundsException: Index: 0, Size: 0
 	at java.util.ArrayList.rangeCheck(ArrayList.java:657)
@@ -1174,10 +1172,6 @@ interpreter: Failed [["vec", "x", "=", []], "in", ["x", "=", 1], "x"], Expected 
 	at ast.stmt.StmtBlock.CESK(StmtBlock.java:134)
 	at ast.stmt.StmtBlock.run(StmtBlock.java:169)
 	at main.main.main(main.java:20)
-
-interpreter: Failed [["vec", "x", "=", [1, 2, 3]], ["vec", "a", "=", ["x", "x", "x"]], "in", ["x", "=", 4], "a"]
-, Expected [4, 4, 4]
-, Got [[1,2,3],[1,2,3],[1,2,3]]
 
 interpreter: Failed [["vec", "a", "=", []], "in",
  ["if0", "a", [["a", 10], "=", 11], ["a", "=", 0]],
