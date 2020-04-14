@@ -1,0 +1,28 @@
+82
+Dustin Jamner
+
+82/90 + Bonus: 0/10
+
+Task 3 (memo)
+----------------------------------------
+
+-5 the explanation of failures is missing/incorrect
+
+Task 1 (prelude)
+----------------------------------------
+
+
+Task 2 (transpiler)
+----------------------------------------
+
+-3 no test harness for transpiler
+    (program transpilation should be separate from reading input XPAL
+     and outputing the result program)
+
+----------------------------------------
+ Misc Comments
+----------------------------------------
+
+We wanted your memo to directly address the two forms of issue discussed in the assignment.
+
+Your postprocessing and reserve keyword handling should have been in your transpiler, not your test harness.

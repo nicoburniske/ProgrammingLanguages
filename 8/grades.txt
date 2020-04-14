@@ -1,0 +1,11 @@
+Total: 80.0/90
+-0.0 For your agreement rate
+Found 92% tests passed of your reported 95.5%
+-5 for [["let",["f",":",["int","int","->","int"]],"=",["fun*",[["x",":","int"],["y",":","int"]],["call","f","x","y"]]],2], expected 2
+
+-5 for ["call",["fun*",[["x",":",["int","cell"]]],[["x","=",1],"+",["x","!"]]],[0,"@"]], expected 0
+
+===============
+Code Inspection
+===============
+Inspection Scores Forthcoming
