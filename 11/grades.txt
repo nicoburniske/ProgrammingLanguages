@@ -1,6 +1,6 @@
-Total: 160/110
+Total: 110/110
 
-+50 Bonus for your tests
++0 Bonus for your tests
 ===============
 Code Inspection
 ===============
