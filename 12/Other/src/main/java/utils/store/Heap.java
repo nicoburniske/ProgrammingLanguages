@@ -10,9 +10,22 @@ import value.*;
 import java.util.*;
 import java.util.stream.IntStream;
 
+/**
+ * This class is used to garbage collect the store. Find roots is called to and will return the new store.
+ */
 public class Heap {
 
-    public static Store findRoots(WhileLang control, Environment env, Stack<IFrame> stack, Store store) {
+    /**
+     * This function finds the roots that are necessary to know to preform garbage collection. It then passes those,
+     * roots to cleanup store which performs garbage collection based on this list of roots.
+     * @param control The control of the current state of the CESK machine
+     * @param env the Environment of the current state of the CESK machine
+     * @param stack the stack to the current state of the CESK machine
+     * @param store the store of the current state of the CESK machine
+     * @return the store that has been garbage collected
+     * @throws StoreSizeException if the garbage collection is unable to remove anything from the store
+     */
+    public static Store findRoots(WhileLang control, Environment env, Stack<IFrame> stack, Store store) throws StoreSizeException{
         Set<Location> roots= new HashSet<>();
         roots.addAll(findEnvironmentRoots(env));
         stack.forEach(iFrame -> {
@@ -30,12 +43,25 @@ public class Heap {
         }
     }
 
+    /**
+     * This function returns the necessary roots from an {@link Environment}
+     * @param env the {@link Environment} that the roots can be gleaned from
+     * @return the roots
+     */
     private static Set<Location> findEnvironmentRoots(Environment env) {
         return new HashSet<>(env.getValues());
     }
 
 
-    public static Store cleanupStore(Store oldStore, Store newStore, Set<Location> currentLocations) {
+    /**
+     * This function performs garbage collection on the {@link Store} by building a list of next locations to check
+     * and adding any current locations to the new {@link Store}
+     * @param oldStore the store before garbage collection
+     * @param newStore the new store that is being built
+     * @param currentLocations the current list of locations that are being checked and added to the {@param newStore}
+     * @return the {@param newStore} populated with all of the necessary values
+     */
+    private static Store cleanupStore(Store oldStore, Store newStore, Set<Location> currentLocations) {
         Set<Location> nextLocations = new HashSet<>();
         for (Location loc : currentLocations) {
             IValue val = oldStore.get(loc);

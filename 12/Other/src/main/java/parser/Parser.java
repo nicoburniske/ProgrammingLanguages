@@ -182,8 +182,9 @@ public class Parser {
     }
 
     /**
-     * @param obj
-     * @return
+     * This function ectracts the size of the store that will be used in the running of the corresponding program
+     * @param obj the object containing the program and the space requirement
+     * @return the maximum size of the store
      */
     public static int parseSize(Object obj) {
         if (obj instanceof JSONObject) {
@@ -199,6 +200,11 @@ public class Parser {
         }
     }
 
+    /**
+     * This function extracts the while program that is going tp berun form the object it is passed
+     * @param obj the object containing the program and the space requirement
+     * @return the while program that needs to be parsed and executed
+     */
     public static Object parseProgram(Object obj) {
         if (obj instanceof JSONObject) {
             JSONObject json = (JSONObject) obj;

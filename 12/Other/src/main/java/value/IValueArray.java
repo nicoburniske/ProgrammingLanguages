@@ -9,6 +9,11 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * This class represents an array in the Store. It is stored as the lenght of the Array and the Location of the Array.
+ * The location is purely syntactic as the array is always the location of this element + 1.
+ * The elements of the array are always sequentially the next elements in the Store.
+ */
 public class IValueArray implements IValue {
 
     private Location location;

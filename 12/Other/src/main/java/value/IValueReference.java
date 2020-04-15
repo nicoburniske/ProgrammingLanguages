@@ -5,6 +5,9 @@ import utils.store.Store;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * This class represents a reference to another {@link Location} in the store that hold the value.
+ */
 public class IValueReference implements IValue {
     private Location loc;
 

@@ -148,10 +148,10 @@ public class StmtBlock implements Stmt {
                             // IValueArray location points to block after head
                             //tuple = tuple.insert(frame.getVar(), new IValueArray(tuple.getRight().getSize() + 1, frame.getLength()));
                             tuple = tuple.insert(frame.getVar(), new IValueReference(new Location(tuple.getRight().getCounter() + 1)), tuple, stack, control);
-                            tuple = new EnvStoreTuple(tuple.getLeft(), tuple.getRight().insert(new IValueArray(tuple.getRight().getCounter() + 1, frame.getLength()), tuple, stack, control));
+                            tuple = new EnvStoreTuple(tuple.getLeft(), tuple.getRight().insertWithGarbageCollection(new IValueArray(tuple.getRight().getCounter() + 1, frame.getLength()), tuple, stack, control));
                         } else {
                             tuple = new EnvStoreTuple(tuple.getLeft(),
-                                    tuple.getRight().insert(controlExpr.expressionInterpret(envDecl), tuple, stack, control));
+                                    tuple.getRight().insertWithGarbageCollection(controlExpr.expressionInterpret(envDecl), tuple, stack, control));
                         }
                         Expression after = frame.getAfter();
                         if (after != null) control = after;

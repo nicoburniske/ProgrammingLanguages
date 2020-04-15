@@ -42,11 +42,24 @@ public interface LookupTable<Key, Value> {
      */
     LookupTable<Key, Value> set(Key key, Value val);
 
+    /**
+     *
+     * @param reference a {@link Key}
+     * @return does the Table contain the {@param reference}
+     */
     boolean containsKey(Key reference);
 
+    /**
+     *
+     * @return the {@link Value}s in the Lookuptable
+     */
     default List<Value> getValues() {
         return this.getValuesHelper(new ArrayList<>());
     }
 
+    /**
+     * a helper for collecting the values in the Table
+     * @param valuesAcc the accumulator for collecting the values
+     */
     List<Value> getValuesHelper(List<Value> valuesAcc);
 }

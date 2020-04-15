@@ -9,7 +9,6 @@ import value.IValue;
 import value.IValueArray;
 import value.Location;
 
-import java.awt.*;
 import java.util.List;
 import java.util.Stack;
 
@@ -17,10 +16,19 @@ public class EnvStoreTuple extends Tuple<Environment, Store> {
     public EnvStoreTuple(Environment left, Store right) {
         super(left, right);
     }
+
+    /**
+     * ONLY USE THIS CONSTRUTOR IF YOU KNOW WHAT YOU ARE DOING
+     * IT HAS A SET MAXSIZE TO ITS STORE
+     */
     public EnvStoreTuple() {
         super(new Environment(), new Store(100));
     }
 
+    /**
+     *  Creates a new {@link EnvStoreTuple}  with a specified maxsize for the store
+     * @param maxSize the maximum size of a store
+     */
     public EnvStoreTuple(int maxSize) {
         super(new Environment(), new Store(maxSize));
     }
@@ -37,22 +45,27 @@ public class EnvStoreTuple extends Tuple<Environment, Store> {
     }
 
     /**
-     * inserts a new value into the {@link EnvStoreTuple}
+     * inserts a new value into the {@link EnvStoreTuple}, This will trigger garbage collection if the
+     * Store is out of space.
      *
      * @param variable the variable to be inserted into the Env
      * @param value    the value to be inserted into the Store
+     * @param tuple used for garbage collection
+     * @param stack used for garbage collection
+     * @param control used for garbage collection
      * @return the new {@link EnvStoreTuple}
      */
     public EnvStoreTuple insert(Var variable, IValue value, EnvStoreTuple tuple, Stack<IFrame> stack , WhileLang control) {
         Integer pos = this.getRight().getCounter();
-        Store newStore = this.getRight().put(new Location(pos), value, tuple, stack, control);
+        Store newStore = this.getRight().putWithGarbageCollection(new Location(pos), value, tuple, stack, control);
         Environment newEnv = this.getLeft().put(variable, pos);
         return new EnvStoreTuple(newEnv, newStore);
     }
 
 
     /**
-     * inserts a new value into the {@link EnvStoreTuple}
+     * inserts a new value into the {@link EnvStoreTuple}. This function will not trigger garbage collection
+     * Only use this function if you know what you are doing. It will fail if the {@link Store} is out of space
      *
      * @param variable the variable to be inserted into the Env
      * @param value    the value to be inserted into the Store

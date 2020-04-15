@@ -6,6 +6,9 @@ import java.math.BigInteger;
 import java.util.Objects;
 import java.util.Set;
 
+/**
+ * This class represents an Int in the store. It is composed of a BigInteger
+ */
 public class IValueInt implements IValue{
     private BigInteger value;
 

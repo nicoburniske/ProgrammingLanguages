@@ -18,7 +18,7 @@ import java.util.List;
  */
 public interface IDecl<T> extends JSONAware, WhileLang {
     /**
-     * This functio performs a pre-evaluation check to ensure that all of the {@link Var} have been declared
+     * This function performs a pre-evaluation check to ensure that all of the {@link Var} have been declared
      *
      * @throws TypeCheckException if the decl does not typecheck
      * @param environment the current enviroment containing all of th declared variables in scope.
