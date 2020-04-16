@@ -16,7 +16,8 @@ public class ArrDecl implements IDecl<List<Expression>> {
     //Example of how it will look in the store
     //0 location is ref
     //1 location is arrayTag and lenght
-    //2 and on are the array
+    //2 to 4 is the array
+    //5 is a reference to the Array
     //[let x = [1,2,3]][y = x]
     //[x][y]
     //[0][5]
