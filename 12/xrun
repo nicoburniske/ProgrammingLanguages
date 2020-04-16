@@ -1,2 +1,2 @@
 #!/bin/bash
-java -jar Other/target/assignment11-1.0-SNAPSHOT-jar-with-dependencies.jar /dev/stdin
+java -jar Other/target/assignment12-1.0-SNAPSHOT-jar-with-dependencies.jar /dev/stdin
