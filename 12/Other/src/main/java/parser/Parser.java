@@ -13,6 +13,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import utils.exceptions.ParseException;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -101,7 +102,7 @@ public class Parser {
             return new Int(((Long)obj).intValue());
         }
         if(obj instanceof String) {
-            return new VarExpr((String) obj);
+            return new VarExpr(parseVar(obj));
         }
         if(obj instanceof JSONArray) {
             JSONArray arr = (JSONArray) obj;
@@ -157,7 +158,7 @@ public class Parser {
          *  - [Expression, Expression] % the location of an array index
          */
         if(obj instanceof String) {
-            return new VarLoc((String) obj);
+            return new VarLoc(parseVar(obj));
         }
         if(obj instanceof JSONArray) {
             JSONArray arr = (JSONArray) obj;
@@ -175,7 +176,7 @@ public class Parser {
         /**
          * Var is a String
          */
-        if(obj instanceof String && !Operator.operators.containsKey(obj)) {
+        if(obj instanceof String && !Operator.operators.containsKey(obj) || !illegalVars.contains((String)obj)) {
             return new Var((String) obj);
         }
         throw new ParseException(ParseException.expectedVar);
@@ -227,4 +228,5 @@ public class Parser {
         return (obj instanceof String) && ((String) obj).equals(str);
     }
 
+    private static List<String> illegalVars = Arrays.asList("=", "if0", "do0", "in", "+", "*", "let", "vec");
 }
