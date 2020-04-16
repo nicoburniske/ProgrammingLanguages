@@ -132,26 +132,26 @@ public class TestGarbageCollection {
     @Test
     void testOnePlace() {
         assertThrowsToZero(size2 -1 , block2);
-        assertForTheNextFew(size2, 10,result2, block2);
+        assertForTheNextFew(size2, 90,result2, block2);
     }
 
     @Test
     void nestedDelcs() {
         assertThrowsToZero(size3 -1 , block3);
-        assertForTheNextFew(size3, 10,result3, block3);
+        assertForTheNextFew(size3, 90,result3, block3);
     }
 
     @Test
     void allocateDeallocate() {
         assertThrowsToZero(size4 -1 , block4);
-        assertForTheNextFew(size4, 10,result4, block4);
+        assertForTheNextFew(size4, 90,result4, block4);
     }
 
     @Test
     void ifConditional() {
         assertThrowsToZero(size5 -1 , block5);
-        assertForTheNextFew(size5, 10,result5, block5);
+        assertForTheNextFew(size5, 90,result5, block5);
         assertThrowsToZero(size6 -1 , block6);
-        assertForTheNextFew(size6, 10,result6, block6);
+        assertForTheNextFew(size6, 90,result6, block6);
     }
 }
