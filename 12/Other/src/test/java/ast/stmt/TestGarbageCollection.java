@@ -8,19 +8,17 @@ import ast.expression.VarExpr;
 import ast.lhs.VarLoc;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import utils.exceptions.StoreSizeException;
 
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 public class TestGarbageCollection {
 
-    StmtBlock block1, block2,block3, block4, block5;
-    String result1, result2, result3, result4, result5;
-    int size1, size2, size3, size4, size5;
+    StmtBlock block1, block2,block3, block4, block5, block6;
+    String result1, result2, result3, result4, result5, result6;
+    int size1, size2, size3, size4, size5, size6;
     int sizeFail1, sizeFail2, sizeFail3;
 
     @BeforeEach
@@ -89,6 +87,25 @@ public class TestGarbageCollection {
         size5 = 1;
         result5 = "0";
 
+        block6 = new StmtBlock(
+                Arrays.asList(new Decl("a", new Int(100))),
+                Arrays.asList(
+                        new Conditional(new VarExpr("a"),
+                                new StmtBlock(new Int(6)),
+                                new StmtBlock(
+                                        Arrays.asList(
+                                                new Decl("b", new Int(8)),
+                                                new ArrDecl("c", Arrays.asList()),
+                                                new ArrDecl("d", Arrays.asList(new Int(5)))),
+                                        Arrays.asList(new Assignment(
+                                                new VarLoc("a"),
+                                                new Operator(new VarExpr("a"), new Int(-10000), "+"))),
+                                        new VarExpr("a")
+                                ))),
+                new VarExpr("a"));
+        size6 = 7;
+        result6 = "-9900";
+
     }
 
     void assertForTheNextFew(int start, int count, String result, StmtBlock block) {
@@ -100,7 +117,7 @@ public class TestGarbageCollection {
     void assertThrowsToZero(int start, StmtBlock block) {
         for(int ii = 0; ii <= start; ii ++) {
             int finalIi = ii;
-            assertThrows(StoreSizeException.class, () -> block.run(finalIi));
+            assertEquals("\"out of space\"", block.run(finalIi));
         }
     }
 
@@ -134,5 +151,7 @@ public class TestGarbageCollection {
     void ifConditional() {
         assertThrowsToZero(size5 -1 , block5);
         assertForTheNextFew(size5, 10,result5, block5);
+        assertThrowsToZero(size6 -1 , block6);
+        assertForTheNextFew(size6, 10,result6, block6);
     }
 }

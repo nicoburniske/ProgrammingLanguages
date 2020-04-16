@@ -14,10 +14,7 @@ import utils.EnvStoreTuple;
 import utils.ValueEnvStoreTuple;
 import utils.env.Environment;
 import utils.env.StaticCheckEnv;
-import utils.exceptions.ArrayIndexException;
-import utils.exceptions.IntExpectedException;
-import utils.exceptions.ParseException;
-import utils.exceptions.TypeCheckException;
+import utils.exceptions.*;
 import utils.store.Store;
 import value.*;
 
@@ -175,7 +172,7 @@ public class StmtBlock implements Stmt {
           ValueEnvStoreTuple result = this.CESK(new EnvStoreTuple(maxSize));
           // System.out.println(result.getStore().toString());
           return result.getLeft().toOutputString(result.getStore(), new HashSet<>());
-        } catch (TypeCheckException | IntExpectedException | ParseException | ArrayIndexException exception) {
+        } catch (TypeCheckException | IntExpectedException | ParseException | ArrayIndexException | StoreSizeException exception) {
             //exception.printStackTrace();
             return "\"" + exception.getMessage() + "\"";
         }
