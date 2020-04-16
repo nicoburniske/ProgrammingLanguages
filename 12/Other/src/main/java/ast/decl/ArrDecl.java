@@ -13,6 +13,15 @@ import java.util.stream.Collectors;
 public class ArrDecl implements IDecl<List<Expression>> {
     private Var var;
     private List<Expression> value;
+    //Example of how it will look in the store
+    //0 location is ref
+    //1 location is arrayTag and lenght
+    //2 and on are the array
+    //[let x = [1,2,3]][y = x]
+    //[x][y]
+    //[0][5]
+    //[0][1][2][3][4][5]
+    //[1][3,2][1][2][3][1]
 
     public ArrDecl(Var var, List<Expression> value) {
         this.var = var;
@@ -76,9 +85,4 @@ public class ArrDecl implements IDecl<List<Expression>> {
     }
 
 
-    //[let x = [1,2,3]][y = x]
-    //[x][y]
-    //[0][5]
-    //[0][1][2][3][4][5]
-    //[1][3,2][1][2][3][1]
 }
