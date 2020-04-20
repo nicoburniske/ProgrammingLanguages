@@ -1,0 +1,32 @@
+131
+Dustin Jamner
+
+131/170 + Bonus: 0/40
+
+task 1 30/30 (parser)
+----------------------------------------
+
+task 2 30/30 (static_checker)
+----------------------------------------
+
+task 3 30/40 (interpreter)
+----------------------------------------
+
+-10 no interpretation of array allocation documented
+
+task 4 41/70 (CESK) 
+----------------------------------------
+
+-10 no documentation for environment
+
+-5 IValueArray holds 2 pieces of data: the size and the start location; this goes against the spirit of implementing a heap
+
+-4 CESK implementation does not have all standard pieces
+    (load, transition)
+
+-10 transition is not straightforward
+
+----------------------------------------
+ Misc Comments
+----------------------------------------
+
