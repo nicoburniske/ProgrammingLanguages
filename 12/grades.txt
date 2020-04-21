@@ -1,0 +1,35 @@
+Total: 100/110
+
+-5, for your test 8-in.json; got xrun: not a positive space request: 0
+  context...:
+   /home/vagrant/src/20PL/Code/12/xrun:20:0: main
+
++0 Bonus for your tests
+===============
+Code Inspection
+===============
+Inspection Scores Forthcoming
+
+===============
+Test Fest
+===============
+interpreter: Failed {
+  "space": 11,
+  "program": [["let", "x", "=", 10], "in",
+                [["vec", "x", "=", ["x", 10]], "in",
+                 [["let", "x", "=", 11], "in",
+                  [["vec", "x", "=", ["x", 11]], "in",
+                   [["let", "x", "=", ["x", 0]], "in", 0],
+                   0],
+                  0],
+                 0],
+                [["vec", "x", "=", ["x", 20]], "in",
+                 [["let", "x", "=", 21], "in",
+                  [["vec", "x", "=", ["x", 21]], "in",
+                   [["let", "x", "=", ["x", 0]], "in", 0],
+                   0],
+                  0],
+                 0],
+                "x"]
+}, Expected 10
+, Got "indexing error"
