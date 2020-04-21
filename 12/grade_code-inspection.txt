@@ -1,0 +1,32 @@
+49
+Julia Belyakova
+
+49/90
+
+task 1 10/20 (find_roots)
+----------------------------------------
+
+-10 no unit tests for findRoots
+
+task 2 29/30 (heap representation)
+----------------------------------------
+
+-1 data definition for heap does not pre-allocate 2 stores --
+   the machine has finite memory, which is divided into two halfs
+
+task 3 10/40 (collector)
+----------------------------------------
+
+-0 it would be useful if documentation explicitly mentioned "gray coloring"
+
+-20 forwarding of reallocated locations is not identified
+
+-10 updating root locations in the mutator is not identified
+    (let me know where it is if I missed it)
+
+----------------------------------------
+ Misc Comments
+----------------------------------------
+
+The structure of the GC is hard to unravel.
+
